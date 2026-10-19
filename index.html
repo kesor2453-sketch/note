@@ -186,6 +186,15 @@ table.rxt{width:100%;table-layout:fixed;border-collapse:collapse;counter-reset:r
 .symchip[aria-pressed="true"]{background:var(--pen);border-color:var(--pen);color:#fff}
 .symchip[aria-pressed="true"]::after{content:" ✓";color:#fff}
 .symhint{flex-basis:100%;font:11.5px var(--kh);color:var(--muted)}
+body:not(.view-dis) .dis-only{display:none!important}
+body.view-dis .opd-tag{display:none!important}
+body.view-dis .caretag{color:#fff;background:#0f7b6c;border-color:#0f7b6c}
+.patient.p-dis{display:grid;grid-template-columns:3fr 1fr;gap:4px 14px}
+.vseg{display:inline-flex;border:1.5px solid #8a3b12;border-radius:6px;overflow:hidden}
+.vseg button{border:0;background:var(--paper);color:#8a3b12;padding:7px 11px;font:600 13px var(--kh);cursor:pointer}
+.vseg button[aria-pressed="true"]{background:#8a3b12;color:#fff}
+.vseg button[data-v="dis"][aria-pressed="true"]{background:#0f7b6c}
+.vseg[hidden]{display:none}
 body:not(.care-ipd) .ipd-only{display:none!important}
 body.care-ipd .opd-only{display:none!important}
 body.care-ipd .appt{display:none}
@@ -626,6 +635,10 @@ body.no-vitals .vitals{display:none}
       </div>
       <select id="tplGroup" aria-label="Disease group"></select>
       <select id="tplCare" aria-label="OPD or IPD"><option value="opd">🩺 OPD ពិគ្រោះក្រៅ</option><option value="ipd">🏥 IPD សម្រាកពេទ្យ</option></select>
+      <div class="vseg" id="viewSeg" role="group" aria-label="IPD orders or discharge prescription" hidden>
+        <button type="button" data-v="orders">🏥 បញ្ជាការ IPD</button>
+        <button type="button" data-v="dis">💊 វេជ្ជបញ្ជាចេញពីពេទ្យ</button>
+      </div>
       <button class="btn" id="saveBtn" type="button">រក្សាទុក</button>
       <button class="btn alt" id="saveNewBtn" type="button">រក្សាទុកជាថ្មី</button>
       <button class="btn danger" id="deleteBtn" type="button">លុប</button>
@@ -652,7 +665,7 @@ body.no-vitals .vitals{display:none}
           <div class="clinic-sub" id="hPhone"></div>
           <div class="clinic-hint noprint" id="hHint">⚙ ចុចទីនេះ ដើម្បីដាក់ឈ្មោះគ្លីនិក អាសយដ្ឋាន និងលេខទូរស័ព្ទ</div>
         </div>
-        <div class="caretag" id="careTag"><span class="opd-only" data-fr="Consultation externe" data-frkh="OPD · ពិគ្រោះជំងឺក្រៅ">OPD · ពិគ្រោះជំងឺក្រៅ</span><span class="ipd-only" data-fr="Hospitalisation · ordonnance" data-frkh="IPD · Hospitalisation · សម្រាកពេទ្យ">IPD · ព្យាបាលសម្រាកពេទ្យ</span></div>
+        <div class="caretag" id="careTag"><span class="dis-only" data-fr="Ordonnance de sortie" data-frkh="Ordonnance de sortie · វេជ្ជបញ្ជាចេញពីពេទ្យ">Discharge Rx · វេជ្ជបញ្ជាចេញពីពេទ្យ</span><span class="opd-only opd-tag" data-fr="Consultation externe" data-frkh="OPD · ពិគ្រោះជំងឺក្រៅ">OPD · ពិគ្រោះជំងឺក្រៅ</span><span class="ipd-only" data-fr="Hospitalisation · ordonnance" data-frkh="IPD · Hospitalisation · សម្រាកពេទ្យ">IPD · ព្យាបាលសម្រាកពេទ្យ</span></div>
         <div class="rxmark" aria-hidden="true">℞</div>
       </header>
 
@@ -669,6 +682,10 @@ body.no-vitals .vitals{display:none}
         <div class="field"><label data-fr="Lit">Bed</label><div id="pBed" contenteditable="true"></div></div>
         <div class="field"><label data-fr="Admission">Admitted</label><div id="pAdmit" contenteditable="true"></div></div>
         <div class="field"><label data-fr="Jour">Day</label><div id="pDay" class="pday"></div></div>
+      </section>
+      <section class="patient p-dis dis-only">
+        <div class="field"><label data-fr="Hospitalisé">Admitted</label><div id="disInfo"></div></div>
+        <div class="field"><label data-fr="Jours">Days</label><div id="disDays"></div></div>
       </section>
       <section class="vitals" aria-label="Vital signs">
         <label class="vbox"><span class="vl" data-fr="TA">BP</span><input id="vBp" type="text" inputmode="numeric" placeholder="120/80" autocomplete="off"><span class="vu">mmHg</span></label>
@@ -769,7 +786,7 @@ body.no-vitals .vitals{display:none}
       <button type="button" id="gUp">បង្កើតគណនីថ្មី</button>
       <button type="button" id="gReset">ភ្លេចពាក្យសម្ងាត់?</button>
     </div>
-    <p class="gate-note" id="gateNote">ព័ត៌មានអ្នកជំងឺមិនត្រូវបានផ្ញើទៅ cloud ទេ។ · v20</p>
+    <p class="gate-note" id="gateNote">ព័ត៌មានអ្នកជំងឺមិនត្រូវបានផ្ញើទៅ cloud ទេ។ · v21</p>
   </form>
 </div>
 
@@ -856,7 +873,7 @@ body.no-vitals .vitals{display:none}
       <p class="hint">ឯកសារត្រូវមានជួរឈរ៖ ICD 10 · EN · KH · FR។ បញ្ជីនេះរក្សាទុកក្នុង browser ហើយប្រើសម្រាប់ស្វែងរករោគវិនិច្ឆ័យទាំងអស់។</p>
     </fieldset>
     <div class="actions">
-      <span style="margin-right:auto;font:12px var(--body);color:var(--muted)">Rx Clinic v20</span>
+      <span style="margin-right:auto;font:12px var(--body);color:var(--muted)">Rx Clinic v21</span>
       <button class="btn alt" id="settingsClose" type="button">បិទ</button>
       <button class="btn" type="submit">រក្សាទុកការកំណត់</button>
     </div>
@@ -2166,7 +2183,7 @@ Object.assign(DXI,{
    For IPD the advice block becomes nursing orders & monitoring, red flags become "call the doctor / refer if",
    and follow-up becomes discharge criteria. A(en,kh,fr) also registers the French text. */
 var FRD_ADD={};
-function A(en,kh,fr){ if(fr) FRD_ADD[en]=fr; return [en,kh]; }
+function A(en,kh,fr){ if(fr){ FRD_ADD[en]=fr; if(typeof FRD==="object"&&FRD) FRD[en]=fr; } return [en,kh]; }
 function IPD(t){t.care="ipd"; return t;}
 var VS_Q4=A("Vital signs (BP, pulse, RR, temperature, SpO₂) every 4 hours.","វាស់សញ្ញាជីវិត (សម្ពាធ ជីពចរ ដង្ហើម កម្តៅ SpO₂) រៀងរាល់ ៤ ម៉ោង។","Signes vitaux (TA, pouls, FR, température, SpO₂) toutes les 4 heures.");
 var IO_CHART=A("Input / output chart. Record urine output.","កត់ត្រាបរិមាណទឹកចូល និងចេញ។ កត់ត្រាបរិមាណទឹកនោម។","Bilan entrées / sorties. Noter la diurèse.");
@@ -2326,6 +2343,98 @@ Object.assign(DXI,{
  "i-hyperemesis":["ក្អួតខ្លាំងពេលមានផ្ទៃពោះ (សម្រាកពេទ្យ)","Hyperémèse gravidique","hyperemesis severe vomiting pregnancy ផ្ទៃពោះ ក្អួតខ្លាំង hyperémèse"]
 });
 
+/* ---------- v21: discharge prescriptions (medicines to continue at home) for the IPD templates ---------- */
+function DIS(id,rx,advice,red,follow){var t=DEFAULTS.find(function(x){return x.id===id;}); if(t) t.dis={rx:rx,advice:advice,red:red,follow:follow};}
+var D_FINISH=A("Finish all the medicine, even if you feel well.","លេបថ្នាំឱ្យអស់ ទោះបីមានអារម្មណ៍ធូរហើយក៏ដោយ។","Prenez tout le traitement, même si vous vous sentez bien.");
+var D_REST=A("Rest at home for a few days. Eat well and drink plenty of water.","សម្រាកនៅផ្ទះពីរបីថ្ងៃ។ ញ៉ាំឱ្យបានល្អ និងផឹកទឹកច្រើន។","Reposez-vous quelques jours à la maison. Mangez bien et buvez beaucoup d'eau.");
+var D_BRING=A("Bring this paper and all your medicines to the next visit.","យកក្រដាសនេះ និងថ្នាំទាំងអស់មកពេលណាត់ក្រោយ។","Apportez cette ordonnance et tous vos médicaments à la prochaine visite.");
+DIS("i-dengue",[R("Paracetamol 500 mg","tab","1-1-1-1","prn","3","Max 3 g a day. No ibuprofen, aspirin or diclofenac."),R("ORS (low osmolarity)","sachet","","prn","","Drink often.")],
+ [A("Keep drinking plenty: water, ORS, soup, fruit juice.","បន្តផឹកទឹកឱ្យបានច្រើន៖ ទឹកស្អាត ORS ស៊ុប ទឹកផ្លែឈើ។","Continuez à boire beaucoup : eau, SRO, soupe, jus de fruits."),
+  A("Only paracetamol for pain or fever. No ibuprofen or aspirin for 2 weeks.","ប្រើតែ Paracetamol សម្រាប់ឈឺ ឬគ្រុន។ កុំប្រើ Ibuprofen ឬ Aspirin រយៈពេល ២ សប្តាហ៍។","Uniquement du paracétamol pour la douleur ou la fièvre. Pas d'ibuprofène ni d'aspirine pendant 2 semaines."),
+  A("An itchy red rash during recovery is common and goes away.","កន្ទួលក្រហមរមាស់ពេលជាសះស្បើយ ជារឿងធម្មតា ហើយនឹងបាត់ទៅវិញ។","Une éruption rouge qui démange pendant la convalescence est fréquente et disparaît."),
+  A("Sleep under a mosquito net and remove standing water.","គេងក្នុងមុង និងចាក់ចោលទឹកដក់។","Dormez sous une moustiquaire et videz les eaux stagnantes.")],
+ A("Bleeding from gums, nose or in stool, belly pain, vomiting, fever comes back, very tired or dizzy.","ហូរឈាមអញ្ចាញធ្មេញ ច្រមុះ ឬលាមក ឈឺពោះ ក្អួត គ្រុនឡើងវិញ អស់កម្លាំង ឬវិលមុខខ្លាំង។","Saignement des gencives, du nez ou dans les selles, douleur abdominale, vomissements, retour de la fièvre, grande fatigue ou vertiges."),
+ A("Follow-up: after 2 days with CBC","មកពិនិត្យក្រោយ ២ ថ្ងៃ ជាមួយការពិនិត្យឈាម CBC","Suivi : après 2 jours avec NFS"));
+DIS("i-sepsis",[R("Amoxicillin-clavulanate 625 mg","tab","1-1-1","after-meals","7","Or the antibiotic chosen for the source / culture result."),R("Paracetamol 500 mg","tab","1-1-1-1","prn","3","")],
+ [D_FINISH,D_REST,D_BRING],
+ A("Fever comes back, fast breathing, confusion, very little urine, feeling worse.","គ្រុនឡើងវិញ ដកដង្ហើមញាប់ វង្វេង នោមតិចខ្លាំង ឬកាន់តែធ្ងន់។","Retour de la fièvre, respiration rapide, confusion, très peu d'urine, aggravation."),
+ A("Follow-up: after 3 days","មកពិនិត្យក្រោយ ៣ ថ្ងៃ","Suivi : après 3 jours"));
+DIS("i-typhoid",[R("Azithromycin 500 mg","tab","1-0-0","","7","To complete 14 days of treatment."),R("Paracetamol 500 mg","tab","1-1-1-1","prn","3","")],
+ [D_FINISH,A("Drink boiled water. Wash hands with soap before eating and after the toilet.","ផឹកទឹកឆ្អិន។ លាងដៃនឹងសាប៊ូមុនញ៉ាំ និងក្រោយបន្ទប់ទឹក។","Buvez de l'eau bouillie. Lavez-vous les mains au savon avant de manger et après les toilettes."),
+  A("Eat soft, well-cooked food for 1–2 weeks.","ញ៉ាំអាហារទន់ ចម្អិនឆ្អិនល្អ ១–២ សប្តាហ៍។","Mangez des aliments mous et bien cuits pendant 1–2 semaines.")],
+ A("Belly pain, black or bloody stool, fever after 3 days, vomiting.","ឈឺពោះ លាមកខ្មៅ ឬមានឈាម គ្រុនក្រោយ ៣ ថ្ងៃ ក្អួត។","Douleur abdominale, selles noires ou sanglantes, fièvre après 3 jours, vomissements."),
+ A("Follow-up: after 1 week","មកពិនិត្យក្រោយ ១ សប្តាហ៍","Suivi : après 1 semaine"));
+DIS("i-malaria",[R("Artemether + Lumefantrine 20/120 mg","tab","4-0-4","with-food","3","Full course if not finished in hospital. Take with milk or fatty food."),
+  R("Primaquine 15 mg","tab","1-0-0","with-food","1","Single low dose 0.25 mg/kg for P. falciparum (national guideline). Not in pregnancy or infants under 6 months.")],
+ [D_FINISH,A("Sleep under an insecticide-treated net every night.","គេងក្នុងមុងជ្រលក់ថ្នាំរាល់យប់។","Dormez chaque nuit sous une moustiquaire imprégnée."),D_BRING],
+ A("Fever comes back, dark urine, yellow eyes, vomiting the tablets, confusion.","គ្រុនឡើងវិញ ទឹកនោមខ្មៅ ភ្នែកលឿង ក្អួតថ្នាំចេញ វង្វេង។","Retour de la fièvre, urines foncées, yeux jaunes, vomissement des comprimés, confusion."),
+ A("Follow-up: after 7 days (blood test again at day 28)","មកពិនិត្យក្រោយ ៧ ថ្ងៃ (ពិនិត្យឈាមម្តងទៀតនៅថ្ងៃទី ២៨)","Suivi : après 7 jours (nouveau contrôle sanguin à J28)"));
+DIS("i-pneumonia",[R("Amoxicillin-clavulanate 625 mg","tab","1-1-1","after-meals","5","To complete 7 days of antibiotics."),R("Paracetamol 500 mg","tab","1-1-1-1","prn","3","")],
+ [D_FINISH,A("Deep breathing exercises several times a day. Stop smoking.","ហាត់ដកដង្ហើមវែងៗច្រើនដងក្នុងមួយថ្ងៃ។ ឈប់ជក់បារី។","Exercices de respiration profonde plusieurs fois par jour. Arrêtez de fumer."),
+  A("Ask about influenza and pneumococcal vaccines.","សួររកវ៉ាក់សាំងផ្តាសាយធំ និង Pneumococcus។","Renseignez-vous sur les vaccins contre la grippe et le pneumocoque.")],
+ A("Breathing difficulty, fever comes back, chest pain, coughing blood, confusion.","ពិបាកដកដង្ហើម គ្រុនឡើងវិញ ឈឺទ្រូង ក្អកចេញឈាម វង្វេង។","Difficulté à respirer, retour de la fièvre, douleur thoracique, toux avec sang, confusion."),
+ A("Follow-up: after 1 week","មកពិនិត្យក្រោយ ១ សប្តាហ៍","Suivi : après 1 semaine"));
+DIS("i-asthma",[R("Prednisolone 5 mg","tab","8-0-0","after-breakfast","4","40 mg once daily to complete 5 days."),
+  R("Beclometasone inhaler 100 mcg","puff","2-0-2","","30","Controller — every day, even when well. Rinse the mouth after use."),
+  R("Salbutamol inhaler 100 mcg","puff","2-2-2-2","prn","","Reliever — with a spacer when wheezy.")],
+ [A("Use both inhalers with a spacer. The brown/controller one every day.","ប្រើថ្នាំបាញ់ទាំងពីរជាមួយ Spacer។ ថ្នាំបាញ់ការពារ ត្រូវប្រើរាល់ថ្ងៃ។","Utilisez les deux inhalateurs avec une chambre d'inhalation. Le traitement de fond tous les jours."),
+  A("Avoid smoke, dust and other triggers.","ជៀសវាងផ្សែង ធូលី និងកត្តាបង្ក។","Évitez la fumée, la poussière et les autres facteurs déclenchants.")],
+ A("Reliever needed more than every 4 hours, cannot speak full sentences, blue lips, very drowsy.","ត្រូវការថ្នាំបាញ់ញឹកជាងរៀងរាល់ ៤ ម៉ោង និយាយមិនចប់ប្រយោគ បបូរមាត់ស្វាយ ងងុយខ្លាំង។","Bronchodilatateur nécessaire plus souvent que toutes les 4 heures, impossible de finir une phrase, lèvres bleues, somnolence."),
+ A("Follow-up: after 1 week","មកពិនិត្យក្រោយ ១ សប្តាហ៍","Suivi : après 1 semaine"));
+DIS("i-copd",[R("Prednisolone 5 mg","tab","8-0-0","after-breakfast","3","To complete 5 days."),R("Amoxicillin-clavulanate 625 mg","tab","1-1-1","after-meals","3","Only if started in hospital, to complete 5 days."),
+  R("Salbutamol inhaler 100 mcg","puff","2-2-2-2","prn","","With a spacer.")],
+ [A("Stop smoking — the most important treatment.","ឈប់ជក់បារី — ជាការព្យាបាលសំខាន់បំផុត។","Arrêtez de fumer — c'est le traitement le plus important."),A("Walk a little every day. Avoid cooking smoke.","ដើរបន្តិចៗរាល់ថ្ងៃ។ ជៀសវាងផ្សែងចង្ក្រាន។","Marchez un peu chaque jour. Évitez la fumée de cuisine.")],
+ A("More breathless, drowsy or confused, lips blue, fever.","ហត់ខ្លាំងជាងមុន ងងុយ ឬវង្វេង បបូរមាត់ស្វាយ គ្រុន។","Plus essoufflé, somnolent ou confus, lèvres bleues, fièvre."),
+ A("Follow-up: after 2 weeks","មកពិនិត្យក្រោយ ២ សប្តាហ៍","Suivi : après 2 semaines"));
+DIS("i-dehyd",[R("ORS (low osmolarity)","sachet","","prn","","200–400 ml after each loose stool.")],
+ [A("Drink ORS after each loose stool. Eat light food.","ផឹក ORS ក្រោយរាករាល់ដង។ ញ៉ាំអាហារស្រាលៗ។","Buvez de la SRO après chaque selle liquide. Mangez léger."),
+  A("Wash hands with soap. Drink boiled or bottled water.","លាងដៃនឹងសាប៊ូ។ ផឹកទឹកឆ្អិន ឬទឹកដប។","Lavez-vous les mains au savon. Buvez de l'eau bouillie ou en bouteille.")],
+ A("Cannot drink, vomiting again, very little urine, blood in stool, dizziness.","មិនអាចផឹក ក្អួតម្តងទៀត នោមតិចខ្លាំង លាមកមានឈាម វិលមុខ។","Ne peut pas boire, vomissements qui reprennent, très peu d'urine, sang dans les selles, vertiges."),
+ A("Follow-up: after 2 days if not better","មកពិនិត្យក្រោយ ២ ថ្ងៃ ប្រសិនបើមិនធូរ","Suivi : après 2 jours en l'absence d'amélioration"));
+DIS("i-pyelo",[R("Cefixime 200 mg","cap","1-0-1","after-meals","10","To complete 10–14 days. Safe in pregnancy."),R("Paracetamol 500 mg","tab","1-1-1-1","prn","3","")],
+ [D_FINISH,A("Drink 2–3 litres of water a day. Do not hold urine.","ផឹកទឹក ២–៣ លីត្រក្នុងមួយថ្ងៃ។ កុំទប់ទឹកនោម។","Buvez 2–3 litres d'eau par jour. Ne vous retenez pas d'uriner.")],
+ A("Fever comes back, back pain, vomiting, very little urine.","គ្រុនឡើងវិញ ឈឺខ្នង ក្អួត នោមតិចខ្លាំង។","Retour de la fièvre, douleur du dos, vomissements, très peu d'urine."),
+ A("Follow-up: after 1 week with urine test","មកពិនិត្យក្រោយ ១ សប្តាហ៍ ជាមួយការពិនិត្យទឹកនោម","Suivi : après 1 semaine avec examen d'urines"));
+DIS("i-cellulitis",[R("Cloxacillin 500 mg","cap","1-1-1-1","empty","7","Or cefalexin 500 mg 4 times a day."),R("Paracetamol 500 mg","tab","1-1-1-1","prn","3","")],
+ [D_FINISH,A("Raise the leg when resting. Keep the skin clean. Treat cracks between the toes.","លើកជើងពេលសម្រាក។ រក្សាស្បែកឱ្យស្អាត។ ព្យាបាលស្នាមប្រេះចន្លោះម្រាមជើង។","Surélevez la jambe au repos. Gardez la peau propre. Traitez les fissures entre les orteils.")],
+ A("Redness spreading again, fever, pus, blisters, severe pain.","ក្រហមរាលដាលម្តងទៀត គ្រុន ខ្ទុះ ពងទឹក ឈឺខ្លាំង។","Rougeur qui s'étend de nouveau, fièvre, pus, bulles, douleur intense."),
+ A("Follow-up: after 3 days","មកពិនិត្យក្រោយ ៣ ថ្ងៃ","Suivi : après 3 jours"));
+DIS("i-meningitis",[],
+ [A("Continue the treatment given by the referral hospital.","បន្តការព្យាបាលតាមមន្ទីរពេទ្យបញ្ជូន។","Poursuivez le traitement prescrit par l'hôpital de référence."),D_BRING],
+ A("Fever, headache, stiff neck, convulsion, confusion.","គ្រុន ឈឺក្បាល រឹងក ប្រកាច់ វង្វេង។","Fièvre, mal de tête, raideur de nuque, convulsion, confusion."),
+ A("Follow-up: hearing check after 4–6 weeks","ពិនិត្យការស្តាប់ឮក្រោយ ៤–៦ សប្តាហ៍","Suivi : contrôle de l'audition après 4–6 semaines"));
+DIS("i-pedpneu",[W(R("Amoxicillin suspension 250 mg/5 ml","ml","1-0-1","after-meals","3","40 mg/kg twice a day to complete 5 days."),"40/50/1000"),PCM_C()],
+ [A("Give every dose of the antibiotic until finished.","ឱ្យថ្នាំអង់ទីប៊ីយ៉ូទិកគ្រប់ដូសរហូតអស់។","Donnez toutes les doses d'antibiotique jusqu'à la fin."),
+  A("Continue breastfeeding and give fluids often. Clear the nose.","បន្តបំបៅដោះ និងឱ្យទឹកញឹកញាប់។ សម្អាតច្រមុះ។","Poursuivez l'allaitement et donnez souvent à boire. Désobstruez le nez.")],
+ A("Fast breathing, chest indrawing, not feeding, very sleepy, convulsion.","ដកដង្ហើមញាប់ ទ្រូងស្រុត មិនបៅដោះ ងងុយខ្លាំង ប្រកាច់។","Respiration rapide, tirage thoracique, ne s'alimente pas, très somnolent, convulsion."),
+ A("Follow-up: after 2 days","មកពិនិត្យក្រោយ ២ ថ្ងៃ","Suivi : après 2 jours"));
+DIS("i-peddehyd",[R("ORS (low osmolarity)","sachet","","prn","","Under 2 y: 50–100 ml; 2–10 y: 100–200 ml after each loose stool."),R("Zinc (dispersible) 20 mg","tab","1-0-0","","10","To complete 10–14 days. Under 6 months: ½ tab.")],
+ [A("Give more fluids than usual (Plan A) and continue breastfeeding.","ឱ្យទឹកច្រើនជាងធម្មតា (Plan A) និងបន្តបំបៅដោះ។","Donnez plus de liquides que d'habitude (plan A) et poursuivez l'allaitement."),
+  A("Wash hands with soap after changing nappies.","លាងដៃនឹងសាប៊ូក្រោយប្តូរកន្ទប។","Lavez-vous les mains au savon après avoir changé les couches.")],
+ A("Not drinking, sunken eyes, very sleepy, blood in stool, repeated vomiting.","មិនផឹក ភ្នែកស្រុត ងងុយខ្លាំង លាមកមានឈាម ក្អួតច្រើនដង។","Ne boit pas, yeux enfoncés, très somnolent, sang dans les selles, vomissements répétés."),
+ A("Follow-up: after 2 days if not better","មកពិនិត្យក្រោយ ២ ថ្ងៃ ប្រសិនបើមិនធូរ","Suivi : après 2 jours en l'absence d'amélioration"));
+DIS("i-peddengue",[W(R("Paracetamol syrup 120 mg/5 ml","ml","1-1-1-1","prn","3","10–15 mg/kg every 6 h if fever. No ibuprofen."),"10/24/500"),R("ORS (low osmolarity)","sachet","","prn","","Drink often.")],
+ [A("Give plenty of fluids. Only paracetamol, never ibuprofen or aspirin.","ឱ្យផឹកទឹកច្រើន។ ប្រើតែ Paracetamol កុំឱ្យ Ibuprofen ឬ Aspirin។","Donnez beaucoup à boire. Uniquement du paracétamol, jamais d'ibuprofène ni d'aspirine."),
+  A("Sleep under a mosquito net.","គេងក្នុងមុង។","Dormez sous une moustiquaire.")],
+ A("Bleeding, belly pain, vomiting, cold hands and feet, very sleepy, fever comes back.","ហូរឈាម ឈឺពោះ ក្អួត ដៃជើងត្រជាក់ ងងុយខ្លាំង គ្រុនឡើងវិញ។","Saignement, douleur abdominale, vomissements, extrémités froides, très somnolent, retour de la fièvre."),
+ A("Follow-up: after 2 days with CBC","មកពិនិត្យក្រោយ ២ ថ្ងៃ ជាមួយការពិនិត្យឈាម CBC","Suivi : après 2 jours avec NFS"));
+DIS("i-preeclampsia",[R("Nifedipine 20 mg (slow-release)","tab","1-0-1","","14","Adjust to keep BP below 150/100. Safe while breastfeeding."),
+  R("Ferrous sulfate + Folic acid 60 mg + 400 mcg","tab","1-0-0","empty","30","")],
+ [A("Check blood pressure every 2–3 days for 2 weeks after delivery.","វាស់សម្ពាធឈាមរៀងរាល់ ២–៣ ថ្ងៃ រយៈពេល ២ សប្តាហ៍ក្រោយសម្រាល។","Contrôlez la tension tous les 2–3 jours pendant 2 semaines après l'accouchement."),
+  A("Pre-eclampsia can come back in the next pregnancy — start antenatal care early.","Pre-eclampsia អាចកើតម្តងទៀតពេលមានផ្ទៃពោះលើកក្រោយ — មកពិនិត្យផ្ទៃពោះឱ្យបានឆាប់។","La pré-éclampsie peut récidiver à la prochaine grossesse — consultation prénatale précoce.")],
+ A("Severe headache, blurred vision, pain under the ribs, fits, breathlessness, BP ≥ 160/110.","ឈឺក្បាលខ្លាំង ភ្នែកព្រិល ឈឺក្រោមឆ្អឹងជំនីរ ប្រកាច់ ហត់ សម្ពាធ ≥ ១៦០/១១០។","Mal de tête intense, vision floue, douleur sous les côtes, convulsions, essoufflement, TA ≥ 160/110."),
+ A("Follow-up: after 1 week for blood pressure","មកពិនិត្យសម្ពាធឈាមក្រោយ ១ សប្តាហ៍","Suivi : après 1 semaine pour la tension"));
+DIS("i-pph",[R("Ferrous sulfate + Folic acid 60 mg + 400 mcg","tab","1-0-1","empty","90","For 3 months. Not with tea."),R("Paracetamol 500 mg","tab","1-1-1-1","prn","3","Safe while breastfeeding.")],
+ [A("Rest. Eat iron-rich food: meat, liver, fish, eggs, green vegetables.","សម្រាក។ ញ៉ាំអាហារសម្បូរជាតិដែក៖ សាច់ ថ្លើម ត្រី ពង បន្លែបៃតង។","Reposez-vous. Mangez des aliments riches en fer : viande, foie, poisson, œufs, légumes verts."),
+  A("Continue breastfeeding.","បន្តបំបៅដោះ។","Poursuivez l'allaitement.")],
+ A("Bleeding again (a pad every hour), fever, smelly discharge, dizziness or fainting, breathlessness.","ហូរឈាមម្តងទៀត (មួយសំឡីក្នុងមួយម៉ោង) គ្រុន ធ្លាក់សធុំក្លិន វិលមុខ ឬសន្លប់ ហត់។","Nouveau saignement (une serviette par heure), fièvre, pertes malodorantes, vertiges ou malaise, essoufflement."),
+ A("Follow-up: after 1 week (Hb at 6 weeks)","មកពិនិត្យក្រោយ ១ សប្តាហ៍ (Hb នៅ ៦ សប្តាហ៍)","Suivi : après 1 semaine (Hb à 6 semaines)"));
+DIS("i-hyperemesis",[R("Pyridoxine (Vitamin B6) 25 mg","tab","1-1-1","after-meals","14",""),R("Metoclopramide 10 mg","tab","1-1-1","before-meals","7","Only if needed."),
+  R("Folic acid 400 mcg","tab","1-0-0","","30","")],
+ [A("Small dry meals often. Sip fluids between meals.","ញ៉ាំអាហារស្ងួតតិចៗ ញឹកញាប់។ ផឹកទឹកតិចៗចន្លោះពេលអាហារ។","Petits repas secs fréquents. Boire par petites gorgées entre les repas."),PREG_MED],
+ A("Cannot keep fluids for 24 hours, dark urine, dizziness, weight loss, pain or bleeding.","មិនអាចផឹកទឹកបាន ២៤ ម៉ោង ទឹកនោមខ្មៅ វិលមុខ ស្រកទម្ងន់ ឈឺ ឬហូរឈាម។","Impossible de garder les liquides pendant 24 heures, urines foncées, vertiges, perte de poids, douleur ou saignement."),
+ A("Follow-up: after 1 week","មកពិនិត្យក្រោយ ១ សប្តាហ៍","Suivi : après 1 semaine"));
+
 var PROC_DROP=/incision and drainage|^wound cleaning|^wash wound|^crepe bandage/i;
 function applyProc(t){
   var pr=PROCS[t.id]; if(!pr) return false;
@@ -2345,6 +2454,7 @@ function pair(v){return Array.isArray(v)?[v[0]||"",v[1]||""]:[v||"",""];}
 function normalize(t){
   t.group=GROUPS.some(function(g){return g.id===t.group;})?t.group:"other";
   t.care=t.care==="ipd"?"ipd":"opd";
+  if(t.dis&&typeof t.dis==="object"){ t.dis={rx:(t.dis.rx||[]).map(normRx),advice:(t.dis.advice||[]).map(pair),red:pair(t.dis.red),follow:pair(t.dis.follow),frx:t.dis.frx||null}; } else delete t.dis;
   t.advice=(t.advice||[]).map(pair); t.red=pair(t.red); t.follow=pair(t.follow);
   t.rx=(t.rx||[]).map(normRx);
   ["co","ho","dx","inv","dxKh","dxFr","sym"].forEach(function(k){t[k]=t[k]||"";});
@@ -2356,6 +2466,7 @@ function load(){
     if(!localStorage.getItem(PCM_KEY)){ if(migratePcm(m)) localStorage.setItem(KEY,JSON.stringify(m)); localStorage.setItem(PCM_KEY,"1"); }
     if(!localStorage.getItem(PROC_KEY)){ if(migrateProc(m)) localStorage.setItem(KEY,JSON.stringify(m)); localStorage.setItem(PROC_KEY,"1"); }
     if(!localStorage.getItem(WD_KEY)){ if(migrateWd(m)) localStorage.setItem(KEY,JSON.stringify(m)); localStorage.setItem(WD_KEY,"1"); }
+    if(!localStorage.getItem(DIS_KEY)){ if(migrateDis(m)) localStorage.setItem(KEY,JSON.stringify(m)); localStorage.setItem(DIS_KEY,"1"); }
     return m; }}}catch(e){}
   var lib=clone(DEFAULTS).map(normalize);
   try{var o=JSON.parse(localStorage.getItem(OLD_KEY)||"null");
@@ -2365,7 +2476,8 @@ function load(){
 }
 var DEL_KEY="rxTemplates.deletedDefaults";
 function deletedDefaults(){try{return JSON.parse(localStorage.getItem(DEL_KEY)||"[]")||[];}catch(e){return [];}}
-var PCM_KEY="rxTemplates.mig.pcm1", PROC_KEY="rxTemplates.mig.proc1", WD_KEY="rxTemplates.mig.wd1";
+var PCM_KEY="rxTemplates.mig.pcm1", PROC_KEY="rxTemplates.mig.proc1", WD_KEY="rxTemplates.mig.wd1", DIS_KEY="rxTemplates.mig.dis1";
+function migrateDis(arr){var ch=false; arr.forEach(function(t){ if(t.dis) return; var d=DEFAULTS.find(function(x){return x.id===t.id;}); if(d&&d.dis){t.dis=normalize({id:"x",rx:[],advice:[],red:"",follow:"",dis:clone(d.dis)}).dis; ch=true;} }); return ch;}
 function migrateWd(arr){var ch=false; arr.forEach(function(t){ var d=DEFAULTS.find(function(x){return x.id===t.id;}); if(!d) return;
   (t.rx||[]).forEach(function(r){ if(r.wd) return; var m=d.rx.find(function(x){return x.wd&&fold(x.drug)===fold(r.drug);}); if(!m) return;
     r.wd=m.wd; if(!(r.slots||[]).some(function(v){return v&&v!=="0";})) r.slots=m.slots.slice(); ch=true; }); }); return ch;}
@@ -3420,32 +3532,61 @@ function fillSheet(t){
   setTimeout(renderSymChips,0);
   $("fCo").textContent=t.co; $("fHo").textContent=t.ho; $("fDx").textContent=t.dx; $("fInv").textContent=t.inv;
   $("fDxKh").textContent=t.dxKh||""; $("fDxFr").textContent=t.dxFr||"";
-  rxItems().forEach(function(tb){tb.remove();});
-  t.rx.forEach(function(r){$("rxTable").appendChild(rxRow(r));});
-  fillList($("adviceEn"),t.advice.map(function(a){return a[0];}).filter(Boolean));
-  fillList($("adviceKh"),t.advice.map(function(a){return a[1];}).filter(Boolean));
-  $("fRedEn").textContent=t.red[0]; $("fRedKh").textContent=t.red[1];
   fillProc(t.proc);
-  $("fFollowEn").textContent=t.follow[0]; $("fFollowKh").textContent=t.follow[1];
-  fillFr(t.frx);
-  delete $("apptDate").dataset.manual; computeAppt();
-
+  PARTS={orders:null,dis:t.care==="ipd"?(t.dis?clone(t.dis):autoDis(t)):null}; SHEET_VIEW="orders";
+  fillPart({rx:t.rx,advice:t.advice,red:t.red,follow:t.follow,frx:t.frx});
   $("tplName").value=t.name; $("tplGroup").value=t.group; $("tplCare").value=t.care||"opd"; applyCare();
 }
 function readItems(ul){
   var li=[].map.call(ul.querySelectorAll("li"),function(x){return x.textContent.trim();}).filter(Boolean);
   return li.length?li:ul.innerText.split(/\n+/).map(function(s){return s.trim();}).filter(Boolean);
 }
-function readSheet(){
+/* the sheet shows one "part" at a time: the template's own orders, or (IPD) the discharge prescription */
+var PARTS={orders:null,dis:null}, SHEET_VIEW="orders";
+function fillPart(pt){
+  rxItems().forEach(function(tb){tb.remove();});
+  (pt.rx||[]).forEach(function(r){$("rxTable").appendChild(rxRow(r));});
+  var adv=(pt.advice||[]).map(pair), red=pair(pt.red), fol=pair(pt.follow);
+  fillList($("adviceEn"),adv.map(function(a){return a[0];}).filter(Boolean));
+  fillList($("adviceKh"),adv.map(function(a){return a[1];}).filter(Boolean));
+  $("fRedEn").textContent=red[0]; $("fRedKh").textContent=red[1];
+  $("fFollowEn").textContent=fol[0]; $("fFollowKh").textContent=fol[1];
+  fillFr(pt.frx);
+  delete $("apptDate").dataset.manual; computeAppt();
+  setTimeout(renderSymChips,0);
+}
+function readPart(fallbackFr){
   var rx=rxItems().map(rowData).filter(function(r){return r.drug||r.slots.some(Boolean);});
   var en=readItems($("adviceEn")), kh=readItems($("adviceKh")), adv=[];
   for(var i=0;i<Math.max(en.length,kh.length);i++) adv.push([en[i]||"",kh[i]||""]);
+  return {rx:rx,advice:adv,red:[$("fRedEn").textContent.trim(),$("fRedKh").textContent.trim()],
+    follow:[$("fFollowEn").textContent.trim(),$("fFollowKh").textContent.trim()],frx:readFr({frx:fallbackFr||null})};
+}
+var ORAL_UNITS=["tab","cap","ml","sachet","lozenge","puff","spray","drop","apply","supp"];
+function autoDis(t){
+  return {rx:clone((t.rx||[]).filter(function(r){return ORAL_UNITS.indexOf(normRx(r).unit)>-1;})),
+    advice:[A("Finish all the medicine, even if you feel well.","លេបថ្នាំឱ្យអស់ ទោះបីមានអារម្មណ៍ធូរហើយក៏ដោយ។"),A("Rest at home for a few days. Eat well and drink plenty of water.","សម្រាកនៅផ្ទះពីរបីថ្ងៃ។ ញ៉ាំឱ្យបានល្អ និងផឹកទឹកច្រើន។")],
+    red:A("Fever comes back, feeling worse, any new problem.","គ្រុនឡើងវិញ កាន់តែធ្ងន់ ឬមានបញ្ហាថ្មី។","Retour de la fièvre, aggravation, tout nouveau problème."),
+    follow:A("Follow-up: after 1 week","មកពិនិត្យក្រោយ ១ សប្តាហ៍","Suivi : après 1 semaine"),frx:null};
+}
+function setView(v){
+  if(v===SHEET_VIEW) return;
   var cur=lib.find(function(x){return x.id===currentId;});
+  PARTS[SHEET_VIEW]=readPart(SHEET_VIEW==="dis"?(PARTS.dis&&PARTS.dis.frx):(cur&&cur.frx));
+  SHEET_VIEW=v;
+  if(v==="dis"&&!PARTS.dis) PARTS.dis=autoDis(PARTS.orders||{rx:[]});
+  fillPart(PARTS[v]); applyCare();
+  say(v==="dis"?"វេជ្ជបញ្ជាចេញពីពេទ្យ — ថ្នាំលេបបន្តនៅផ្ទះ":"បញ្ជាការព្យាបាល IPD");
+}
+function readSheet(){
+  var cur=lib.find(function(x){return x.id===currentId;}), ipd=$("tplCare").value==="ipd";
+  PARTS[SHEET_VIEW]=readPart(SHEET_VIEW==="dis"?(PARTS.dis&&PARTS.dis.frx):(cur&&cur.frx));
+  var o=PARTS.orders||readPart(cur&&cur.frx);
   return {co:$("fCo").textContent.trim(),ho:$("fHo").textContent.trim(),dx:$("fDx").textContent.trim(),inv:$("fInv").textContent.trim(),
     dxKh:$("fDxKh").textContent.trim(),dxFr:$("fDxFr").textContent.trim(),sym:cur?cur.sym:"",
-    rx:rx,advice:adv,red:[$("fRedEn").textContent.trim(),$("fRedKh").textContent.trim()],
-    follow:[$("fFollowEn").textContent.trim(),$("fFollowKh").textContent.trim()],
-    proc:readProc(), frx:readFr(cur), care:$("tplCare").value==="ipd"?"ipd":"opd"};
+    rx:o.rx,advice:o.advice,red:o.red,follow:o.follow,frx:o.frx,
+    dis:ipd?(PARTS.dis||null):null,
+    proc:readProc(), care:ipd?"ipd":"opd"};
 }
 function openTemplate(id){
   var t=lib.find(function(x){return x.id===id;}); if(!t) return;
@@ -3639,8 +3780,10 @@ function connectClinic(create){
     startSync(doc.data().ownerEmail===email?"owner":"member");
   }).catch(fbErr);
 }
-function enc(col,x){var o=JSON.parse(JSON.stringify(x)); if(col==="templates"&&o.proc&&Array.isArray(o.proc.steps)) o.proc.steps=o.proc.steps.map(function(a){return Array.isArray(a)?{en:a[0]||"",kh:a[1]||""}:a;}); if(col==="templates"&&Array.isArray(o.advice)) o.advice=o.advice.map(function(a){return Array.isArray(a)?{en:a[0]||"",kh:a[1]||""}:a;}); return o;}
-function dec(col,o){if(col==="templates"&&o.proc&&Array.isArray(o.proc.steps)) o.proc.steps=o.proc.steps.map(function(a){return Array.isArray(a)?a:[a.en||"",a.kh||""];}); if(col==="templates"&&Array.isArray(o.advice)) o.advice=o.advice.map(function(a){return Array.isArray(a)?a:[a.en||"",a.kh||""];}); return o;}
+function enc(col,x){var o=JSON.parse(JSON.stringify(x)); if(col==="templates"&&o.proc&&Array.isArray(o.proc.steps)) o.proc.steps=o.proc.steps.map(function(a){return Array.isArray(a)?{en:a[0]||"",kh:a[1]||""}:a;}); if(col==="templates"&&Array.isArray(o.advice)) o.advice=o.advice.map(function(a){return Array.isArray(a)?{en:a[0]||"",kh:a[1]||""}:a;});
+  if(col==="templates"&&o.dis&&Array.isArray(o.dis.advice)) o.dis.advice=o.dis.advice.map(function(a){return Array.isArray(a)?{en:a[0]||"",kh:a[1]||""}:a;}); return o;}
+function dec(col,o){if(col==="templates"&&o.proc&&Array.isArray(o.proc.steps)) o.proc.steps=o.proc.steps.map(function(a){return Array.isArray(a)?a:[a.en||"",a.kh||""];}); if(col==="templates"&&Array.isArray(o.advice)) o.advice=o.advice.map(function(a){return Array.isArray(a)?a:[a.en||"",a.kh||""];});
+  if(col==="templates"&&o.dis&&Array.isArray(o.dis.advice)) o.dis.advice=o.dis.advice.map(function(a){return Array.isArray(a)?a:[a.en||"",a.kh||""];}); return o;}
 function pushDiff(col,arr){
   if(!cloudOn()||!CLOUD.ready[col]) return;
   var map=CLOUD.synced[col], seen={}, ops=[];
@@ -3680,7 +3823,8 @@ function startSync(role){
           var mk1=PCM_KEY+"."+CLOUD.clinic, mk2=PROC_KEY+"."+CLOUD.clinic, mig=false;
           try{ if(!localStorage.getItem(mk1)){ mig=migratePcm(lib)||mig; localStorage.setItem(mk1,"1"); }
                if(!localStorage.getItem(mk2)){ mig=migrateProc(lib)||mig; localStorage.setItem(mk2,"1"); }
-               var mk3=WD_KEY+"."+CLOUD.clinic; if(!localStorage.getItem(mk3)){ mig=migrateWd(lib)||mig; localStorage.setItem(mk3,"1"); } }catch(e){}
+               var mk3=WD_KEY+"."+CLOUD.clinic; if(!localStorage.getItem(mk3)){ mig=migrateWd(lib)||mig; localStorage.setItem(mk3,"1"); }
+               var mk4=DIS_KEY+"."+CLOUD.clinic; if(!localStorage.getItem(mk4)){ mig=migrateDis(lib)||mig; localStorage.setItem(mk4,"1"); } }catch(e){}
           if(lib.length>before||mig) setTimeout(function(){pushDiff("templates",lib);},0);}
         persistLocal(); renderGroupSel(); renderList(); }
       else { stock=arr; saveStockLocal(); if(!$("stockView").hidden) renderStock(); else renderStockTile(); refreshStockBadges(); }
@@ -3761,7 +3905,13 @@ function newPatient(){
 
 /* ---------- OPD / IPD ---------- */
 function applyCare(){
-  var ipd=$("tplCare").value==="ipd"; document.body.classList.toggle("care-ipd",ipd);
+  var isIpd=$("tplCare").value==="ipd"; if(!isIpd&&SHEET_VIEW==="dis"){ SHEET_VIEW="orders"; if(PARTS.orders) fillPart(PARTS.orders); }
+  var dis=isIpd&&SHEET_VIEW==="dis", ipd=isIpd&&!dis;
+  document.body.classList.toggle("care-ipd",ipd); document.body.classList.toggle("view-dis",dis);
+  $("viewSeg").hidden=!isIpd;
+  [].forEach.call(document.querySelectorAll("#viewSeg button"),function(b){b.setAttribute("aria-pressed",String(b.dataset.v===SHEET_VIEW));});
+  if(dis){ var bits=[$("pAdmit").textContent.trim(),$("pWard").textContent.trim(),$("pBed").textContent.trim()?"Bed "+$("pBed").textContent.trim():""].filter(Boolean);
+    $("disInfo").textContent=bits.join(" · "); $("disDays").textContent=($("pDay").textContent||"").replace(/^D/,""); }
   /* inpatient orders are long: print them on A4 */
   $("pageStyle").textContent="@page{size:"+(ipd||SET.paper==="A4"?"A4":"A5")+";margin:"+(ipd||SET.paper==="A4"?"12mm":"7mm")+"}";
   if(ipd&&!$("pAdmit").textContent.trim()) $("pAdmit").textContent=$("pDate").textContent||todayStr();
@@ -3908,6 +4058,7 @@ function pickCare(c){activeCare=c; renderLib();}
 [].forEach.call(document.querySelectorAll("#qCare button"),function(b){b.onclick=function(){pickCare(b.dataset.c);};});
 [].forEach.call(document.querySelectorAll("[data-qcare]"),function(b){b.addEventListener("click",function(){pickGroup("all"); pickCare(b.dataset.qcare); openDrawer("lib");});});
 $("tplCare").addEventListener("change",applyCare);
+[].forEach.call(document.querySelectorAll("#viewSeg button"),function(b){b.onclick=function(){setView(b.dataset.v);};});
 $("saveBtn").onclick=saveCurrent; $("saveNewBtn").onclick=saveNew; $("deleteBtn").onclick=del;
 $("newBtn").onclick=newBlank; $("printBtn").onclick=function(){window.print();};
 $("settingsBtn").onclick=openSettings; $("sheetHead").onclick=openSettings; $("tileSettings").onclick=openSettings;
