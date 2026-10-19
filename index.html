@@ -177,6 +177,15 @@ table.rxt{width:100%;table-layout:fixed;border-collapse:collapse;counter-reset:r
 .usage{flex:1 1 220px;min-width:0;font:500 14.5px var(--kh);color:var(--pen);background:var(--pen-soft);border:1px solid var(--pen-soft);border-radius:5px;padding:5px 8px;line-height:1.5}
 .reauto{border:1px solid var(--rule);background:var(--paper);color:var(--muted);border-radius:5px;font:12px var(--kh);padding:4px 7px;white-space:nowrap}
 .note{font-size:12.5px;color:var(--muted)}
+.symbar{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;margin:2px 0 8px;padding:7px 9px;border:1px dashed var(--rule);border-radius:8px;background:var(--panel)}
+.symlab{font:600 12px var(--kh);color:var(--muted)}
+.symchips{display:flex;flex-wrap:wrap;gap:5px}
+.symchip{border:1px solid var(--rule);background:var(--paper);color:var(--ink);border-radius:999px;padding:3px 10px;font:500 12.5px var(--kh);cursor:pointer}
+.symchip.sug{border-color:var(--pen);color:var(--pen);font-weight:700}
+.symchip.sug::after{content:" •";color:var(--pen)}
+.symchip[aria-pressed="true"]{background:var(--pen);border-color:var(--pen);color:#fff}
+.symchip[aria-pressed="true"]::after{content:" ✓";color:#fff}
+.symhint{flex-basis:100%;font:11.5px var(--kh);color:var(--muted)}
 .addrow{margin-top:8px;width:100%;border:1.5px dashed var(--pen);background:var(--pen-soft);color:var(--pen);border-radius:6px;padding:9px;font:600 14px var(--kh)}
 .addrow:hover{background:var(--paper)}
 
@@ -629,6 +638,11 @@ body.no-vitals .vitals{display:none}
       </section>
 
       <h2>Treatment <span class="noprint" style="display:flex;gap:6px"><button class="add" id="addProc" type="button">+ ការវះកាត់តូច</button><button class="add" id="addRx" type="button">+ បន្ថែមថ្នាំ</button></span></h2>
+      <div class="symbar noprint" id="symBar">
+        <span class="symlab">ព្យាបាលរោគសញ្ញា (WHO):</span>
+        <div class="symchips" id="symChips"></div>
+        <span class="symhint" id="symHint"></span>
+      </div>
       <table class="rxt" id="rxTable">
         <colgroup><col class="c-slot"><col class="c-slot"><col class="c-slot"><col class="c-slot"><col class="c-unit"><col class="c-time"><col class="c-days"><col class="c-total"></colgroup>
         <thead><tr><th>ព្រឹក</th><th>ថ្ងៃ</th><th>ល្ងាច</th><th>យប់</th><th>ឯកតា</th><th>ពេលលេប</th><th>ចំនួនថ្ងៃ</th><th>សរុប</th></tr></thead>
@@ -687,7 +701,7 @@ body.no-vitals .vitals{display:none}
       <button type="button" id="gUp">បង្កើតគណនីថ្មី</button>
       <button type="button" id="gReset">ភ្លេចពាក្យសម្ងាត់?</button>
     </div>
-    <p class="gate-note" id="gateNote">ព័ត៌មានអ្នកជំងឺមិនត្រូវបានផ្ញើទៅ cloud ទេ។ · v16</p>
+    <p class="gate-note" id="gateNote">ព័ត៌មានអ្នកជំងឺមិនត្រូវបានផ្ញើទៅ cloud ទេ។ · v17</p>
   </form>
 </div>
 
@@ -774,7 +788,7 @@ body.no-vitals .vitals{display:none}
       <p class="hint">ឯកសារត្រូវមានជួរឈរ៖ ICD 10 · EN · KH · FR។ បញ្ជីនេះរក្សាទុកក្នុង browser ហើយប្រើសម្រាប់ស្វែងរករោគវិនិច្ឆ័យទាំងអស់។</p>
     </fieldset>
     <div class="actions">
-      <span style="margin-right:auto;font:12px var(--body);color:var(--muted)">Rx Clinic v16</span>
+      <span style="margin-right:auto;font:12px var(--body);color:var(--muted)">Rx Clinic v17</span>
       <button class="btn alt" id="settingsClose" type="button">បិទ</button>
       <button class="btn" type="submit">រក្សាទុកការកំណត់</button>
     </div>
@@ -1241,7 +1255,7 @@ function normRx(x){
   if(!Array.isArray(x.slots)) return stripForm(fromOld(x));
   var s=x.slots.slice(0,4); while(s.length<4) s.push("");
   return stripForm({drug:x.drug||"",slots:s.map(String),unit:x.unit||"",time:x.time||"",days:String(x.days||""),note:x.note||"",
-    usage:x.usage||"",total:x.total||"",timeManual:x.timeManual?1:0,vsched:x.vsched||"",vdose:x.vdose||""});
+    usage:x.usage||"",total:x.total||"",timeManual:x.timeManual?1:0,vsched:x.vsched||"",vdose:x.vdose||"",sym:x.sym||""});
 }
 function doseLine(r,lang,tot){
   if(r.unit==="vacc"&&typeof vacLine==="function") return vacLine(r,lang);
@@ -2529,6 +2543,98 @@ function readProc(){
   return (name[0]||name[1]||st.length)?{name:name,steps:st}:null;
 }
 
+/* ---------- symptomatic treatment (WHO Essential Medicines / IMCI) ---------- */
+function ptAgeYears(){
+  var t=(($("pAge")&&$("pAge").textContent)||"").toLowerCase(), n=parseFloat(t.replace(",","."));
+  if(isNaN(n)) return null;
+  if(/m|ខែ|mo/.test(t)&&!/y|ឆ្នាំ/.test(t)) return n/12;
+  if(/d|ថ្ងៃ/.test(t)&&!/y|ឆ្នាំ/.test(t)) return n/365;
+  return n;
+}
+function ptWeight(){var n=parseFloat((($("pWt")&&$("pWt").textContent)||"").replace(",","."));return isNaN(n)?null:n;}
+function mlFor(mgPerKg,wt,mgPerMl,maxMg){ if(!wt) return ""; var mg=Math.min(mgPerKg*wt,maxMg||1e9); var ml=Math.round(mg/mgPerMl*2)/2; return String(ml);}
+var SYMPTX=[
+ {id:"fever",kh:"គ្រុន",en:"Fever",kw:/fever|temperature|គ្រុន|ក្តៅខ្លួន|fièvre/,
+  adult:function(){return [{drug:"Paracetamol 500 mg",slots:["1","1","1","1"],unit:"tab",time:"prn",days:"3",note:"For fever ≥ 38 °C. Max 4 g per day."}];},
+  child:function(w){var m=mlFor(15,w,24,1000);return [{drug:"Paracetamol syrup 120 mg/5 ml",slots:[m,m,m,m],unit:"ml",time:"prn",days:"3",note:"15 mg/kg per dose, max 4 doses a day."+(w?"":" Enter weight for ml.")}];}},
+ {id:"pain",kh:"ឈឺ",en:"Pain",kw:/pain|ache|ឈឺ|douleur|sprain|injury|wound|របួស|headache/,
+  adult:function(){return [{drug:"Ibuprofen 400 mg",slots:["1","1","1",""],unit:"tab",time:"after-meals",days:"3",note:"Avoid if stomach ulcer, kidney disease, asthma, pregnancy or dengue. Use paracetamol instead."}];},
+  child:function(w){var m=mlFor(10,w,20,400);return [{drug:"Ibuprofen syrup 100 mg/5 ml",slots:[m,m,m,""],unit:"ml",time:"after-meals",days:"3",note:"10 mg/kg per dose, over 3 months old. Not in dengue or dehydration."+(w?"":" Enter weight for ml.")}];}},
+ {id:"vomit",kh:"ក្អួត",en:"Vomiting",kw:/vomit|nausea|ក្អួត|ចង្អោរ|vomissement|nausée/,
+  adult:function(){return [{drug:"Domperidone 10 mg",slots:["1","1","1",""],unit:"tab",time:"before-meals",days:"3",note:"Max 3 days. Avoid in heart disease."},{drug:"ORS (low osmolarity)",slots:["","","",""],unit:"sachet",time:"prn",days:"",note:"Small sips often."}];},
+  child:function(){return [{drug:"ORS (low osmolarity)",slots:["","","",""],unit:"sachet",time:"prn",days:"",note:"5 ml every 1–2 minutes; continue feeding. No domperidone under 12 years."}];}},
+ {id:"diarrhea",kh:"រាក",en:"Diarrhoea",kw:/diarrh|loose stool|រាក|diarrhée/,
+  adult:function(){return [{drug:"ORS (low osmolarity)",slots:["","","",""],unit:"sachet",time:"prn",days:"",note:"200–400 ml after each loose stool."}];},
+  child:function(w,age){var z=age!==null&&age<0.5?"½":"1";return [{drug:"ORS (low osmolarity)",slots:["","","",""],unit:"sachet",time:"prn",days:"",note:"Under 2 y: 50–100 ml; 2–10 y: 100–200 ml after each loose stool."},
+    {drug:"Zinc (dispersible) 20 mg",slots:[z,"0","0",""],unit:"tab",time:"",days:"10",note:"WHO: 10–14 days; 10 mg (½ tab) under 6 months."}];}},
+ {id:"cough",kh:"ក្អក",en:"Cough",kw:/cough|sputum|ក្អក|toux/,
+  adult:function(){return [{drug:"Ambroxol 30 mg",slots:["1","1","1",""],unit:"tab",time:"after-meals",days:"5",note:"Optional. Warm fluids and honey first."}];},
+  child:function(w,age){return age!==null&&age<6?[{drug:"Honey (over 1 year) / warm fluids",slots:["","","",""],unit:"",time:"prn",days:"",note:"WHO: no cough medicines for children under 6. No honey under 1 year."}]
+    :[{drug:"Ambroxol syrup 15 mg/5 ml",slots:["5","5","5",""],unit:"ml",time:"after-meals",days:"5",note:"6–12 years: 5 ml three times a day."}];}},
+ {id:"rhinitis",kh:"ហៀរសំបោរ",en:"Runny nose",kw:/runny|sneez|blocked nose|nasal|ហៀរសំបោរ|កណ្តាស់|តឹងច្រមុះ|rhume|nez/,
+  adult:function(){return [{drug:"Cetirizine 10 mg",slots:["0","0","1",""],unit:"tab",time:"bedtime",days:"5",note:"May cause drowsiness."},{drug:"Normal saline nasal spray",slots:["2","2","2",""],unit:"spray",time:"",days:"5",note:"Each nostril."}];},
+  child:function(w,age){var d=age!==null&&age<6?"2.5":"5";return [{drug:"Normal saline nasal drops",slots:["1","1","1",""],unit:"drop",time:"",days:"5",note:"Each nostril before feeds."}].concat(age!==null&&age<2?[]:[{drug:"Cetirizine syrup 5 mg/5 ml",slots:["0","0",d,""],unit:"ml",time:"bedtime",days:"5",note:"2–6 y: 2.5 ml; 6–12 y: 5 ml."}]);}},
+ {id:"itch",kh:"រមាស់",en:"Itch",kw:/itch|rash|urticar|allerg|រមាស់|កន្ទួល|អាឡែកហ្ស៊ី|prurit|démangeaison/,
+  adult:function(){return [{drug:"Cetirizine 10 mg",slots:["0","0","1",""],unit:"tab",time:"bedtime",days:"7",note:""},{drug:"Calamine lotion",slots:["1","1","1",""],unit:"apply",time:"",days:"7",note:""}];},
+  child:function(w,age){var d=age!==null&&age<6?"2.5":"5";return [{drug:"Calamine lotion",slots:["1","1","1",""],unit:"apply",time:"",days:"7",note:""}].concat(age!==null&&age<2?[]:[{drug:"Cetirizine syrup 5 mg/5 ml",slots:["0","0",d,""],unit:"ml",time:"bedtime",days:"7",note:"2–6 y: 2.5 ml; 6–12 y: 5 ml."}]);}},
+ {id:"heartburn",kh:"ឆេះទ្រូង",en:"Heartburn",kw:/heartburn|epigastr|reflux|gastr|ឆេះទ្រូង|ឈឺក្រពះ|brûlure|pyrosis/,
+  adult:function(){return [{drug:"Antacid suspension",slots:["10","10","10","10"],unit:"ml",time:"prn",days:"",note:"After meals and at bedtime."},{drug:"Omeprazole 20 mg",slots:["1","0","0",""],unit:"cap",time:"before-breakfast",days:"14",note:""}];},
+  child:function(){return [];}},
+ {id:"colic",kh:"ចុកពោះ",en:"Cramps",kw:/cramp|colic|abdominal pain|ចុកពោះ|ឈឺពោះ|colique/,
+  adult:function(){return [{drug:"Hyoscine butylbromide 10 mg",slots:["1","1","1",""],unit:"tab",time:"prn",days:"3",note:"Not for undiagnosed severe pain."}];},
+  child:function(){return [];}},
+ {id:"constip",kh:"ទល់លាមក",en:"Constipation",kw:/constipat|hard stool|ទល់លាមក/,
+  adult:function(){return [{drug:"Lactulose 10 g/15 ml",slots:["0","0","15",""],unit:"ml",time:"bedtime",days:"7",note:""}];},
+  child:function(w,age){var d=age!==null&&age<5?"5":"10";return [{drug:"Lactulose 10 g/15 ml",slots:["0","0",d,""],unit:"ml",time:"bedtime",days:"7",note:"1–5 y: 5 ml; 5–12 y: 10 ml."}];}},
+ {id:"wheeze",kh:"ហឺត",en:"Wheeze",kw:/wheez|asthma|breathless|ហឺត|ហត់|sifflement|dyspnée/,
+  adult:function(){return [{drug:"Salbutamol inhaler 100 mcg",slots:["2","2","2","2"],unit:"puff",time:"prn",days:"",note:"With spacer."}];},
+  child:function(){return [{drug:"Salbutamol inhaler 100 mcg",slots:["2","2","2","2"],unit:"puff",time:"prn",days:"",note:"With spacer (and mask under 4 years)."}];}},
+ {id:"throat",kh:"ឈឺក",en:"Sore throat",kw:/sore throat|pharyng|tonsil|ឈឺបំពង់ក|gorge/,
+  adult:function(){return [{drug:"Throat lozenges",slots:["1","1","1","1"],unit:"lozenge",time:"",days:"5",note:"Gargle with warm salt water too."}];},
+  child:function(w,age){return age!==null&&age<6?[]:[{drug:"Throat lozenges",slots:["1","1","1",""],unit:"lozenge",time:"",days:"5",note:"Over 6 years only."}];}}
+];
+function symContext(){
+  var cur=lib.find(function(x){return x.id===currentId;});
+  return fold([cur?hay(cur):"",$("fCo").textContent,$("fDx").textContent,$("fHo").textContent].join(" "));
+}
+function renderSymChips(){
+  var box=$("symChips"); if(!box) return; box.textContent="";
+  var ctx=symContext(), age=ptAgeYears(), child=age!==null&&age<12, tags={};
+  rxItems().forEach(function(tb){if(tb.dataset.sym) tags[tb.dataset.sym]=1;});
+  SYMPTX.forEach(function(sx){
+    var b=mk("button","symchip"); b.type="button"; b.textContent=curLang()==="en"?sx.en:sx.kh; b.title=sx.en;
+    if(sx.kw.test(ctx)) b.classList.add("sug");
+    b.setAttribute("aria-pressed",String(!!tags[sx.id]));
+    b.onclick=function(){toggleSym(sx);};
+    box.appendChild(b);
+  });
+  var w=ptWeight();
+  $("symHint").textContent="• = អាចកើតមានក្នុងជំងឺនេះ · ចុចម្តងបន្ថែមថ្នាំ ចុចម្តងទៀតដកចេញ · "+(child?("ដូសកុមារ"+(w?" (ទម្ងន់ "+w+" kg)":" — សូមដាក់ទម្ងន់ ដើម្បីគណនា ml")):"ដូសមនុស្សពេញវ័យ (ដាក់អាយុ < 12 សម្រាប់ដូសកុមារ)");
+}
+function toggleSym(sx){
+  var rows=rxItems().filter(function(tb){return tb.dataset.sym===sx.id;});
+  if(rows.length){rows.forEach(function(tb){tb.remove();}); renderSymChips(); return;}
+  var age=ptAgeYears(), child=age!==null&&age<12, list=child?sx.child(ptWeight(),age):sx.adult();
+  /* NSAIDs are unsafe in dengue, pregnancy, gastritis/ulcer and kidney disease — use paracetamol instead */
+  if(sx.id==="pain"&&/dengue|គ្រុនឈាម|pregnan|ផ្ទៃពោះ|grossesse|gastrit|ulcer|ក្រពះ|kidney|renal|តម្រងនោម/.test(symContext())){
+    list=SYMPTX[0][child?"child":"adult"](ptWeight(),age).map(function(r){r.note="Paracetamol instead of NSAID (dengue / pregnancy / stomach / kidney). "+r.note;return r;});
+    say("ប្រើ Paracetamol ជំនួស Ibuprofen ព្រោះជំងឺនេះមិនសមនឹង NSAID។");
+  }
+  if(!list.length){say((curLang()==="en"?sx.en:sx.kh)+": មិនណែនាំថ្នាំសម្រាប់កុមារក្នុងអាយុនេះ — ផ្តល់ការណែនាំ ឬពិគ្រោះគ្រូពេទ្យ។",true); return;}
+  var added=0;
+  list.forEach(function(r){
+    var gname=fold(r.drug).split(/\s+/)[0];
+    var same=rxItems().filter(function(tb){return fold(tb.querySelector(".drug").textContent).indexOf(gname)>-1;});
+    if(same.length){
+      /* a child gets the syrup instead of an adult tablet already on the sheet */
+      var adultTab=same.filter(function(tb){var u=tb.querySelector("select.unit").value;return (u==="tab"||u==="cap")&&r.unit==="ml";});
+      if(child&&adultTab.length){adultTab.forEach(function(tb){tb.remove();});} else {same.forEach(function(tb){tb.dataset.sym=sx.id;}); return;}
+    }
+    r.sym=sx.id; $("rxTable").appendChild(rxRow(r)); added++;
+  });
+  renderSymChips();
+}
+
 /* ---------- medicine table ---------- */
 function editable(cls,ph,text){var d=mk("div",cls);d.contentEditable="true";d.dataset.ph=ph;d.textContent=text||"";return d;}
 function labelSelects(root,lang){
@@ -2545,7 +2651,7 @@ function rowData(tb){
     note:tb.querySelector(".note").textContent.trim(),
     total:tb.dataset.totalManual?tb.querySelector("input.totalin").value.trim():"",
     usage:tb.dataset.usageManual?tb.querySelector(".usage").textContent.trim():"",
-    timeManual:tb.dataset.timeManual?1:0,
+    timeManual:tb.dataset.timeManual?1:0, sym:tb.dataset.sym||"",
     vsched:tb.querySelector("select.vsched")?tb.querySelector("select.vsched").value:"",
     vdose:tb.querySelector("select.vdose")?tb.querySelector("select.vdose").value:""};
 }
@@ -2564,7 +2670,7 @@ function updatePrint(tb){
 }
 function rxRow(r){
   r=normRx(r);
-  var tb=mk("tbody","rxitem");
+  var tb=mk("tbody","rxitem"); if(r.sym) tb.dataset.sym=r.sym;
   /* row 1: number, name, delete */
   var tr1=mk("tr","r-name"), td1=mk("td"); td1.colSpan=8;
   td1.className="namecell";
@@ -2575,7 +2681,7 @@ function rxRow(r){
   var nb=mk("button","notebtn noprint"); nb.type="button"; nb.textContent="+ ចំណាំ";
   nb.onclick=function(){tb.classList.add("has-note"); tb.querySelector(".note").focus();}; wrap.appendChild(nb);
   var x=mk("button","del noprint"); x.type="button"; x.textContent="✕ លុប"; x.title="លុបថ្នាំនេះ";
-  x.onclick=function(){tb.remove();}; wrap.appendChild(x);
+  x.onclick=function(){tb.remove(); renderSymChips();}; wrap.appendChild(x);
   td1.appendChild(wrap);
   var sg=mk("div","subs noprint"); sg.hidden=true; td1.appendChild(sg);
   var ac=mk("div","ac noprint"); ac.hidden=true; td1.appendChild(ac);
@@ -2641,6 +2747,7 @@ function rxItems(){return [].slice.call($("rxTable").querySelectorAll("tbody.rxi
 /* ---------- sheet ---------- */
 function fillList(ul,arr){ul.textContent="";(arr.length?arr:[""]).forEach(function(a){var li=mk("li");li.textContent=a;ul.appendChild(li);});}
 function fillSheet(t){
+  setTimeout(renderSymChips,0);
   $("fCo").textContent=t.co; $("fHo").textContent=t.ho; $("fDx").textContent=t.dx; $("fInv").textContent=t.inv;
   $("fDxKh").textContent=t.dxKh||""; $("fDxFr").textContent=t.dxFr||"";
   rxItems().forEach(function(tb){tb.remove();});
@@ -2681,6 +2788,7 @@ function setLang(l){
   [].forEach.call(document.querySelectorAll(".seg button"),function(b){b.setAttribute("aria-pressed",String(b.dataset.lang===l));});
   labelSelects(document,l);
   rxItems().forEach(updatePrint);
+  if(typeof renderSymChips==="function") renderSymChips();
   try{localStorage.setItem(LANG_KEY,l);}catch(e){}
 }
 
@@ -3064,6 +3172,7 @@ loadPatient();
 PT_TEXT.forEach(function(id){$(id).addEventListener("input",savePatient);});
 PT_VITAL.forEach(function(id){$(id).addEventListener("input",function(){checkVitals();savePatient();});});
 $("newPatientBtn").onclick=newPatient;
+["pAge","pWt","fCo","fDx"].forEach(function(id){$(id).addEventListener("input",function(){clearTimeout(window.__symT);window.__symT=setTimeout(renderSymChips,250);});});
 $("addProc").onclick=function(){
   if($("procSec").hidden){
     var cur=lib.find(function(x){return x.id===currentId;});
