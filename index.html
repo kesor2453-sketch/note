@@ -207,6 +207,9 @@ footer{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;
 .signbtn{margin-top:6px;border:1px dashed var(--rule);background:none;color:var(--muted);border-radius:6px;padding:3px 9px;font:12px var(--kh)}
 .appt{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;margin-top:6px}
 .appt-l{font:600 11px var(--kh);color:var(--muted)}
+.appt-on{display:flex;align-items:center;cursor:pointer}
+.appt-on input{width:16px;height:16px;margin:0}
+.appt.off .appt-l,.appt.off input[type=date],.appt.off .appt-txt,.appt.off .reauto{opacity:.4;text-decoration:line-through}
 .appt input{border:1px solid var(--rule);border-radius:6px;padding:4px 6px;font:14px var(--body);color:var(--pen);background:var(--panel)}
 .appt input.manual{background:var(--warn-bg);border-color:var(--warn)}
 .appt-txt{font:600 14px var(--kh);color:var(--pen)}
@@ -215,7 +218,7 @@ footer{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;
 .vacrow{display:flex;flex-wrap:wrap;gap:4px 6px;align-items:center;font:12.5px var(--kh);color:var(--muted)}
 .vacrow select{width:auto!important;max-width:100%;height:30px}
 .vacrow .vnext{color:var(--pen);font-weight:600}
-.sign .dr{font:600 13px var(--kh);margin-top:3px;min-height:1em}
+.sign .dr{font:700 14px var(--kh);margin-top:4px;min-height:1em;color:var(--ink)}
 .sign small{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
 [contenteditable]{border-radius:2px}
 [contenteditable]:hover{background:rgba(31,63,158,.05)}
@@ -447,7 +450,7 @@ body.no-vitals .vitals{display:none}
   .sign .line{height:46px!important}
   .sign .line img{max-height:44px}
   .appt input{display:none} .appt-txt{font-size:12px} .appt-l{font-size:9.5px}
-  .appt:not(.has){display:none}
+  .appt:not(.has),.appt.off{display:none!important}
   .rxt tr.r-vac{display:none}
   .vbox input::placeholder,.rxt input::placeholder{color:transparent}
   .proc{border:0;background:none;padding:0;margin-top:4px}
@@ -648,7 +651,8 @@ body.no-vitals .vitals{display:none}
         <div class="followup">
           <div class="en" id="fFollowEn" contenteditable="true" data-ph="Follow-up"></div>
           <div class="kh" id="fFollowKh" contenteditable="true" data-ph="ការណាត់ជួប"></div>
-          <div class="appt">
+          <div class="appt" id="apptBox">
+            <label class="appt-on noprint" title="ដាក់ ឬមិនដាក់ថ្ងៃណាត់លើវេជ្ជបញ្ជា"><input type="checkbox" id="apptOn" checked></label>
             <span class="appt-l">ថ្ងៃណាត់ · Appointment</span>
             <input type="date" id="apptDate" aria-label="Appointment date">
             <span class="appt-txt" id="apptTxt"></span>
@@ -656,8 +660,9 @@ body.no-vitals .vitals{display:none}
           </div>
         </div>
         <div class="sign">
+          <small>Doctor's signature · ហត្ថលេខា</small>
           <div class="line"><img id="sigImg" alt="" hidden></div>
-          <div class="dr" id="hDoctor"></div><small>Doctor's signature</small>
+          <div class="dr" id="hDoctor"></div>
           <button class="signbtn noprint" id="signBtn" type="button">✍ ហត្ថលេខាឌីជីថល</button>
         </div>
       </footer>
@@ -682,7 +687,7 @@ body.no-vitals .vitals{display:none}
       <button type="button" id="gUp">បង្កើតគណនីថ្មី</button>
       <button type="button" id="gReset">ភ្លេចពាក្យសម្ងាត់?</button>
     </div>
-    <p class="gate-note" id="gateNote">ព័ត៌មានអ្នកជំងឺមិនត្រូវបានផ្ញើទៅ cloud ទេ។ · v14</p>
+    <p class="gate-note" id="gateNote">ព័ត៌មានអ្នកជំងឺមិនត្រូវបានផ្ញើទៅ cloud ទេ។ · v16</p>
   </form>
 </div>
 
@@ -695,7 +700,18 @@ body.no-vitals .vitals{display:none}
       <label class="f">ឈ្មោះគ្លីនិក<input id="sName" type="text" placeholder="ឧ. គ្លីនិកសុខភាព ..."></label>
       <label class="f">អាសយដ្ឋាន<input id="sAddr" type="text" placeholder="ផ្ទះលេខ, ផ្លូវ, សង្កាត់, ខណ្ឌ, រាជធានី/ខេត្ត"></label>
       <label class="f">លេខទូរស័ព្ទ<input id="sPhone" type="text" inputmode="tel" placeholder="012 345 678"></label>
-      <label class="f">ឈ្មោះវេជ្ជបណ្ឌិត (ក្រោមហត្ថលេខា)<input id="sDoctor" type="text" placeholder="Dr. ..."></label>
+    </fieldset>
+    <fieldset id="sigSet">
+      <legend>✍ ហត្ថលេខាឌីជីថល · Signature</legend>
+      <canvas id="sigPad" width="600" height="200" aria-label="គូរហត្ថលេខានៅទីនេះ"></canvas>
+      <div class="row">
+        <button class="ghost" id="sigClear" type="button">លុប</button>
+        <label class="ghost" for="sigFile" style="cursor:pointer">Upload រូបហត្ថលេខា</label>
+        <input id="sigFile" type="file" accept="image/*" hidden>
+        <label><input type="checkbox" id="sSigOn"> ដាក់លើវេជ្ជបញ្ជា</label>
+      </div>
+      <label class="f">ឈ្មោះវេជ្ជបណ្ឌិត (បង្ហាញនៅក្រោមហត្ថលេខា)<input id="sDoctor" type="text" placeholder="Dr. ..."></label>
+      <p class="hint">គូរដោយម្រាមដៃ ឬ mouse ក្នុងប្រអប់ ឬ upload រូបថតហត្ថលេខា (ផ្ទៃសល្អជាង)។ ហត្ថលេខារក្សាទុកតែក្នុងឧបករណ៍នេះ មិនផ្ញើទៅ cloud ទេ។ ចុច “រក្សាទុកការកំណត់” ដើម្បីប្រើ។</p>
     </fieldset>
     <fieldset>
       <legend>ក្រដាសបោះពុម្ព · Printing</legend>
@@ -742,17 +758,6 @@ body.no-vitals .vitals{display:none}
       </div>
       <p class="hint">គំរូ ស្តុក និងការកំណត់ ធ្វើសមកាលកម្មរវាងបុគ្គលិកទាំងអស់។ ព័ត៌មានអ្នកជំងឺ និងបញ្ជី ICD-10 មិនផ្ញើទៅ cloud ទេ។ ពេលគ្មានអ៊ីនធឺណិត ការកែនៅតែរក្សាទុក ហើយផ្ញើពេលមានអ៊ីនធឺណិតវិញ។</p>
     </fieldset>
-    <fieldset id="sigSet">
-      <legend>✍ ហត្ថលេខាឌីជីថល · Signature</legend>
-      <canvas id="sigPad" width="600" height="200" aria-label="គូរហត្ថលេខានៅទីនេះ"></canvas>
-      <div class="row">
-        <button class="ghost" id="sigClear" type="button">លុប</button>
-        <label class="ghost" for="sigFile" style="cursor:pointer">Upload រូបហត្ថលេខា</label>
-        <input id="sigFile" type="file" accept="image/*" hidden>
-        <label><input type="checkbox" id="sSigOn"> ដាក់លើវេជ្ជបញ្ជា</label>
-      </div>
-      <p class="hint">គូរដោយម្រាមដៃ ឬ mouse ក្នុងប្រអប់ ឬ upload រូបថតហត្ថលេខា (ផ្ទៃសល្អជាង)។ ហត្ថលេខារក្សាទុកតែក្នុងឧបករណ៍នេះ មិនផ្ញើទៅ cloud ទេ។ ចុច “រក្សាទុកការកំណត់” ដើម្បីប្រើ។</p>
-    </fieldset>
     <fieldset>
       <legend>ទិន្នន័យ · Data</legend>
       <div class="row">
@@ -769,7 +774,7 @@ body.no-vitals .vitals{display:none}
       <p class="hint">ឯកសារត្រូវមានជួរឈរ៖ ICD 10 · EN · KH · FR។ បញ្ជីនេះរក្សាទុកក្នុង browser ហើយប្រើសម្រាប់ស្វែងរករោគវិនិច្ឆ័យទាំងអស់។</p>
     </fieldset>
     <div class="actions">
-      <span style="margin-right:auto;font:12px var(--body);color:var(--muted)">Rx Clinic v14</span>
+      <span style="margin-right:auto;font:12px var(--body);color:var(--muted)">Rx Clinic v16</span>
       <button class="btn alt" id="settingsClose" type="button">បិទ</button>
       <button class="btn" type="submit">រក្សាទុកការកំណត់</button>
     </div>
@@ -3072,6 +3077,9 @@ padInit(); loadSig();
 $("signBtn").onclick=function(){openSettings(); setTimeout(function(){$("sigSet").scrollIntoView({block:"start",behavior:"smooth"});},60);};
 $("apptDate").addEventListener("change",function(){if(this.value) this.dataset.manual="1"; else delete this.dataset.manual; showAppt();});
 $("apptAuto").onclick=function(){delete $("apptDate").dataset.manual; computeAppt();};
+(function(){var on=true; try{on=localStorage.getItem("rxTemplates.apptOn")!=="0";}catch(e){}
+  $("apptOn").checked=on; $("apptBox").classList.toggle("off",!on);
+  $("apptOn").addEventListener("change",function(){$("apptBox").classList.toggle("off",!this.checked); try{localStorage.setItem("rxTemplates.apptOn",this.checked?"1":"0");}catch(e){}});})();
 $("fFollowEn").addEventListener("input",computeAppt); $("fFollowKh").addEventListener("input",computeAppt);
 $("pDate").addEventListener("input",function(){rxItems().forEach(updatePrint); computeAppt();});
 var qsT; $("tplName").addEventListener("input",function(){clearTimeout(qsT);qsT=setTimeout(quickSearch,ICD.length>5000?200:40);});
