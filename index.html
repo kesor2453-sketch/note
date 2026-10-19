@@ -181,6 +181,18 @@ table.rxt{width:100%;table-layout:fixed;border-collapse:collapse;counter-reset:r
 .addrow{margin-top:8px;width:100%;border:1.5px dashed var(--pen);background:var(--pen-soft);color:var(--pen);border-radius:6px;padding:9px;font:600 14px var(--kh)}
 .addrow:hover{background:var(--paper)}
 
+.proc{border:1px solid var(--rule);border-left:3px solid var(--pen);border-radius:6px;padding:2px 12px 8px;margin-top:10px;background:var(--panel)}
+.proc h2{margin-top:8px}
+.proc-tools{display:flex;gap:8px;align-items:center;font:12px var(--kh);color:var(--muted);text-transform:none;letter-spacing:0}
+.proc-name{display:flex;flex-wrap:wrap;gap:2px 12px;font:600 15px var(--kh);color:var(--pen)}
+.proc-name .en{font-family:var(--body)}
+body.lang-both .proc-name .kh::before{content:"· ";color:var(--muted)}
+.proc-cols{display:grid;grid-template-columns:1fr 1fr;gap:4px 18px;margin-top:4px}
+body.lang-en .proc-cols,body.lang-kh .proc-cols{grid-template-columns:1fr}
+.proc-steps{margin:0;padding-left:20px;font-size:13.5px;line-height:1.5}
+.proc-steps.kh{font-family:var(--kh);font-size:13px}
+.proc-steps li{margin:2px 0}
+@media (max-width:760px){.proc-cols{grid-template-columns:1fr}}
 ul.advice{margin:0;padding-left:18px}
 ul.advice li{margin:3px 0}
 ul.advice.kh{font-family:var(--kh);font-size:14.5px;line-height:1.7}
@@ -190,8 +202,20 @@ ul.advice.kh{font-family:var(--kh);font-size:14.5px;line-height:1.7}
 footer{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-top:30px;flex-wrap:wrap}
 .followup{font-size:13px;color:var(--muted);display:flex;flex-direction:column;gap:2px;min-width:0}
 .followup .kh{font-family:var(--kh)}
-.sign{text-align:center;min-width:180px}
-.sign .line{border-bottom:1px solid var(--ink);height:40px}
+.sign{text-align:center;min-width:200px;display:flex;flex-direction:column;align-items:center}
+.sign .line{border-bottom:1px solid var(--ink);height:70px;width:100%;position:relative}
+.sign .line img{position:absolute;left:50%;bottom:2px;transform:translateX(-50%);max-height:66px;max-width:100%;object-fit:contain}
+.signbtn{margin-top:6px;border:1px dashed var(--rule);background:none;color:var(--muted);border-radius:6px;padding:3px 9px;font:12px var(--kh)}
+.appt{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;margin-top:6px}
+.appt-l{font:600 11px var(--kh);color:var(--muted)}
+.appt input{border:1px solid var(--rule);border-radius:6px;padding:4px 6px;font:14px var(--body);color:var(--pen);background:var(--panel)}
+.appt input.manual{background:var(--warn-bg);border-color:var(--warn)}
+.appt-txt{font:600 14px var(--kh);color:var(--pen)}
+#sigPad{width:100%;max-width:600px;aspect-ratio:3/1;height:auto;border:1.5px dashed var(--rule);border-radius:8px;background:#fff;touch-action:none;cursor:crosshair}
+.rxt tr.r-vac td{padding:2px 2px 4px}
+.vacrow{display:flex;flex-wrap:wrap;gap:4px 6px;align-items:center;font:12.5px var(--kh);color:var(--muted)}
+.vacrow select{width:auto!important;max-width:100%;height:30px}
+.vacrow .vnext{color:var(--pen);font-weight:600}
 .sign .dr{font:600 13px var(--kh);margin-top:3px;min-height:1em}
 .sign small{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
 [contenteditable]{border-radius:2px}
@@ -287,7 +311,7 @@ ul.advice{font-size:14px}
 ul.advice.kh{font-size:13.5px;line-height:1.55}
 .redflag{margin-top:8px;padding:6px 10px;font-size:13px;gap:2px}
 footer{margin-top:14px}
-.sign .line{height:30px}
+.sign .line{height:64px}
 @media (max-width:760px){
   .patient.p-id{grid-template-columns:1fr 1fr 1fr}
   .patient.p-id .field:first-child{grid-column:1/-1}
@@ -383,7 +407,7 @@ body.no-vitals .vitals{display:none}
   body.lang-en .advice-cols,body.lang-kh .advice-cols{grid-template-columns:1fr!important}
   .redflag{font-size:10.5px;padding:4px 8px;margin-top:5px}
   footer{margin-top:8px} .followup{font-size:10.5px}
-  .sign .line{height:24px}
+  .sign .line{height:48px}
   .stk,.subs,.ac,.notebtn{display:none!important}
   .rxt tr.r-use{display:none}
   .namewrap{flex-wrap:wrap;column-gap:10px;row-gap:0}
@@ -397,8 +421,18 @@ body.no-vitals .vitals{display:none}
   ul.advice,ul.advice.kh{font-size:10px!important;line-height:1.35!important}
   ul.advice li{margin:0!important}
   .redflag{font-size:9.5px!important;padding:3px 7px!important;margin-top:4px!important;line-height:1.35}
-  footer{margin-top:4px!important} .followup{font-size:9.5px!important}
-  .sign .line{height:18px!important}
+  footer{margin-top:12px!important} .followup{font-size:9.5px!important}
+  .sign .line{height:46px!important}
+  .sign .line img{max-height:44px}
+  .appt input{display:none} .appt-txt{font-size:12px} .appt-l{font-size:9.5px}
+  .appt:not(.has){display:none}
+  .rxt tr.r-vac{display:none}
+  .vbox input::placeholder,.rxt input::placeholder{color:transparent}
+  .proc{border:0;background:none;padding:0;margin-top:4px}
+  .proc h2{margin-top:4px!important}
+  .proc-name{font-size:12px}
+  body:not(.print-proc) .proc-cols{display:none}
+  .proc-steps{font-size:10px!important;line-height:1.35}
   header{padding-bottom:3px} .clinic-sub{font-size:10px}
   .patient.p-id{grid-template-columns:2fr .6fr .7fr .9fr 1.2fr 1.6fr!important}
   .patient.p-id .field:first-child{grid-column:auto!important}
@@ -558,7 +592,18 @@ body.no-vitals .vitals{display:none}
         <div class="field wide"><label>Ix</label><div id="fInv" contenteditable="true" data-ph="Investigations"></div></div>
       </section>
 
-      <h2>Treatment <button class="add noprint" id="addRx" type="button">+ បន្ថែមថ្នាំ</button></h2>
+      <section class="proc" id="procSec" hidden>
+        <h2><span>Minor surgery <span class="kh">· ការវះកាត់តូច</span></span>
+          <span class="noprint proc-tools"><label><input type="checkbox" id="procPrint"> បោះពុម្ពជំហាន</label>
+          <button class="add" id="procRemove" type="button">✕ ដកចេញ</button></span></h2>
+        <div class="proc-name"><span class="en" id="procNameEn" contenteditable="true" data-ph="Procedure"></span><span class="kh" id="procNameKh" contenteditable="true" data-ph="ឈ្មោះវិធីសាស្ត្រ"></span></div>
+        <div class="proc-cols">
+          <ol class="proc-steps en" id="procEn" contenteditable="true"></ol>
+          <ol class="proc-steps kh" id="procKh" contenteditable="true"></ol>
+        </div>
+      </section>
+
+      <h2>Treatment <span class="noprint" style="display:flex;gap:6px"><button class="add" id="addProc" type="button">+ ការវះកាត់តូច</button><button class="add" id="addRx" type="button">+ បន្ថែមថ្នាំ</button></span></h2>
       <table class="rxt" id="rxTable">
         <colgroup><col class="c-slot"><col class="c-slot"><col class="c-slot"><col class="c-slot"><col class="c-unit"><col class="c-time"><col class="c-days"><col class="c-total"></colgroup>
         <thead><tr><th>ព្រឹក</th><th>ថ្ងៃ</th><th>ល្ងាច</th><th>យប់</th><th>ឯកតា</th><th>ពេលលេប</th><th>ចំនួនថ្ងៃ</th><th>សរុប</th></tr></thead>
@@ -581,8 +626,18 @@ body.no-vitals .vitals{display:none}
         <div class="followup">
           <div class="en" id="fFollowEn" contenteditable="true" data-ph="Follow-up"></div>
           <div class="kh" id="fFollowKh" contenteditable="true" data-ph="ការណាត់ជួប"></div>
+          <div class="appt">
+            <span class="appt-l">ថ្ងៃណាត់ · Appointment</span>
+            <input type="date" id="apptDate" aria-label="Appointment date">
+            <span class="appt-txt" id="apptTxt"></span>
+            <button class="reauto noprint" id="apptAuto" type="button" hidden>↺ ស្វ័យប្រវត្តិ</button>
+          </div>
         </div>
-        <div class="sign"><div class="line"></div><div class="dr" id="hDoctor"></div><small>Doctor's signature</small></div>
+        <div class="sign">
+          <div class="line"><img id="sigImg" alt="" hidden></div>
+          <div class="dr" id="hDoctor"></div><small>Doctor's signature</small>
+          <button class="signbtn noprint" id="signBtn" type="button">✍ ហត្ថលេខាឌីជីថល</button>
+        </div>
       </footer>
     </main>
   </div>
@@ -644,6 +699,17 @@ body.no-vitals .vitals{display:none}
       </div>
       <p class="hint">គំរូ ស្តុក និងការកំណត់ ធ្វើសមកាលកម្មរវាងបុគ្គលិកទាំងអស់។ ព័ត៌មានអ្នកជំងឺ និងបញ្ជី ICD-10 មិនផ្ញើទៅ cloud ទេ។ ពេលគ្មានអ៊ីនធឺណិត ការកែនៅតែរក្សាទុក ហើយផ្ញើពេលមានអ៊ីនធឺណិតវិញ។</p>
     </fieldset>
+    <fieldset id="sigSet">
+      <legend>✍ ហត្ថលេខាឌីជីថល · Signature</legend>
+      <canvas id="sigPad" width="600" height="200" aria-label="គូរហត្ថលេខានៅទីនេះ"></canvas>
+      <div class="row">
+        <button class="ghost" id="sigClear" type="button">លុប</button>
+        <label class="ghost" for="sigFile" style="cursor:pointer">Upload រូបហត្ថលេខា</label>
+        <input id="sigFile" type="file" accept="image/*" hidden>
+        <label><input type="checkbox" id="sSigOn"> ដាក់លើវេជ្ជបញ្ជា</label>
+      </div>
+      <p class="hint">គូរដោយម្រាមដៃ ឬ mouse ក្នុងប្រអប់ ឬ upload រូបថតហត្ថលេខា (ផ្ទៃសល្អជាង)។ ហត្ថលេខារក្សាទុកតែក្នុងឧបករណ៍នេះ មិនផ្ញើទៅ cloud ទេ។ ចុច “រក្សាទុកការកំណត់” ដើម្បីប្រើ។</p>
+    </fieldset>
     <fieldset>
       <legend>ទិន្នន័យ · Data</legend>
       <div class="row">
@@ -700,7 +766,7 @@ function T(id,group,name,co,dx,inv,rx,advice,red,follow){
     rx:rx.map(function(r){return Array.isArray(r)?{drug:r[0],dose:r[1],days:r[2],note:r[3]||""}:r;}),
     advice:advice,red:red,follow:follow};
 }
-var PCM=["Tab. Paracetamol 500 mg","1–2 tab every 6 h if needed","PRN","Max 8 tablets (4 g) per day."];
+var PCM=["Tab. Paracetamol 500 mg","1 tab every 6 h if needed","PRN","Max 8 tablets (4 g) per day."];
 var ABX_KH=["If antibiotics are given, finish the full course.","ប្រសិនបើបានថ្នាំអង់ទីប៊ីយ៉ូទិក សូមលេបឱ្យអស់តាមវេជ្ជបញ្ជា ទោះបីធូរស្បើយហើយក៏ដោយ។"];
 var WATER=["Drink plenty of water, 2–3 litres a day.","ផឹកទឹកឱ្យបានច្រើន ២–៣ លីត្រក្នុងមួយថ្ងៃ។"];
 var REST=["Rest well.","សម្រាកឱ្យបានគ្រប់គ្រាន់។"];
@@ -729,7 +795,7 @@ T("d-dengue","general","Dengue fever","Fever, headache, body ache","Dengue fever
 /* Respiratory */
 T("d-cough","resp","Productive cough","Productive cough","Acute bronchitis (J20.9)","Chest X-ray if pneumonia suspected",
  [["Syp. Ambroxol 30 mg/5 ml","10 ml  1 + 1 + 1 after meals","× 5 days","Ivy leaf syrup may be used instead."],
-  ["Tab. Paracetamol 500 mg","1–2 tab every 6 h if needed","PRN","For fever or pain. Max 8 tablets (4 g) per day."],
+  ["Tab. Paracetamol 500 mg","1 tab every 6 h if needed","PRN","For fever or pain. Max 8 tablets (4 g) per day."],
   ["Tab. Cetirizine 10 mg","0 + 0 + 1","× 5 days","Only if runny nose or sneezing. May cause drowsiness."],
   ["Steam inhalation","2 times daily","if needed",""],
   ["Cap. Amoxicillin 500 mg","1 + 1 + 1","× 5–7 days","Only if bacterial signs: fever > 3 days, purulent sputum with fever, abnormal chest sounds. Penicillin allergy: Tab. Azithromycin 500 mg 1 + 0 + 0 × 3 days."]],
@@ -868,7 +934,7 @@ T("d-backpain","msk","Low back pain","Low back pain","Low back pain (M54.5)","",
 
 /* Neurology */
 T("d-headache","neuro","Tension headache","Headache","Tension-type headache (G44.2)","",
- [["Tab. Paracetamol 500 mg","1–2 tab every 6 h if needed","PRN","Do not use painkillers more than 10 days a month."]],
+ [["Tab. Paracetamol 500 mg","1 tab every 6 h if needed","PRN","Do not use painkillers more than 10 days a month."]],
  [["Sleep 7–8 hours. Eat and drink regularly.","គេងឱ្យបាន ៧–៨ ម៉ោង។ ញ៉ាំ និងផឹកឱ្យទៀងទាត់។"],
   ["Take breaks from screens. Stretch your neck and shoulders.","សម្រាកពីអេក្រង់។ ធ្វើលំហាត់ពន្លាតក និងស្មា។"],
   ["Reduce stress and caffeine.","កាត់បន្ថយភាពតានតឹង និងកាហ្វេអ៊ីន។"]],
@@ -1126,9 +1192,10 @@ function normRx(x){
   if(!Array.isArray(x.slots)) return stripForm(fromOld(x));
   var s=x.slots.slice(0,4); while(s.length<4) s.push("");
   return stripForm({drug:x.drug||"",slots:s.map(String),unit:x.unit||"",time:x.time||"",days:String(x.days||""),note:x.note||"",
-    usage:x.usage||"",total:x.total||"",timeManual:x.timeManual?1:0});
+    usage:x.usage||"",total:x.total||"",timeManual:x.timeManual?1:0,vsched:x.vsched||"",vdose:x.vdose||""});
 }
 function doseLine(r,lang,tot){
+  if(r.unit==="vacc"&&typeof vacLine==="function") return vacLine(r,lang);
   var u=unitOf(r.unit), en=lang==="en", out=[], parts=[];
   r.slots.forEach(function(v,i){
     v=String(v||"").trim(); if(!num(v)) return;
@@ -1221,7 +1288,7 @@ T("n-heat","general","Heat exhaustion","Weakness, dizziness, sweating in hot wea
 
 /* Respiratory */
 T("n-flu","resp","Influenza","Fever, body ache, cough","Influenza, virus not identified (J11.1)","",
- [R("Paracetamol 500 mg","tab","1–2-1–2-1–2-1–2","prn","","Max 8 tablets (4 g) per day."),R("Cetirizine 10 mg","tab","0-0-1","bedtime","5","For runny nose.")],
+ [R("Paracetamol 500 mg","tab","1-1-1-1","prn","","Max 8 tablets (4 g) per day."),R("Cetirizine 10 mg","tab","0-0-1","bedtime","5","For runny nose.")],
  [WATER,REST,["Stay home and wear a mask to protect others.","នៅផ្ទះ និងពាក់ម៉ាស់ ដើម្បីការពារអ្នកដទៃ។"],
   ["Antibiotics do not treat influenza.","ថ្នាំអង់ទីប៊ីយ៉ូទិកមិនព្យាបាលជំងឺផ្តាសាយធំទេ។"]],
  ["Difficulty breathing, chest pain, confusion, fever more than 3 days, or getting better then worse.",
@@ -1295,7 +1362,7 @@ T("n-hemorrhoid","gi","Haemorrhoids","Anal pain, bleeding with stool","Haemorrho
 
 /* Genitourinary */
 T("n-pyelo","gu","Kidney infection (mild)","Fever, back pain, burning urine","Acute pyelonephritis (N10)","Urinalysis, urine culture, CBC",
- [R("Ciprofloxacin 500 mg","tab","1-0-1","after-meals","7","Not in pregnancy (use cefixime 200 mg twice daily)."),R("Paracetamol 500 mg","tab","1–2-1–2-1–2-1–2","prn","","For fever.")],
+ [R("Ciprofloxacin 500 mg","tab","1-0-1","after-meals","7","Not in pregnancy (use cefixime 200 mg twice daily)."),R("Paracetamol 500 mg","tab","1-1-1-1","prn","","For fever.")],
  [WATER,ABX_KH,REST],
  ["Vomiting and cannot take tablets, very high fever, confusion, low blood pressure, pregnancy, no improvement in 48 hours.",
   "ក្អួតមិនអាចលេបថ្នាំ គ្រុនខ្លាំង វង្វេង សម្ពាធឈាមចុះ មានផ្ទៃពោះ ឬមិនធូរក្រោយ ៤៨ ម៉ោង។"],fu("2 days")),
@@ -1316,7 +1383,7 @@ T("n-impetigo","skin","Impetigo","Crusted sores on skin","Impetigo (L01.0)","",
  ["Fever, spreading redness, many sores, dark urine or face swelling after the infection.",
   "គ្រុន ក្រហមរាលដាល ដំបៅច្រើន ទឹកនោមខ្មៅ ឬហើមមុខក្រោយការឆ្លង។"],fu("1 week")),
 T("n-cellulitis","skin","Cellulitis","Red, hot, swollen skin","Cellulitis, unspecified (L03.9)","CBC, glucose",
- [R("Amoxicillin-clavulanate 625 mg","tab","1-1-1","after-meals","7",""),R("Paracetamol 500 mg","tab","1–2-1–2-1–2-1–2","prn","","For pain or fever.")],
+ [R("Amoxicillin-clavulanate 625 mg","tab","1-1-1","after-meals","7",""),R("Paracetamol 500 mg","tab","1-1-1-1","prn","","For pain or fever.")],
  [["Raise the affected leg or arm.","លើកជើង ឬដៃដែលរលាកឱ្យខ្ពស់។"],
   ["Draw a line around the redness to see if it spreads.","គូសបន្ទាត់ជុំវិញកន្លែងក្រហម ដើម្បីមើលថាវារាលដាលឬអត់។"],ABX_KH],
  ["Redness spreading past the line, high fever, blisters or black skin, severe pain, diabetes.",
@@ -1335,13 +1402,13 @@ T("n-acne","skin","Acne","Pimples on face","Acne vulgaris (L70.0)","",
   ["Treatment takes 6–8 weeks to work.","ការព្យាបាលត្រូវការ ៦–៨ សប្តាហ៍ទើបឃើញលទ្ធផល។"]],
  ["Painful deep lumps or scars, severe skin irritation, mood problems.","ដុំជ្រៅឈឺ ឬស្លាកស្នាម រលាកស្បែកខ្លាំង ឬបញ្ហាអារម្មណ៍។"],fu("6 weeks")),
 T("n-zoster","skin","Shingles (herpes zoster)","Painful blistering rash on one side","Zoster without complications (B02.9)","",
- [R("Acyclovir 800 mg","tab","1-1-1-1","","7","5 times a day (every 4 hours while awake). Best within 72 hours of rash."),R("Paracetamol 500 mg","tab","1–2-1–2-1–2-1–2","prn","","For pain.")],
+ [R("Acyclovir 800 mg","tab","1-1-1-1","","7","5 times a day (every 4 hours while awake). Best within 72 hours of rash."),R("Paracetamol 500 mg","tab","1-1-1-1","prn","","For pain.")],
  [["Keep the rash clean and dry. Do not burst blisters.","រក្សាកន្ទួលឱ្យស្អាត និងស្ងួត។ កុំបំបែកពងទឹក។"],
   ["Avoid contact with pregnant women and babies until crusted.","ជៀសវាងប៉ះស្ត្រីមានផ្ទៃពោះ និងទារក រហូតដល់ពងក្រៀម។"]],
  ["Rash near the eye or on the nose tip, eye pain or vision change, weakness of face, very widespread rash.",
   "កន្ទួលជិតភ្នែក ឬចុងច្រមុះ ឈឺភ្នែក ឬមើលមិនច្បាស់ ខ្សោយមុខ ឬកន្ទួលរាលដាលខ្លាំង។"],fu("1 week")),
 T("n-varicella","skin","Chickenpox","Fever, itchy blisters","Varicella without complication (B01.9)","",
- [R("Paracetamol 500 mg","tab","1–2-1–2-1–2-1–2","prn","","Never give aspirin."),R("Calamine lotion","apply","1-1-1","","7","On itchy spots."),R("Cetirizine 10 mg","tab","0-0-1","bedtime","5","For itch.")],
+ [R("Paracetamol 500 mg","tab","1-1-1-1","prn","","Never give aspirin."),R("Calamine lotion","apply","1-1-1","","7","On itchy spots."),R("Cetirizine 10 mg","tab","0-0-1","bedtime","5","For itch.")],
  [["Stay home until all blisters have crusted (about 1 week).","នៅផ្ទះរហូតដល់ពងទឹកក្រៀមទាំងអស់ (ប្រហែល ១ សប្តាហ៍)។"],
   ["Cut nails short and do not scratch.","កាត់ក្រចកឱ្យខ្លី ហើយកុំកោស។"],["Never give aspirin or ibuprofen.","កុំឱ្យ Aspirin ឬ Ibuprofen។"]],
  ["Difficulty breathing, confusion, red painful skin around blisters, pregnancy, newborn, weak immunity.",
@@ -1349,7 +1416,7 @@ T("n-varicella","skin","Chickenpox","Fever, itchy blisters","Varicella without c
 
 /* Wound / trauma */
 T("n-burn","wound","Minor burn","Burn","Burn of unspecified body region, first or second degree (T30.0)","",
- [R("Silver sulfadiazine 1% cream","apply","1-0-0","","7","Daily dressing. Not on the face or in pregnancy near term."),R("Paracetamol 500 mg","tab","1–2-1–2-1–2-1–2","prn","",""),
+ [R("Silver sulfadiazine 1% cream","apply","1-0-0","","7","Daily dressing. Not on the face or in pregnancy near term."),R("Paracetamol 500 mg","tab","1-1-1-1","prn","",""),
   R("Tetanus-diphtheria vaccine (Td)","vacc","1","","","If not vaccinated in the last 5–10 years.")],
  [["Cool the burn under running water for 20 minutes (first aid).","ត្រជាក់កន្លែងរលាកក្រោមទឹកហូរ ២០ នាទី (ជំនួយបឋម)។"],
   ["Do not put toothpaste, oil or ice on burns. Do not burst blisters.","កុំលាបថ្នាំដុសធ្មេញ ប្រេង ឬទឹកកកលើរបួសរលាក។ កុំបំបែកពងទឹក។"],
@@ -1357,13 +1424,13 @@ T("n-burn","wound","Minor burn","Burn","Burn of unspecified body region, first o
  ["Burn larger than the patient's palm, burns on face, hands, genitals or joints, deep white or black burn, fever or pus.",
   "រលាកធំជាងបាតដៃអ្នកជំងឺ រលាកលើមុខ ដៃ ប្រដាប់ភេទ ឬសន្លាក់ រលាកជ្រៅពណ៌ស ឬខ្មៅ គ្រុន ឬខ្ទុះ។"],fu("2 days")),
 T("n-abscess","wound","Skin abscess","Painful swelling with pus","Cutaneous abscess, unspecified (L02.9)","Glucose if recurrent",
- [R("Incision and drainage + daily dressing","","","","5",""),R("Amoxicillin-clavulanate 625 mg","tab","1-1-1","after-meals","5","Only if spreading redness, fever or diabetes."),R("Paracetamol 500 mg","tab","1–2-1–2-1–2-1–2","prn","","")],
+ [R("Incision and drainage + daily dressing","","","","5",""),R("Amoxicillin-clavulanate 625 mg","tab","1-1-1","after-meals","5","Only if spreading redness, fever or diabetes."),R("Paracetamol 500 mg","tab","1-1-1-1","prn","","")],
  [["Keep the wound clean and change the dressing daily.","រក្សារបួសឱ្យស្អាត ហើយប្តូររុំរៀងរាល់ថ្ងៃ។"],
   ["Do not squeeze the abscess.","កុំច្របាច់ពក។"],["Warm compress 3 times a day.","ស្អំក្តៅ ៣ ដងក្នុងមួយថ្ងៃ។"]],
  ["Fever, red streaks spreading, abscess on the face near the nose, recurring abscesses.",
   "គ្រុន ឆ្នូតក្រហមរាលដាល ពកលើមុខជិតច្រមុះ ឬពកកើតឡើងញឹកញាប់។"],fu("2 days")),
 T("n-bruise","wound","Bruise / soft tissue injury","Pain and swelling after a fall or hit","Superficial injury of unspecified body region (T14.0)","X-ray if bone pain",
- [R("Paracetamol 500 mg","tab","1–2-1–2-1–2-1–2","prn","",""),R("Diclofenac 1% gel","apply","1-1-1","","5","")],
+ [R("Paracetamol 500 mg","tab","1-1-1-1","prn","",""),R("Diclofenac 1% gel","apply","1-1-1","","5","")],
  [["Ice 15–20 minutes, 3–4 times a day for 2 days.","ដាក់ទឹកកក ១៥–២០ នាទី ៣–៤ ដងក្នុងមួយថ្ងៃ រយៈពេល ២ ថ្ងៃ។"],
   ["Rest and raise the injured part.","សម្រាក និងលើកផ្នែករបួសឱ្យខ្ពស់។"]],
  ["Deformity, cannot move or bear weight, numbness, head injury with vomiting or drowsiness.",
@@ -1382,7 +1449,7 @@ T("n-gout","msk","Gout attack","Sudden hot painful joint","Gout, unspecified (M1
   ["Lose weight slowly if overweight.","ស្រកទម្ងន់បន្តិចម្តងៗ បើលើសទម្ងន់។"]],
  ["Fever, many joints, no improvement in 3 days.","គ្រុន ឈឺសន្លាក់ច្រើន ឬមិនធូរក្រោយ ៣ ថ្ងៃ។"],fu("1 week")),
 T("n-neck","msk","Neck pain","Neck pain and stiffness","Cervicalgia (M54.2)","",
- [R("Paracetamol 500 mg","tab","1–2-1–2-1–2-1–2","prn","",""),R("Ibuprofen 400 mg","tab","1-1-1","after-meals","5","Avoid if ulcer, kidney disease or asthma.")],
+ [R("Paracetamol 500 mg","tab","1-1-1-1","prn","",""),R("Ibuprofen 400 mg","tab","1-1-1","after-meals","5","Avoid if ulcer, kidney disease or asthma.")],
  [["Keep moving the neck gently. Use a warm compress.","កម្រើកកថ្នមៗ។ ស្អំក្តៅ។"],
   ["Keep screens at eye level. Take breaks from phone use.","ដាក់អេក្រង់ឱ្យស្មើភ្នែក។ សម្រាកពីការប្រើទូរស័ព្ទ។"]],
  ["Weakness or numbness in arms, pain after injury, fever with stiff neck, severe headache.",
@@ -1406,7 +1473,7 @@ T("n-bell","neuro","Bell's palsy","Sudden weakness of one side of the face","Bel
 
 /* ENT */
 T("n-otext","ent","Otitis externa","Ear pain, itchy ear canal","Otitis externa, unspecified (H60.9)","",
- [R("Ofloxacin 0.3% ear drops","drop","5-0-5","","7","In the affected ear."),R("Paracetamol 500 mg","tab","1–2-1–2-1–2-1–2","prn","","")],
+ [R("Ofloxacin 0.3% ear drops","drop","5-0-5","","7","In the affected ear."),R("Paracetamol 500 mg","tab","1-1-1-1","prn","","")],
  [["Keep the ear dry. Use cotton with oil in the ear when bathing.","រក្សាត្រចៀកឱ្យស្ងួត។ ដាក់សំឡីលាបប្រេងក្នុងត្រចៀកពេលងូតទឹក។"],
   ["Do not use cotton buds or put objects in the ear.","កុំប្រើឈើចាក់ត្រចៀក ឬដាក់វត្ថុក្នុងត្រចៀក។"],["No swimming for 1 week.","កុំហែលទឹក ១ សប្តាហ៍។"]],
  ["Swelling behind the ear, fever, facial weakness, diabetes with severe pain.","ហើមក្រោយត្រចៀក គ្រុន ខ្សោយមុខ ឬមានទឹកនោមផ្អែមហើយឈឺខ្លាំង។"],fu("1 week")),
@@ -1476,7 +1543,7 @@ T("n-anaemiapreg","obs","Anaemia in pregnancy","Tired, pale, pregnant","Anaemia 
   ["Iron makes stools black. This is normal.","ជាតិដែកធ្វើឱ្យលាមកខ្មៅ ដែលជារឿងធម្មតា។"],["Deworm after the first 3 months of pregnancy.","ទម្លាក់ព្រូនក្រោយផ្ទៃពោះ ៣ ខែដំបូង។"]],
  ["Breathlessness, chest pain, fainting, bleeding.","ហត់ ឈឺទ្រូង សន្លប់ ឬហូរឈាម។"],fu("1 month")),
 T("n-postpartum","obs","Postpartum check","Routine visit after delivery","Routine postpartum follow-up (Z39.2)","Hb, BP",
- [R("Ferrous sulfate + Folic acid 60 mg + 400 mcg","tab","1-0-0","empty","90",""),R("Paracetamol 500 mg","tab","1–2-1–2-1–2-1–2","prn","","Safe while breastfeeding.")],
+ [R("Ferrous sulfate + Folic acid 60 mg + 400 mcg","tab","1-0-0","empty","90",""),R("Paracetamol 500 mg","tab","1-1-1-1","prn","","Safe while breastfeeding.")],
  [["Breastfeed only for 6 months, day and night.","បំបៅដោះកូនតែទឹកដោះម្តាយរយៈពេល ៦ ខែ ទាំងថ្ងៃទាំងយប់។"],
   ["Eat well, drink plenty, rest when the baby sleeps.","ញ៉ាំឱ្យបានល្អ ផឹកទឹកច្រើន សម្រាកពេលកូនដេក។"],
   ["Discuss family planning at 6 weeks.","ពិភាក្សាពីការពន្យារកំណើតនៅ ៦ សប្តាហ៍។"]],
@@ -1507,19 +1574,19 @@ T("n-diaper","peds","Nappy rash","Red rash in nappy area","Diaper dermatitis (L2
 
 /* Infectious / STI */
 T("n-typhoid","id","Typhoid fever","Fever for several days, abdominal pain","Typhoid fever (A01.0)","Blood culture, CBC, Widal (limited value)",
- [R("Azithromycin 500 mg","tab","2-0-0","","7","1 g once daily."),R("Paracetamol 500 mg","tab","1–2-1–2-1–2-1–2","prn","","")],
+ [R("Azithromycin 500 mg","tab","2-0-0","","7","1 g once daily."),R("Paracetamol 500 mg","tab","1-1-1-1","prn","","")],
  [WATER,ABX_KH,["Wash hands and drink boiled water.","លាងដៃ និងផឹកទឹកឆ្អិន។"]],
  ["Severe abdominal pain, black stools, confusion, fever after 5 days of treatment.","ឈឺពោះខ្លាំង លាមកខ្មៅ វង្វេង ឬគ្រុនក្រោយព្យាបាល ៥ ថ្ងៃ។"],fu("3 days")),
 T("n-malaria","id","Malaria (test positive)","Fever, chills","Malaria, unspecified (B54)","Malaria RDT / blood smear",
- [R("Antimalarial per National Malaria Programme (CNM)","","","","","Choose drug by species and current CNM guideline."),R("Paracetamol 500 mg","tab","1–2-1–2-1–2-1–2","prn","","")],
+ [R("Antimalarial per National Malaria Programme (CNM)","","","","","Choose drug by species and current CNM guideline."),R("Paracetamol 500 mg","tab","1-1-1-1","prn","","")],
  [["Take every dose of the antimalarial.","លេបថ្នាំគ្រុនចាញ់ឱ្យគ្រប់ដូស។"],["Sleep under an insecticide-treated net.","គេងក្នុងមុងជ្រលក់ថ្នាំ។"],WATER],
  ["Confusion, convulsion, cannot drink, dark urine, yellow eyes, breathing difficulty, pregnancy (urgent).","វង្វេង ប្រកាច់ មិនអាចផឹក ទឹកនោមខ្មៅ ភ្នែកលឿង ពិបាកដកដង្ហើម មានផ្ទៃពោះ (បន្ទាន់)។"],fu("3 days")),
 T("n-lepto","id","Leptospirosis (mild)","Fever, muscle pain after flood water","Leptospirosis, unspecified (A27.9)","CBC, creatinine, LFT",
- [R("Doxycycline 100 mg","cap","1-0-1","after-meals","7","Not in pregnancy or children under 8 (use amoxicillin)."),R("Paracetamol 500 mg","tab","1–2-1–2-1–2-1–2","prn","","")],
+ [R("Doxycycline 100 mg","cap","1-0-1","after-meals","7","Not in pregnancy or children under 8 (use amoxicillin)."),R("Paracetamol 500 mg","tab","1-1-1-1","prn","","")],
  [WATER,ABX_KH,["Wear boots in flood water and rice fields.","ពាក់ស្បែកជើងកវែងពេលដើរក្នុងទឹកជំនន់ និងស្រែ។"]],
  ["Yellow eyes, very little urine, bleeding, cough with blood, breathlessness.","ភ្នែកលឿង នោមតិចខ្លាំង ហូរឈាម ក្អកមានឈាម ឬហត់។"],fu("2 days")),
 T("n-herpes","id","Genital herpes","Painful genital blisters","Herpesviral infection of genitalia (A60.0)","HIV & syphilis test",
- [R("Acyclovir 400 mg","tab","1-1-1","","7",""),R("Paracetamol 500 mg","tab","1–2-1–2-1–2-1–2","prn","","")],
+ [R("Acyclovir 400 mg","tab","1-1-1","","7",""),R("Paracetamol 500 mg","tab","1-1-1-1","prn","","")],
  [["No sex until sores have healed. Use condoms always.","កុំរួមភេទរហូតដល់ដំបៅជា។ ប្រើស្រោមអនាម័យជានិច្ច។"],["Keep the area clean and dry.","រក្សាកន្លែងនោះឱ្យស្អាត និងស្ងួត។"]],
  ["Cannot pass urine, fever with headache, pregnancy.","មិនអាចនោម គ្រុនជាមួយឈឺក្បាល ឬមានផ្ទៃពោះ។"],fu("1 week")),
 T("n-syphilis","id","Syphilis","Positive syphilis test or painless ulcer","Syphilis, unspecified (A53.9)","RPR/TPHA, HIV test",
@@ -1554,7 +1621,7 @@ T("n-anaphylaxis","emerg","Anaphylaxis","Swelling, wheeze, low BP after exposure
  ["Transfer to hospital and observe at least 6–12 hours — symptoms can return.","បញ្ជូនទៅមន្ទីរពេទ្យ និងតាមដានយ៉ាងតិច ៦–១២ ម៉ោង — រោគសញ្ញាអាចកើតឡើងវិញ។"],
  FU("Refer: hospital now","បញ្ជូនទៅមន្ទីរពេទ្យភ្លាម")),
 T("n-snakebite","emerg","Snake bite","Snake bite","Toxic effect of snake venom (T63.0)","20-minute whole blood clotting test",
- [R("Tetanus-diphtheria vaccine (Td)","vacc","1","","","If not up to date."),R("Paracetamol 500 mg","tab","1–2-1–2-1–2-1–2","prn","","No aspirin or ibuprofen.")],
+ [R("Tetanus-diphtheria vaccine (Td)","vacc","1","","","If not up to date."),R("Paracetamol 500 mg","tab","1-1-1-1","prn","","No aspirin or ibuprofen.")],
  [["Keep still. Immobilise the bitten limb with a splint below heart level.","នៅស្ងៀម។ ចងបន្ទះទប់អវយវៈដែលត្រូវខាំ ឱ្យទាបជាងបេះដូង។"],
   ["Do not cut, suck, apply ice or a tight tourniquet.","កុំវះ កុំបឺត កុំដាក់ទឹកកក ឬចងតឹង។"],["Go to a hospital with antivenom immediately.","ទៅមន្ទីរពេទ្យដែលមានថ្នាំប្រឆាំងពិសភ្លាម។"]],
  ["Drooping eyelids, difficulty swallowing or breathing, bleeding, swelling spreading, dark urine.","ត្របកភ្នែកធ្លាក់ ពិបាកលេប ឬដកដង្ហើម ហូរឈាម ហើមរាលដាល ទឹកនោមខ្មៅ។"],
@@ -1633,6 +1700,122 @@ Object.assign(DXI,{
  "n-hypogly":["ជាតិស្ករក្នុងឈាមចុះទាប","Hypoglycémie","low sugar hypoglycemia sweating shaking ស្ករចុះ hypoglycémie"]
 });
 
+/* ---------- minor surgery: new templates ---------- */
+DEFAULTS=DEFAULTS.concat([
+T("n-ingrown","wound","Ingrown toenail","Painful swollen toe edge","Ingrowing nail (L60.0)","",
+ [R("Paracetamol 500 mg","tab","1-1-1-1","prn","",""),R("Povidone-iodine 10% solution","apply","1-0-0","","7","Daily soak and dressing."),
+  R("Amoxicillin-clavulanate 625 mg","tab","1-1-1","after-meals","5","Only if pus or spreading redness.")],
+ [["Soak the foot in warm water for 15 minutes twice a day.","ត្រាំជើងក្នុងទឹកក្តៅឧណ្ហៗ ១៥ នាទី ២ ដងក្នុងមួយថ្ងៃ។"],
+  ["Cut toenails straight across, not too short.","កាត់ក្រចកជើងត្រង់ កុំកាត់ខ្លីពេក។"],["Wear wide, open shoes for 2 weeks.","ពាក់ស្បែកជើងធំ ឬចំហ ២ សប្តាហ៍។"]],
+ ["Spreading redness, fever, pus, diabetes or poor circulation.","ក្រហមរាលដាល គ្រុន ខ្ទុះ ទឹកនោមផ្អែម ឬឈាមរត់មិនល្អ។"],fu("2 days")),
+T("n-cyst","skin","Epidermoid (sebaceous) cyst","Round lump under the skin","Trichodermal cyst (L72.1)","",
+ [R("Paracetamol 500 mg","tab","1-1-1-1","prn","",""),R("Povidone-iodine 10% solution","apply","1-0-0","","7","Dressing after excision.")],
+ [["Keep the wound clean and dry for 48 hours.","រក្សារបួសឱ្យស្អាត និងស្ងួត ៤៨ ម៉ោង។"],["Stitches out after 7–10 days.","ដកចំណងក្រោយ ៧–១០ ថ្ងៃ។"],
+  ["Do not squeeze cysts.","កុំច្របាច់ដុំ។"]],
+ ["Redness, pus, fever, bleeding through the dressing.","ក្រហម ខ្ទុះ គ្រុន ឬឈាមជ្រាបតាមបង់រុំ។"],fu("7 days")),
+T("n-fb","wound","Foreign body in skin","Splinter / glass / thorn in skin","Residual foreign body in soft tissue (M79.5)","X-ray (glass, metal); ultrasound (wood)",
+ [R("Tetanus-diphtheria vaccine (Td)","vacc","1","","","If not up to date."),R("Paracetamol 500 mg","tab","1-1-1-1","prn","","")],
+ [["Keep the wound clean and dry. Change the dressing daily.","រក្សារបួសឱ្យស្អាត និងស្ងួត។ ប្តូររុំរៀងរាល់ថ្ងៃ។"],["Wear shoes outside.","ពាក់ស្បែកជើងពេលចេញក្រៅ។"]],
+ ["Redness, swelling, pus, fever, a piece still felt inside.","ក្រហម ហើម ខ្ទុះ គ្រុន ឬនៅមានវត្ថុនៅខាងក្នុង។"],fu("2 days")),
+T("n-earwax","ent","Impacted ear wax","Blocked ear, hearing loss","Impacted cerumen (H61.2)","Otoscopy",
+ [R("Olive oil ear drops","drop","3-0-3","","5","Soften wax before irrigation.")],
+ [["Do not use cotton buds — they push wax deeper.","កុំប្រើឈើចាក់ត្រចៀក ព្រោះវារុញក្អែលចូលជ្រៅ។"],["Use oil drops for 3–5 days if the ear blocks again.","ដាក់ប្រេង ៣–៥ ថ្ងៃ បើត្រចៀកស្ទះម្តងទៀត។"]],
+ ["Ear pain, discharge, dizziness, sudden hearing loss.","ឈឺត្រចៀក ហូរខ្ទុះ វិលមុខ ឬថ្លង់ភ្លាមៗ។"],fu("1 week"))
+]);
+Object.assign(DXI,{
+ "n-ingrown":["ក្រចកជើងដុះចូលសាច់","Ongle incarné","ingrown toenail toe pain ក្រចកដុះចូលសាច់ ongle incarné"],
+ "n-cyst":["ដុំខ្លាញ់/ដុំក្រោមស្បែក (Epidermoid cyst)","Kyste épidermoïde (sébacé)","cyst lump sebaceous ដុំក្រោមស្បែក kyste"],
+ "n-fb":["វត្ថុចម្លែកក្នុងស្បែក","Corps étranger sous-cutané","foreign body splinter glass thorn បន្លា កញ្ចក់ corps étranger écharde"],
+ "n-earwax":["ក្អែលត្រចៀកស្ទះ","Bouchon de cérumen","ear wax blocked ear ក្អែលត្រចៀក ត្រចៀកស្ទះ cérumen"]
+});
+
+/* ---------- minor surgery techniques by diagnosis ([English, Khmer] steps) ---------- */
+var PROCS={
+ "d-wound":{name:["Wound cleaning and suturing (laceration repair)","សម្អាត និងដេររបួស"],steps:[
+  ["Control bleeding with pressure. Check tetanus status and allergies.","បញ្ឈប់ការហូរឈាមដោយសង្កត់។ ពិនិត្យវ៉ាក់សាំងតេតាណូស និងអាឡែកហ្ស៊ី។"],
+  ["Explore the wound: depth, tendon, nerve, vessel injury, foreign body. Refer if deep structures are involved.","ពិនិត្យរបួស៖ ជម្រៅ សរសៃពួរ សរសៃប្រសាទ សរសៃឈាម វត្ថុចម្លែក។ បញ្ជូន បើប៉ះពាល់រចនាសម្ព័ន្ធជ្រៅ។"],
+  ["Local anaesthesia: lidocaine 1–2% infiltration (max 4.5 mg/kg). No adrenaline on fingers, toes, nose, ears or penis.","ចាក់ថ្នាំស្ពឹក lidocaine ១–២% (អតិបរមា ៤,៥ mg/kg)។ កុំប្រើ adrenaline លើម្រាមដៃ ម្រាមជើង ច្រមុះ ត្រចៀក ឬលិង្គ។"],
+  ["Irrigate with plenty of normal saline, remove debris and trim dead tissue.","លាងដោយ NaCl 0.9% ឱ្យបានច្រើន ដកកំទេច និងកាត់សាច់ងាប់ចេញ។"],
+  ["Close within 6–8 hours (face up to 24 h) with simple interrupted sutures: face 5/0–6/0, scalp and limbs 3/0–4/0 nylon. Do not close bites, dirty or old wounds.","ដេរក្នុងរយៈពេល ៦–៨ ម៉ោង (មុខរហូតដល់ ២៤ ម៉ោង) ដោយចំណងដាច់ៗ៖ មុខ 5/0–6/0 ក្បាល និងអវយវៈ 3/0–4/0 nylon។ កុំដេររបួសខាំ កខ្វក់ ឬយូរ។"],
+  ["Cover with a dry sterile dressing.","គ្របដោយបង់ស្ងួតមាប់មគ។"],
+  ["Remove sutures: face 5 days, scalp 7, trunk and arms 7–10, legs and feet 10–14 days.","ដកចំណង៖ មុខ ៥ ថ្ងៃ ក្បាល ៧ ថ្ងៃ ខ្លួន និងដៃ ៧–១០ ថ្ងៃ ជើង ១០–១៤ ថ្ងៃ។"]]},
+ "n-abscess":{name:["Incision and drainage (I&D) of abscess","វះបញ្ចេញខ្ទុះ (I&D)"],steps:[
+  ["Confirm a soft, fluctuant collection (ultrasound if unsure). Do not incise abscesses on the face near the nose — refer.","ប្រាកដថាមានខ្ទុះ (ទន់ រំញ័រ ឬ ultrasound)។ ពកលើមុខជិតច្រមុះ កុំវះ — បញ្ជូន។"],
+  ["Clean the skin with povidone-iodine. Use sterile gloves and drapes.","សម្អាតស្បែកដោយ povidone-iodine។ ពាក់ស្រោមដៃ និងក្រណាត់គ្របមាប់មគ។"],
+  ["Local anaesthesia: lidocaine 1–2% around the abscess (field block), not into the cavity.","ចាក់ថ្នាំស្ពឹក lidocaine ១–២% ជុំវិញពក (field block) កុំចាក់ចូលប្រហោងខ្ទុះ។"],
+  ["Incise with a No. 11 blade along skin lines over the softest point, about 2/3 of the abscess length.","វះដោយកាំបិតលេខ ១១ តាមបន្ទាត់ស្បែក ត្រង់កន្លែងទន់បំផុត ប្រវែងប្រហែល ២/៣ នៃពក។"],
+  ["Express the pus and break loculations with a curved haemostat. Send pus for culture if recurrent.","បញ្ចេញខ្ទុះ ហើយបំបែកថតខ្ទុះដោយដង្កាប់កោង។ យកខ្ទុះទៅបណ្តុះមេរោគ បើកើតញឹកញាប់។"],
+  ["Irrigate with normal saline. Pack loosely with gauze only for large cavities (over 5 cm).","លាងដោយ NaCl 0.9%។ ញាត់មារលុងៗ តែប្រហោងធំ (លើស ៥ cm)។"],
+  ["Cover with a dry dressing. Review in 24–48 h, remove packing, then dress daily until healed.","គ្របដោយបង់ស្ងួត។ ពិនិត្យវិញក្រោយ ២៤–៤៨ ម៉ោង ដកមារ រួចប្តូររុំរៀងរាល់ថ្ងៃ រហូតជា។"]]},
+ "n-burn":{name:["Burn wound dressing","រុំរបួសរលាក"],steps:[
+  ["Estimate size (patient's palm ≈ 1% of body surface) and depth. Refer if over 10% in adults, 5% in children, deep, or on face, hands, genitals or joints.","ប៉ាន់ទំហំ (បាតដៃអ្នកជំងឺ ≈ ១% នៃផ្ទៃខ្លួន) និងជម្រៅ។ បញ្ជូន បើលើស ១០% មនុស្សពេញវ័យ ៥% កុមារ រលាកជ្រៅ ឬលើមុខ ដៃ ប្រដាប់ភេទ សន្លាក់។"],
+  ["Give pain relief before the dressing.","ឱ្យថ្នាំបំបាត់ការឈឺ មុនរុំរបួស។"],
+  ["Clean gently with normal saline. Remove loose dead skin; leave small intact blisters.","សម្អាតថ្នមៗដោយ NaCl 0.9%។ ដកស្បែកងាប់ដែលរបក ទុកពងទឹកតូចៗដែលមិនទាន់បែក។"],
+  ["Apply silver sulfadiazine 1% (2–3 mm layer) or paraffin gauze.","លាប silver sulfadiazine 1% (ក្រាស់ ២–៣ mm) ឬ paraffin gauze។"],
+  ["Cover with a non-stick dressing and gauze. Do not bandage tightly around limbs.","គ្របដោយបង់មិនស្អិត និងមារ។ កុំរុំតឹងជុំវិញអវយវៈ។"],
+  ["Change the dressing every 1–2 days and check for infection.","ប្តូររុំរៀងរាល់ ១–២ ថ្ងៃ ហើយពិនិត្យការឆ្លងមេរោគ។"]]},
+ "d-dogbite":{name:["Bite wound care","ថែទាំរបួសសត្វខាំ"],steps:[
+  ["Wash immediately with soap and running water for 15 minutes.","លាងភ្លាមៗដោយសាប៊ូ និងទឹកហូរ ១៥ នាទី។"],
+  ["Apply povidone-iodine or 70% alcohol.","លាប povidone-iodine ឬអាល់កុល ៧០%។"],
+  ["Classify the exposure (WHO category I–III). Category III: infiltrate rabies immunoglobulin into and around the wound.","ចាត់ថ្នាក់ការប៉ះពាល់ (WHO ថ្នាក់ I–III)។ ថ្នាក់ III៖ ចាក់ RIG ចូល និងជុំវិញរបួស។"],
+  ["Debride dead tissue and check for tendon or joint injury.","កាត់សាច់ងាប់ ហើយពិនិត្យរបួសសរសៃពួរ ឬសន្លាក់។"],
+  ["Do not suture bites primarily (except the face, after RIG). Leave open or loosely approximate.","កុំដេររបួសខាំភ្លាម (លើកលែងមុខ ក្រោយចាក់ RIG)។ ទុកចំហ ឬចងរលុងៗ។"],
+  ["Start rabies vaccine and tetanus as scheduled. Antibiotic prophylaxis for deep, hand or face bites.","ចាប់ផ្តើមវ៉ាក់សាំងឆ្កែឆ្កួត និងតេតាណូសតាមកាលវិភាគ។ ថ្នាំអង់ទីប៊ីយ៉ូទិកការពារ សម្រាប់របួសជ្រៅ ដៃ ឬមុខ។"]]},
+ "n-epistaxis":{name:["Anterior nasal packing (if bleeding continues)","ញាត់ច្រមុះផ្នែកមុខ (បើនៅតែហូរឈាម)"],steps:[
+  ["Firm pressure on the soft part of the nose for 10–15 minutes, leaning forward.","ច្របាច់ផ្នែកទន់នៃច្រមុះឱ្យណែន ១០–១៥ នាទី ដោយឱនទៅមុខ។"],
+  ["Find the bleeding point with a light. Insert cotton soaked in lidocaine with adrenaline (or xylometazoline) for 10 minutes.","រកកន្លែងហូរឈាមដោយភ្លើង។ ញាត់សំឡីជ្រលក់ lidocaine + adrenaline (ឬ xylometazoline) ១០ នាទី។"],
+  ["If still bleeding: pack with ribbon gauze coated with paraffin or antibiotic ointment in layers, or use a nasal tampon.","បើនៅតែហូរ៖ ញាត់មារបន្ទះលាប paraffin ឬថ្នាំអង់ទីប៊ីយ៉ូទិកជាស្រទាប់ៗ ឬប្រើ nasal tampon។"],
+  ["Leave the pack 24–48 hours. Refer if bleeding continues or seems posterior.","ទុកមារ ២៤–៤៨ ម៉ោង។ បញ្ជូន បើនៅតែហូរ ឬហូរពីខាងក្រោយ។"],
+  ["Check blood pressure and haemoglobin.","វាស់សម្ពាធឈាម និងពិនិត្យ Hb។"]]},
+ "d-sprain":{name:["Compression bandage","រុំបង់ទប់ (Compression)"],steps:[
+  ["Rule out fracture (Ottawa ankle rules); X-ray if bone tenderness or cannot bear weight.","ពិនិត្យថាមិនបាក់ឆ្អឹង (Ottawa ankle rules)។ ថត X-ray បើឈឺឆ្អឹង ឬមិនអាចទប់ទម្ងន់។"],
+  ["Wrap a crepe bandage from the toes upward, overlapping half its width, firm but not tight, ankle at 90°.","រុំបង់ crepe ពីម្រាមជើងឡើងលើ ត្រួតគ្នាពាក់កណ្តាល ណែនតែមិនតឹង កជើង ៩០°។"],
+  ["Check toe colour, warmth and sensation after wrapping.","ពិនិត្យពណ៌ កម្តៅ និងអារម្មណ៍ម្រាមជើង ក្រោយរុំ។"],
+  ["Remove at night and rewrap in the morning for 1 week.","ដោះពេលយប់ ហើយរុំឡើងវិញពេលព្រឹក រយៈពេល ១ សប្តាហ៍។"]]},
+ "n-snakebite":{name:["Pressure immobilisation and observation","ទប់អវយវៈ និងតាមដាន"],steps:[
+  ["Remove rings, watches and tight clothing from the bitten limb.","ដោះចិញ្ចៀន នាឡិកា និងសំលៀកបំពាក់តឹងចេញពីអវយវៈដែលត្រូវខាំ។"],
+  ["Splint the limb and keep the patient still, limb below heart level.","ចងបន្ទះទប់អវយវៈ ហើយឱ្យអ្នកជំងឺនៅស្ងៀម អវយវៈទាបជាងបេះដូង។"],
+  ["Do not cut, suck, apply ice or a tight tourniquet.","កុំវះ កុំបឺត កុំដាក់ទឹកកក ឬចងតឹង។"],
+  ["Insert an IV line on the other arm. Do the 20-minute whole blood clotting test.","ដាក់សេរ៉ូនៅដៃម្ខាងទៀត។ ធ្វើតេស្តកកឈាម ២០ នាទី (20WBCT)។"],
+  ["Refer immediately to a hospital with antivenom.","បញ្ជូនភ្លាមទៅមន្ទីរពេទ្យដែលមានថ្នាំប្រឆាំងពិស។"]]},
+ "n-ingrown":{name:["Partial nail avulsion (wedge resection)","ដកក្រចកមួយផ្នែក (Wedge resection)"],steps:[
+  ["Clean the toe. Apply a tourniquet at the base of the toe (maximum 15 minutes).","សម្អាតម្រាមជើង។ ចងខ្សែកៅស៊ូនៅគល់ម្រាម (អតិបរមា ១៥ នាទី)។"],
+  ["Digital block: plain lidocaine 1–2% (no adrenaline), 1–2 ml on each side of the toe base.","ចាក់ស្ពឹកម្រាម (digital block)៖ lidocaine ១–២% គ្មាន adrenaline ១–២ ml សងខាងគល់ម្រាម។"],
+  ["Lift the ingrown edge (about 1/4 of the nail) and cut straight back to the base with scissors.","លើកគែមក្រចកដែលដុះចូល (ប្រហែល ១/៤ នៃក្រចក) ហើយកាត់ត្រង់រហូតដល់គល់ដោយកន្ត្រៃ។"],
+  ["Remove the nail piece including the root with a haemostat. Remove granulation tissue.","ដកបំណែកក្រចករួមទាំងឫសដោយដង្កាប់។ កោសសាច់ដុះចេញ។"],
+  ["If trained: apply phenol 80% to the nail bed for 1–2 minutes to prevent regrowth.","បើមានបទពិសោធន៍៖ លាប phenol ៨០% លើគល់ក្រចក ១–២ នាទី ដើម្បីកុំឱ្យដុះវិញ។"],
+  ["Release the tourniquet, apply paraffin gauze and dressing. Elevate the foot for 24 hours.","ដោះខ្សែកៅស៊ូ គ្របដោយ paraffin gauze និងបង់។ លើកជើងឱ្យខ្ពស់ ២៤ ម៉ោង។"]]},
+ "n-cyst":{name:["Excision of epidermoid cyst","វះយកដុំ Epidermoid cyst ចេញ"],steps:[
+  ["Do not excise an inflamed cyst — drain it now and excise after 4–6 weeks.","កុំវះយកដុំដែលកំពុងរលាក — បញ្ចេញខ្ទុះឥឡូវ ហើយវះយកចេញក្រោយ ៤–៦ សប្តាហ៍។"],
+  ["Mark an elliptical incision around the punctum along skin lines.","គូសរាងពងក្រពើជុំវិញរន្ធកណ្តាល តាមបន្ទាត់ស្បែក។"],
+  ["Local anaesthesia around (not into) the cyst.","ចាក់ថ្នាំស្ពឹកជុំវិញដុំ (កុំចាក់ចូលដុំ)។"],
+  ["Incise the skin ellipse and dissect around the cyst wall with scissors, keeping it intact.","វះស្បែករាងពងក្រពើ ហើយញែកជុំវិញជញ្ជាំងដុំដោយកន្ត្រៃ កុំឱ្យបែក។"],
+  ["Remove the whole cyst including its wall to prevent recurrence. Stop bleeding.","យកដុំទាំងមូលរួមទាំងជញ្ជាំង ដើម្បីកុំឱ្យកើតវិញ។ បញ្ឈប់ការហូរឈាម។"],
+  ["Close with interrupted sutures and dress. Remove sutures in 7–10 days. Send for histology if unusual.","ដេរដោយចំណងដាច់ៗ ហើយរុំ។ ដកចំណងក្រោយ ៧–១០ ថ្ងៃ។ ផ្ញើពិនិត្យជាលិកា បើមើលទៅមិនធម្មតា។"]]},
+ "n-fb":{name:["Removal of superficial foreign body","ដកវត្ថុចម្លែកចេញពីស្បែក"],steps:[
+  ["Locate the object: X-ray for glass or metal, ultrasound for wood or thorns.","រកទីតាំងវត្ថុ៖ X-ray សម្រាប់កញ្ចក់ ឬដែក ultrasound សម្រាប់ឈើ ឬបន្លា។"],
+  ["Clean the skin. Use local anaesthesia if the object is deep.","សម្អាតស្បែក។ ចាក់ថ្នាំស្ពឹក បើវត្ថុនៅជ្រៅ។"],
+  ["Make a small incision along the entry track. Grasp with fine forceps and pull out in line with entry.","វះតូចតាមផ្លូវចូល។ ចាប់ដោយដង្កាប់ល្អិត ហើយទាញចេញតាមទិសដែលចូល។"],
+  ["Irrigate. Leave small wounds open. Give tetanus vaccine; antibiotics if contaminated.","លាងសម្អាត។ ទុករបួសតូចៗចំហ។ ចាក់វ៉ាក់សាំងតេតាណូស ឱ្យថ្នាំអង់ទីប៊ីយ៉ូទិក បើកខ្វក់។"],
+  ["Refer if near joints, nerves or vessels, or not found within 15–20 minutes.","បញ្ជូន បើនៅជិតសន្លាក់ សរសៃប្រសាទ ឬសរសៃឈាម ឬរកមិនឃើញក្នុង ១៥–២០ នាទី។"]]},
+ "n-earwax":{name:["Ear irrigation (syringing)","លាងត្រចៀក (Ear irrigation)"],steps:[
+  ["Do not irrigate if there is a perforated eardrum, previous ear surgery, discharge, or only one hearing ear.","កុំលាង បើក្រដាសត្រចៀកធ្លុះ ធ្លាប់វះត្រចៀក ហូរខ្ទុះ ឬមានត្រចៀកឮតែម្ខាង។"],
+  ["Soften the wax with oil drops for 3–5 days before.","ដាក់ប្រេងបន្ទន់ក្អែល ៣–៥ ថ្ងៃ មុនលាង។"],
+  ["Use water at body temperature (37 °C) to avoid dizziness.","ប្រើទឹកក្តៅស្មើកម្តៅខ្លួន (៣៧ °C) ដើម្បីកុំឱ្យវិលមុខ។"],
+  ["Pull the ear up and back. Aim the stream gently at the upper back wall of the canal.","ទាញត្រចៀកឡើងលើ និងទៅក្រោយ។ បាញ់ទឹកថ្នមៗទៅជញ្ជាំងខាងលើ-ក្រោយនៃប្រឡាយ។"],
+  ["Stop if pain or dizziness. Check the canal and eardrum afterwards and dry the ear.","ឈប់ បើឈឺ ឬវិលមុខ។ ពិនិត្យប្រឡាយ និងក្រដាសត្រចៀកក្រោយលាង ហើយសម្ងួតត្រចៀក។"]]}
+};
+var PROC_DROP=/incision and drainage|^wound cleaning|^wash wound|^crepe bandage/i;
+function applyProc(t){
+  var pr=PROCS[t.id]; if(!pr) return false;
+  t.proc=clone(pr);
+  t.rx=(t.rx||[]).filter(function(r){return !PROC_DROP.test(r.drug||"");});
+  if(t.id==="d-wound"&&!t.rx.some(function(r){return /povidone/i.test(r.drug||"");}))
+    t.rx.unshift({drug:"Povidone-iodine 10% solution",slots:["1","0","0",""],unit:"apply",time:"",days:"5–7",note:"Daily dressing."});
+  return true;
+}
+DEFAULTS.forEach(applyProc);
+
 DEFAULTS.forEach(addDx);
 
 /* ---------- storage ---------- */
@@ -1643,10 +1826,14 @@ function normalize(t){
   t.advice=(t.advice||[]).map(pair); t.red=pair(t.red); t.follow=pair(t.follow);
   t.rx=(t.rx||[]).map(normRx);
   ["co","ho","dx","inv","dxKh","dxFr","sym"].forEach(function(k){t[k]=t[k]||"";});
+  if(t.proc&&(t.proc.name||t.proc.steps)){t.proc={name:pair(t.proc.name),steps:(t.proc.steps||[]).map(pair)};} else delete t.proc;
   return addDx(t);
 }
 function load(){
-  try{var s=localStorage.getItem(KEY); if(s){var a=JSON.parse(s); if(Array.isArray(a)) return mergeDefaults(a.map(normalize));}}catch(e){}
+  try{var s=localStorage.getItem(KEY); if(s){var a=JSON.parse(s); if(Array.isArray(a)){ var m=mergeDefaults(a.map(normalize));
+    if(!localStorage.getItem(PCM_KEY)){ if(migratePcm(m)) localStorage.setItem(KEY,JSON.stringify(m)); localStorage.setItem(PCM_KEY,"1"); }
+    if(!localStorage.getItem(PROC_KEY)){ if(migrateProc(m)) localStorage.setItem(KEY,JSON.stringify(m)); localStorage.setItem(PROC_KEY,"1"); }
+    return m; }}}catch(e){}
   var lib=clone(DEFAULTS).map(normalize);
   try{var o=JSON.parse(localStorage.getItem(OLD_KEY)||"null");
     if(Array.isArray(o)) o.filter(function(t){return t&&t.id&&t.id.indexOf("u-")===0;}).forEach(function(t){lib.push(normalize(t));});
@@ -1655,6 +1842,17 @@ function load(){
 }
 var DEL_KEY="rxTemplates.deletedDefaults";
 function deletedDefaults(){try{return JSON.parse(localStorage.getItem(DEL_KEY)||"[]")||[];}catch(e){return [];}}
+var PCM_KEY="rxTemplates.mig.pcm1", PROC_KEY="rxTemplates.mig.proc1";
+function migrateProc(arr){var ch=false; arr.forEach(function(t){ if(PROCS[t.id]&&!t.proc){ applyProc(t); ch=true; } }); return ch;}
+function migratePcm(arr){
+  var changed=false;
+  arr.forEach(function(t){(t.rx||[]).forEach(function(r){
+    if(/paracetamol/i.test(r.drug||"")&&Array.isArray(r.slots)&&r.unit==="tab"){
+      r.slots=r.slots.map(function(v){if(/^\s*1\s*[–-]\s*2\s*$/.test(v)){changed=true;return "1";}return v;});
+    }
+  });});
+  return changed;
+}
 function mergeDefaults(arr){
   var have={}, del=deletedDefaults(); arr.forEach(function(t){have[t.id]=1;});
   DEFAULTS.forEach(function(d){ if(!have[d.id]&&del.indexOf(d.id)<0) arr.push(normalize(clone(d))); });
@@ -1688,7 +1886,7 @@ function applySettings(){
 }
 function openSettings(){
   $("sName").value=SET.name; $("sAddr").value=SET.addr; $("sPhone").value=SET.phone; $("sDoctor").value=SET.doctor;
-  $("sPaper").value=SET.paper; $("sDxKh").checked=SET.dxKh; $("sDxFr").checked=SET.dxFr; $("sVitals").checked=SET.vitals; $("sBottle").value=SET.bottle;
+  $("sPaper").value=SET.paper; $("sDxKh").checked=SET.dxKh; $("sDxFr").checked=SET.dxFr; $("sVitals").checked=SET.vitals; padShow(); $("sBottle").value=SET.bottle;
   var cfg=fbConfig(); $("fbConfig").value=cfg?JSON.stringify(cfg,null,1):""; $("fbConfig").disabled=!!FIREBASE_CONFIG;
   $("fbClinic").value=fbClinicId(); setCloud(CLOUD.state,null);
   $("settings").hidden=false; markNav(); $("sName").focus();
@@ -1806,7 +2004,7 @@ function createFromDx(code,en,kh,fr){
   currentId=null;
   var dx=code?en+" ("+code+")":en;
   fillSheet({name:en,group:code?groupForCode(code):(activeGroup==="all"?"other":activeGroup),co:"",ho:"",dx:dx,dxKh:kh||"",dxFr:fr||"",inv:"",
-    rx:[{drug:"",slots:["","","",""],unit:"tab",time:"",days:"",note:""}],advice:[WATER,REST],red:["",""],follow:["",""]});
+    rx:[{drug:"",slots:["","","",""],unit:"tab",time:"",days:"",note:""}],advice:[WATER,REST],red:["",""],follow:fu("5 days"),proc:null});
   disarm(); renderList();
   say("រោគវិនិច្ឆ័យថ្មី៖ ដាក់ថ្នាំ និងការណែនាំ ហើយចុច “រក្សាទុក” ដើម្បីទុកជាគំរូ។");
   var d=document.querySelector("#rxTable .drug"); if(d) setTimeout(function(){d.focus();},300);
@@ -2128,6 +2326,160 @@ function applyAutoTime(tb){
   tb.querySelector("input.time-custom").hidden=true;
 }
 
+/* ---------- dates ---------- */
+var KH_DAYS=["អាទិត្យ","ចន្ទ","អង្គារ","ពុធ","ព្រហស្បតិ៍","សុក្រ","សៅរ៍"], EN_DAYS=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+function visitDate(){var m=/(\d{1,2})\/(\d{1,2})\/(\d{4})/.exec(($("pDate")&&$("pDate").textContent)||""); var d=m?new Date(+m[3],+m[2]-1,+m[1]):new Date(); d.setHours(12,0,0,0); return d;}
+function dmy(d){var z=function(n){return String(n).padStart(2,"0");};return z(d.getDate())+"/"+z(d.getMonth()+1)+"/"+d.getFullYear();}
+function isoD(d){var z=function(n){return String(n).padStart(2,"0");};return d.getFullYear()+"-"+z(d.getMonth()+1)+"-"+z(d.getDate());}
+function addOff(d,o,sign){var x=new Date(d.getTime()); sign=sign||1; if(o.d) x.setDate(x.getDate()+sign*o.d); if(o.m) x.setMonth(x.getMonth()+sign*o.m); if(o.y) x.setFullYear(x.getFullYear()+sign*o.y); return x;}
+function dayName(d,lang){return lang==="en"?EN_DAYS[d.getDay()]:"ថ្ងៃ"+KH_DAYS[d.getDay()];}
+
+/* ---------- WHO vaccine schedules ---------- */
+var VSCHED={
+  rabies_im:{kh:"ឆ្កែឆ្កួត PEP · IM ៤ ដូស (ថ្ងៃ 0, 3, 7, 14)",en:"Rabies PEP · IM 4 doses (day 0, 3, 7, 14)",doses:[{d:0},{d:3},{d:7},{d:14}]},
+  rabies_id:{kh:"ឆ្កែឆ្កួត PEP · ID ១ សប្តាហ៍ (ថ្ងៃ 0, 3, 7)",en:"Rabies PEP · ID 1-week (day 0, 3, 7)",doses:[{d:0},{d:3},{d:7}]},
+  rabies_zagreb:{kh:"ឆ្កែឆ្កួត PEP · Zagreb (ថ្ងៃ 0, 7, 21)",en:"Rabies PEP · Zagreb 2-1-1 (day 0, 7, 21)",doses:[{d:0},{d:7},{d:21}]},
+  rabies_prep:{kh:"ឆ្កែឆ្កួត PrEP · មុនប៉ះពាល់ (ថ្ងៃ 0, 7)",en:"Rabies PrEP (day 0, 7)",doses:[{d:0},{d:7}]},
+  rabies_booster:{kh:"ឆ្កែឆ្កួត · ធ្លាប់ចាក់គ្រប់ (ថ្ងៃ 0, 3)",en:"Rabies PEP, previously vaccinated (day 0, 3)",doses:[{d:0},{d:3}]},
+  td_primary:{kh:"Td · មិនធ្លាប់ចាក់ (0, 1 ខែ, 7 ខែ)",en:"Td primary (0, 1 month, 7 months)",doses:[{d:0},{m:1},{m:7}],after:{y:1},afterKh:"ដូសទី ៤ ក្រោយ ១ ឆ្នាំ",afterEn:"4th dose after 1 year"},
+  td_booster:{kh:"Td · ដូសជំរុញ (១ ដូស)",en:"Td booster (1 dose)",doses:[{d:0}],after:{y:10},afterKh:"ដូសជំរុញបន្ទាប់ក្រោយ ១០ ឆ្នាំ",afterEn:"next booster in 10 years"},
+  hepb:{kh:"រលាកថ្លើម B (0, 1 ខែ, 6 ខែ)",en:"Hepatitis B (0, 1 month, 6 months)",doses:[{d:0},{m:1},{m:6}]},
+  flu:{kh:"ផ្តាសាយធំ · ប្រចាំឆ្នាំ",en:"Influenza · yearly",doses:[{d:0}],after:{y:1},afterKh:"ចាក់ម្តងទៀតក្រោយ ១ ឆ្នាំ",afterEn:"repeat after 1 year"},
+  single:{kh:"១ ដូស",en:"Single dose",doses:[{d:0}]}
+};
+function autoSched(drug){
+  var d=fold(drug);
+  if(/rabies|ឆ្កែឆ្កួត/.test(d)) return "rabies_im";
+  if(/tetanus|\btd\b|តេតាណូស/.test(d)) return "td_booster";
+  if(/hepatitis b|hep b|hbv/.test(d)) return "hepb";
+  if(/influenza|flu/.test(d)) return "flu";
+  return "single";
+}
+function vacPlan(r){
+  var key=VSCHED[r.vsched]?r.vsched:autoSched(r.drug), sc=VSCHED[key], n=sc.doses.length;
+  var k=Math.min(Math.max(parseInt(r.vdose,10)||1,1),n), today=visitDate();
+  var day0=addOff(today,sc.doses[k-1],-1), next=[];
+  for(var i=k;i<n;i++) next.push({n:i+1,date:addOff(day0,sc.doses[i])});
+  var after=(k===n&&sc.after)?addOff(today,sc.after):null;
+  return {key:key,sc:sc,n:n,k:k,next:next,after:after};
+}
+function vacLine(r,lang){
+  var p=vacPlan(r), en=lang==="en", out=[];
+  out.push(en?"Inject dose "+p.k+" of "+p.n:"ចាក់ ដូសទី "+p.k+"/"+p.n);
+  if(p.next.length) out.push((en?"Next: ":"ណាត់ចាក់: ")+p.next.map(function(x){return (en?"dose ":"ដូសទី ")+x.n+" "+dmy(x.date);}).join(", "));
+  else if(p.after) out.push((en?p.sc.afterEn:p.sc.afterKh)+" ("+dmy(p.after)+")");
+  else out.push(en?"Course complete":"គ្រប់ដូសហើយ");
+  return out.join("  ·  ");
+}
+function nextVaccineDate(){
+  var best=null;
+  rxItems().forEach(function(tb){
+    var r=rowData(tb); if(r.unit!=="vacc") return;
+    var p=vacPlan(r), d=p.next.length?p.next[0].date:null;
+    if(d&&(!best||d<best)) best=d;
+  });
+  return best;
+}
+function fillVacRow(tb,r){
+  var tr=tb.querySelector("tr.r-vac"), sel=tr.querySelector("select.vsched"), ds=tr.querySelector("select.vdose");
+  var lang=curLang(), key=sel.dataset.manual?(sel.value||sel.dataset.saved):autoSched(r.drug); if(!VSCHED[key]) key=autoSched(r.drug);
+  if(!sel.options.length) Object.keys(VSCHED).forEach(function(k){var o=document.createElement("option");o.value=k;sel.appendChild(o);});
+  [].forEach.call(sel.options,function(o){o.textContent=lang==="en"?VSCHED[o.value].en:VSCHED[o.value].kh;});
+  sel.value=key;
+  var n=VSCHED[key].doses.length, cur=ds.value||ds.dataset.saved||"1"; ds.textContent="";
+  for(var i=1;i<=n;i++){var o=document.createElement("option");o.value=String(i);o.textContent=(lang==="en"?"Today: dose ":"ថ្ងៃនេះ ដូសទី ")+i+"/"+n;ds.appendChild(o);}
+  ds.value=String(Math.min(parseInt(cur,10)||1,n));
+  var p=vacPlan({drug:r.drug,vsched:key,vdose:ds.value});
+  tr.querySelector(".vnext").textContent=p.next.length?((lang==="en"?"Next dose: ":"ដូសបន្ទាប់: ")+dmy(p.next[0].date)+" ("+dayName(p.next[0].date,lang)+")"):(p.after?(lang==="en"?p.sc.afterEn:p.sc.afterKh):"");
+}
+
+/* ---------- appointment date ---------- */
+function followDays(txt){
+  var m=/(\d+)(?:\s*[–-]\s*\d+)?\s*(day|week|month)/i.exec(txt||"");
+  if(!m){ m=/([០-៩\d]+)(?:\s*[–-]\s*[០-៩\d]+)?\s*(ថ្ងៃ|សប្តាហ៍|ខែ)/.exec(txt||""); if(m) m[1]=m[1].replace(/[០-៩]/g,function(c){return "០១២៣៤៥៦៧៨៩".indexOf(c);}); }
+  if(!m) return null; var n=parseInt(m[1],10), u=m[2].toLowerCase();
+  return /week|សប្តាហ៍/.test(u)?{d:n*7}:/month|ខែ/.test(u)?{m:n}:{d:n};
+}
+var apptT;
+function computeAppt(){
+  clearTimeout(apptT);
+  apptT=setTimeout(function(){
+    var inp=$("apptDate");
+    if(!inp.dataset.manual){
+      var d=nextVaccineDate();
+      if(!d){var o=followDays($("fFollowEn").textContent)||followDays($("fFollowKh").textContent); if(o) d=addOff(visitDate(),o);}
+      inp.value=d?isoD(d):"";
+    }
+    showAppt();
+  },30);
+}
+function showAppt(){
+  var inp=$("apptDate"), v=inp.value, lang=curLang();
+  inp.classList.toggle("manual",!!inp.dataset.manual); $("apptAuto").hidden=!inp.dataset.manual;
+  if(!v){$("apptTxt").textContent="";$("apptTxt").parentNode.classList.remove("has");return;}
+  var d=new Date(v+"T12:00:00");
+  $("apptTxt").textContent=dayName(d,lang==="en"?"en":"kh")+" "+dmy(d); $("apptTxt").parentNode.classList.add("has");
+}
+
+/* ---------- digital signature (kept on this device) ---------- */
+var SIG_KEY="rxTemplates.signature", SIGON_KEY="rxTemplates.sigOn", sigDirty=false, sigData="";
+function loadSig(){try{sigData=localStorage.getItem(SIG_KEY)||"";}catch(e){sigData="";} applySig();}
+function applySig(){
+  var on=false; try{on=localStorage.getItem(SIGON_KEY)==="1";}catch(e){}
+  var img=$("sigImg"); if(sigData&&on){img.src=sigData;img.hidden=false;} else {img.hidden=true;img.removeAttribute("src");}
+}
+function padInit(){
+  var pad=$("sigPad"), ctx=pad.getContext("2d"), down=false, last=null;
+  function pos(e){var r=pad.getBoundingClientRect();return [(e.clientX-r.left)*pad.width/r.width,(e.clientY-r.top)*pad.height/r.height];}
+  pad.addEventListener("pointerdown",function(e){down=true;last=pos(e);try{pad.setPointerCapture(e.pointerId);}catch(x){} e.preventDefault();});
+  pad.addEventListener("pointermove",function(e){if(!down)return;var p=pos(e);ctx.lineWidth=3.2;ctx.lineCap="round";ctx.lineJoin="round";ctx.strokeStyle="#1b2a4a";
+    ctx.beginPath();ctx.moveTo(last[0],last[1]);ctx.lineTo(p[0],p[1]);ctx.stroke();last=p;sigDirty=true;});
+  ["pointerup","pointercancel","pointerleave"].forEach(function(ev){pad.addEventListener(ev,function(){down=false;});});
+  $("sigClear").onclick=function(){ctx.clearRect(0,0,pad.width,pad.height);sigDirty=true;};
+  $("sigFile").addEventListener("change",function(){
+    var f=this.files[0]; if(!f) return; var rd=new FileReader();
+    rd.onload=function(){var im=new Image(); im.onload=function(){
+      ctx.clearRect(0,0,pad.width,pad.height); var sc=Math.min(pad.width/im.width,pad.height/im.height), w=im.width*sc, h=im.height*sc;
+      ctx.drawImage(im,(pad.width-w)/2,(pad.height-h)/2,w,h);
+      /* make a white paper background transparent so the signature sits on the line */
+      try{var id=ctx.getImageData(0,0,pad.width,pad.height),a=id.data;for(var i=0;i<a.length;i+=4){if(a[i]>200&&a[i+1]>200&&a[i+2]>200)a[i+3]=0;}ctx.putImageData(id,0,0);}catch(x){}
+      sigDirty=true;}; im.src=rd.result;};
+    rd.readAsDataURL(f); this.value="";
+  });
+}
+function padShow(){
+  var pad=$("sigPad"), ctx=pad.getContext("2d"); ctx.clearRect(0,0,pad.width,pad.height); sigDirty=false;
+  if(sigData){var im=new Image(); im.onload=function(){ctx.drawImage(im,0,0,pad.width,pad.height);}; im.src=sigData;}
+  var on=false; try{on=localStorage.getItem(SIGON_KEY)==="1";}catch(e){} $("sSigOn").checked=on;
+}
+function padSave(){
+  var pad=$("sigPad");
+  if(sigDirty){
+    var blank=true; try{var a=pad.getContext("2d").getImageData(0,0,pad.width,pad.height).data; for(var i=3;i<a.length;i+=4){if(a[i]>0){blank=false;break;}}}catch(e){blank=false;}
+    sigData=blank?"":pad.toDataURL("image/png");
+    try{ if(sigData) localStorage.setItem(SIG_KEY,sigData); else localStorage.removeItem(SIG_KEY);}catch(e){}
+  }
+  try{localStorage.setItem(SIGON_KEY,$("sSigOn").checked?"1":"0");}catch(e){}
+  applySig();
+}
+
+/* ---------- minor surgery section ---------- */
+function fillProc(pr){
+  var sec=$("procSec");
+  if(!pr){sec.hidden=true; $("procNameEn").textContent=""; $("procNameKh").textContent=""; fillList($("procEn"),[]); fillList($("procKh"),[]); return;}
+  $("procNameEn").textContent=pr.name[0]||""; $("procNameKh").textContent=pr.name[1]||"";
+  fillList($("procEn"),pr.steps.map(function(x){return x[0];}).filter(Boolean));
+  fillList($("procKh"),pr.steps.map(function(x){return x[1];}).filter(Boolean));
+  sec.hidden=false;
+}
+function readProc(){
+  if($("procSec").hidden) return null;
+  var en=readItems($("procEn")), kh=readItems($("procKh")), st=[];
+  for(var i=0;i<Math.max(en.length,kh.length);i++) st.push([en[i]||"",kh[i]||""]);
+  var name=[$("procNameEn").textContent.trim(),$("procNameKh").textContent.trim()];
+  return (name[0]||name[1]||st.length)?{name:name,steps:st}:null;
+}
+
 /* ---------- medicine table ---------- */
 function editable(cls,ph,text){var d=mk("div",cls);d.contentEditable="true";d.dataset.ph=ph;d.textContent=text||"";return d;}
 function labelSelects(root,lang){
@@ -2144,7 +2496,9 @@ function rowData(tb){
     note:tb.querySelector(".note").textContent.trim(),
     total:tb.dataset.totalManual?tb.querySelector("input.totalin").value.trim():"",
     usage:tb.dataset.usageManual?tb.querySelector(".usage").textContent.trim():"",
-    timeManual:tb.dataset.timeManual?1:0};
+    timeManual:tb.dataset.timeManual?1:0,
+    vsched:tb.querySelector("select.vsched")?tb.querySelector("select.vsched").value:"",
+    vdose:tb.querySelector("select.vdose")?tb.querySelector("select.vdose").value:""};
 }
 function updatePrint(tb){
   var r=rowData(tb), lang=curLang(), tin=tb.querySelector("input.totalin"), us=tb.querySelector(".usage");
@@ -2153,7 +2507,10 @@ function updatePrint(tb){
   if(!tb.dataset.usageManual) us.textContent=doseLine(r,lang,tb.dataset.totalManual?tin.value.trim():undefined);
   us.classList.toggle("manual",!!tb.dataset.usageManual);
   tb.querySelector(".reauto").hidden=!(tb.dataset.usageManual||tb.dataset.totalManual);
+  var isV=r.unit==="vacc", trv=tb.querySelector("tr.r-vac");
+  if(trv){trv.hidden=!isV; if(isV){fillVacRow(tb,r); if(!tb.dataset.usageManual) us.textContent=doseLine(rowData(tb),lang);}}
   tb.querySelector(".pusage").textContent=us.textContent;
+  computeAppt();
   updateStock(tb);
 }
 function rxRow(r){
@@ -2173,7 +2530,7 @@ function rxRow(r){
   td1.appendChild(wrap);
   var sg=mk("div","subs noprint"); sg.hidden=true; td1.appendChild(sg);
   var ac=mk("div","ac noprint"); ac.hidden=true; td1.appendChild(ac);
-  dEl.addEventListener("input",function(){showAc(tb); applyAutoTime(tb);});
+  dEl.addEventListener("input",function(){showAc(tb); if(/vaccin|វ៉ាក់សាំង/i.test(dEl.textContent)&&!us.dataset.manual) us.value="vacc"; applyAutoTime(tb);});
   dEl.addEventListener("blur",function(){setTimeout(function(){closeAc(tb);},150);});
   dEl.addEventListener("keydown",function(e){if(e.key==="Escape") closeAc(tb); if(e.key==="Enter"){e.preventDefault(); var f=ac.querySelector("button"); if(!ac.hidden&&f){f.dispatchEvent(new MouseEvent("mousedown"));} else dEl.blur();}});
   tr1.appendChild(td1); tb.appendChild(tr1);
@@ -2187,7 +2544,7 @@ function rxRow(r){
   var us=mk("select","unit"); us.setAttribute("aria-label","ឯកតា / Unit");
   [["","",""]].concat(UNITS).forEach(function(u){var o=document.createElement("option");o.value=u[0];us.appendChild(o);});
   us.value=unitOf(r.unit)?r.unit:""; cell(us);
-  us.addEventListener("change",function(){applyAutoTime(tb);});
+  us.addEventListener("change",function(){us.dataset.manual="1"; applyAutoTime(tb);});
   var ts=mk("select","time"); ts.setAttribute("aria-label","ពេលលេប / When");
   TIME.forEach(function(o){var op=document.createElement("option");op.value=o[0];ts.appendChild(op);});
   var custom=r.time.indexOf("custom:")===0;
@@ -2199,6 +2556,15 @@ function rxRow(r){
   if(r.total){tb.dataset.totalManual="1"; tin.value=r.total;}
   tin.addEventListener("input",function(){ if(this.value.trim()) tb.dataset.totalManual="1"; else delete tb.dataset.totalManual; });
   tb.appendChild(tr2);
+  var trv=mk("tr","r-vac"), tdv=mk("td"); tdv.colSpan=8;
+  var vr=mk("div","vacrow"), vl=mk("span"); vl.textContent="កាលវិភាគ WHO:";
+  var vs=mk("select","vsched"); vs.setAttribute("aria-label","Vaccine schedule");
+  var vd=mk("select","vdose"); vd.setAttribute("aria-label","Dose given today");
+  var vn=mk("span","vnext");
+  vr.appendChild(vl); vr.appendChild(vs); vr.appendChild(vd); vr.appendChild(vn); tdv.appendChild(vr); trv.appendChild(tdv); tb.appendChild(trv);
+  if(r.vsched&&VSCHED[r.vsched]){vs.dataset.manual="1"; vs.dataset.saved=r.vsched;}
+  vd.dataset.saved=r.vdose||"1";
+  vs.addEventListener("input",function(){vs.dataset.manual="1"; vd.value="1";});
   /* row 3: usage line (auto, editable) */
   var tr3=mk("tr","r-use"), td3=mk("td"); td3.colSpan=8;
   var ubx=mk("div","usagebox"), ul=mk("span"); ul.textContent="ការប្រើប្រាស់";
@@ -2233,7 +2599,9 @@ function fillSheet(t){
   fillList($("adviceEn"),t.advice.map(function(a){return a[0];}).filter(Boolean));
   fillList($("adviceKh"),t.advice.map(function(a){return a[1];}).filter(Boolean));
   $("fRedEn").textContent=t.red[0]; $("fRedKh").textContent=t.red[1];
+  fillProc(t.proc);
   $("fFollowEn").textContent=t.follow[0]; $("fFollowKh").textContent=t.follow[1];
+  delete $("apptDate").dataset.manual; computeAppt();
 
   $("tplName").value=t.name; $("tplGroup").value=t.group;
 }
@@ -2249,7 +2617,8 @@ function readSheet(){
   return {co:$("fCo").textContent.trim(),ho:$("fHo").textContent.trim(),dx:$("fDx").textContent.trim(),inv:$("fInv").textContent.trim(),
     dxKh:$("fDxKh").textContent.trim(),dxFr:$("fDxFr").textContent.trim(),sym:cur?cur.sym:"",
     rx:rx,advice:adv,red:[$("fRedEn").textContent.trim(),$("fRedKh").textContent.trim()],
-    follow:[$("fFollowEn").textContent.trim(),$("fFollowKh").textContent.trim()]};
+    follow:[$("fFollowEn").textContent.trim(),$("fFollowKh").textContent.trim()],
+    proc:readProc()};
 }
 function openTemplate(id){
   var t=lib.find(function(x){return x.id===id;}); if(!t) return;
@@ -2298,7 +2667,7 @@ function del(){
 function newBlank(){
   currentId=null;
   fillSheet({name:"",group:activeGroup==="all"?"other":activeGroup,co:"",ho:"",dx:"",dxKh:"",dxFr:"",inv:"",
-    rx:[{drug:"",slots:["","","",""],unit:"tab",time:"",days:"",note:""}],advice:[WATER,REST],red:["",""],follow:["",""]});
+    rx:[{drug:"",slots:["","","",""],unit:"tab",time:"",days:"",note:""}],advice:[WATER,REST],red:["",""],follow:fu("5 days"),proc:null});
   renderList(); $("fCo").focus();
 }
 var resetArmed=false;
@@ -2411,8 +2780,8 @@ function connectClinic(create){
     startSync(doc.data().ownerEmail===email?"owner":"member");
   }).catch(fbErr);
 }
-function enc(col,x){var o=JSON.parse(JSON.stringify(x)); if(col==="templates"&&Array.isArray(o.advice)) o.advice=o.advice.map(function(a){return Array.isArray(a)?{en:a[0]||"",kh:a[1]||""}:a;}); return o;}
-function dec(col,o){if(col==="templates"&&Array.isArray(o.advice)) o.advice=o.advice.map(function(a){return Array.isArray(a)?a:[a.en||"",a.kh||""];}); return o;}
+function enc(col,x){var o=JSON.parse(JSON.stringify(x)); if(col==="templates"&&o.proc&&Array.isArray(o.proc.steps)) o.proc.steps=o.proc.steps.map(function(a){return Array.isArray(a)?{en:a[0]||"",kh:a[1]||""}:a;}); if(col==="templates"&&Array.isArray(o.advice)) o.advice=o.advice.map(function(a){return Array.isArray(a)?{en:a[0]||"",kh:a[1]||""}:a;}); return o;}
+function dec(col,o){if(col==="templates"&&o.proc&&Array.isArray(o.proc.steps)) o.proc.steps=o.proc.steps.map(function(a){return Array.isArray(a)?a:[a.en||"",a.kh||""];}); if(col==="templates"&&Array.isArray(o.advice)) o.advice=o.advice.map(function(a){return Array.isArray(a)?a:[a.en||"",a.kh||""];}); return o;}
 function pushDiff(col,arr){
   if(!cloudOn()||!CLOUD.ready[col]) return;
   var map=CLOUD.synced[col], seen={}, ops=[];
@@ -2448,7 +2817,11 @@ function startSync(role){
       CLOUD.synced[col]=map;
       if(col==="templates"){
         var before=arr.length; lib=arr.map(normalize);
-        if(role==="owner"&&!CLOUD.mergedDefaults){CLOUD.mergedDefaults=true; lib=mergeDefaults(lib); if(lib.length>before) setTimeout(function(){pushDiff("templates",lib);},0);}
+        if(role==="owner"&&!CLOUD.mergedDefaults){CLOUD.mergedDefaults=true; lib=mergeDefaults(lib);
+          var mk1=PCM_KEY+"."+CLOUD.clinic, mk2=PROC_KEY+"."+CLOUD.clinic, mig=false;
+          try{ if(!localStorage.getItem(mk1)){ mig=migratePcm(lib)||mig; localStorage.setItem(mk1,"1"); }
+               if(!localStorage.getItem(mk2)){ mig=migrateProc(lib)||mig; localStorage.setItem(mk2,"1"); } }catch(e){}
+          if(lib.length>before||mig) setTimeout(function(){pushDiff("templates",lib);},0);}
         persistLocal(); renderGroupSel(); renderList(); }
       else { stock=arr; saveStockLocal(); if(!$("stockView").hidden) renderStock(); else renderStockTile(); refreshStockBadges(); }
       syncedMsg(snap.metadata&&snap.metadata.fromCache);
@@ -2603,6 +2976,21 @@ loadPatient();
 PT_TEXT.forEach(function(id){$(id).addEventListener("input",savePatient);});
 PT_VITAL.forEach(function(id){$(id).addEventListener("input",function(){checkVitals();savePatient();});});
 $("newPatientBtn").onclick=newPatient;
+$("addProc").onclick=function(){
+  if($("procSec").hidden){
+    var cur=lib.find(function(x){return x.id===currentId;});
+    fillProc(cur&&PROCS[cur.id]?clone(PROCS[cur.id]):{name:["",""],steps:[["",""]]});
+  }
+  $("procSec").scrollIntoView({block:"center",behavior:"smooth"}); setTimeout(function(){$("procNameEn").focus();},200);
+};
+$("procRemove").onclick=function(){fillProc(null);};
+$("procPrint").addEventListener("change",function(){document.body.classList.toggle("print-proc",this.checked);});
+padInit(); loadSig();
+$("signBtn").onclick=function(){openSettings(); setTimeout(function(){$("sigSet").scrollIntoView({block:"start",behavior:"smooth"});},60);};
+$("apptDate").addEventListener("change",function(){if(this.value) this.dataset.manual="1"; else delete this.dataset.manual; showAppt();});
+$("apptAuto").onclick=function(){delete $("apptDate").dataset.manual; computeAppt();};
+$("fFollowEn").addEventListener("input",computeAppt); $("fFollowKh").addEventListener("input",computeAppt);
+$("pDate").addEventListener("input",function(){rxItems().forEach(updatePrint); computeAppt();});
 var qsT; $("tplName").addEventListener("input",function(){clearTimeout(qsT);qsT=setTimeout(quickSearch,ICD.length>5000?200:40);});
 $("tplName").addEventListener("focus",function(){if(this.value.trim().length>=2&&this.dataset.typed) quickSearch();});
 $("tplName").addEventListener("keydown",function(e){
@@ -2655,7 +3043,7 @@ document.addEventListener("keydown",function(e){if(e.key!=="Escape")return; if(!
 $("settingsForm").addEventListener("submit",function(e){
   e.preventDefault();
   SET.name=$("sName").value.trim(); SET.addr=$("sAddr").value.trim(); SET.phone=$("sPhone").value.trim(); SET.doctor=$("sDoctor").value.trim();
-  SET.paper=$("sPaper").value; SET.dxKh=$("sDxKh").checked; SET.dxFr=$("sDxFr").checked; SET.vitals=$("sVitals").checked; SET.bottle=parseFloat($("sBottle").value)||60;
+  SET.paper=$("sPaper").value; SET.dxKh=$("sDxKh").checked; SET.dxFr=$("sDxFr").checked; SET.vitals=$("sVitals").checked; padSave(); SET.bottle=parseFloat($("sBottle").value)||60;
   rxItems().forEach(updatePrint);
   applySettings(); closeSettings();
   say(saveSettings()?"បានរក្សាទុកការកំណត់":"មិនអាចរក្សាទុកការកំណត់ក្នុង browser នេះបាន។",!saveSettings());
