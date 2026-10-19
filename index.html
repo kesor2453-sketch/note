@@ -1195,6 +1195,444 @@ var DXI={
  "d-dogbite":["ឆ្កែខាំ","Morsure de chien","dog bite rabies ឆ្កែខាំ ឆ្កែឆ្កួត morsure rage"]
 };
 function addDx(t){var d=DXI[t.id]; if(d){ if(!t.dxKh) t.dxKh=d[0]; if(!t.dxFr) t.dxFr=d[1]; if(!t.sym) t.sym=d[2]; } return t;}
+/* ---------- more common outpatient templates (doctor to review before use) ---------- */
+function R(drug,unit,slots,time,days,note){
+  var s=slots?String(slots).split("-"):["","","",""]; while(s.length<4) s.push("");
+  return {drug:drug,slots:s,unit:unit,time:time||"",days:days||"",note:note||""};
+}
+var FU=function(en,kh){return [en,kh];};
+DEFAULTS=DEFAULTS.concat([
+/* General */
+T("n-vomit","general","Nausea & vomiting","Nausea, vomiting","Nausea and vomiting (R11)","",
+ [R("Domperidone 10 mg","tab","1-1-1","before-meals","3","Not for children under 12 or with heart disease."),R("ORS (low osmolarity)","sachet","","prn","","1 sachet in 1 litre water, sip often.")],
+ [["Take small sips of ORS or water every few minutes.","ផឹកទឹក ORS ឬទឹកស្អាតតិចៗ រៀងរាល់ពីរបីនាទីម្តង។"],
+  ["Eat light food when vomiting stops: rice porridge, bread, banana.","ពេលឈប់ក្អួត ញ៉ាំអាហារស្រាលៗ៖ បបរ នំប៉័ង ចេក។"],
+  ["Avoid oily, spicy food and milk for 1–2 days.","ជៀសវាងអាហារខ្លាញ់ ហឹរ និងទឹកដោះគោ ១–២ ថ្ងៃ។"]],
+ ["Cannot keep any fluids down, vomiting blood or green fluid, severe abdominal pain, very little urine, confusion.",
+  "មិនអាចផឹកទឹកបានសោះ ក្អួតឈាម ឬទឹកពណ៌បៃតង ឈឺពោះខ្លាំង នោមតិចខ្លាំង វង្វេង។"],fu("2 days")),
+T("n-heat","general","Heat exhaustion","Weakness, dizziness, sweating in hot weather","Heat exhaustion (T67.5)","",
+ [R("ORS (low osmolarity)","sachet","1-1-1","prn","2","Drink slowly; 1 sachet in 1 litre water.")],
+ [["Rest in a cool, shaded place. Loosen clothes.","សម្រាកនៅកន្លែងត្រជាក់ មានម្លប់។ បន្ធូរខោអាវ។"],
+  ["Sponge the body with cool water and use a fan.","ជូតខ្លួនដោយទឹកត្រជាក់ និងប្រើកង្ហារ។"],
+  ["Drink water or ORS often. Avoid alcohol and very sweet drinks.","ផឹកទឹក ឬ ORS ញឹកញាប់។ ជៀសវាងស្រា និងភេសជ្ជៈផ្អែមខ្លាំង។"],
+  ["Avoid hard work in the midday sun.","ជៀសវាងការងារធ្ងន់ក្រោមកម្តៅថ្ងៃត្រង់។"]],
+ ["Confusion, fainting, convulsion, body very hot and dry skin, vomiting and cannot drink.",
+  "វង្វេង សន្លប់ ប្រកាច់ ខ្លួនក្តៅខ្លាំង ស្បែកស្ងួត ក្អួត ហើយមិនអាចផឹកទឹកបាន។"],fu("1 day")),
+
+/* Respiratory */
+T("n-flu","resp","Influenza","Fever, body ache, cough","Influenza, virus not identified (J11.1)","",
+ [R("Paracetamol 500 mg","tab","1–2-1–2-1–2-1–2","prn","","Max 8 tablets (4 g) per day."),R("Cetirizine 10 mg","tab","0-0-1","bedtime","5","For runny nose.")],
+ [WATER,REST,["Stay home and wear a mask to protect others.","នៅផ្ទះ និងពាក់ម៉ាស់ ដើម្បីការពារអ្នកដទៃ។"],
+  ["Antibiotics do not treat influenza.","ថ្នាំអង់ទីប៊ីយ៉ូទិកមិនព្យាបាលជំងឺផ្តាសាយធំទេ។"]],
+ ["Difficulty breathing, chest pain, confusion, fever more than 3 days, or getting better then worse.",
+  "ពិបាកដកដង្ហើម ឈឺទ្រូង វង្វេង គ្រុនលើសពី ៣ ថ្ងៃ ឬធូរហើយធ្ងន់វិញ។"],fu("3 days")),
+T("n-copd","resp","COPD exacerbation (mild)","Worse cough and breathlessness","COPD with acute exacerbation (J44.1)","SpO₂, chest X-ray if fever",
+ [R("Salbutamol inhaler 100 mcg","puff","2-2-2-2","prn","","Use with spacer."),R("Prednisolone 5 mg","tab","8-0-0","after-breakfast","5","40 mg daily."),
+  R("Amoxicillin 500 mg","cap","1-1-1","after-meals","5","Only if sputum is yellow/green or increased.")],
+ [["Stop smoking and avoid smoke from cooking fires.","ឈប់ជក់បារី និងជៀសវាងផ្សែងចង្ក្រានដុត។"],
+  ["Use the inhaler correctly with a spacer.","ប្រើថ្នាំបាញ់ឱ្យត្រឹមត្រូវជាមួយបំពង់ spacer។"],ABX_KH],
+ ["Breathless at rest, lips blue, confusion, cannot speak full sentences, SpO₂ below 90%.",
+  "ហត់ពេលសម្រាក បបូរមាត់ស្វាយ វង្វេង មិនអាចនិយាយបានពេញប្រយោគ SpO₂ ក្រោម ៩០%។"],fu("3 days")),
+T("n-tbsus","resp","Chronic cough (TB suspected)","Cough more than 2 weeks","Cough (R05) — TB to be excluded","Sputum GeneXpert / AFB, chest X-ray",
+ [R("Paracetamol 500 mg","tab","1-1-1","prn","","For fever or pain.")],
+ [["Give sputum samples for TB testing as soon as possible.","ផ្តល់កំហាកដើម្បីពិនិត្យរបេងឱ្យបានឆាប់។"],
+  ["Cover your mouth when coughing and open windows at home.","បិទមាត់ពេលក្អក និងបើកបង្អួចផ្ទះ។"],
+  ["TB testing and treatment are free at public health centres.","ការពិនិត្យ និងព្យាបាលរបេងគឺឥតគិតថ្លៃនៅមណ្ឌលសុខភាពរដ្ឋ។"]],
+ ["Coughing blood, difficulty breathing, high fever, severe weight loss.","ក្អកចេញឈាម ពិបាកដកដង្ហើម គ្រុនខ្លាំង ស្រកទម្ងន់ខ្លាំង។"],
+ FU("Follow-up: with TB test result","ត្រឡប់មកវិញជាមួយលទ្ធផលពិនិត្យរបេង")),
+
+/* Cardiovascular */
+T("n-htn2","cv","Hypertension (two drugs)","High blood pressure not controlled","Essential hypertension (I10)","Creatinine, potassium, glucose, lipids, ECG",
+ [R("Amlodipine 10 mg","tab","1-0-0","after-breakfast","30",""),R("Losartan 50 mg","tab","1-0-0","after-breakfast","30","Not in pregnancy. Check potassium and creatinine.")],
+ [["Take both medicines every morning, even when you feel well.","លេបថ្នាំទាំងពីររៀងរាល់ព្រឹក ទោះបីមានអារម្មណ៍ថាសុខសប្បាយក៏ដោយ។"],
+  ["Eat less salt and fish sauce. Walk 30 minutes a day.","កាត់បន្ថយអំបិល និងទឹកត្រី។ ដើរ ៣០ នាទីក្នុងមួយថ្ងៃ។"],
+  ["Check blood pressure at home or the clinic every 1–2 weeks.","វាស់សម្ពាធឈាមនៅផ្ទះ ឬគ្លីនិករៀងរាល់ ១–២ សប្តាហ៍។"]],
+ ["Severe headache, chest pain, weakness or numbness of one side, difficulty speaking, BP above 180/110.",
+  "ឈឺក្បាលខ្លាំង ឈឺទ្រូង ខ្សោយ ឬស្ពឹកម្ខាងខ្លួន និយាយពិបាក សម្ពាធឈាមលើស ១៨០/១១០។"],fu("2 weeks")),
+T("n-lipid","cv","High cholesterol","High cholesterol on blood test","Hyperlipidaemia, unspecified (E78.5)","Lipid profile, ALT",
+ [R("Atorvastatin 20 mg","tab","0-0-1","bedtime","30","Report unexplained muscle pain.")],
+ [["Eat less fatty meat, fried food, coconut milk and sweets.","ញ៉ាំសាច់ខ្លាញ់ អាហារចៀន ខ្ទិះដូង និងបង្អែមតិច។"],
+  ["Eat more vegetables, fish and beans.","ញ៉ាំបន្លែ ត្រី និងសណ្តែកឱ្យបានច្រើន។"],
+  ["Exercise 30 minutes a day, 5 days a week.","ហាត់ប្រាណ ៣០ នាទីក្នុងមួយថ្ងៃ ៥ ថ្ងៃក្នុងមួយសប្តាហ៍។"]],
+ ["Severe muscle pain or weakness, dark urine, yellow eyes.","ឈឺ ឬខ្សោយសាច់ដុំខ្លាំង ទឹកនោមខ្មៅ ភ្នែកលឿង។"],fu("3 months")),
+T("n-angina","cv","Chest pain (angina suspected)","Chest pain on exertion","Angina pectoris, unspecified (I20.9)","ECG now, troponin if available",
+ [R("Aspirin 81 mg","tab","4-0-0","","1","Chew 300 mg once now if no allergy or bleeding."),R("Isosorbide dinitrate (sublingual) 5 mg","tab","1-0-0-0","prn","","Under the tongue for chest pain; may repeat after 5 minutes, max 3.")],
+ [["Stop activity and rest when chest pain starts.","ឈប់ធ្វើសកម្មភាព ហើយសម្រាកពេលចាប់ផ្តើមឈឺទ្រូង។"],
+  ["Go to hospital for heart tests.","ទៅមន្ទីរពេទ្យដើម្បីពិនិត្យបេះដូង។"],
+  ["Stop smoking.","ឈប់ជក់បារី។"]],
+ ["Chest pain lasting more than 15 minutes, pain with sweating or breathlessness, fainting — call ambulance 119.",
+  "ឈឺទ្រូងលើសពី ១៥ នាទី ឈឺជាមួយបែកញើស ឬហត់ សន្លប់ — ហៅឡានពេទ្យ ១១៩។"],
+ FU("Refer: hospital cardiology today","បញ្ជូនទៅមន្ទីរពេទ្យ (ផ្នែកបេះដូង) ថ្ងៃនេះ")),
+
+/* Gastrointestinal */
+T("n-gerd","gi","Acid reflux (GERD)","Heartburn, sour taste","Gastro-oesophageal reflux disease (K21.9)","",
+ [R("Omeprazole 20 mg","cap","1-0-0","before-breakfast","28",""),R("Antacid suspension","ml","10-10-10-10","prn","","After meals and at bedtime if burning.")],
+ [["Do not lie down for 3 hours after eating. Raise the head of the bed.","កុំដេកក្នុងរយៈពេល ៣ ម៉ោងក្រោយញ៉ាំ។ លើកក្បាលគ្រែឱ្យខ្ពស់។"],
+  ["Eat smaller meals. Avoid coffee, alcohol, spicy and fatty food.","ញ៉ាំអាហារតិចៗ។ ជៀសវាងកាហ្វេ ស្រា អាហារហឹរ និងខ្លាញ់។"],
+  ["Lose weight if overweight. Stop smoking.","ស្រកទម្ងន់ បើលើសទម្ងន់។ ឈប់ជក់បារី។"]],
+ ["Difficulty swallowing, vomiting blood, black stools, weight loss, chest pain on exertion.",
+  "ពិបាកលេប ក្អួតឈាម លាមកខ្មៅ ស្រកទម្ងន់ ឈឺទ្រូងពេលធ្វើការ។"],fu("4 weeks")),
+T("n-dysentery","gi","Bloody diarrhea (dysentery)","Diarrhea with blood","Shigellosis, unspecified (A03.9)","Stool exam",
+ [R("Ciprofloxacin 500 mg","tab","1-0-1","after-meals","3","Not in pregnancy or children. Azithromycin 500 mg daily × 3 days is an alternative."),
+  R("ORS (low osmolarity)","sachet","","prn","","After each loose stool.")],
+ [["Drink ORS after each loose stool.","ផឹក ORS ក្រោយជុះរាកម្តងៗ។"],ABX_KH,
+  ["Do not take loperamide for bloody diarrhea.","កុំលេប Loperamide ពេលរាកមានឈាម។"],
+  ["Wash hands with soap. Keep the patient's dishes separate.","លាងដៃនឹងសាប៊ូ។ ញែកចាន ស្លាបព្រារបស់អ្នកជំងឺ។"]],
+ ["High fever, severe abdominal pain, dehydration, blood continuing after 2 days of treatment.",
+  "គ្រុនខ្លាំង ឈឺពោះខ្លាំង ខ្វះជាតិទឹក នៅតែមានឈាមក្រោយព្យាបាល ២ ថ្ងៃ។"],fu("2 days")),
+T("n-colic","gi","Abdominal colic","Cramping abdominal pain","Other and unspecified abdominal pain (R10.4)","Urine test, ultrasound if severe",
+ [R("Hyoscine butylbromide 10 mg","tab","1-1-1","prn","3","For cramping pain.")],
+ [["Eat light food and drink warm water.","ញ៉ាំអាហារស្រាលៗ និងផឹកទឹកក្តៅឧណ្ហៗ។"],
+  ["A warm compress on the belly can help.","ស្អំក្តៅលើពោះអាចជួយបាន។"]],
+ ["Pain moving to the lower right belly, pain getting worse, fever, vomiting, hard belly, pregnancy possible.",
+  "ឈឺផ្លាស់មកពោះខាងស្តាំខាងក្រោម ឈឺកាន់តែខ្លាំង គ្រុន ក្អួត ពោះរឹង ឬអាចមានផ្ទៃពោះ។"],fu("1 day")),
+T("n-hemorrhoid","gi","Haemorrhoids","Anal pain, bleeding with stool","Haemorrhoids, unspecified (K64.9)","",
+ [R("Lactulose 10 g/15 ml","ml","0-0-15","bedtime","14","Keep stools soft."),R("Paracetamol 500 mg","tab","1-1-1","prn","","For pain.")],
+ [["Sit in warm water for 10–15 minutes, 2–3 times a day.","អង្គុយក្នុងទឹកក្តៅឧណ្ហៗ ១០–១៥ នាទី ២–៣ ដងក្នុងមួយថ្ងៃ។"],
+  WATER,["Eat more vegetables and fruit. Do not strain or sit long on the toilet.","ញ៉ាំបន្លែ ផ្លែឈើឱ្យបានច្រើន។ កុំបញ្ចេញកម្លាំងខ្លាំង ឬអង្គុយយូរលើបង្គន់។"]],
+ ["Heavy bleeding, black stools, severe pain with a hard lump, weight loss, age over 50 with new bleeding.",
+  "ហូរឈាមច្រើន លាមកខ្មៅ ឈឺខ្លាំងមានដុំរឹង ស្រកទម្ងន់ អាយុលើស ៥០ ហើយទើបហូរឈាម។"],fu("2 weeks")),
+
+/* Genitourinary */
+T("n-pyelo","gu","Kidney infection (mild)","Fever, back pain, burning urine","Acute pyelonephritis (N10)","Urinalysis, urine culture, CBC",
+ [R("Ciprofloxacin 500 mg","tab","1-0-1","after-meals","7","Not in pregnancy (use cefixime 200 mg twice daily)."),R("Paracetamol 500 mg","tab","1–2-1–2-1–2-1–2","prn","","For fever.")],
+ [WATER,ABX_KH,REST],
+ ["Vomiting and cannot take tablets, very high fever, confusion, low blood pressure, pregnancy, no improvement in 48 hours.",
+  "ក្អួតមិនអាចលេបថ្នាំ គ្រុនខ្លាំង វង្វេង សម្ពាធឈាមចុះ មានផ្ទៃពោះ ឬមិនធូរក្រោយ ៤៨ ម៉ោង។"],fu("2 days")),
+T("n-renalcolic","gu","Kidney stone pain","Severe flank pain","Urinary calculus, unspecified (N23)","Urinalysis, ultrasound KUB",
+ [R("Diclofenac 50 mg","tab","1-1-1","after-meals","3","Avoid if kidney disease or stomach ulcer."),R("Hyoscine butylbromide 10 mg","tab","1-1-1","prn","3","")],
+ [["Drink 2.5–3 litres of water a day.","ផឹកទឹក ២,៥–៣ លីត្រក្នុងមួយថ្ងៃ។"],
+  ["Strain the urine to catch the stone if possible.","ត្រងទឹកនោម ដើម្បីចាប់គ្រួស ប្រសិនបើអាច។"],
+  ["Reduce salt and soft drinks.","កាត់បន្ថយអំបិល និងភេសជ្ជៈកំប៉ុង។"]],
+ ["Fever with pain, cannot pass urine, pain not controlled, vomiting, only one kidney.",
+  "គ្រុនជាមួយការឈឺ មិនអាចនោម ឈឺមិនធូរ ក្អួត ឬមានតម្រងនោមតែមួយ។"],fu("3 days")),
+
+/* Dermatology */
+T("n-impetigo","skin","Impetigo","Crusted sores on skin","Impetigo (L01.0)","",
+ [R("Fusidic acid 2% cream","apply","1-1-1","","7","Remove crusts gently first. If widespread: amoxicillin-clavulanate."),],
+ [["Wash sores with soap and water and pat dry.","លាងដំបៅដោយសាប៊ូ និងទឹក ហើយជូតឱ្យស្ងួត។"],
+  ["Cut nails short. Do not share towels.","កាត់ក្រចកឱ្យខ្លី។ កុំប្រើកន្សែងរួមគ្នា។"],
+  ["Children stay home from school until sores dry.","កុមារត្រូវនៅផ្ទះ រហូតដល់ដំបៅស្ងួត។"]],
+ ["Fever, spreading redness, many sores, dark urine or face swelling after the infection.",
+  "គ្រុន ក្រហមរាលដាល ដំបៅច្រើន ទឹកនោមខ្មៅ ឬហើមមុខក្រោយការឆ្លង។"],fu("1 week")),
+T("n-cellulitis","skin","Cellulitis","Red, hot, swollen skin","Cellulitis, unspecified (L03.9)","CBC, glucose",
+ [R("Amoxicillin-clavulanate 625 mg","tab","1-1-1","after-meals","7",""),R("Paracetamol 500 mg","tab","1–2-1–2-1–2-1–2","prn","","For pain or fever.")],
+ [["Raise the affected leg or arm.","លើកជើង ឬដៃដែលរលាកឱ្យខ្ពស់។"],
+  ["Draw a line around the redness to see if it spreads.","គូសបន្ទាត់ជុំវិញកន្លែងក្រហម ដើម្បីមើលថាវារាលដាលឬអត់។"],ABX_KH],
+ ["Redness spreading past the line, high fever, blisters or black skin, severe pain, diabetes.",
+  "ក្រហមរាលដាលហួសបន្ទាត់ គ្រុនខ្លាំង ពងទឹក ឬស្បែកខ្មៅ ឈឺខ្លាំង ឬមានទឹកនោមផ្អែម។"],fu("2 days")),
+T("n-eczema","skin","Eczema / dermatitis","Itchy dry red skin","Dermatitis, unspecified (L30.9)","",
+ [R("Hydrocortisone 1% cream","apply","1-0-1","","7","Thin layer. Not on broken skin."),R("Cetirizine 10 mg","tab","0-0-1","bedtime","7","For itch.")],
+ [["Use mild soap and a moisturiser after bathing.","ប្រើសាប៊ូស្រាល និងលាបក្រែមសំណើមក្រោយងូតទឹក។"],
+  ["Avoid hot water, perfume and detergents on skin.","ជៀសវាងទឹកក្តៅ ទឹកអប់ និងសាប៊ូបោកខោអាវប៉ះស្បែក។"],
+  ["Do not scratch.","កុំកោស។"]],
+ ["Pus, crusts or fever (infection), rash spreading quickly, no improvement after 2 weeks.",
+  "មានខ្ទុះ ក្រៀម ឬគ្រុន (ឆ្លងមេរោគ) កន្ទួលរាលដាលលឿន ឬមិនធូរក្រោយ ២ សប្តាហ៍។"],fu("2 weeks")),
+T("n-acne","skin","Acne","Pimples on face","Acne vulgaris (L70.0)","",
+ [R("Benzoyl peroxide 5% gel","apply","0-0-1","","56","Start every other night; may dry the skin."),R("Doxycycline 100 mg","cap","1-0-0","after-meals","42","Only for moderate acne. Not in pregnancy or under 12.")],
+ [["Wash face twice daily with mild soap. Do not squeeze pimples.","លាងមុខ ២ ដងក្នុងមួយថ្ងៃដោយសាប៊ូស្រាល។ កុំច្របាច់មុន។"],
+  ["Use oil-free sunscreen and products.","ប្រើឡេការពារពន្លឺថ្ងៃ និងគ្រឿងសំអាងគ្មានប្រេង។"],
+  ["Treatment takes 6–8 weeks to work.","ការព្យាបាលត្រូវការ ៦–៨ សប្តាហ៍ទើបឃើញលទ្ធផល។"]],
+ ["Painful deep lumps or scars, severe skin irritation, mood problems.","ដុំជ្រៅឈឺ ឬស្លាកស្នាម រលាកស្បែកខ្លាំង ឬបញ្ហាអារម្មណ៍។"],fu("6 weeks")),
+T("n-zoster","skin","Shingles (herpes zoster)","Painful blistering rash on one side","Zoster without complications (B02.9)","",
+ [R("Acyclovir 800 mg","tab","1-1-1-1","","7","5 times a day (every 4 hours while awake). Best within 72 hours of rash."),R("Paracetamol 500 mg","tab","1–2-1–2-1–2-1–2","prn","","For pain.")],
+ [["Keep the rash clean and dry. Do not burst blisters.","រក្សាកន្ទួលឱ្យស្អាត និងស្ងួត។ កុំបំបែកពងទឹក។"],
+  ["Avoid contact with pregnant women and babies until crusted.","ជៀសវាងប៉ះស្ត្រីមានផ្ទៃពោះ និងទារក រហូតដល់ពងក្រៀម។"]],
+ ["Rash near the eye or on the nose tip, eye pain or vision change, weakness of face, very widespread rash.",
+  "កន្ទួលជិតភ្នែក ឬចុងច្រមុះ ឈឺភ្នែក ឬមើលមិនច្បាស់ ខ្សោយមុខ ឬកន្ទួលរាលដាលខ្លាំង។"],fu("1 week")),
+T("n-varicella","skin","Chickenpox","Fever, itchy blisters","Varicella without complication (B01.9)","",
+ [R("Paracetamol 500 mg","tab","1–2-1–2-1–2-1–2","prn","","Never give aspirin."),R("Calamine lotion","apply","1-1-1","","7","On itchy spots."),R("Cetirizine 10 mg","tab","0-0-1","bedtime","5","For itch.")],
+ [["Stay home until all blisters have crusted (about 1 week).","នៅផ្ទះរហូតដល់ពងទឹកក្រៀមទាំងអស់ (ប្រហែល ១ សប្តាហ៍)។"],
+  ["Cut nails short and do not scratch.","កាត់ក្រចកឱ្យខ្លី ហើយកុំកោស។"],["Never give aspirin or ibuprofen.","កុំឱ្យ Aspirin ឬ Ibuprofen។"]],
+ ["Difficulty breathing, confusion, red painful skin around blisters, pregnancy, newborn, weak immunity.",
+  "ពិបាកដកដង្ហើម វង្វេង ស្បែកក្រហមឈឺជុំវិញពង មានផ្ទៃពោះ ទារកទើបកើត ឬភាពស៊ាំខ្សោយ។"],fu("3 days")),
+
+/* Wound / trauma */
+T("n-burn","wound","Minor burn","Burn","Burn of unspecified body region, first or second degree (T30.0)","",
+ [R("Silver sulfadiazine 1% cream","apply","1-0-0","","7","Daily dressing. Not on the face or in pregnancy near term."),R("Paracetamol 500 mg","tab","1–2-1–2-1–2-1–2","prn","",""),
+  R("Tetanus-diphtheria vaccine (Td)","vacc","1","","","If not vaccinated in the last 5–10 years.")],
+ [["Cool the burn under running water for 20 minutes (first aid).","ត្រជាក់កន្លែងរលាកក្រោមទឹកហូរ ២០ នាទី (ជំនួយបឋម)។"],
+  ["Do not put toothpaste, oil or ice on burns. Do not burst blisters.","កុំលាបថ្នាំដុសធ្មេញ ប្រេង ឬទឹកកកលើរបួសរលាក។ កុំបំបែកពងទឹក។"],
+  ["Change the dressing every day.","ប្តូររុំរបួសរៀងរាល់ថ្ងៃ។"]],
+ ["Burn larger than the patient's palm, burns on face, hands, genitals or joints, deep white or black burn, fever or pus.",
+  "រលាកធំជាងបាតដៃអ្នកជំងឺ រលាកលើមុខ ដៃ ប្រដាប់ភេទ ឬសន្លាក់ រលាកជ្រៅពណ៌ស ឬខ្មៅ គ្រុន ឬខ្ទុះ។"],fu("2 days")),
+T("n-abscess","wound","Skin abscess","Painful swelling with pus","Cutaneous abscess, unspecified (L02.9)","Glucose if recurrent",
+ [R("Incision and drainage + daily dressing","","","","5",""),R("Amoxicillin-clavulanate 625 mg","tab","1-1-1","after-meals","5","Only if spreading redness, fever or diabetes."),R("Paracetamol 500 mg","tab","1–2-1–2-1–2-1–2","prn","","")],
+ [["Keep the wound clean and change the dressing daily.","រក្សារបួសឱ្យស្អាត ហើយប្តូររុំរៀងរាល់ថ្ងៃ។"],
+  ["Do not squeeze the abscess.","កុំច្របាច់ពក។"],["Warm compress 3 times a day.","ស្អំក្តៅ ៣ ដងក្នុងមួយថ្ងៃ។"]],
+ ["Fever, red streaks spreading, abscess on the face near the nose, recurring abscesses.",
+  "គ្រុន ឆ្នូតក្រហមរាលដាល ពកលើមុខជិតច្រមុះ ឬពកកើតឡើងញឹកញាប់។"],fu("2 days")),
+T("n-bruise","wound","Bruise / soft tissue injury","Pain and swelling after a fall or hit","Superficial injury of unspecified body region (T14.0)","X-ray if bone pain",
+ [R("Paracetamol 500 mg","tab","1–2-1–2-1–2-1–2","prn","",""),R("Diclofenac 1% gel","apply","1-1-1","","5","")],
+ [["Ice 15–20 minutes, 3–4 times a day for 2 days.","ដាក់ទឹកកក ១៥–២០ នាទី ៣–៤ ដងក្នុងមួយថ្ងៃ រយៈពេល ២ ថ្ងៃ។"],
+  ["Rest and raise the injured part.","សម្រាក និងលើកផ្នែករបួសឱ្យខ្ពស់។"]],
+ ["Deformity, cannot move or bear weight, numbness, head injury with vomiting or drowsiness.",
+  "ខូចទ្រង់ទ្រាយ មិនអាចកម្រើក ឬទប់ទម្ងន់ ស្ពឹក ឬរបួសក្បាលហើយក្អួត ឬងងុយ។"],fu("1 week")),
+
+/* Musculoskeletal */
+T("n-oa","msk","Knee osteoarthritis","Knee pain, stiffness","Gonarthrosis, unspecified (M17.9)","X-ray knee",
+ [R("Paracetamol 500 mg","tab","2-0-2","prn","","Max 8 tablets per day."),R("Diclofenac 1% gel","apply","1-1-1","","14","")],
+ [["Keep active: walking, cycling, leg-strengthening exercises.","ធ្វើចលនាជានិច្ច៖ ដើរ ជិះកង់ ហាត់ពង្រឹងសាច់ដុំជើង។"],
+  ["Lose weight if overweight.","ស្រកទម្ងន់ បើលើសទម្ងន់។"],["Avoid squatting and kneeling for long.","ជៀសវាងការអង្គុយច្រហោង និងលុតជង្គង់យូរ។"]],
+ ["Hot, red, very swollen knee, fever, cannot walk.","ជង្គង់ក្តៅ ក្រហម ហើមខ្លាំង គ្រុន ឬមិនអាចដើរបាន។"],fu("1 month")),
+T("n-gout","msk","Gout attack","Sudden hot painful joint","Gout, unspecified (M10.9)","Uric acid (after the attack), creatinine",
+ [R("Diclofenac 50 mg","tab","1-1-1","after-meals","5","Avoid if kidney disease or ulcer. Colchicine is an alternative.")],
+ [["Rest and raise the joint. Ice for 20 minutes.","សម្រាក និងលើកសន្លាក់ឱ្យខ្ពស់។ ដាក់ទឹកកក ២០ នាទី។"],
+  ["Drink plenty of water. Avoid beer, alcohol, organ meats and seafood.","ផឹកទឹកឱ្យបានច្រើន។ ជៀសវាងស្រាបៀរ ស្រា គ្រឿងក្នុង និងគ្រឿងសមុទ្រ។"],
+  ["Lose weight slowly if overweight.","ស្រកទម្ងន់បន្តិចម្តងៗ បើលើសទម្ងន់។"]],
+ ["Fever, many joints, no improvement in 3 days.","គ្រុន ឈឺសន្លាក់ច្រើន ឬមិនធូរក្រោយ ៣ ថ្ងៃ។"],fu("1 week")),
+T("n-neck","msk","Neck pain","Neck pain and stiffness","Cervicalgia (M54.2)","",
+ [R("Paracetamol 500 mg","tab","1–2-1–2-1–2-1–2","prn","",""),R("Ibuprofen 400 mg","tab","1-1-1","after-meals","5","Avoid if ulcer, kidney disease or asthma.")],
+ [["Keep moving the neck gently. Use a warm compress.","កម្រើកកថ្នមៗ។ ស្អំក្តៅ។"],
+  ["Keep screens at eye level. Take breaks from phone use.","ដាក់អេក្រង់ឱ្យស្មើភ្នែក។ សម្រាកពីការប្រើទូរស័ព្ទ។"]],
+ ["Weakness or numbness in arms, pain after injury, fever with stiff neck, severe headache.",
+  "ខ្សោយ ឬស្ពឹកដៃ ឈឺក្រោយរបួស គ្រុនជាមួយរឹងក ឬឈឺក្បាលខ្លាំង។"],fu("1 week")),
+
+/* Neurology */
+T("n-migraine","neuro","Migraine","Throbbing headache, nausea","Migraine, unspecified (G43.9)","",
+ [R("Ibuprofen 400 mg","tab","1-0-0-0","prn","","At the start of headache; may repeat after 6 hours."),R("Metoclopramide 10 mg","tab","1-0-0-0","prn","","For nausea.")],
+ [["Rest in a dark, quiet room at the start of the headache.","សម្រាកក្នុងបន្ទប់ងងឹត ស្ងាត់ ពេលចាប់ផ្តើមឈឺក្បាល។"],
+  ["Keep a headache diary to find triggers (sleep loss, skipped meals, stress).","កត់ត្រាការឈឺក្បាល ដើម្បីរកកត្តាបង្ក (គេងមិនគ្រប់ រំលងអាហារ ភាពតានតឹង)។"],
+  ["Do not use painkillers more than 10 days a month.","កុំប្រើថ្នាំបំបាត់ការឈឺលើសពី ១០ ថ្ងៃក្នុងមួយខែ។"]],
+ ["Sudden worst headache, weakness, confusion, fever with stiff neck, headache after injury, new headache over age 50.",
+  "ឈឺក្បាលខ្លាំងបំផុតភ្លាមៗ ខ្សោយ វង្វេង គ្រុនជាមួយរឹងក ឈឺក្រោយរបួស ឬឈឺក្បាលថ្មីអាយុលើស ៥០។"],fu("1 month")),
+T("n-bell","neuro","Bell's palsy","Sudden weakness of one side of the face","Bell's palsy (G51.0)","",
+ [R("Prednisolone 5 mg","tab","10-0-0","after-breakfast","10","50 mg daily; start within 72 hours."),R("Tetracycline 1% eye ointment","apply","0-0-1","bedtime","14","Protect the eye.")],
+ [["Protect the eye: use eye ointment at night and tape the eye closed.","ការពារភ្នែក៖ លាបថ្នាំភ្នែកពេលយប់ ហើយបិទភ្នែកដោយស្កុត។"],
+  ["Wear glasses outside to protect from dust.","ពាក់វ៉ែនតាពេលចេញក្រៅ ដើម្បីការពារធូលី។"],
+  ["Most people recover in 3 weeks to 3 months.","មនុស្សភាគច្រើនជាសះស្បើយក្នុងរយៈពេល ៣ សប្តាហ៍ ទៅ ៣ ខែ។"]],
+ ["Weakness of arm or leg, difficulty speaking, forehead not affected (may be stroke), eye pain or redness.",
+  "ខ្សោយដៃ ឬជើង និយាយពិបាក ថ្ងាសមិនខ្សោយ (អាចជាដាច់សរសៃឈាមខួរក្បាល) ឈឺ ឬក្រហមភ្នែក។"],fu("1 week")),
+
+/* ENT */
+T("n-otext","ent","Otitis externa","Ear pain, itchy ear canal","Otitis externa, unspecified (H60.9)","",
+ [R("Ofloxacin 0.3% ear drops","drop","5-0-5","","7","In the affected ear."),R("Paracetamol 500 mg","tab","1–2-1–2-1–2-1–2","prn","","")],
+ [["Keep the ear dry. Use cotton with oil in the ear when bathing.","រក្សាត្រចៀកឱ្យស្ងួត។ ដាក់សំឡីលាបប្រេងក្នុងត្រចៀកពេលងូតទឹក។"],
+  ["Do not use cotton buds or put objects in the ear.","កុំប្រើឈើចាក់ត្រចៀក ឬដាក់វត្ថុក្នុងត្រចៀក។"],["No swimming for 1 week.","កុំហែលទឹក ១ សប្តាហ៍។"]],
+ ["Swelling behind the ear, fever, facial weakness, diabetes with severe pain.","ហើមក្រោយត្រចៀក គ្រុន ខ្សោយមុខ ឬមានទឹកនោមផ្អែមហើយឈឺខ្លាំង។"],fu("1 week")),
+T("n-rhinitis","ent","Allergic rhinitis","Sneezing, runny itchy nose","Other seasonal allergic rhinitis (J30.2)","",
+ [R("Cetirizine 10 mg","tab","0-0-1","bedtime","14",""),R("Normal saline nasal spray","spray","2-0-2","","14","Each nostril.")],
+ [["Avoid dust, smoke and pet hair. Wash bedding weekly in hot water.","ជៀសវាងធូលី ផ្សែង និងរោមសត្វ។ បោកភួយរៀងរាល់សប្តាហ៍ក្នុងទឹកក្តៅ។"],
+  ["Wear a mask on dusty roads.","ពាក់ម៉ាស់ពេលធ្វើដំណើរលើផ្លូវមានធូលី។"]],
+ ["Wheezing or breathlessness, facial pain with fever, nosebleeds.","ដង្ហើមហ្វីតៗ ឬហត់ ឈឺមុខជាមួយគ្រុន ឬហូរឈាមច្រមុះ។"],fu("2 weeks")),
+T("n-epistaxis","ent","Nosebleed","Bleeding from the nose","Epistaxis (R04.0)","BP, CBC if recurrent",
+ [R("Normal saline nasal spray","spray","2-0-2","","7","Keeps the nose moist.")],
+ [["First aid: sit up, lean forward and pinch the soft part of the nose for 10–15 minutes.","ជំនួយបឋម៖ អង្គុយ ឱនទៅមុខ ហើយច្របាច់ផ្នែកទន់នៃច្រមុះ ១០–១៥ នាទី។"],
+  ["Do not blow or pick the nose for 1 week.","កុំញីច្រមុះ ឬជីកច្រមុះ ១ សប្តាហ៍។"],["Check blood pressure.","វាស់សម្ពាធឈាម។"]],
+ ["Bleeding more than 20 minutes despite pressure, very heavy bleeding, dizziness, taking blood thinners, recurrent bleeding.",
+  "ហូរឈាមលើសពី ២០ នាទី ទោះបីច្របាច់ ហូរឈាមច្រើនខ្លាំង វិលមុខ លេបថ្នាំរំលាយឈាម ឬហូរញឹកញាប់។"],fu("1 week")),
+T("n-vertigo","ent","Vertigo (BPPV)","Spinning dizziness on moving the head","Benign paroxysmal vertigo (H81.1)","",
+ [R("Betahistine 16 mg","tab","1-1-1","after-meals","7",""),R("Metoclopramide 10 mg","tab","1-0-0-0","prn","","For nausea.")],
+ [["Get up slowly. Sit on the bed edge before standing.","ក្រោកយឺតៗ។ អង្គុយលើគែមគ្រែមុនឈរ។"],
+  ["Repositioning exercises (Epley) can cure BPPV.","លំហាត់ប្តូរទីតាំងក្បាល (Epley) អាចព្យាបាល BPPV បាន។"],["Do not drive or climb while dizzy.","កុំបើកបរ ឬឡើងខ្ពស់ពេលវិលមុខ។"]],
+ ["Weakness, numbness, difficulty speaking or walking, double vision, severe headache, hearing loss.",
+  "ខ្សោយ ស្ពឹក និយាយ ឬដើរពិបាក មើលឃើញពីរ ឈឺក្បាលខ្លាំង ឬថ្លង់ត្រចៀក។"],fu("1 week")),
+
+/* Eye */
+T("n-stye","eye","Stye","Painful lump on the eyelid","Hordeolum (H00.0)","",
+ [R("Tetracycline 1% eye ointment","apply","1-1-1","","7","")],
+ [["Warm compress for 10 minutes, 3–4 times a day.","ស្អំក្តៅ ១០ នាទី ៣–៤ ដងក្នុងមួយថ្ងៃ។"],
+  ["Do not squeeze. Do not wear eye make-up until healed.","កុំច្របាច់។ កុំផាត់ភ្នែក រហូតដល់ជា។"]],
+ ["Swelling spreading to the whole eyelid or face, fever, vision change.","ហើមរាលដាលពេញត្របកភ្នែក ឬមុខ គ្រុន ឬមើលមិនច្បាស់។"],fu("1 week")),
+T("n-allconj","eye","Allergic conjunctivitis","Itchy watery red eyes","Other acute conjunctivitis (H10.1)","",
+ [R("Cetirizine 10 mg","tab","0-0-1","bedtime","7","")],
+ [["Cool compress on closed eyes.","ស្អំត្រជាក់លើភ្នែកបិទ។"],["Do not rub the eyes. Avoid dust and smoke.","កុំត្រដុសភ្នែក។ ជៀសវាងធូលី និងផ្សែង។"]],
+ ["Eye pain, decreased vision, sensitivity to light, thick yellow discharge.","ឈឺភ្នែក មើលឃើញថយចុះ ងាប់ពន្លឺ ឬអាចម៍ភ្នែកលឿងខាប់។"],fu("1 week")),
+
+/* Dental */
+T("n-gingivitis","dental","Gingivitis","Bleeding swollen gums","Chronic gingivitis (K05.1)","",
+ [R("Chlorhexidine 0.12% mouthwash","ml","10-0-10","","7","Rinse 30 seconds, do not swallow.")],
+ [["Brush twice a day with a soft brush and fluoride toothpaste.","ដុសធ្មេញ ២ ដងក្នុងមួយថ្ងៃ ដោយច្រាសទន់ និងថ្នាំដុសធ្មេញមានហ្វ្លុយអរ។"],
+  ["Clean between teeth daily. See a dentist for scaling.","សម្អាតចន្លោះធ្មេញរៀងរាល់ថ្ងៃ។ ទៅទន្តបណ្ឌិតដើម្បីកោសកំណកធ្មេញ។"],["Stop smoking.","ឈប់ជក់បារី។"]],
+ ["Swelling of the face, fever, pus, loose teeth.","ហើមមុខ គ្រុន ខ្ទុះ ឬធ្មេញរង្គើ។"],fu("2 weeks")),
+T("n-ulcer","dental","Mouth ulcer","Painful mouth sores","Recurrent oral aphthae (K12.0)","",
+ [R("Chlorhexidine 0.12% mouthwash","ml","10-0-10","","7",""),R("Vitamin B complex","tab","1-0-0","after-meals","14","")],
+ [["Avoid spicy, sour and hot food until healed.","ជៀសវាងអាហារហឹរ ជូរ និងក្តៅ រហូតដល់ជា។"],["Use a soft toothbrush.","ប្រើច្រាសដុសធ្មេញទន់។"]],
+ ["Ulcer lasting more than 3 weeks, many ulcers with fever, cannot drink.","ដំបៅលើសពី ៣ សប្តាហ៍ ដំបៅច្រើនជាមួយគ្រុន ឬមិនអាចផឹកទឹកបាន។"],fu("2 weeks")),
+
+/* Gynecology */
+T("n-bv","gyn","Bacterial vaginosis","Fishy-smelling grey discharge","Acute vaginitis (N76.0)","",
+ [R("Metronidazole 250 mg","tab","2-0-2","after-meals","7","500 mg twice daily. No alcohol during and 48 h after.")],
+ [["Do not douche or use scented soap inside the vagina.","កុំលាងក្នុងទ្វារមាស ឬប្រើសាប៊ូក្រអូប។"],["No alcohol during treatment.","កុំផឹកស្រាពេលកំពុងព្យាបាល។"],ABX_KH],
+ ["Fever, pelvic pain, pregnancy, symptoms return often.","គ្រុន ឈឺអាងត្រគាក មានផ្ទៃពោះ ឬរោគសញ្ញាកើតឡើងវិញញឹកញាប់។"],fu("1 week")),
+T("n-pid","gyn","Pelvic inflammatory disease","Lower abdominal pain, discharge, fever","Female pelvic inflammatory disease, unspecified (N73.9)","Pregnancy test, CBC, HIV & syphilis",
+ [R("Ceftriaxone 1 g","vial","","","1","500 mg IM once."),R("Doxycycline 100 mg","cap","1-0-1","after-meals","14","Not in pregnancy."),R("Metronidazole 250 mg","tab","2-0-2","after-meals","14","500 mg twice daily.")],
+ [["Partner must be treated too. No sex until both finish treatment.","ដៃគូត្រូវព្យាបាលផងដែរ។ កុំរួមភេទរហូតដល់ទាំងពីរព្យាបាលរួច។"],ABX_KH,
+  ["Use condoms.","ប្រើស្រោមអនាម័យ។"]],
+ ["Severe pain, vomiting, high fever, pregnancy, no improvement in 72 hours.","ឈឺខ្លាំង ក្អួត គ្រុនខ្លាំង មានផ្ទៃពោះ ឬមិនធូរក្រោយ ៧២ ម៉ោង។"],fu("3 days")),
+T("n-menorrhagia","gyn","Heavy menstrual bleeding","Heavy periods","Excessive and frequent menstruation (N92.0)","CBC, pregnancy test, pelvic ultrasound",
+ [R("Tranexamic acid 500 mg","tab","2-2-2","after-meals","5","Days of heavy bleeding only."),R("Mefenamic acid 500 mg","cap","1-1-1","after-meals","3","For pain."),R("Ferrous sulfate + Folic acid 60 mg + 400 mcg","tab","1-0-0","empty","30","")],
+ [["Record the number of pads used each day.","កត់ត្រាចំនួនសំឡីអនាម័យដែលប្រើក្នុងមួយថ្ងៃ។"],["Eat iron-rich food.","ញ៉ាំអាហារសម្បូរជាតិដែក។"]],
+ ["Soaking a pad every hour, dizziness or fainting, bleeding after menopause, pregnancy.","ជោកសំឡីអនាម័យរៀងរាល់ម៉ោង វិលមុខ ឬសន្លប់ ហូរឈាមក្រោយអស់រដូវ ឬមានផ្ទៃពោះ។"],fu("1 month")),
+
+/* Obstetric */
+T("n-utipreg","obs","Urinary infection in pregnancy","Burning urine in pregnancy","Infections of genitourinary tract in pregnancy (O23.4)","Urinalysis, urine culture",
+ [R("Cefixime 200 mg","cap","1-0-1","after-meals","7","Safe in pregnancy.")],
+ [WATER,ABX_KH,["Do not hold urine.","កុំទប់ទឹកនោម។"]],
+ ["Fever, back pain, vomiting, contractions or bleeding, baby moving less.","គ្រុន ឈឺខ្នង ក្អួត ពោះតឹងរឹង ឬហូរឈាម ឬកូនកម្រើកតិច។"],fu("1 week")),
+T("n-anaemiapreg","obs","Anaemia in pregnancy","Tired, pale, pregnant","Anaemia complicating pregnancy (O99.0)","CBC, ferritin",
+ [R("Ferrous sulfate + Folic acid 60 mg + 400 mcg","tab","1-0-1","empty","30","Take with water or orange juice, not tea.")],
+ [["Eat iron-rich food: meat, liver, fish, eggs, dark green vegetables.","ញ៉ាំអាហារសម្បូរជាតិដែក៖ សាច់ ថ្លើម ត្រី ពង បន្លែបៃតងចាស់។"],
+  ["Iron makes stools black. This is normal.","ជាតិដែកធ្វើឱ្យលាមកខ្មៅ ដែលជារឿងធម្មតា។"],["Deworm after the first 3 months of pregnancy.","ទម្លាក់ព្រូនក្រោយផ្ទៃពោះ ៣ ខែដំបូង។"]],
+ ["Breathlessness, chest pain, fainting, bleeding.","ហត់ ឈឺទ្រូង សន្លប់ ឬហូរឈាម។"],fu("1 month")),
+T("n-postpartum","obs","Postpartum check","Routine visit after delivery","Routine postpartum follow-up (Z39.2)","Hb, BP",
+ [R("Ferrous sulfate + Folic acid 60 mg + 400 mcg","tab","1-0-0","empty","90",""),R("Paracetamol 500 mg","tab","1–2-1–2-1–2-1–2","prn","","Safe while breastfeeding.")],
+ [["Breastfeed only for 6 months, day and night.","បំបៅដោះកូនតែទឹកដោះម្តាយរយៈពេល ៦ ខែ ទាំងថ្ងៃទាំងយប់។"],
+  ["Eat well, drink plenty, rest when the baby sleeps.","ញ៉ាំឱ្យបានល្អ ផឹកទឹកច្រើន សម្រាកពេលកូនដេក។"],
+  ["Discuss family planning at 6 weeks.","ពិភាក្សាពីការពន្យារកំណើតនៅ ៦ សប្តាហ៍។"]],
+ ["Heavy bleeding, fever, bad-smelling discharge, severe headache, breast red and painful, feeling very sad or hopeless.",
+  "ហូរឈាមច្រើន គ្រុន ធ្លាក់សធុំក្លិនស្អុយ ឈឺក្បាលខ្លាំង ដោះក្រហមឈឺ ឬមានអារម្មណ៍សោកសៅខ្លាំង។"],fu("6 weeks")),
+
+/* Pediatrics */
+T("n-pedurti","peds","Cough & cold (child)","Cough, runny nose","Acute upper respiratory infection, unspecified (J06.9)","",
+ [R("Paracetamol syrup 120 mg/5 ml","ml","","prn","3","15 mg/kg per dose up to 4 times a day. Write ml for weight."),R("Normal saline nasal spray","spray","1-1-1","","5","Before feeds.")],
+ [["Continue breastfeeding and give fluids often.","បន្តបំបៅដោះ និងឱ្យទឹកញឹកញាប់។"],
+  ["Clear the nose with saline before feeds and sleep.","សម្អាតច្រមុះដោយទឹកអំបិលមុនបំបៅ និងមុនដេក។"],["No cough syrups for children under 6.","កុំឱ្យថ្នាំក្អកដល់កុមារអាយុក្រោម ៦ ឆ្នាំ។"]],
+ ["Fast breathing, chest indrawing, not feeding, very sleepy, fever more than 3 days, convulsion.",
+  "ដកដង្ហើមញាប់ ទ្រូងស្រុត មិនបៅដោះ ងងុយខ្លាំង គ្រុនលើស ៣ ថ្ងៃ ឬប្រកាច់។"],fu("3 days")),
+T("n-pedpneu","peds","Pneumonia (child, no danger signs)","Cough with fast breathing","Pneumonia, unspecified (J18.9)","SpO₂",
+ [R("Amoxicillin suspension 250 mg/5 ml","ml","","after-meals","5","40 mg/kg per dose twice daily. Write ml for weight."),R("Paracetamol syrup 120 mg/5 ml","ml","","prn","","15 mg/kg per dose for fever.")],
+ [["Give all the antibiotic for 5 days.","ឱ្យថ្នាំអង់ទីប៊ីយ៉ូទិកឱ្យអស់ ៥ ថ្ងៃ។"],["Continue breastfeeding and fluids.","បន្តបំបៅដោះ និងឱ្យទឹក។"]],
+ ["Chest indrawing, cannot drink, vomiting everything, convulsion, very sleepy, SpO₂ below 92%.",
+  "ទ្រូងស្រុត មិនអាចផឹក ក្អួតទាំងអស់ ប្រកាច់ ងងុយខ្លាំង SpO₂ ក្រោម ៩២%។"],fu("2 days")),
+T("n-hfmd","peds","Hand, foot & mouth disease","Fever, mouth ulcers, rash on hands and feet","Enteroviral vesicular stomatitis with exanthem (B08.4)","",
+ [R("Paracetamol syrup 120 mg/5 ml","ml","","prn","","15 mg/kg per dose.")],
+ [["Give cool fluids and soft food.","ឱ្យទឹកត្រជាក់ និងអាហារទន់ៗ។"],["Keep the child home from school for 1 week. Wash hands often.","ទុកកុមារនៅផ្ទះ ១ សប្តាហ៍។ លាងដៃញឹកញាប់។"]],
+ ["Startle jerks during sleep, vomiting, very sleepy or irritable, weakness, fast breathing, fever more than 3 days (urgent).",
+  "ភ្ញាក់ផ្អើលញ័រពេលគេង ក្អួត ងងុយ ឬរពឹសខ្លាំង ខ្សោយ ដកដង្ហើមញាប់ គ្រុនលើស ៣ ថ្ងៃ (បន្ទាន់)។"],fu("2 days")),
+T("n-diaper","peds","Nappy rash","Red rash in nappy area","Diaper dermatitis (L22)","",
+ [R("Zinc oxide cream","apply","1-1-1-1","","7","At each nappy change."),R("Clotrimazole 1% cream","apply","1-0-1","","7","Only if red spots at the edges (candida).")],
+ [["Change nappies often. Leave the skin open to air.","ប្តូរកន្ទបញឹកញាប់។ ទុកស្បែកឱ្យប៉ះខ្យល់។"],["Clean with water, not wipes with alcohol.","សម្អាតដោយទឹក កុំប្រើក្រដាសជូតមានអាល់កុល។"]],
+ ["Blisters or pus, fever, rash spreading beyond the nappy area.","ពងទឹក ឬខ្ទុះ គ្រុន ឬកន្ទួលរាលដាលហួសកន្លែងកន្ទប។"],fu("1 week")),
+
+/* Infectious / STI */
+T("n-typhoid","id","Typhoid fever","Fever for several days, abdominal pain","Typhoid fever (A01.0)","Blood culture, CBC, Widal (limited value)",
+ [R("Azithromycin 500 mg","tab","2-0-0","","7","1 g once daily."),R("Paracetamol 500 mg","tab","1–2-1–2-1–2-1–2","prn","","")],
+ [WATER,ABX_KH,["Wash hands and drink boiled water.","លាងដៃ និងផឹកទឹកឆ្អិន។"]],
+ ["Severe abdominal pain, black stools, confusion, fever after 5 days of treatment.","ឈឺពោះខ្លាំង លាមកខ្មៅ វង្វេង ឬគ្រុនក្រោយព្យាបាល ៥ ថ្ងៃ។"],fu("3 days")),
+T("n-malaria","id","Malaria (test positive)","Fever, chills","Malaria, unspecified (B54)","Malaria RDT / blood smear",
+ [R("Antimalarial per National Malaria Programme (CNM)","","","","","Choose drug by species and current CNM guideline."),R("Paracetamol 500 mg","tab","1–2-1–2-1–2-1–2","prn","","")],
+ [["Take every dose of the antimalarial.","លេបថ្នាំគ្រុនចាញ់ឱ្យគ្រប់ដូស។"],["Sleep under an insecticide-treated net.","គេងក្នុងមុងជ្រលក់ថ្នាំ។"],WATER],
+ ["Confusion, convulsion, cannot drink, dark urine, yellow eyes, breathing difficulty, pregnancy (urgent).","វង្វេង ប្រកាច់ មិនអាចផឹក ទឹកនោមខ្មៅ ភ្នែកលឿង ពិបាកដកដង្ហើម មានផ្ទៃពោះ (បន្ទាន់)។"],fu("3 days")),
+T("n-lepto","id","Leptospirosis (mild)","Fever, muscle pain after flood water","Leptospirosis, unspecified (A27.9)","CBC, creatinine, LFT",
+ [R("Doxycycline 100 mg","cap","1-0-1","after-meals","7","Not in pregnancy or children under 8 (use amoxicillin)."),R("Paracetamol 500 mg","tab","1–2-1–2-1–2-1–2","prn","","")],
+ [WATER,ABX_KH,["Wear boots in flood water and rice fields.","ពាក់ស្បែកជើងកវែងពេលដើរក្នុងទឹកជំនន់ និងស្រែ។"]],
+ ["Yellow eyes, very little urine, bleeding, cough with blood, breathlessness.","ភ្នែកលឿង នោមតិចខ្លាំង ហូរឈាម ក្អកមានឈាម ឬហត់។"],fu("2 days")),
+T("n-herpes","id","Genital herpes","Painful genital blisters","Herpesviral infection of genitalia (A60.0)","HIV & syphilis test",
+ [R("Acyclovir 400 mg","tab","1-1-1","","7",""),R("Paracetamol 500 mg","tab","1–2-1–2-1–2-1–2","prn","","")],
+ [["No sex until sores have healed. Use condoms always.","កុំរួមភេទរហូតដល់ដំបៅជា។ ប្រើស្រោមអនាម័យជានិច្ច។"],["Keep the area clean and dry.","រក្សាកន្លែងនោះឱ្យស្អាត និងស្ងួត។"]],
+ ["Cannot pass urine, fever with headache, pregnancy.","មិនអាចនោម គ្រុនជាមួយឈឺក្បាល ឬមានផ្ទៃពោះ។"],fu("1 week")),
+T("n-syphilis","id","Syphilis","Positive syphilis test or painless ulcer","Syphilis, unspecified (A53.9)","RPR/TPHA, HIV test",
+ [R("Benzathine penicillin 2.4 MU IM","vial","","","1","Once (early syphilis). Watch 30 minutes for allergy.")],
+ [["Partner(s) must be tested and treated.","ដៃគូត្រូវធ្វើតេស្ត និងព្យាបាល។"],["No sex for 7 days after treatment.","កុំរួមភេទ ៧ ថ្ងៃក្រោយព្យាបាល។"],["Use condoms.","ប្រើស្រោមអនាម័យ។"]],
+ ["Rash, headache, vision or hearing change, pregnancy.","កន្ទួល ឈឺក្បាល ភ្នែក ឬត្រចៀកប្រែប្រួល ឬមានផ្ទៃពោះ។"],fu("3 months")),
+
+/* Endocrine */
+T("n-dm2b","endo","Type 2 diabetes (two drugs)","High blood sugar on metformin","Type 2 diabetes mellitus without complications (E11.9)","HbA1c, creatinine, urine protein",
+ [R("Metformin 500 mg","tab","2-0-2","after-meals","30","1 g twice daily."),R("Gliclazide 80 mg","tab","1-0-0","before-meals","30","Can cause low sugar — eat regularly.")],
+ [["Do not skip meals while taking gliclazide.","កុំរំលងអាហារ ពេលលេប Gliclazide។"],
+  ["Carry sweets in case of low sugar (sweating, shaking).","យកស្ករគ្រាប់តាមខ្លួន ក្រែងស្ករចុះ (បែកញើស ញ័រ)។"],["Check your feet every day.","ពិនិត្យជើងរៀងរាល់ថ្ងៃ។"]],
+ ["Sweating, shaking, confusion (low sugar), vomiting, very thirsty, foot wound.","បែកញើស ញ័រ វង្វេង (ស្ករចុះ) ក្អួត ស្រេកទឹកខ្លាំង ឬរបួសជើង។"],fu("1 month")),
+T("n-hypothyroid","endo","Hypothyroidism","Tiredness, weight gain, cold intolerance","Hypothyroidism, unspecified (E03.9)","TSH, FT4",
+ [R("Levothyroxine 50 mcg","tab","1-0-0","before-breakfast","30","30 minutes before breakfast, apart from iron and calcium.")],
+ [["Take on an empty stomach at the same time every day.","លេបពេលពោះទទេ នៅម៉ោងដដែលរៀងរាល់ថ្ងៃ។"],["Check TSH after 6–8 weeks.","ពិនិត្យ TSH ក្រោយ ៦–៨ សប្តាហ៍។"]],
+ ["Chest pain, fast heartbeat, shaking (dose too high), pregnancy.","ឈឺទ្រូង បេះដូងដើរលឿន ញ័រ (ដូសខ្ពស់ពេក) ឬមានផ្ទៃពោះ។"],fu("6 weeks")),
+
+/* Hematology */
+T("n-thal","heme","Thalassaemia trait","Mild anaemia, small red cells","Thalassaemia, unspecified (D56.9)","CBC, ferritin, Hb electrophoresis",
+ [R("Folic acid 5 mg","tab","1-0-0","after-meals","30","")],
+ [["Do not take iron tablets unless a test shows low iron.","កុំលេបថ្នាំជាតិដែក លុះត្រាតែតេស្តបង្ហាញថាខ្វះជាតិដែក។"],
+  ["Partner testing before pregnancy is recommended.","គួរឱ្យដៃគូធ្វើតេស្តមុនមានផ្ទៃពោះ។"],["Eat a balanced diet with green vegetables.","ញ៉ាំអាហារមានតុល្យភាព និងបន្លែបៃតង។"]],
+ ["Very tired, breathless, yellow eyes, dark urine.","អស់កម្លាំងខ្លាំង ហត់ ភ្នែកលឿង ឬទឹកនោមខ្មៅ។"],fu("3 months")),
+
+/* Emergency */
+T("n-anaphylaxis","emerg","Anaphylaxis","Swelling, wheeze, low BP after exposure","Anaphylactic shock, unspecified (T78.2)","BP, SpO₂, pulse every 5 minutes",
+ [R("Adrenaline (Epinephrine) 1 mg/ml","amp","","","","0.5 mg (0.5 ml) IM outer thigh now; repeat every 5 minutes if needed. Child 0.01 mg/kg."),
+  R("Chlorpheniramine 10 mg/ml","amp","","","","10 mg IM/IV after adrenaline."),R("Hydrocortisone 100 mg","vial","","","","200 mg IV/IM."),R("Sodium chloride 0.9% 500 ml","bag","","","","Fast IV if low BP.")],
+ [["Lie flat with legs raised (sit up if breathing is difficult).","ដេកផ្ងារ លើកជើងខ្ពស់ (អង្គុយ បើពិបាកដកដង្ហើម)។"],
+  ["Avoid the cause. Carry an allergy card.","ជៀសវាងមូលហេតុ។ យកប័ណ្ណអាឡែកហ្ស៊ីតាមខ្លួន។"]],
+ ["Transfer to hospital and observe at least 6–12 hours — symptoms can return.","បញ្ជូនទៅមន្ទីរពេទ្យ និងតាមដានយ៉ាងតិច ៦–១២ ម៉ោង — រោគសញ្ញាអាចកើតឡើងវិញ។"],
+ FU("Refer: hospital now","បញ្ជូនទៅមន្ទីរពេទ្យភ្លាម")),
+T("n-snakebite","emerg","Snake bite","Snake bite","Toxic effect of snake venom (T63.0)","20-minute whole blood clotting test",
+ [R("Tetanus-diphtheria vaccine (Td)","vacc","1","","","If not up to date."),R("Paracetamol 500 mg","tab","1–2-1–2-1–2-1–2","prn","","No aspirin or ibuprofen.")],
+ [["Keep still. Immobilise the bitten limb with a splint below heart level.","នៅស្ងៀម។ ចងបន្ទះទប់អវយវៈដែលត្រូវខាំ ឱ្យទាបជាងបេះដូង។"],
+  ["Do not cut, suck, apply ice or a tight tourniquet.","កុំវះ កុំបឺត កុំដាក់ទឹកកក ឬចងតឹង។"],["Go to a hospital with antivenom immediately.","ទៅមន្ទីរពេទ្យដែលមានថ្នាំប្រឆាំងពិសភ្លាម។"]],
+ ["Drooping eyelids, difficulty swallowing or breathing, bleeding, swelling spreading, dark urine.","ត្របកភ្នែកធ្លាក់ ពិបាកលេប ឬដកដង្ហើម ហូរឈាម ហើមរាលដាល ទឹកនោមខ្មៅ។"],
+ FU("Refer: hospital now","បញ្ជូនទៅមន្ទីរពេទ្យភ្លាម")),
+T("n-seizure","emerg","Seizure","Convulsion","Other and unspecified convulsions (R56.8)","Glucose now",
+ [R("Diazepam 10 mg/2 ml","amp","","","","10 mg IV slowly (or rectal) if seizure lasts more than 5 minutes. Child 0.3–0.5 mg/kg rectal."),R("Glucose 50% 50 ml","vial","","","","If blood sugar is low.")],
+ [["Lay the person on their side. Do not put anything in the mouth.","ដាក់អ្នកជំងឺឱ្យដេកផ្អៀង។ កុំដាក់អ្វីក្នុងមាត់។"],
+  ["Time the seizure.","កត់ម៉ោងនៃការប្រកាច់។"]],
+ ["Seizure more than 5 minutes, repeated seizures, first seizure, fever with stiff neck, pregnancy, head injury.","ប្រកាច់លើសពី ៥ នាទី ប្រកាច់ច្រើនដង ប្រកាច់លើកដំបូង គ្រុនជាមួយរឹងក មានផ្ទៃពោះ ឬរបួសក្បាល។"],
+ FU("Refer: hospital now","បញ្ជូនទៅមន្ទីរពេទ្យភ្លាម")),
+T("n-hypogly","emerg","Low blood sugar","Sweating, shaking, confusion","Hypoglycaemia, unspecified (E16.2)","Glucose before and 15 minutes after",
+ [R("Glucose 50% 50 ml","vial","","","","25–50 ml IV if unable to swallow."),R("Sugar drink / sweets","","","","","15–20 g sugar by mouth if awake; repeat after 15 minutes.")],
+ [["Eat a meal or snack after sugar recovers.","ញ៉ាំអាហារ ឬអាហារសម្រន់ ក្រោយស្ករឡើងវិញ។"],
+  ["Diabetes medicines may need adjusting.","ថ្នាំទឹកនោមផ្អែមប្រហែលត្រូវកែដូស។"],["Carry sweets at all times.","យកស្ករគ្រាប់តាមខ្លួនជានិច្ច។"]],
+ ["Not waking up, sugar stays low, on long-acting insulin or gliclazide (needs observation).","មិនដឹងខ្លួន ស្ករនៅតែទាប ឬប្រើ insulin យូរ ឬ gliclazide (ត្រូវតាមដាន)។"],
+ FU("Follow-up: review diabetes medicines","ត្រឡប់មកពិនិត្យថ្នាំទឹកនោមផ្អែម"))
+]);
+Object.assign(DXI,{
+ "n-vomit":["ចង្អោរ និងក្អួត","Nausées et vomissements","nausea vomiting ចង្អោរ ក្អួត nausée vomissement"],
+ "n-heat":["ហត់នឿយដោយកម្តៅ","Épuisement dû à la chaleur","heat dizziness weakness sun កម្តៅ វិលមុខ អស់កម្លាំង chaleur"],
+ "n-flu":["ផ្តាសាយធំ (គ្រុនផ្តាសាយ)","Grippe","flu influenza fever body ache cough គ្រុនផ្តាសាយ ឈឺខ្លួន ក្អក grippe"],
+ "n-copd":["ជំងឺស្ទះសួតរ៉ាំរ៉ៃ (ធ្ងន់ឡើង)","BPCO avec exacerbation aiguë","copd breathless smoker cough ហត់ ក្អក ជក់បារី bpco dyspnée"],
+ "n-tbsus":["ក្អករ៉ាំរ៉ៃ (សង្ស័យរបេង)","Toux chronique (suspicion de tuberculose)","chronic cough tb tuberculosis weight loss ក្អកយូរ របេង ស្រកទម្ងន់ toux tuberculose"],
+ "n-htn2":["លើសសម្ពាធឈាម (ថ្នាំ ២ មុខ)","Hypertension essentielle (bithérapie)","high blood pressure hypertension សម្ពាធឈាមខ្ពស់ hypertension"],
+ "n-lipid":["ខ្លាញ់ក្នុងឈាមខ្ពស់","Hyperlipidémie","cholesterol lipid ខ្លាញ់ក្នុងឈាម cholestérol"],
+ "n-angina":["ឈឺទ្រូង (សង្ស័យ Angina)","Angine de poitrine","chest pain angina heart ឈឺទ្រូង បេះដូង douleur thoracique"],
+ "n-gerd":["ច្រាលអាស៊ីតក្រពះ","Reflux gastro-œsophagien","heartburn reflux sour ឆេះទ្រូង ច្រាលអាស៊ីត reflux pyrosis"],
+ "n-dysentery":["រាកមួល (រាកមានឈាម)","Shigellose (dysenterie)","bloody diarrhea dysentery រាកឈាម រាកមួល dysenterie"],
+ "n-colic":["ចុកពោះ","Douleur abdominale (colique)","abdominal pain cramp colic ឈឺពោះ ចុកពោះ douleur abdominale"],
+ "n-hemorrhoid":["ឬសដូងបាត","Hémorroïdes","hemorrhoids piles anal bleeding ឬសដូងបាត ហូរឈាមគូទ hémorroïdes"],
+ "n-pyelo":["រលាកតម្រងនោម","Pyélonéphrite aiguë","kidney infection back pain fever urine រលាកតម្រងនោម ឈឺចង្កេះ pyélonéphrite"],
+ "n-renalcolic":["គ្រួសក្នុងតម្រងនោម","Lithiase urinaire","kidney stone flank pain គ្រួស ឈឺចង្កេះ calcul rénal colique"],
+ "n-impetigo":["ដំបៅស្បែកឆ្លង (Impetigo)","Impétigo","impetigo crust sores skin infection ដំបៅស្បែក impétigo"],
+ "n-cellulitis":["រលាកស្បែក និងជាលិកាក្រោមស្បែក","Cellulite","cellulitis red swollen skin ស្បែកក្រហមហើម cellulite"],
+ "n-eczema":["រលាកស្បែក (អេកស៊ីម៉ា)","Dermatite","eczema dermatitis itchy dry skin ស្បែកស្ងួតរមាស់ eczéma"],
+ "n-acne":["មុន","Acné","acne pimples មុន acné"],
+ "n-zoster":["រើម","Zona","shingles zoster blisters pain one side រើម zona"],
+ "n-varicella":["អុតស្វាយ","Varicelle","chickenpox varicella blisters fever អុតស្វាយ varicelle"],
+ "n-burn":["របួសរលាក","Brûlure","burn scald រលាក ទឹកក្តៅ brûlure"],
+ "n-abscess":["ពក (អាប់សេ)","Abcès cutané","abscess boil pus ពក ខ្ទុះ abcès furoncle"],
+ "n-bruise":["ជាំ / របួសសាច់","Contusion","bruise contusion fall injury ជាំ ដួល contusion"],
+ "n-oa":["រលាកសន្លាក់ជង្គង់ (រិចរិល)","Gonarthrose","knee pain arthritis osteoarthritis ឈឺជង្គង់ arthrose genou"],
+ "n-gout":["ជំងឺហ្គោត","Goutte","gout joint pain uric toe ហ្គោត ឈឺសន្លាក់ goutte"],
+ "n-neck":["ឈឺក","Cervicalgie","neck pain stiff neck ឈឺក រឹងក cervicalgie"],
+ "n-migraine":["ឈឺក្បាលប្រកាំង (Migraine)","Migraine","migraine headache nausea ឈឺក្បាលប្រកាំង migraine"],
+ "n-bell":["ខ្វិនមុខ (Bell's palsy)","Paralysie faciale de Bell","facial palsy face weakness ខ្វិនមុខ មាត់វៀច paralysie faciale"],
+ "n-otext":["រលាកប្រឡាយត្រចៀក","Otite externe","ear canal pain itchy ear ឈឺត្រចៀក រមាស់ត្រចៀក otite externe"],
+ "n-rhinitis":["រលាកច្រមុះដោយអាឡែកហ្ស៊ី","Rhinite allergique","sneezing allergy runny nose កណ្តាស់ អាឡែកហ្ស៊ី ហៀរសំបោរ rhinite allergique"],
+ "n-epistaxis":["ហូរឈាមច្រមុះ","Épistaxis","nosebleed epistaxis ហូរឈាមច្រមុះ saignement de nez"],
+ "n-vertigo":["វិលមុខ (BPPV)","Vertige paroxystique bénin","vertigo dizziness spinning វិលមុខ vertige"],
+ "n-stye":["ឡើងកូនដុំត្របកភ្នែក","Orgelet","stye eyelid lump ដុំត្របកភ្នែក orgelet"],
+ "n-allconj":["រលាកភ្នែកដោយអាឡែកហ្ស៊ី","Conjonctivite allergique","itchy eyes allergy watery រមាស់ភ្នែក conjonctivite allergique"],
+ "n-gingivitis":["រលាកអញ្ចាញធ្មេញ","Gingivite","gum bleeding gingivitis ហូរឈាមអញ្ចាញ gingivite"],
+ "n-ulcer":["ដំបៅមាត់","Aphtes buccaux","mouth ulcer aphthous ដំបៅមាត់ aphte"],
+ "n-bv":["រលាកទ្វារមាស (Bacterial vaginosis)","Vaginose bactérienne","vaginal discharge smell ធ្លាក់ស ធុំក្លិន vaginose"],
+ "n-pid":["រលាកអាងត្រគាក (PID)","Maladie inflammatoire pelvienne","pelvic pain discharge fever ឈឺពោះក្រោម ធ្លាក់ស salpingite"],
+ "n-menorrhagia":["ធ្លាក់ឈាមរដូវច្រើន","Ménorragie","heavy period bleeding មករដូវច្រើន ménorragie"],
+ "n-utipreg":["រលាកផ្លូវទឹកនោមពេលមានផ្ទៃពោះ","Infection urinaire de la grossesse","pregnancy urine infection burning ផ្ទៃពោះ នោមក្តៅ grossesse infection urinaire"],
+ "n-anaemiapreg":["ស្លេកស្លាំងពេលមានផ្ទៃពោះ","Anémie de la grossesse","pregnancy anemia pale tired ផ្ទៃពោះ ស្លេកស្លាំង anémie grossesse"],
+ "n-postpartum":["ពិនិត្យក្រោយសម្រាល","Suivi post-partum","postpartum after delivery ក្រោយសម្រាល post-partum"],
+ "n-pedurti":["ក្អក ផ្តាសាយលើកុមារ","Infection des voies respiratoires supérieures (enfant)","child cough cold runny nose ក្មេង ក្អក ផ្តាសាយ enfant toux rhume"],
+ "n-pedpneu":["រលាកសួតលើកុមារ","Pneumonie de l'enfant","child pneumonia fast breathing ក្មេង រលាកសួត enfant pneumonie"],
+ "n-hfmd":["ជំងឺដៃ ជើង និងមាត់","Syndrome pieds-mains-bouche","hand foot mouth hfmd rash ulcer ដៃជើងមាត់ pieds-mains-bouche"],
+ "n-diaper":["ក្រហមកន្ទប","Érythème fessier","nappy diaper rash ក្រហមកន្ទប érythème fessier"],
+ "n-typhoid":["គ្រុនពោះវៀន","Fièvre typhoïde","typhoid fever abdominal pain គ្រុនពោះវៀន typhoïde"],
+ "n-malaria":["គ្រុនចាញ់","Paludisme","malaria fever chills គ្រុនចាញ់ paludisme"],
+ "n-lepto":["ជំងឺឡិបតូ (Leptospirosis)","Leptospirose","leptospirosis flood fever muscle pain ទឹកជំនន់ គ្រុន ឈឺសាច់ leptospirose"],
+ "n-herpes":["អ៊ែប៉េសប្រដាប់ភេទ","Herpès génital","genital herpes blisters STI ពងទឹកប្រដាប់ភេទ កាមរោគ herpès génital"],
+ "n-syphilis":["ស្វាយ (Syphilis)","Syphilis","syphilis ulcer STI ស្វាយ កាមរោគ syphilis"],
+ "n-dm2b":["ទឹកនោមផ្អែមប្រភេទទី ២ (ថ្នាំ ២ មុខ)","Diabète de type 2 (bithérapie)","diabetes high sugar ទឹកនោមផ្អែម ជាតិស្ករ diabète"],
+ "n-hypothyroid":["ក្រពេញទីរ៉ូអ៊ីតខ្សោយ","Hypothyroïdie","thyroid tired weight gain ទីរ៉ូអ៊ីត hypothyroïdie"],
+ "n-thal":["ធាឡាស្សេមី (ផ្ទុកហ្សែន)","Trait thalassémique","thalassemia anemia hbe ធាឡាស្សេមី ស្លេកស្លាំង thalassémie"],
+ "n-anaphylaxis":["ប្រតិកម្មអាឡែកហ្ស៊ីធ្ងន់ (Anaphylaxis)","Choc anaphylactique","anaphylaxis allergy shock swelling អាឡែកហ្ស៊ីធ្ងន់ choc anaphylactique"],
+ "n-snakebite":["ពស់ខាំ","Morsure de serpent","snake bite venom ពស់ខាំ morsure de serpent"],
+ "n-seizure":["ប្រកាច់","Convulsions","seizure convulsion fit ប្រកាច់ convulsion"],
+ "n-hypogly":["ជាតិស្ករក្នុងឈាមចុះទាប","Hypoglycémie","low sugar hypoglycemia sweating shaking ស្ករចុះ hypoglycémie"]
+});
+
 DEFAULTS.forEach(addDx);
 
 /* ---------- storage ---------- */
@@ -1208,12 +1646,19 @@ function normalize(t){
   return addDx(t);
 }
 function load(){
-  try{var s=localStorage.getItem(KEY); if(s){var a=JSON.parse(s); if(Array.isArray(a)) return a.map(normalize);}}catch(e){}
+  try{var s=localStorage.getItem(KEY); if(s){var a=JSON.parse(s); if(Array.isArray(a)) return mergeDefaults(a.map(normalize));}}catch(e){}
   var lib=clone(DEFAULTS).map(normalize);
   try{var o=JSON.parse(localStorage.getItem(OLD_KEY)||"null");
     if(Array.isArray(o)) o.filter(function(t){return t&&t.id&&t.id.indexOf("u-")===0;}).forEach(function(t){lib.push(normalize(t));});
   }catch(e){}
   return lib;
+}
+var DEL_KEY="rxTemplates.deletedDefaults";
+function deletedDefaults(){try{return JSON.parse(localStorage.getItem(DEL_KEY)||"[]")||[];}catch(e){return [];}}
+function mergeDefaults(arr){
+  var have={}, del=deletedDefaults(); arr.forEach(function(t){have[t.id]=1;});
+  DEFAULTS.forEach(function(d){ if(!have[d.id]&&del.indexOf(d.id)<0) arr.push(normalize(clone(d))); });
+  return arr;
 }
 function persistLocal(){try{localStorage.setItem(KEY,JSON.stringify(lib));return true;}catch(e){return false;}}
 function persist(){var ok=persistLocal(); if(typeof pushDiff==="function") pushDiff("templates",lib); return ok||cloudOn();}
@@ -1512,6 +1957,8 @@ var ESSENTIAL=[
  ["Amlodipine","5 mg","tab","tab"],["Losartan","50 mg","tab","tab"],["Hydrochlorothiazide","25 mg","tab","tab"],["Atenolol","50 mg","tab","tab"],
  ["Metformin","500 mg","tab","tab"],["Gliclazide","80 mg","tab","tab"],["Atorvastatin","20 mg","tab","tab"],["Aspirin","81 mg","tab","tab"],
  ["Isosorbide dinitrate (sublingual)","5 mg","tab","tab"],
+ ["Acyclovir","400 mg","tab","tab"],["Acyclovir","800 mg","tab","tab"],["Betahistine","16 mg","tab","tab"],["Tranexamic acid","500 mg","tab","tab"],
+ ["Levothyroxine","50 mcg","tab","tab"],["Colchicine","0.5 mg","tab","tab"],
  ["Ferrous sulfate + Folic acid","60 mg + 400 mcg","tab","tab"],["Folic acid","5 mg","tab","tab"],["Calcium carbonate","500 mg","tab","tab"],
  ["Vitamin B complex","","tab","tab"],["Pyridoxine (Vitamin B6)","25 mg","tab","tab"],["Zinc (dispersible)","20 mg","tab","tab"],
  /* syrups */
@@ -1528,7 +1975,7 @@ var ESSENTIAL=[
  ["Hyoscine butylbromide injection","20 mg/ml","amp","inj"],["Omeprazole injection","40 mg","vial","inj"],["Dexamethasone","4 mg/ml","amp","inj"],
  ["Hydrocortisone","100 mg","vial","inj"],["Adrenaline (Epinephrine)","1 mg/ml","amp","inj"],["Chlorpheniramine injection","10 mg/ml","amp","inj"],
  ["Furosemide","20 mg/2 ml","amp","inj"],["Diazepam injection","10 mg/2 ml","amp","inj"],["Tranexamic acid","500 mg/5 ml","amp","inj"],
- ["Oxytocin","10 IU/ml","amp","inj"],["Lidocaine 2%","20 ml","vial","inj"],["Glucose 50%","50 ml","vial","inj"],["Water for injection","10 ml","amp","inj"],
+ ["Oxytocin","10 IU/ml","amp","inj"],["Benzathine penicillin","2.4 MU","vial","inj"],["Lidocaine 2%","20 ml","vial","inj"],["Glucose 50%","50 ml","vial","inj"],["Water for injection","10 ml","amp","inj"],
  /* IV fluids */
  ["Sodium chloride 0.9%","500 ml","bag","iv"],["Ringer lactate","500 ml","bag","iv"],["Dextrose 5%","500 ml","bag","iv"],["Dextrose 5% + Sodium chloride 0.9%","500 ml","bag","iv"],
  /* vaccines */
@@ -1539,6 +1986,7 @@ var ESSENTIAL=[
  ["Miconazole 2%","cream","apply","topical"],["Hydrocortisone 1%","cream","apply","topical"],["Betamethasone 0.1%","cream","apply","topical"],
  ["Fusidic acid 2%","cream","apply","topical"],["Mupirocin 2%","ointment","apply","topical"],["Permethrin 5%","cream","apply","topical"],
  ["Calamine","lotion","apply","topical"],["Diclofenac 1%","gel","apply","topical"],
+ ["Zinc oxide","cream","apply","topical"],["Benzoyl peroxide 5%","gel","apply","topical"],["Chlorhexidine 0.12% mouthwash","","ml","topical"],
  /* eye, ear, nose */
  ["Chloramphenicol 0.5% eye drops","10 ml","drop","drops"],["Tetracycline 1% eye ointment","5 g","apply","drops"],["Ofloxacin 0.3% ear drops","5 ml","drop","drops"],
  ["Normal saline nasal spray","","spray","drops"],["Xylometazoline 0.1% nasal spray","","spray","drops"],
@@ -1843,6 +2291,7 @@ function del(){
   if(!currentId){say("មិនទាន់បានជ្រើសគំរូ។",true);return;}
   if(!armed){armed=true;var b=$("deleteBtn");b.classList.add("armed");b.textContent="ចុចម្តងទៀតដើម្បីលុប";setTimeout(disarm,4000);return;}
   var t=lib.find(function(x){return x.id===currentId;});
+  if(/^(d|n)-/.test(currentId)){var dl=deletedDefaults(); if(dl.indexOf(currentId)<0) dl.push(currentId); try{localStorage.setItem(DEL_KEY,JSON.stringify(dl));}catch(e){}}
   lib=lib.filter(function(x){return x.id!==currentId;}); persist();
   disarm(); newBlank(); renderGroupSel(); renderList(); say("បានលុប “"+(t?t.name:"")+"”");
 }
@@ -1857,6 +2306,7 @@ function disarmReset(){resetArmed=false;$("resetBtn").textContent="កំណត�
 function reset(){
   if(!resetArmed){resetArmed=true;$("resetBtn").textContent="ចុចម្តងទៀត (គំរូរបស់ខ្ញុំនឹងបាត់)";setTimeout(disarmReset,4000);return;}
   disarmReset();
+  try{localStorage.removeItem(DEL_KEY);}catch(e){}
   lib=clone(DEFAULTS).map(normalize); persist(); activeGroup="all"; renderGroupSel(); openTemplate(lib[0].id); closeSettings();
   say("បានកំណត់គំរូដើមឡើងវិញ");
 }
@@ -1891,7 +2341,8 @@ var FB_VER="10.14.1", FB_CFG_KEY="rxTemplates.fbConfig", FB_CLINIC_KEY="rxTempla
 var CLOUD={db:null,auth:null,user:null,clinic:"",role:"",unsub:[],memUnsub:null,synced:{templates:{},stock:{}},ready:{},state:"off"};
 function cloudOn(){return !!(CLOUD.db&&CLOUD.user&&CLOUD.role);}
 function parseFbConfig(txt){
-  if(!txt) return null; txt=String(txt);
+  if(!txt) return null;
+  txt=String(txt).replace(/[\u201C\u201D\u201E\u201F\u2033\u00AB\u00BB]/g,'"').replace(/[\u2018\u2019\u201A\u201B\u2032]/g,"'");
   try{var j=JSON.parse(txt); if(j&&j.apiKey) return j;}catch(e){}
   var o={}, re=/(\w+)\s*:\s*["']([^"']+)["']/g, m; while((m=re.exec(txt))) o[m[1]]=m[2];
   return o.apiKey&&o.projectId?o:null;
@@ -1985,7 +2436,7 @@ function pushSettings(){
   if(CLOUD.role==="owner"&&SET.name) cref().set({name:SET.name},{merge:true}).catch(function(){});
 }
 function startSync(role){
-  CLOUD.role=role; CLOUD.ready={}; CLOUD.synced={templates:{},stock:{}};
+  CLOUD.role=role; CLOUD.ready={}; CLOUD.synced={templates:{},stock:{}}; CLOUD.mergedDefaults=false;
   ["templates","stock"].forEach(function(col){
     CLOUD.unsub.push(cref().collection(col).onSnapshot(function(snap){
       var arr=[], map={};
@@ -1995,7 +2446,10 @@ function startSync(role){
         if(!arr.length&&role==="owner"){ pushDiff(col,col==="templates"?lib:stock); syncedMsg(); return; }
       }
       CLOUD.synced[col]=map;
-      if(col==="templates"){ lib=arr.map(normalize); persistLocal(); renderGroupSel(); renderList(); }
+      if(col==="templates"){
+        var before=arr.length; lib=arr.map(normalize);
+        if(role==="owner"&&!CLOUD.mergedDefaults){CLOUD.mergedDefaults=true; lib=mergeDefaults(lib); if(lib.length>before) setTimeout(function(){pushDiff("templates",lib);},0);}
+        persistLocal(); renderGroupSel(); renderList(); }
       else { stock=arr; saveStockLocal(); if(!$("stockView").hidden) renderStock(); else renderStockTile(); refreshStockBadges(); }
       syncedMsg(snap.metadata&&snap.metadata.fromCache);
     },fbErr));
@@ -2022,8 +2476,8 @@ function syncedMsg(fromCache){
 }
 function renderStockTile(){ if($("tileStock")){var out=stock.filter(needsBuy).length; $("tileStock").textContent=stock.length?("ថ្នាំ "+stock.length+" មុខ · ត្រូវទិញ "+out+" មុខ"):"បញ្ជីថ្នាំក្នុងស្តុក";} }
 function cloudSignIn(kind){
-  var cfg=parseFbConfig($("fbConfig").value)||fbConfig();
-  if(!cfg){setCloud("err","សូមបិទភ្ជាប់ Firebase config ជាមុនសិន។");return;}
+  var cfg=FIREBASE_CONFIG||parseFbConfig($("fbConfig").value)||fbConfig();
+  if(!cfg){setCloud("err",$("fbConfig").value.trim()?"Firebase config មិនត្រឹមត្រូវ។ ត្រូវមាន apiKey, authDomain, projectId និង appId។":"សូមបិទភ្ជាប់ Firebase config ជាមុនសិន។");return;}
   if(!FIREBASE_CONFIG) try{localStorage.setItem(FB_CFG_KEY,JSON.stringify(cfg));}catch(e){}
   var id=slug($("fbClinic").value); if(id) try{localStorage.setItem(FB_CLINIC_KEY,id);}catch(e){}
   initFirebase().then(function(ok){
