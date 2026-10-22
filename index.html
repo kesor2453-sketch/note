@@ -230,6 +230,20 @@ tbody.rxitem.unsafe .namecell{box-shadow:inset 3px 0 0 var(--alert)}
 .addrow{margin-top:8px;width:100%;border:1.5px dashed var(--pen);background:var(--pen-soft);color:var(--pen);border-radius:6px;padding:9px;font:600 14px var(--kh)}
 .addrow:hover{background:var(--paper)}
 
+.soap{border:1px solid var(--rule);border-left:3px solid #6b4fa0;border-radius:6px;padding:2px 12px 8px;margin-top:10px;background:var(--panel)}
+.soap h2{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.soapday{font:600 12px var(--body);color:#6b4fa0;text-transform:none;letter-spacing:0}
+.soap-tools{display:flex;gap:6px}
+.soaprow{display:grid;grid-template-columns:26px 150px 1fr;gap:4px 8px;align-items:start;padding:5px 0;border-top:1px dashed var(--rule)}
+.soaprow:first-of-type{border-top:0}
+.soaprow > b{font:700 18px var(--body);color:#6b4fa0;line-height:1.2}
+.soaprow label{font:600 11.5px var(--body);color:var(--muted);padding-top:3px}
+.soaprow label .kh{font-family:var(--kh)}
+.soaprow > div{min-height:22px;font:15px var(--hand);color:var(--pen);white-space:pre-wrap;outline:none}
+#soapBtn[aria-pressed="true"]{background:#6b4fa0;border-color:#6b4fa0;color:#fff}
+@media (max-width:640px){.soaprow{grid-template-columns:22px 1fr}.soaprow > div{grid-column:1/-1}}
+.soapprint{display:flex;gap:4px;align-items:center;font:600 12px var(--kh);color:var(--muted);text-transform:none;letter-spacing:0}
+@media print{.soap:not(.print-on){display:none!important}.soap{background:none;padding:0 0 4px;border-left-width:2px}.soaprow{padding:2px 0}.soaprow > div{font-size:13px}}
 .proc{border:1px solid var(--rule);border-left:3px solid var(--pen);border-radius:6px;padding:2px 12px 8px;margin-top:10px;background:var(--panel)}
 .proc h2{margin-top:8px}
 .proc-tools{display:flex;gap:8px;align-items:center;font:12px var(--kh);color:var(--muted);text-transform:none;letter-spacing:0}
@@ -652,6 +666,7 @@ body.no-vitals .vitals{display:none}
         <button type="button" data-lang="frkh">FR+ខ្មែរ</button>
       </div>
       <button class="btn alt" id="newBtn" type="button">+ ថ្មី</button>
+      <button class="btn alt" id="soapBtn" type="button" aria-pressed="false" title="បង្ហាញ / លាក់ SOAP note">📝 SOAP</button>
       <button class="btn alt" id="newPatientBtn" type="button">អ្នកជំងឺថ្មី</button>
       <button class="btn" id="printBtn" type="button">បោះពុម្ព</button>
       <div class="toast" id="toast" role="status" aria-live="polite"></div>
@@ -703,6 +718,16 @@ body.no-vitals .vitals{display:none}
         <div class="field dxl dx-kh"><label>ខ្មែរ</label><div id="fDxKh" contenteditable="true" data-ph="រោគវិនិច្ឆ័យ"></div></div>
         <div class="field dxl dx-fr"><label>FR</label><div id="fDxFr" contenteditable="true" data-ph="Diagnostic"></div></div>
         <div class="field wide"><label data-fr="Examens">Ix</label><div id="fInv" contenteditable="true" data-ph="Investigations"></div></div>
+      </section>
+
+      <section class="soap" id="soapSec" hidden>
+        <h2><span>SOAP note <span class="kh">· កំណត់ត្រាពិនិត្យ</span> <span class="soapday" id="soapDay"></span></span>
+          <span class="noprint soap-tools"><label class="soapprint"><input type="checkbox" id="soapPrint"> បោះពុម្ព SOAP</label><button class="add" id="soapFill" type="button" title="ទាញពី C/O, Vital signs, Dx និងថ្នាំ">↺ បំពេញស្វ័យប្រវត្តិ</button>
+          <button class="add" id="soapHide" type="button">✕ លាក់</button></span></h2>
+        <div class="soaprow"><b>S</b><label><span data-fr="Subjectif">Subjective</span> <span class="kh">· អ្នកជំងឺប្រាប់</span></label><div id="soapS" contenteditable="true" data-ph="Symptoms, history, what the patient reports"></div></div>
+        <div class="soaprow"><b>O</b><label><span data-fr="Objectif">Objective</span> <span class="kh">· ការពិនិត្យ</span></label><div id="soapO" contenteditable="true" data-ph="Vital signs, examination, test results"></div></div>
+        <div class="soaprow"><b>A</b><label><span data-fr="Évaluation">Assessment</span> <span class="kh">· ការវាយតម្លៃ</span></label><div id="soapA" contenteditable="true" data-ph="Diagnosis / progress"></div></div>
+        <div class="soaprow"><b>P</b><label><span data-fr="Plan">Plan</span> <span class="kh">· ផែនការព្យាបាល</span></label><div id="soapP" contenteditable="true" data-ph="Treatment, tests, follow-up"></div></div>
       </section>
 
       <section class="proc" id="procSec" hidden>
@@ -786,7 +811,7 @@ body.no-vitals .vitals{display:none}
       <button type="button" id="gUp">បង្កើតគណនីថ្មី</button>
       <button type="button" id="gReset">ភ្លេចពាក្យសម្ងាត់?</button>
     </div>
-    <p class="gate-note" id="gateNote">ព័ត៌មានអ្នកជំងឺមិនត្រូវបានផ្ញើទៅ cloud ទេ។ · v21</p>
+    <p class="gate-note" id="gateNote">ព័ត៌មានអ្នកជំងឺមិនត្រូវបានផ្ញើទៅ cloud ទេ។ · v22</p>
   </form>
 </div>
 
@@ -873,7 +898,7 @@ body.no-vitals .vitals{display:none}
       <p class="hint">ឯកសារត្រូវមានជួរឈរ៖ ICD 10 · EN · KH · FR។ បញ្ជីនេះរក្សាទុកក្នុង browser ហើយប្រើសម្រាប់ស្វែងរករោគវិនិច្ឆ័យទាំងអស់។</p>
     </fieldset>
     <div class="actions">
-      <span style="margin-right:auto;font:12px var(--body);color:var(--muted)">Rx Clinic v21</span>
+      <span style="margin-right:auto;font:12px var(--body);color:var(--muted)">Rx Clinic v22</span>
       <button class="btn alt" id="settingsClose" type="button">បិទ</button>
       <button class="btn" type="submit">រក្សាទុកការកំណត់</button>
     </div>
@@ -3899,7 +3924,7 @@ function newPatient(){
   if(!newPtArmed){newPtArmed=true;b.textContent="ចុចម្តងទៀតដើម្បីលុប";b.classList.add("danger");setTimeout(function(){newPtArmed=false;b.textContent="អ្នកជំងឺថ្មី";b.classList.remove("danger");},3500);return;}
   newPtArmed=false; b.textContent="អ្នកជំងឺថ្មី"; b.classList.remove("danger");
   PT_TEXT.forEach(function(id){$(id).textContent="";}); PT_VITAL.forEach(function(id){$(id).value="";});
-  ptModeManual=""; $("fHo").textContent=""; $("pDate").textContent=todayStr(); checkVitals(); savePatient(); renderSymChips(); $("pName").focus();
+  ptModeManual=""; SOAP_IDS.forEach(function(id){$(id).innerText="";}); showSoap(false); $("fHo").textContent=""; $("pDate").textContent=todayStr(); checkVitals(); savePatient(); renderSymChips(); $("pName").focus();
   say("បានសម្អាតព័ត៌មានអ្នកជំងឺ");
 }
 
@@ -3922,7 +3947,47 @@ function admitDay(){
   if(!m){el.textContent="";return;}
   var a=new Date(+m[3],+m[2]-1,+m[1]); a.setHours(12,0,0,0); var n=Math.round((visitDate()-a)/864e5)+1;
   el.textContent=n>0?"D"+n:"";
+  if(typeof soapDayLabel==="function"&&$("soapDay")) soapDayLabel();
 }
+
+/* ---------- SOAP note (hidden until the doctor clicks 📝 SOAP; printed only when shown) ---------- */
+var SOAP_IDS=["soapS","soapO","soapA","soapP"];
+function soapEmpty(){return SOAP_IDS.every(function(id){return !$(id).innerText.trim();});}
+function soapFill(){
+  var co=$("fCo").textContent.trim(), ho=$("fHo").textContent.trim();
+  $("soapS").innerText=[co,ho].filter(Boolean).join(". ");
+  var v=[["BP",$("vBp").value,"mmHg"],["P",$("vP").value,"/min"],["T",$("vT").value,"°C"],["RR",$("vRr").value,"/min"],["SpO₂",$("vSpo2").value,"%"]]
+    .filter(function(x){return x[1].trim();}).map(function(x){return x[0]+" "+x[1].trim()+(x[2]==="%"?"%":" "+x[2]);});
+  var wt=$("pWt").textContent.trim(); if(wt) v.push("Wt "+wt+(/kg/i.test(wt)?"":" kg"));
+  $("soapO").innerText=v.join(", ")+($("fInv").textContent.trim()?(v.length?"\n":"")+"Ix: "+$("fInv").textContent.trim():"");
+  $("soapA").innerText=[$("fDx").textContent.trim(),$("fDxKh").textContent.trim()].filter(Boolean).join(" · ");
+  var rx=rxItems().map(rowData).filter(function(r){return r.drug;}).map(function(r){
+    var sl=r.slots.map(function(x){return x||"0";}).join("-"); return "• "+r.drug+(r.slots.some(Boolean)?" "+sl:"")+(r.days?" × "+r.days+" d":"");});
+  var fu=$("fFollowEn").textContent.trim();
+  $("soapP").innerText=rx.join("\n")+(fu?"\n"+fu:"");
+  saveSoap();
+}
+function soapDayLabel(){
+  var d=$("pDate").textContent.trim(), ipd=document.body.classList.contains("care-ipd"), day=$("pDay")?$("pDay").textContent.trim():"";
+  $("soapDay").textContent=d+(ipd&&day?" · "+day:"");
+}
+function showSoap(on){
+  $("soapSec").hidden=!on; $("soapBtn").setAttribute("aria-pressed",String(on));
+  if(on){ soapDayLabel(); if(soapEmpty()) soapFill(); }
+  saveSoap();
+}
+function saveSoap(){
+  $("soapSec").classList.toggle("print-on",$("soapPrint").checked);
+  var o={open:!$("soapSec").hidden,print:$("soapPrint").checked}; SOAP_IDS.forEach(function(id){o[id]=$(id).innerText;});
+  try{localStorage.setItem(SOAP_KEY,JSON.stringify(o));}catch(e){}
+}
+function loadSoap(){
+  var o=null; try{o=JSON.parse(localStorage.getItem(SOAP_KEY)||"null");}catch(e){}
+  SOAP_IDS.forEach(function(id){$(id).innerText=o&&o[id]?o[id]:"";});
+  $("soapPrint").checked=!!(o&&o.print); $("soapSec").classList.toggle("print-on",$("soapPrint").checked);
+  $("soapSec").hidden=!(o&&o.open); $("soapBtn").setAttribute("aria-pressed",String(!!(o&&o.open))); soapDayLabel();
+}
+var SOAP_KEY="rxTemplates.soap";
 
 /* ---------- quick search in the template-name box ---------- */
 var acIdx=-1;
@@ -4014,6 +4079,12 @@ loadPatient();
 PT_TEXT.forEach(function(id){$(id).addEventListener("input",savePatient);});
 PT_VITAL.forEach(function(id){$(id).addEventListener("input",function(){checkVitals();savePatient();});});
 $("newPatientBtn").onclick=newPatient;
+loadSoap();
+$("soapBtn").onclick=function(){showSoap($("soapSec").hidden);};
+$("soapHide").onclick=function(){showSoap(false);};
+$("soapFill").onclick=function(){soapFill(); say("បានបំពេញ SOAP ពីទិន្នន័យក្នុងវេជ្ជបញ្ជា");};
+SOAP_IDS.forEach(function(id){$(id).addEventListener("input",saveSoap);});
+$("soapPrint").addEventListener("change",saveSoap);
 ["pAdmit","pDate"].forEach(function(id){$(id).addEventListener("input",admitDay);});
 ["pAge","pWt","pSex","pAllergy","fCo","fDx"].forEach(function(id){$(id).addEventListener("input",function(){clearTimeout(window.__symT);window.__symT=setTimeout(function(){
   if(id==="pAge"||id==="pWt") rxItems().forEach(function(tb){wdApply(tb); updatePrint(tb);});
