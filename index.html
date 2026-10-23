@@ -233,7 +233,30 @@ tbody.rxitem.unsafe .namecell{box-shadow:inset 3px 0 0 var(--alert)}
 .npcachk{margin:3px 0 0 26px;padding:3px 8px;border-radius:6px;font:600 12px var(--kh)}
 .npcachk.bad{background:var(--warn-bg);color:#8a5a00;border:1px solid var(--warn)}
 .npcachk.good{background:#e3f4ea;color:var(--ok)}
+.npcarm{margin-left:8px;border:1px solid var(--alert);background:var(--paper);color:var(--alert);border-radius:5px;padding:1px 8px;font:600 11.5px var(--kh);cursor:pointer}
+.npcaok{margin-left:8px;border:1px solid var(--ok);background:var(--paper);color:var(--ok);border-radius:5px;padding:1px 8px;font:600 11.5px var(--kh);cursor:pointer}
+.justpick{display:flex;flex-wrap:wrap;gap:6px;margin-top:5px}
+.justpick select,.justpick input{border:1px solid var(--rule);border-radius:5px;padding:4px 6px;font:13px var(--body);max-width:100%;min-width:0;flex:1 1 220px}
+.justpick button{border:1px solid var(--ok);background:var(--ok);color:#fff;border-radius:5px;padding:3px 10px;font:600 12px var(--kh)}
+.npcafix{display:block;margin-top:2px;font:600 11.5px var(--kh);color:#0b6e99}
 .npcasum{margin:-2px 0 8px;padding:6px 10px;border-radius:8px;background:var(--warn-bg);border:1px solid var(--warn);color:#8a5a00;font:600 13px var(--kh)}
+.sheetwrap{display:block}
+.sidenotes{margin-top:12px}
+.sidenotes:empty{display:none}
+@media (min-width:1180px){
+  #rxView{max-width:1440px}
+  .sheetwrap{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:14px;align-items:start}
+  .sidenotes{margin-top:0;position:sticky;top:66px;max-height:calc(100vh - 80px);overflow:auto;padding-right:2px}
+}
+@media (min-width:1000px) and (max-width:1500px){ body.drawer-open .sheetwrap{grid-template-columns:minmax(0,1fr)} body.drawer-open .sidenotes{position:static;max-height:none} }
+.sidenotes .pe,.sidenotes .soap{margin-top:0;margin-bottom:10px;background:var(--paper);box-shadow:0 2px 10px rgba(27,42,74,.08)}
+.sidenotes h2{font-size:12px}
+.sidenotes .soaprow{grid-template-columns:22px 1fr}
+.sidenotes .soaprow > div{grid-column:1/-1}
+.sidenotes .perow{grid-template-columns:1fr 112px}
+.sidenotes .perow .pv,.sidenotes .pechips{grid-column:1/-1}
+.sidenotes .perow:not(:focus-within):not(:hover) .pechips{display:none}
+.sidenotes .perow .pv{font-size:14px}
 .pe{border:1px solid var(--rule);border-left:3px solid #0b6e99;border-radius:6px;padding:2px 12px 8px;margin-top:10px;background:var(--panel)}
 .pe h2{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
 .pe-tools{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
@@ -336,6 +359,14 @@ footer{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;
 .stock-top{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 .stock-top h2{margin:0 auto 0 0;font:700 19px var(--kh);color:var(--ink);text-transform:none;letter-spacing:0}
 .stock-top input[type=search]{flex:1 1 220px;border:1px solid var(--rule);border-radius:6px;padding:8px 10px;font:14px var(--kh)}
+.ksug{margin-top:4px;border:1px solid var(--rule);border-radius:8px;background:var(--paper);box-shadow:0 6px 18px rgba(27,42,74,.12);max-height:320px;overflow:auto}
+.ksug button{display:flex;gap:6px;align-items:baseline;width:100%;text-align:left;border:0;border-bottom:1px solid var(--rule);background:none;padding:7px 10px;font:14px var(--body);color:var(--ink);cursor:pointer}
+.ksug button:hover{background:var(--pen-soft)}
+.ksug button span{color:var(--muted);flex:1;min-width:0}
+.ksug button small{font:600 11px var(--kh);color:var(--muted);white-space:nowrap}
+.ksug button small.have{color:var(--ok)}
+.ksug .kload{padding:7px 10px;font:12px var(--kh);color:var(--muted)}
+.stock-dup{margin-top:6px;padding:7px 10px;border-radius:8px;background:var(--warn-bg);border:1px solid var(--warn);color:#8a5a00;font:600 13px var(--kh)}
 .stock-form{display:grid;grid-template-columns:1.2fr 1.3fr .8fr 1fr .9fr .55fr .55fr .9fr auto;gap:6px;align-items:end;background:var(--panel);border:1px solid var(--rule);border-radius:8px;padding:10px}
 .stock-form label{display:flex;flex-direction:column;gap:2px;font:11.5px var(--kh);color:var(--muted);min-width:0}
 .stock-form input,.stock-form select{border:1px solid var(--rule);border-radius:6px;height:36px;padding:0 8px;font:14px var(--kh);color:var(--ink);background:var(--paper);min-width:0;width:100%}
@@ -385,8 +416,9 @@ header{padding-bottom:6px}
 .patient.p-pay{grid-template-columns:1.6fr 1.2fr 1fr;margin-top:4px}
 #pPay{border:1px solid var(--rule);border-radius:5px;padding:3px 6px;font:600 13px var(--kh);background:var(--paper);color:var(--pen);min-width:0;max-width:100%}
 .payprint{display:none;font:500 14px var(--kh);color:var(--pen)}
-body.no-pay .p-pay{display:none}
-@media print{.payprint{display:inline} .patient.p-pay:not(.has-pay){display:none}}
+body:not(.pay-open) .p-pay{display:none}
+#payBtn[aria-pressed="true"]{background:#7a5c00;border-color:#7a5c00;color:#fff}
+@media print{.payprint{display:inline} .patient.p-pay:not(.has-pay){display:none!important} .patient.p-pay.has-pay{display:grid!important}}
 
 .patient.p-hx{grid-template-columns:1fr 1fr}
 .patient.p-dx{grid-template-columns:1fr 1fr}
@@ -652,8 +684,8 @@ body.no-vitals .vitals{display:none}
     </div>
     <div class="cats" id="stockCats" role="group" aria-label="Filter by type"></div>
     <form class="stock-form" id="stockForm" autocomplete="off">
-      <label>ឈ្មោះពាណិជ្ជកម្ម (Brand)<input id="kBrand" type="text" placeholder="ឧ. Panadol"></label>
-      <label>ឈ្មោះថ្នាំ (Generic) *<input id="kGeneric" type="text" placeholder="ឧ. Paracetamol" required></label>
+      <label>ឈ្មោះពាណិជ្ជកម្ម (Brand)<input id="kBrand" type="text" placeholder="ឧ. Panadol — វាយ ៣ អក្សរ" autocomplete="off"></label>
+      <label>ឈ្មោះថ្នាំ (Generic) *<input id="kGeneric" type="text" placeholder="ឧ. Paracetamol — វាយ ៣ អក្សរ" required autocomplete="off"></label>
       <label>កម្លាំង<input id="kStrength" type="text" placeholder="500 mg"></label>
       <label>ក្រុម<select id="kCat"></select></label>
       <label>ឯកតា<select id="kUnit"></select></label>
@@ -662,6 +694,8 @@ body.no-vitals .vitals{display:none}
       <label>ផុតកំណត់<input id="kExp" type="month"></label>
       <button class="btn f-btn" type="submit" id="kSave">+ បន្ថែម</button>
     </form>
+    <div class="ksug" id="kSug" hidden></div>
+    <div class="stock-dup" id="stockDup" hidden></div>
     <div class="stock-sum" id="stockSum"></div>
     <table class="stk-t">
       <colgroup><col class="w1"><col class="w2"><col class="w3"><col class="c-exp"><col class="w5"><col class="c-buy"></colgroup>
@@ -698,6 +732,7 @@ body.no-vitals .vitals{display:none}
         <button type="button" data-lang="frkh">FR+ខ្មែរ</button>
       </div>
       <button class="btn alt" id="newBtn" type="button">+ ថ្មី</button>
+      <button class="btn alt" id="payBtn" type="button" aria-pressed="false" title="ការទូទាត់ HEF / NSSF / NPCA">💳 ការទូទាត់</button>
       <button class="btn alt" id="peBtn" type="button" aria-pressed="true" title="បង្ហាញ / លាក់ Physical examination">🩺 PE</button>
       <button class="btn alt" id="soapBtn" type="button" aria-pressed="true" title="បង្ហាញ / លាក់ SOAP note">📝 SOAP</button>
       <button class="btn alt" id="newPatientBtn" type="button">អ្នកជំងឺថ្មី</button>
@@ -705,6 +740,7 @@ body.no-vitals .vitals{display:none}
       <div class="toast" id="toast" role="status" aria-live="polite"></div>
     </div>
 
+    <div class="sheetwrap">
     <main class="sheet" id="sheet">
       <header id="sheetHead" title="ចុចដើម្បីកែ ឈ្មោះគ្លីនិក អាសយដ្ឋាន ទូរស័ព្ទ">
         <div>
@@ -845,6 +881,8 @@ body.no-vitals .vitals{display:none}
         </div>
       </footer>
     </main>
+    <aside class="sidenotes" id="sideNotes" aria-label="Physical examination and SOAP note"></aside>
+    </div>
   </div>
 </div>
 
@@ -865,7 +903,7 @@ body.no-vitals .vitals{display:none}
       <button type="button" id="gUp">បង្កើតគណនីថ្មី</button>
       <button type="button" id="gReset">ភ្លេចពាក្យសម្ងាត់?</button>
     </div>
-    <p class="gate-note" id="gateNote">ព័ត៌មានអ្នកជំងឺមិនត្រូវបានផ្ញើទៅ cloud ទេ។ · v27</p>
+    <p class="gate-note" id="gateNote">ព័ត៌មានអ្នកជំងឺមិនត្រូវបានផ្ញើទៅ cloud ទេ។ · v31</p>
   </form>
 </div>
 
@@ -952,7 +990,7 @@ body.no-vitals .vitals{display:none}
       <p class="hint">ឯកសារត្រូវមានជួរឈរ៖ ICD 10 · EN · KH · FR។ បញ្ជីនេះរក្សាទុកក្នុង browser ហើយប្រើសម្រាប់ស្វែងរករោគវិនិច្ឆ័យទាំងអស់។</p>
     </fieldset>
     <div class="actions">
-      <span style="margin-right:auto;font:12px var(--body);color:var(--muted)">Rx Clinic v27</span>
+      <span style="margin-right:auto;font:12px var(--body);color:var(--muted)">Rx Clinic v31</span>
       <button class="btn alt" id="settingsClose" type="button">បិទ</button>
       <button class="btn" type="submit">រក្សាទុកការកំណត់</button>
     </div>
@@ -3319,9 +3357,13 @@ function renderSymChips(){
      :mode==="preg"?"ថ្នាំសុវត្ថិភាពសម្រាប់ស្ត្រីមានផ្ទៃពោះ (WHO ANC)":"ដូសមនុស្សពេញវ័យ (ដាក់អាយុ < 12 សម្រាប់ដូសកុមារ)");
   renderPtSeg(); renderAltBar(); rxItems().forEach(checkSafety); if(typeof soapAutoSoon==="function"&&$("soapS")) soapAutoSoon();
 }
+/* the symptom being treated is written into C/O automatically (and removed again when the chip is turned off) */
+function coTerms(){return $("fCo").textContent.split(/\s*[,;]\s*/).map(function(x){return x.trim();}).filter(Boolean);}
+function coAdd(term){var t=coTerms(); if(t.some(function(x){return fold(x)===fold(term);})) return; t.push(t.length?term.toLowerCase():term); $("fCo").textContent=t.join(", "); $("fCo").dispatchEvent(new Event("input"));}
+function coRemove(term){var t=coTerms(), n=t.filter(function(x){return fold(x)!==fold(term);}); if(n.length===t.length) return; if(n.length) n[0]=n[0].charAt(0).toUpperCase()+n[0].slice(1); $("fCo").textContent=n.join(", "); $("fCo").dispatchEvent(new Event("input"));}
 function toggleSym(sx){
   var rows=rxItems().filter(function(tb){return tb.dataset.sym===sx.id;});
-  if(rows.length){rows.forEach(function(tb){tb.remove();}); renderSymChips(); return;}
+  if(rows.length){rows.forEach(function(tb){tb.remove();}); coRemove(sx.en); renderSymChips(); return;}
   var age=ptAgeYears(), mode=ptMode(), child=mode==="child", list=child?sx.child(ptWeight(),age):mode==="preg"&&sx.preg?sx.preg():sx.adult();
   /* NSAIDs are unsafe in dengue, pregnancy, gastritis/ulcer and kidney disease — use paracetamol instead */
   if(sx.id==="pain"&&/dengue|គ្រុនឈាម|pregnan|ផ្ទៃពោះ|grossesse|gastrit|ulcer|ក្រពះ|kidney|renal|តម្រងនោម/.test(symContext())){
@@ -3340,6 +3382,7 @@ function toggleSym(sx){
     }
     r.sym=sx.id; $("rxTable").appendChild(rxRow(r)); added++;
   });
+  coAdd(sx.en);
   renderSymChips();
 }
 
@@ -4023,7 +4066,8 @@ function soapCalc(){
   var fu=$("fFollowEn").textContent.trim(), ix=$("fInv").textContent.trim();
   return {soapS:[co,ho].filter(Boolean).join(". "),
     soapO:[v.join(", ")].concat(pe).filter(Boolean).join("\n"),
-    soapA:[$("fDx").textContent.trim(),$("fDxKh").textContent.trim()].filter(Boolean).join(" · "),
+    soapA:[[$("fDx").textContent.trim(),$("fDxKh").textContent.trim()].filter(Boolean).join(" · ")].concat(
+      rxItems().filter(function(t){return t.dataset.just;}).map(function(t){return "Needed: "+t.querySelector(".drug").textContent.trim()+" — "+t.dataset.just;})).filter(Boolean).join("\n"),
     soapP:rx.concat(ix?["Ix: "+ix]:[]).concat(fu?[fu]:[]).join("\n")};
 }
 function soapAuto(){
@@ -4050,10 +4094,10 @@ function saveSoap(){
 function loadSoap(){
   var o=null; try{o=JSON.parse(localStorage.getItem(SOAP_KEY)||"null");}catch(e){}
   SOAP_IDS.forEach(function(id){$(id).innerText=o&&o[id]?o[id]:""; if(o&&o.edited&&o.edited[id]) $(id).dataset.edited="1"; else delete $(id).dataset.edited;});
-  $("soapPrint").checked=!!(o&&o.print); $("soapSec").classList.toggle("print-on",$("soapPrint").checked);
+  $("soapPrint").checked=!(o&&o.print===false); $("soapSec").classList.toggle("print-on",$("soapPrint").checked);
   $("soapSec").hidden=false; $("soapBtn").setAttribute("aria-pressed","true"); soapDayLabel();
 }
-var SOAP_KEY="rxTemplates.soap";
+var SOAP_KEY="rxTemplates.soap2";
 
 /* ---------- payment scheme (HEF / NSSF certified by NPCA) — kept on this device with the patient ---------- */
 var PAY_TXT={self:["Self-pay","បង់ផ្ទាល់","Paiement direct"],hef:["HEF (ID Poor)","មូលនិធិសមធម៌ HEF","Fonds d'équité (HEF)"],nssf:["NSSF","ប.ស.ស (NSSF)","NSSF"],
@@ -4063,6 +4107,7 @@ function showPay(){
   $("pPayTxt").textContent=t?(l==="en"?t[0]:l==="fr"?t[2]:l==="frkh"?t[2]+" · "+t[1]:l==="both"?t[0]+" · "+t[1]:t[1]):"";
   var any=!!(v||$("pPayId").textContent.trim()||$("pNpca").textContent.trim());
   sec.classList.toggle("has-pay",any);
+  var t2=PAY_TXT[v]; $("payBtn").textContent="💳 "+(t2?(v==="hef"?"HEF":v==="nssf"?"NSSF":t2[1]):"ការទូទាត់");
   /* claim reference only matters for schemes certified by NPCA */
   document.querySelector(".npca-f").style.opacity=(v==="hef"||v==="nssf"||$("pNpca").textContent.trim())?"1":".55";
 }
@@ -4092,7 +4137,7 @@ var PE_SYS=[
 ];
 var PE_GROUP={resp:["resp","ent"],ent:["ent"],cv:["cv"],gi:["gi"],gu:["uro"],skin:["skin"],wound:["skin"],msk:["skin"],neuro:["cns"],eye:["other"],
   dental:["ent"],gyn:["uro"],obs:["gi","other"],peds:["gen","resp"],id:["gen","skin"],endo:["gen","cv"],heme:["gen"],emerg:["gen","cv","resp","cns"],general:["gen"]};
-var PE_KEY="rxTemplates.pe";
+var PE_KEY="rxTemplates.pe2";
 /* typical findings by diagnosis (editable; doctor confirms) — [regex on name/Dx, {system: findings}] */
 var PE_DX=[
  [/pneumon/,{gen:"Febrile, ill-looking",resp:"Tachypnoea, crackles at lung base, reduced air entry"}],
@@ -4242,7 +4287,7 @@ function peLoad(){
   var stored=false;
   [].forEach.call(document.querySelectorAll(".perow"),function(r){var v=o&&o.rows&&o.rows[r.dataset.sys]; if(v&&v[0]!=="ne"){peSet(r,v[0],v[1],false,true); stored=true;}});
   if(!stored) peApplyDx();
-  $("pePrint").checked=!!(o&&o.print); showPe(true); peCount();
+  $("pePrint").checked=!(o&&o.print===false); showPe(true); peCount();
 }
 function showPe(on){ $("peSec").hidden=!on; $("peBtn").setAttribute("aria-pressed",String(on)); if(on) peSuggest(); peSave(); }
 function peResetAll(){ peApplyDx(); }
@@ -4280,6 +4325,8 @@ function npcaIssues(tb,std,ctx,all){
   if(!fold($("fDx").textContent).trim()) out.push("គ្មានរោគវិនិច្ឆ័យ (Dx)");
   var inStd=std.indexOf(g)>-1, bySym=!!tb.dataset.sym;
   if(inStd) ok.push("ស្តង់ដារសម្រាប់ Dx នេះ");
+  else if(tb.dataset.ind){ ok.push("ព្យាបាលរោគសញ្ញា: "+tb.dataset.ind);
+    if(fold($("fCo").textContent).indexOf(fold(tb.dataset.ind))<0) out.push("រោគសញ្ញា «"+tb.dataset.ind+"» មិនបានកត់ក្នុង C/O"); }
   else if(bySym){ var sx=SYMPTX.find(function(x){return x.id===tb.dataset.sym;}); ok.push("ព្យាបាលរោគសញ្ញា: "+(sx?sx.kh:""));
     if(sx&&!sx.kw.test(fold($("fCo").textContent+" "+$("fHo").textContent+" "+$("soapS").innerText))) out.push("រោគសញ្ញា «"+sx.kh+"» មិនបានកត់ក្នុង C/O ឬ SOAP");}
   else out.push("មិនមែនជាការព្យាបាលស្តង់ដារសម្រាប់ Dx នេះ — សរសេរមូលហេតុក្នុង SOAP (A/P)");
@@ -4296,6 +4343,8 @@ function npcaIssues(tb,std,ctx,all){
     var same=all.filter(function(o){return o!==tb&&c[1].test(fold(o.querySelector(".drug").textContent))&&!(c[0]==="Antibiotic (oral)"&&TOPICAL_RE.test(fold(o.querySelector(".drug").textContent)));});
     if(same.length&&!(c[0]==="Antibiotic (oral)"&&inStd&&same.every(function(o){return std.indexOf(gname(o.querySelector(".drug").textContent))>-1;}))) out.push("ស្ទួនក្រុមថ្នាំ ("+c[0]+")");
   });
+  /* the doctor confirmed this medicine is needed and picked a reason (✓ ចាំបាច់) */
+  if(tb.dataset.just){ out=out.filter(function(x){return !JUST_RE.test(x);}); ok.push("ចាំបាច់: "+tb.dataset.just); }
   /* the doctor justified this medicine in the SOAP Assessment */
   var just=$("soapA").dataset.edited&&g.length>3&&fold($("soapA").innerText).indexOf(g)>-1;
   if(just){ out=out.filter(function(x){return !/មិនមែនជាការព្យាបាលស្តង់ដារ|ជំងឺវីរុស|ថ្នាំចាក់ \/ សេរ៉ូ/.test(x);}); ok.push("មានមូលហេតុក្នុង SOAP (A)"); }
@@ -4305,15 +4354,135 @@ function npcaIssues(tb,std,ctx,all){
 }
 function npcaAudit(){
   var all=rxItems(), std=stdGenerics(), ctx=symContext(), pay=$("pPay")?$("pPay").value:"", claim=pay==="hef"||pay==="nssf", risky=0;
+  all.forEach(function(tb){ npcaFix(tb,std); });
+  ctx=symContext();
   all.forEach(function(tb){
     var box=tb.querySelector(".npcachk"); if(!box) return;
-    var res=npcaIssues(tb,std,ctx,all); box.className="npcachk noprint "+(res.out.length?"bad":"good");
-    if(res.out.length){ risky++; box.textContent="⚠ NPCA អាចកាត់ចេញ: "+res.out.join(" · "); box.hidden=false; }
-    else { box.textContent="✓ មិនកាត់: "+(res.ok.join(" · ")||"ត្រឹមត្រូវ"); box.hidden=!claim; }
+    var res=npcaIssues(tb,std,ctx,all); box.className="npcachk noprint "+(res.out.length?"bad":"good"); box.textContent="";
+    var txt=mk("span"); box.appendChild(txt);
+    if(res.out.length){ risky++; txt.textContent="⚠ NPCA អាចកាត់ចេញ: "+res.out.join(" · "); box.hidden=false;
+      if(res.out.some(function(x){return /ជំងឺវីរុស|វីតាមីន|ស្ទួន|មិនមែនជាការព្យាបាលស្តង់ដារ|១៤ ថ្ងៃ|មិនសមស្រប/.test(x);})){
+        var rm=mk("button","npcarm"); rm.type="button"; rm.textContent="✕ ដកថ្នាំនេះចេញ";
+        rm.onclick=function(){ var sid=tb.dataset.sym, sx=sid&&SYMPTX.find(function(x){return x.id===sid;}); tb.remove();
+          if(sx&&!rxItems().some(function(o){return o.dataset.sym===sid;})) coRemove(sx.en); renderSymChips(); npcaAudit(); say("បានដកថ្នាំចេញ"); };
+        box.appendChild(rm);
+        var nd=mk("button","npcaok"); nd.type="button"; nd.textContent="✓ ចាំបាច់ — ជ្រើសមូលហេតុ";
+        (function(t,b,iss){nd.onclick=function(){justPicker(t,b,iss);};})(tb,box,res.out); box.insertBefore(nd,rm); } }
+    else { txt.textContent="✓ មិនកាត់: "+(res.ok.join(" · ")||"ត្រឹមត្រូវ"); box.hidden=!claim&&!tb.dataset.just;
+      if(tb.dataset.just){ var un=mk("button","npcarm"); un.type="button"; un.textContent="↺ ដកការបញ្ជាក់";
+        (function(t){un.onclick=function(){delete t.dataset.just; soapAutoSoon(); npcaAudit();};})(tb); box.appendChild(un); } }
+    if(tb.dataset.autofix){ var af=mk("span","npcafix"); af.textContent="✎ បានបំពេញស្វ័យប្រវត្តិ: "+tb.dataset.autofix+" — សូមពិនិត្យ"; box.appendChild(af); box.hidden=false; }
   });
   var w=$("npcaSum"); if(w){ w.hidden=!(risky&&all.length); w.textContent=risky?"⚠ ថ្នាំ "+risky+" មុខ អាចត្រូវ NPCA កាត់ចេញ — មើលមូលហេតុក្រោមឈ្មោះថ្នាំ":""; }
 }
+
+/* ---------- NPCA: fill what is missing automatically (C/O, Dx, dose, days); offer removal for what cannot be fixed ---------- */
+var IND_MAP=[[/ibuprofen|diclofenac|mefenamic|naproxen|meloxicam|piroxicam|celecoxib|ketoprofen/,"Pain","pain"],
+ [/cetirizine|loratadine|desloratadine|chlorphen|fexofenadine|levocetirizine|promethazine/,"Runny nose","rhinitis"],
+ [/ambroxol|bromhexin|carbociste|acetylcyst|guaifenes|dextrometh|ivy leaf/,"Cough","cough"],
+ [/omeprazol|esomeprazol|pantoprazol|lansoprazol|rabeprazol|ranitidin|famotidin|antacid|alginate|aluminium/,"Heartburn","heartburn"],
+ [/domperidon|metoclopramid|ondansetron|pyridoxine/,"Vomiting","vomit"],
+ [/\bors\b|oral rehydration|zinc|loperamid|racecadotril|diosmectite|smecta/,"Diarrhoea","diarrhea"],
+ [/hyoscine|phloroglucinol|drotaverine/,"Abdominal cramps","colic"],
+ [/lactulose|bisacodyl|macrogol|senna/,"Constipation","constip"],
+ [/salbutamol|ipratropium|terbutaline/,"Wheeze","wheeze"],
+ [/lozenge|strepsils/,"Sore throat","throat"],
+ [/saline nasal|xylometazoline|oxymetazoline/,"Runny nose","rhinitis"],
+ [/calamine/,"Itch","itch"],[/simeticone|simethicone/,"Bloating",""]];
+function indicationOf(d){
+  if(/paracetamol|acetaminophen/.test(d)) return /pain|ache|ឈឺ/.test(fold($("fCo").textContent))?["Pain","pain"]:["Fever","fever"];
+  if(/cetirizine|loratadine|chlorphen|fexofenadine/.test(d)&&/itch|rash|urticar|រមាស់/.test(fold($("fCo").textContent+" "+$("fDx").textContent))) return ["Itch","itch"];
+  for(var i=0;i<IND_MAP.length;i++) if(IND_MAP[i][0].test(d)) return [IND_MAP[i][1],IND_MAP[i][2]];
+  return null;
+}
+function stdRow(g){
+  var cur=lib.find(function(x){return x.id===currentId;}); if(!cur) return null;
+  var all=(cur.rx||[]).concat(cur.dis?cur.dis.rx||[]:[]);
+  for(var i=0;i<all.length;i++){ var r=normRx(all[i]); if(gname(r.drug)===g) return r; }
+  return null;
+}
+/* usual adult dose pattern and days when the doctor left them empty: [regex, slots, days] */
+var DRUG_DEF=[[/omeprazol|esomeprazol|pantoprazol|lansoprazol|rabeprazol/,"1-0-0","14"],[/cetirizine|loratadine|desloratadine|fexofenadine|levocetirizine/,"0-0-1","5"],
+ [/chlorphen/,"1-1-1","5"],[/azithro/,"1-0-0","3"],[/doxycyc|ciproflox|levoflox|cefixim|cefurox|clarithro|nitrofur|cotrimox/,"1-0-1","5"],
+ [/amoxi|cefalex|cloxacil|metronid/,"1-1-1","5"],[/ibuprofen|diclofenac|mefenamic/,"1-1-1","3"],[/meloxicam|piroxicam|celecoxib/,"1-0-0","5"],
+ [/domperidon|metoclopramid/,"1-1-1","3"],[/hyoscine|phloroglucinol/,"1-1-1","3"],[/ambroxol|bromhexin|carbociste/,"1-1-1","5"],
+ [/amlodipin|losartan|enalapril|perindopril|bisoprolol|atenolol|atorvastat|simvastat|rosuvastat|levothyrox|aspirin|clopidogrel|folic/,"1-0-0","30"],
+ [/metformin/,"1-0-1","30"],[/gliclazid|glibenclam|glimepirid/,"1-0-0","30"],[/ferrous|iron/,"1-0-0","30"],[/prednisol/,"1-0-0","5"],
+ [/albendazol|mebendazol/,"1-0-0","1"],[/fluconazol/,"1-0-0","1"],[/lactulose/,"0-0-15","7"],[/zinc/,"1-0-0","10"]];
+function drugDef(d){for(var i=0;i<DRUG_DEF.length;i++) if(DRUG_DEF[i][0].test(d)) return DRUG_DEF[i]; return null;}
+var DEF_SLOTS={tab:"1-1-1",cap:"1-1-1",ml:"5-5-5",puff:"2-2-2-2",neb:"1-1-1-1",lozenge:"1-1-1-1",supp:"0-0-1",drop:"1-1-1-1",spray:"2-2-2",apply:"1-0-1"};
+function npcaFix(tb,std){
+  var r=rowData(tb), d=fold(r.drug), g=gname(r.drug), done=[]; if(!d) return done;
+  /* 1. diagnosis from the template */
+  if(!$("fDx").textContent.trim()){ var cur=lib.find(function(x){return x.id===currentId;});
+    if(cur&&cur.dx){ $("fDx").textContent=cur.dx; if(!$("fDxKh").textContent.trim()) $("fDxKh").textContent=cur.dxKh||""; $("fDx").dispatchEvent(new Event("input")); done.push("Dx"); } }
+  /* 2. indication → C/O */
+  var inStd=std.indexOf(g)>-1;
+  if(tb.dataset.sym){ var sx=SYMPTX.find(function(x){return x.id===tb.dataset.sym;});
+    if(sx&&!sx.kw.test(fold($("fCo").textContent+" "+$("fHo").textContent))){ coAdd(sx.en); done.push("C/O: "+sx.en.toLowerCase()); } }
+  else if(!inStd){ var ind=indicationOf(d);
+    if(ind){ if(ind[1]) tb.dataset.sym=ind[1]; else tb.dataset.ind=ind[0];
+      if(fold($("fCo").textContent).indexOf(fold(ind[0]))<0){ coAdd(ind[0]); done.push("C/O: "+ind[0].toLowerCase()); } } }
+  /* 3. dose and days */
+  var sr=stdRow(g), units=["tab","cap","ml","puff","neb","lozenge","supp","drop","spray","apply"];
+  if(units.indexOf(r.unit)>-1&&!r.slots.some(function(v){return num(v)>0;})){
+    var dfl=drugDef(d), sl=(sr&&sr.slots.some(function(v){return num(v)>0;}))?sr.slots:((dfl&&r.unit!=="ml"?dfl[1]:DEF_SLOTS[r.unit])||"1-1-1").split("-");
+    [].forEach.call(tb.querySelectorAll("input.slot"),function(inp,i){inp.value=sl[i]&&sl[i]!=="0"?sl[i]:"";});
+    done.push("ដូស "+sl.map(function(x){return x||"0";}).join("-"));
+  }
+  if(["tab","cap","ml","sachet","puff","neb","supp","lozenge"].indexOf(r.unit)>-1&&!r.days&&r.time!=="prn"&&r.time!=="stat"){
+    var df2=drugDef(d), dd=(sr&&sr.days)?String(sr.days).replace(/[^\d]/g,"").slice(0,2)||"5":(df2?df2[2]:ABX_RE.test(d)?"5":"3");
+    tb.querySelector("input.days").value=dd; done.push(dd+" ថ្ងៃ");
+  }
+  if(done.length){ updatePrint(tb); tb.dataset.autofix=done.join(", "); }
+  return done;
+}
+
+/* ---------- "✓ needed": the doctor confirms a flagged medicine and picks a reason; it is written into SOAP (A) ---------- */
+var JUST_RE=/មិនមែនជាការព្យាបាលស្តង់ដារ|ជំងឺវីរុស|វីតាមីន|ស្ទួន|១៤ ថ្ងៃ|ថ្នាំចាក់|មិនសមស្រប/;
+var JUST_REASONS=[
+ [/ជំងឺវីរុស/,"Antibiotic",["Fever > 3 days with purulent sputum","Focal chest signs (crackles) — bacterial pneumonia suspected","Tonsillar exudate, tender nodes, no cough — strep suspected","Acute otitis media / sinusitis > 10 days","Bloody diarrhoea (dysentery)","Raised WBC / CRP","High-risk patient (elderly, diabetes, immunocompromised)","Secondary bacterial infection of skin lesions"]],
+ [/មិនមែនជាការព្យាបាលស្តង់ដារ/,"Indication",["Co-existing condition (see Dx)","Symptom relief","Continuation of the patient's regular medicine","Prophylaxis","Previous good response to this medicine","Recommended by specialist"]],
+ [/វីតាមីន/,"Supplement",["Documented deficiency / anaemia","Pregnancy or breastfeeding","Poor intake / malnutrition","Recovery after severe illness","Elderly patient"]],
+ [/ស្ទួន/,"Duplicate",["Different indication for each medicine","Switching — the previous one to be stopped","Combination intended by the doctor"]],
+ [/១៤ ថ្ងៃ/,"Long course",["Chronic or deep infection (bone, prostate, abscess)","Relapse after a short course","Specialist advice"]],
+ [/ថ្នាំចាក់/,"Injection",["Cannot take by mouth (vomiting)","Severe pain needing rapid relief","Single-dose regimen (e.g. ceftriaxone IM)","Severe infection, first dose before referral"]],
+ [/មិនសមស្រប/,"Safety",["Benefit outweighs the risk — patient informed","No safer alternative available","Recommended by specialist"]]];
+function justOptions(issues){
+  var opts=[];
+  JUST_REASONS.forEach(function(j){ if(issues.some(function(x){return j[0].test(x);})) opts.push(j); });
+  return opts;
+}
+function justPicker(tb,box,issues){
+  var old=box.querySelector(".justpick"); if(old){old.remove();return;}
+  var wrap=mk("div","justpick"), sel=mk("select"), first=document.createElement("option"); first.value=""; first.textContent="— ជ្រើសមូលហេតុ —"; sel.appendChild(first);
+  justOptions(issues).forEach(function(j){ var g=document.createElement("optgroup"); g.label=j[1];
+    j[2].forEach(function(r){var o=document.createElement("option"); o.value=r; o.textContent=r; g.appendChild(o);}); sel.appendChild(g); });
+  var oth=document.createElement("option"); oth.value="__other"; oth.textContent="ផ្សេងៗ… (សរសេរ)"; sel.appendChild(oth);
+  var inp=mk("input"); inp.type="text"; inp.placeholder="សរសេរមូលហេតុ…"; inp.hidden=true;
+  var okb=mk("button"); okb.type="button"; okb.textContent="✓ បញ្ជាក់"; okb.hidden=true;
+  function apply(v){ v=String(v||"").trim(); if(!v) return; tb.dataset.just=v; soapAutoSoon(); npcaAudit(); say("បានបញ្ជាក់ថាចាំបាច់ — មូលហេតុបានដាក់ក្នុង SOAP (A)"); }
+  sel.onchange=function(){ if(sel.value==="__other"){inp.hidden=false; okb.hidden=false; inp.focus();} else apply(sel.value); };
+  okb.onclick=function(){apply(inp.value);}; inp.onkeydown=function(e){if(e.key==="Enter"){e.preventDefault(); apply(inp.value);}};
+  /* keep typing here from re-running the table checks (which would redraw this picker) */
+  ["input","change","keyup"].forEach(function(ev){wrap.addEventListener(ev,function(e){e.stopPropagation();});});
+  wrap.appendChild(sel); wrap.appendChild(inp); wrap.appendChild(okb); box.appendChild(wrap); sel.focus();
+}
 var npcaT; function npcaAuditSoon(){clearTimeout(npcaT); npcaT=setTimeout(npcaAudit,200);}
+
+/* ---------- PE and SOAP live in the side column; for printing they go back into the sheet ---------- */
+var NOTE_HOME={};
+function notesToSide(){
+  ["peSec","soapSec"].forEach(function(id){var el=$(id); if(!NOTE_HOME[id]){NOTE_HOME[id]=document.createComment(id); el.parentNode.insertBefore(NOTE_HOME[id],el);} $("sideNotes").appendChild(el);});
+}
+var notesWasHidden={};
+function notesToSheet(){
+  ["peSec","soapSec"].forEach(function(id){var el=$(id), m=NOTE_HOME[id]; if(!m) return;
+    notesWasHidden[id]=el.hidden; if(el.classList.contains("print-on")) el.hidden=false; m.parentNode.insertBefore(el,m.nextSibling);});
+}
+function notesBack(){ notesToSide(); ["peSec","soapSec"].forEach(function(id){ if(id in notesWasHidden) $(id).hidden=notesWasHidden[id]; }); notesWasHidden={}; }
+window.addEventListener("beforeprint",notesToSheet);
+window.addEventListener("afterprint",notesBack);
 
 /* ---------- quick search in the template-name box ---------- */
 var acIdx=-1;
@@ -4405,6 +4574,7 @@ loadPatient();
 PT_TEXT.forEach(function(id){$(id).addEventListener("input",savePatient);});
 PT_VITAL.forEach(function(id){$(id).addEventListener("input",function(){checkVitals();savePatient();});});
 $("newPatientBtn").onclick=newPatient;
+notesToSide();
 peLoad();
 $("peBtn").onclick=function(){showPe($("peSec").hidden);};
 $("peHide").onclick=function(){showPe(false);};
@@ -4415,6 +4585,7 @@ $("pPay").addEventListener("change",function(){npcaCheck(); npcaAudit();}); npca
 ["fDx","fCo","fHo","soapS","soapA","pAllergy"].forEach(function(id){$(id).addEventListener("input",npcaAuditSoon);});
 $("rxTable").addEventListener("input",npcaAuditSoon); $("tplCare").addEventListener("change",npcaAuditSoon);
 $("pPay").addEventListener("change",savePatient);
+$("payBtn").onclick=function(){var on=!document.body.classList.contains("pay-open"); document.body.classList.toggle("pay-open",on); this.setAttribute("aria-pressed",String(on)); if(on) $("pPay").focus();};
 loadSoap();
 $("soapBtn").onclick=function(){showSoap($("soapSec").hidden);};
 $("soapHide").onclick=function(){showSoap(false);};
@@ -4488,14 +4659,150 @@ try{ if(!stock.length&&!localStorage.getItem(SEEDED_KEY)){ addEssentials(); stoc
 $("stockSearch").addEventListener("input",renderStock);
 $("stockSeed").onclick=seedStock;
 $("stockFile").addEventListener("change",function(){if(this.files[0]) importStock(this.files[0]); this.value="";});
+function normStr(x){return fold(x).replace(/\s+/g,"").replace(/,/g,".");}
+function stockDupFind(){
+  var g=normStr($("kGeneric").value), st=normStr($("kStrength").value), br=normStr($("kBrand").value);
+  if(!g&&!br) return null;
+  return stock.find(function(k){ if(k===editingStock) return false;
+    var sameG=g&&normStr(k.generic)===g&&normStr(k.strength||"")===st;
+    var sameB=br&&k.brand&&normStr(k.brand)===br&&normStr(k.strength||"")===st;
+    return sameG||sameB; })||null;
+}
+function stockDupShow(){
+  var k=stockDupFind(), box=$("stockDup");
+  if(!k){box.hidden=true; $("kSave").textContent=editingStock?"✓ កែ":"+ បន្ថែម"; return;}
+  box.hidden=false; box.textContent="⚠ មានក្នុងស្តុករួចហើយ: "+stockLabel(k)+" — ចំនួន "+(+k.qty||0)+(k.unit?" "+k.unit:"")+". ចុច «បូកចូល» ដើម្បីបន្ថែមចំនួនទៅថ្នាំដែលមានស្រាប់ (មិនបង្កើតជួរស្ទួន)។";
+  $("kSave").textContent="+ បូកចូល";
+}
+["kGeneric","kStrength","kBrand"].forEach(function(id){$(id).addEventListener("input",stockDupShow);});
 $("stockForm").addEventListener("submit",function(e){
   e.preventDefault();
+  var dup=!editingStock&&stockDupFind();
+  if(dup){
+    var add=parseFloat($("kQty").value)||0; dup.qty=(+dup.qty||0)+add;
+    if($("kExp").value) dup.exp=$("kExp").value; if($("kMin").value.trim()) dup.min=$("kMin").value.trim(); if($("kBrand").value.trim()&&!dup.brand) dup.brand=$("kBrand").value.trim();
+    this.reset(); $("kUnit").value="tab"; $("kCat").value="tab"; stockDupShow();
+    saveStock(); renderStock(); refreshStockBadges(); say("មានរួចហើយ — បានបូក "+add+" ចូល "+stockLabel(dup)+" (សរុប "+dup.qty+")"); $("kBrand").focus(); return;
+  }
   var k={brand:$("kBrand").value.trim(),generic:$("kGeneric").value.trim(),strength:$("kStrength").value.trim(),unit:$("kUnit").value,cat:$("kCat").value,qty:parseFloat($("kQty").value)||0,min:$("kMin").value.trim(),exp:$("kExp").value};
   if(!k.generic){$("kGeneric").focus();return;}
   if(editingStock){Object.assign(editingStock,k);} else {k.id="k-"+Date.now().toString(36); stock.push(k);}
   editingStock=null; this.reset(); $("kUnit").value="tab"; $("kCat").value="tab"; $("kSave").textContent="+ បន្ថែម";
   saveStock(); renderStock(); refreshStockBadges(); say("បានរក្សាទុកក្នុងស្តុក"); $("kBrand").focus();
 });
+/* ---------- drug name lookup for the stock form: built-in brands + essential list + this clinic's stock + online (openFDA) ---------- */
+/* [brand, generic, strength, unit] — common brands found in Cambodian pharmacies (offline list) */
+var BRANDS=[
+ ["Panadol","Paracetamol","500 mg","tab"],["Panadol Extra","Paracetamol + Caffeine","500/65 mg","tab"],["Efferalgan","Paracetamol","500 mg","tab"],["Doliprane","Paracetamol","500 mg","tab"],
+ ["Dafalgan","Paracetamol","500 mg","tab"],["Biogesic","Paracetamol","500 mg","tab"],["Sara","Paracetamol","500 mg","tab"],["Tylenol","Paracetamol","500 mg","tab"],
+ ["Calpol","Paracetamol syrup","120 mg/5 ml","ml"],["Efferalgan pédiatrique","Paracetamol syrup","30 mg/ml","ml"],["Tiffy","Paracetamol + Chlorphenamine + Phenylephrine","500/2/10 mg","tab"],
+ ["Decolgen","Paracetamol + Chlorphenamine + Phenylephrine","500/2/10 mg","tab"],["Neozep","Paracetamol + Chlorphenamine + Phenylephrine","500/2/10 mg","tab"],
+ ["Brufen","Ibuprofen","400 mg","tab"],["Nurofen","Ibuprofen","200 mg","tab"],["Advil","Ibuprofen","200 mg","tab"],["Nurofen for Children","Ibuprofen syrup","100 mg/5 ml","ml"],
+ ["Voltaren","Diclofenac","50 mg","tab"],["Cataflam","Diclofenac potassium","50 mg","tab"],["Voltaren Emulgel","Diclofenac gel","1%","apply"],["Ponstan","Mefenamic acid","500 mg","tab"],
+ ["Mobic","Meloxicam","7.5 mg","tab"],["Celebrex","Celecoxib","200 mg","cap"],["Feldene","Piroxicam","20 mg","cap"],["Profenid","Ketoprofen","100 mg","tab"],
+ ["Aspégic","Aspirin","100 mg","sachet"],["Aspirin Cardio","Aspirin","100 mg","tab"],["Counterpain","Methyl salicylate cream","","apply"],
+ ["Augmentin","Amoxicillin-clavulanate","625 mg","tab"],["Augmentin syrup","Amoxicillin-clavulanate suspension","228 mg/5 ml","ml"],["Amoxil","Amoxicillin","500 mg","cap"],
+ ["Clamoxyl","Amoxicillin","500 mg","cap"],["Ospamox","Amoxicillin","500 mg","cap"],["Zithromax","Azithromycin","500 mg","tab"],["Zithromax suspension","Azithromycin suspension","200 mg/5 ml","ml"],
+ ["Klacid","Clarithromycin","500 mg","tab"],["Suprax","Cefixime","200 mg","cap"],["Oroken","Cefixime","200 mg","tab"],["Zinnat","Cefuroxime","500 mg","tab"],
+ ["Rocephin","Ceftriaxone","1 g","vial"],["Keflex","Cefalexin","500 mg","cap"],["Ciprobay","Ciprofloxacin","500 mg","tab"],["Ciflox","Ciprofloxacin","500 mg","tab"],
+ ["Tavanic","Levofloxacin","500 mg","tab"],["Flagyl","Metronidazole","250 mg","tab"],["Fasigyn","Tinidazole","500 mg","tab"],["Bactrim","Cotrimoxazole","480 mg","tab"],
+ ["Vibramycin","Doxycycline","100 mg","cap"],["Macrobid","Nitrofurantoin","100 mg","cap"],["Dalacin C","Clindamycin","300 mg","cap"],["Gentalline","Gentamicin","80 mg/2 ml","amp"],
+ ["Diflucan","Fluconazole","150 mg","cap"],["Canesten","Clotrimazole cream","1%","apply"],["Canesten vaginal","Clotrimazole vaginal tablet","500 mg","supp"],["Daktarin","Miconazole cream","2%","apply"],
+ ["Lamisil","Terbinafine cream","1%","apply"],["Nizoral","Ketoconazole cream","2%","apply"],["Polygynax","Neomycin + Polymyxin B + Nystatin vaginal capsule","","supp"],
+ ["Mycostatin","Nystatin oral suspension","100 000 IU/ml","ml"],["Zovirax","Aciclovir","400 mg","tab"],["Zovirax cream","Aciclovir cream","5%","apply"],
+ ["Zentel","Albendazole","400 mg","tab"],["Vermox","Mebendazole","500 mg","tab"],["Coartem","Artemether + Lumefantrine","20/120 mg","tab"],["Fansidar","Sulfadoxine + Pyrimethamine","500/25 mg","tab"],
+ ["Zyrtec","Cetirizine","10 mg","tab"],["Zyrtec syrup","Cetirizine syrup","5 mg/5 ml","ml"],["Clarityne","Loratadine","10 mg","tab"],["Aerius","Desloratadine","5 mg","tab"],
+ ["Telfast","Fexofenadine","180 mg","tab"],["Xyzal","Levocetirizine","5 mg","tab"],["Polaramine","Dexchlorpheniramine","2 mg","tab"],["Phenergan","Promethazine","25 mg","tab"],
+ ["Losec","Omeprazole","20 mg","cap"],["Mopral","Omeprazole","20 mg","cap"],["Nexium","Esomeprazole","40 mg","tab"],["Inexium","Esomeprazole","20 mg","tab"],
+ ["Pantoloc","Pantoprazole","40 mg","tab"],["Gaviscon","Sodium alginate + Antacid suspension","","ml"],["Maalox","Aluminium + Magnesium hydroxide suspension","","ml"],
+ ["Air-X","Simeticone","80 mg","tab"],["Buscopan","Hyoscine butylbromide","10 mg","tab"],["Spasfon","Phloroglucinol","80 mg","tab"],["Motilium","Domperidone","10 mg","tab"],
+ ["Primperan","Metoclopramide","10 mg","tab"],["Smecta","Diosmectite","3 g","sachet"],["Imodium","Loperamide","2 mg","cap"],["Tiorfan","Racecadotril","100 mg","cap"],
+ ["Oresol","ORS (low osmolarity)","","sachet"],["Hydrite","ORS (low osmolarity)","","sachet"],["Duphalac","Lactulose","10 g/15 ml","ml"],["Forlax","Macrogol","10 g","sachet"],
+ ["Dulcolax","Bisacodyl","5 mg","tab"],["Daflon","Diosmin + Hesperidin","500 mg","tab"],["Proctolog","Haemorrhoid cream","","apply"],
+ ["Ventolin","Salbutamol inhaler","100 mcg","puff"],["Ventolin nebules","Salbutamol nebule","2.5 mg/2.5 ml","neb"],["Ventolin syrup","Salbutamol syrup","2 mg/5 ml","ml"],
+ ["Seretide","Salmeterol + Fluticasone inhaler","25/125 mcg","puff"],["Symbicort","Budesonide + Formoterol inhaler","160/4.5 mcg","puff"],["Becotide","Beclometasone inhaler","100 mcg","puff"],
+ ["Pulmicort","Budesonide nebule","0.5 mg/2 ml","neb"],["Atrovent","Ipratropium nebule","250 mcg/ml","neb"],["Mucosolvan","Ambroxol","30 mg","tab"],
+ ["Mucosolvan syrup","Ambroxol syrup","15 mg/5 ml","ml"],["Bisolvon","Bromhexine","8 mg","tab"],["Fluimucil","Acetylcysteine","200 mg","sachet"],["Rhinathiol","Carbocisteine syrup","250 mg/5 ml","ml"],
+ ["Prospan","Ivy leaf extract syrup","35 mg/5 ml","ml"],["Toplexil","Oxomemazine syrup","","ml"],["Strepsils","Throat lozenges","","lozenge"],
+ ["Otrivin","Xylometazoline nasal spray","0.1%","spray"],["Physiomer","Normal saline nasal spray","","spray"],["Sterimar","Normal saline nasal spray","","spray"],
+ ["Glucophage","Metformin","500 mg","tab"],["Diamicron MR","Gliclazide","30 mg","tab"],["Daonil","Glibenclamide","5 mg","tab"],["Amaryl","Glimepiride","2 mg","tab"],
+ ["Mixtard 30","Insulin human 30/70","100 IU/ml","vial"],["Lantus","Insulin glargine","100 IU/ml","vial"],
+ ["Amlor","Amlodipine","5 mg","tab"],["Norvasc","Amlodipine","5 mg","tab"],["Cozaar","Losartan","50 mg","tab"],["Coversyl","Perindopril","5 mg","tab"],["Renitec","Enalapril","5 mg","tab"],
+ ["Concor","Bisoprolol","5 mg","tab"],["Tenormin","Atenolol","50 mg","tab"],["Adalat retard","Nifedipine slow-release","20 mg","tab"],["Aldomet","Methyldopa","250 mg","tab"],
+ ["Lasix","Furosemide","40 mg","tab"],["Esidrex","Hydrochlorothiazide","25 mg","tab"],["Aldactone","Spironolactone","25 mg","tab"],["Lipitor","Atorvastatin","20 mg","tab"],
+ ["Crestor","Rosuvastatin","10 mg","tab"],["Zocor","Simvastatin","20 mg","tab"],["Plavix","Clopidogrel","75 mg","tab"],["Kardegic","Aspirin","75 mg","sachet"],
+ ["Medrol","Methylprednisolone","16 mg","tab"],["Solupred","Prednisolone","20 mg","tab"],["Celestene","Betamethasone","0.5 mg","tab"],["Dexamethasone","Dexamethasone","4 mg/ml","amp"],
+ ["Solu-Cortef","Hydrocortisone","100 mg","vial"],["Diprosone","Betamethasone cream","0.05%","apply"],["Fucidin","Fusidic acid cream","2%","apply"],["Bactroban","Mupirocin ointment","2%","apply"],
+ ["Betadine","Povidone-iodine solution","10%","apply"],["Flammazine","Silver sulfadiazine cream","1%","apply"],["Calamine","Calamine lotion","","apply"],
+ ["Tobrex","Tobramycin eye drops","0.3%","drop"],["Chloramphenicol eye drops","Chloramphenicol eye drops","0.5%","drop"],["Ofloxacin eye drops","Ofloxacin eye drops","0.3%","drop"],
+ ["Tardyferon","Ferrous sulfate","80 mg","tab"],["Ferrograd Folic","Ferrous sulfate + Folic acid","","tab"],["Speciafoldine","Folic acid","5 mg","tab"],["Neurobion","Vitamin B1 + B6 + B12","","tab"],
+ ["Calcium Sandoz","Calcium","500 mg","tab"],["Zinc Kid","Zinc (dispersible)","20 mg","tab"],["Vitamin A","Vitamin A","200 000 IU","cap"],
+ ["Xylocaine","Lidocaine","2%","amp"],["Syntocinon","Oxytocin","10 IU/ml","amp"],["Exacyl","Tranexamic acid","500 mg/5 ml","amp"],["Cytotec","Misoprostol","200 mcg","tab"],
+ ["Valium","Diazepam","5 mg","tab"],["Tegretol","Carbamazepine","200 mg","tab"],["Depakine","Sodium valproate","500 mg","tab"],["Tanganil","Acetylleucine","500 mg","tab"],
+ ["Serc","Betahistine","16 mg","tab"],["Levothyrox","Levothyroxine","50 mcg","tab"],["Mediven","Normal saline 0.9%","500 ml","bag"],["Ringer lactate","Ringer's lactate","500 ml","bag"]
+];
+function titleCase(x){return String(x||"").toLowerCase().replace(/(^|[\s\-\/(+,])([a-z])/g,function(m,a,b){return a+b.toUpperCase();});}
+function fdaUnit(form){var f=String(form||"").toUpperCase();
+  if(/CAPSULE/.test(f))return "cap"; if(/TABLET/.test(f))return "tab"; if(/INJECT|POWDER, FOR SOLUTION/.test(f))return "vial";
+  if(/CREAM|OINTMENT|GEL|LOTION/.test(f))return "apply"; if(/SPRAY/.test(f))return "spray"; if(/AEROSOL|INHAL/.test(f))return "puff";
+  if(/SUPPOSITOR|INSERT/.test(f))return "supp"; if(/DROP|OPHTHALMIC|OTIC/.test(f))return "drop"; if(/SUSPENSION|SYRUP|SOLUTION|ELIXIR/.test(f))return "ml";
+  if(/LOZENGE/.test(f))return "lozenge"; if(/POWDER|GRANULE/.test(f))return "sachet"; return "tab";}
+function fdaStrength(ai){ if(!ai||!ai.length) return ""; return ai.map(function(a){return String(a.strength||"").replace(/\/1$/,"").replace(/mg\/(\d+) ?mL/i,"mg/$1 ml");}).join(" + ");}
+var FDA_CACHE={};
+function fdaLookup(term,cb){
+  term=String(term||"").toLowerCase().replace(/[^a-z0-9 \-]/g,"").trim(); if(term.length<3){cb([]);return;}
+  if(FDA_CACHE[term]){cb(FDA_CACHE[term]);return;}
+  if(!window.fetch||!navigator.onLine){cb([]);return;}
+  var q=term.split(/\s+/)[0], url="https://api.fda.gov/drug/ndc.json?search=brand_name:"+encodeURIComponent(q)+"*+generic_name:"+encodeURIComponent(q)+"*&limit=25";
+  var ctl=window.AbortController?new AbortController():null, timer=setTimeout(function(){if(ctl) ctl.abort();},6000);
+  fetch(url,ctl?{signal:ctl.signal}:{}).then(function(r){return r.ok?r.json():{results:[]};}).then(function(j){
+    clearTimeout(timer); var seen={}, out=[];
+    (j.results||[]).forEach(function(x){
+      var g=titleCase(x.generic_name||""), b=titleCase(x.brand_name||""), st=fdaStrength(x.active_ingredients), u=fdaUnit(x.dosage_form);
+      if(!g) return; var key=fold(b+"|"+g+"|"+st+"|"+u); if(seen[key]) return; seen[key]=1;
+      out.push({brand:fold(b)===fold(g)?"":b,generic:g,strength:st,unit:u,src:"web"});
+    });
+    FDA_CACHE[term]=out; cb(out);
+  }).catch(function(){clearTimeout(timer); cb([]);});
+}
+function localLookup(term){
+  var t=fold(term).trim(); if(t.length<2) return [];
+  var out=[], seen={};
+  function add(o){var key=fold(o.brand+"|"+o.generic+"|"+o.strength); if(seen[key]) return; seen[key]=1; out.push(o);}
+  BRANDS.forEach(function(b){ if(fold(b[0]).indexOf(t)===0||fold(b[1]).indexOf(t)===0||fold(b[0]).indexOf(" "+t)>-1) add({brand:b[0],generic:b[1],strength:b[2],unit:b[3],src:"brand"}); });
+  ESSENTIAL.forEach(function(e){ if(fold(e[0]).indexOf(t)===0) add({brand:"",generic:e[0],strength:e[1],unit:e[2],cat:e[3],src:"list"}); });
+  return out.slice(0,14);
+}
+function kSugRender(list,loading){
+  var box=$("kSug"); box.textContent=""; if(!list.length&&!loading){box.hidden=true;return;}
+  list.slice(0,20).forEach(function(o){
+    var b=mk("button"); b.type="button";
+    var have=stock.find(function(k){return normStr(k.generic)===normStr(o.generic)&&normStr(k.strength||"")===normStr(o.strength||"");});
+    var m=mk("b"); m.textContent=o.brand||o.generic; b.appendChild(m);
+    var sm=mk("span"); sm.textContent=(o.brand?" — "+o.generic:"")+(o.strength?" "+o.strength:"")+" · "+(o.unit||""); b.appendChild(sm);
+    var tag=mk("small"); tag.textContent=have?"✓ មានក្នុងស្តុក":o.src==="web"?"🌐 Internet":o.src==="brand"?"Brand":"បញ្ជីចាំបាច់"; if(have) tag.className="have"; b.appendChild(tag);
+    b.onmousedown=function(e){e.preventDefault(); kSugPick(o);};
+    box.appendChild(b);
+  });
+  if(loading){var l=mk("div","kload"); l.textContent="🌐 កំពុងស្វែងរកលើ Internet…"; box.appendChild(l);}
+  box.hidden=false;
+}
+function kSugPick(o){
+  if(o.brand) $("kBrand").value=o.brand; $("kGeneric").value=o.generic; if(o.strength) $("kStrength").value=o.strength;
+  if(o.unit&&[].some.call($("kUnit").options,function(op){return op.value===o.unit;})){ $("kUnit").value=o.unit; $("kCat").value=o.cat||catOf({unit:o.unit}); }
+  $("kSug").hidden=true; stockDupShow(); $("kQty").focus();
+}
+var kSugT;
+function kSugSearch(e){
+  var term=e.target.value; clearTimeout(kSugT);
+  var loc=localLookup(term); kSugRender(loc,term.trim().length>=3);
+  if(term.trim().length<3) return;
+  kSugT=setTimeout(function(){ fdaLookup(term,function(web){ if(e.target.value!==term) return;
+    kSugRender(loc.concat(web.filter(function(w){return !loc.some(function(l){return fold(l.generic)===fold(w.generic)&&fold(l.strength)===fold(w.strength)&&fold(l.brand)===fold(w.brand);});})),false); }); },400);
+}
+
+["kBrand","kGeneric"].forEach(function(id){$(id).addEventListener("input",kSugSearch); $(id).addEventListener("blur",function(){setTimeout(function(){$("kSug").hidden=true;},200);});
+  $(id).addEventListener("keydown",function(e){ if(e.key==="Escape") $("kSug").hidden=true; if(e.key==="Enter"&&!$("kSug").hidden){var f=$("kSug").querySelector("button"); if(f){e.preventDefault(); f.dispatchEvent(new MouseEvent("mousedown"));}} });});
 renderStock();
 $("tileNew").onclick=function(){newBlank(); go("rx");};
 $("tilePrint").onclick=function(){go("rx"); setTimeout(function(){window.print();},100);};
