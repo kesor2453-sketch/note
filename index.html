@@ -262,7 +262,8 @@ tbody.rxitem.unsafe .namecell{box-shadow:inset 3px 0 0 var(--alert)}
 .sidenotes .soaprow > div{grid-column:1/-1}
 .sidenotes .perow{grid-template-columns:1fr 112px}
 .sidenotes .perow .pv,.sidenotes .pechips{grid-column:1/-1}
-.sidenotes .perow:not(:focus-within):not(:hover) .pechips{display:none}
+.perow:not(.open) .pechips{display:none}
+.perow.open{background:var(--pen-soft);border-radius:6px}
 .sidenotes .perow .pv{font-size:14px}
 .pe{border:1px solid var(--rule);border-left:3px solid #0b6e99;border-radius:6px;padding:2px 12px 8px;margin-top:10px;background:var(--panel)}
 .pe h2{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
@@ -912,7 +913,7 @@ body.no-vitals .vitals{display:none}
       <button type="button" id="gUp">បង្កើតគណនីថ្មី</button>
       <button type="button" id="gReset">ភ្លេចពាក្យសម្ងាត់?</button>
     </div>
-    <p class="gate-note" id="gateNote">ព័ត៌មានអ្នកជំងឺមិនត្រូវបានផ្ញើទៅ cloud ទេ។ · v32</p>
+    <p class="gate-note" id="gateNote">ព័ត៌មានអ្នកជំងឺមិនត្រូវបានផ្ញើទៅ cloud ទេ។ · v33</p>
   </form>
 </div>
 
@@ -999,7 +1000,7 @@ body.no-vitals .vitals{display:none}
       <p class="hint">ឯកសារត្រូវមានជួរឈរ៖ ICD 10 · EN · KH · FR។ បញ្ជីនេះរក្សាទុកក្នុង browser ហើយប្រើសម្រាប់ស្វែងរករោគវិនិច្ឆ័យទាំងអស់។</p>
     </fieldset>
     <div class="actions">
-      <span style="margin-right:auto;font:12px var(--body);color:var(--muted)">Rx Clinic v32</span>
+      <span style="margin-right:auto;font:12px var(--body);color:var(--muted)">Rx Clinic v33</span>
       <button class="btn alt" id="settingsClose" type="button">បិទ</button>
       <button class="btn" type="submit">រក្សាទុកការកំណត់</button>
     </div>
@@ -4252,14 +4253,17 @@ function peBuild(){
     [["normal","Normal"],["abnormal","Abnormal"]].forEach(function(o){var op=document.createElement("option");op.value=o[0];op.textContent=o[1];sel.appendChild(op);});
     var pv=mk("div","pv"); pv.contentEditable="true";
     var ch=mk("div","pechips noprint");
-    var nb=mk("button","n"); nb.type="button"; nb.textContent="✓ Normal"; nb.onclick=function(){peSet(row,"normal",sy[3]);}; ch.appendChild(nb);
+    var nb=mk("button","n"); nb.type="button"; nb.textContent="✓ Normal"; nb.onclick=function(){peSet(row,"normal",sy[3]); peOpen(row,false);}; ch.appendChild(nb);
     sy[4].forEach(function(f){var b=mk("button"); b.type="button"; b.textContent=f; b.onclick=function(){peAdd(row,f);}; ch.appendChild(b);});
-    sel.onchange=function(){ peSet(row,sel.value, sel.value==="normal"?sy[3]:""); if(sel.value==="abnormal") pv.focus(); };
+    sel.onchange=function(){ peSet(row,sel.value, sel.value==="normal"?sy[3]:""); peOpen(row,sel.value==="abnormal"); if(sel.value==="abnormal") pv.focus(); };
+    sel.addEventListener("mousedown",function(){ peOpen(row,true); });
+    sel.addEventListener("keydown",function(e){ if(e.key===" "||e.key==="Enter") peOpen(row,true); });
     pv.addEventListener("input",function(){ if(row.dataset.st==="normal"&&pv.textContent.trim()!==sy[3]) peSet(row,"abnormal",pv.textContent,true); else peSave(); soapAutoSoon(); });
     row.appendChild(pn); row.appendChild(sel); row.appendChild(pv); row.appendChild(ch); box.appendChild(row);
     peSet(row,"normal",sy[3],false,true);
   });
 }
+function peOpen(row,on){ [].forEach.call(document.querySelectorAll(".perow.open"),function(r){ if(r!==row) r.classList.remove("open"); }); row.classList.toggle("open",!!on); }
 function peSet(row,st,txt,keepCaret,quiet){
   row.dataset.st=st; var sel=row.querySelector("select"), pv=row.querySelector(".pv");
   sel.value=st; sel.className="st-"+st;
@@ -4482,7 +4486,7 @@ var npcaT; function npcaAuditSoon(){clearTimeout(npcaT); npcaT=setTimeout(npcaAu
 /* ---------- PE and SOAP live in the side column; for printing they go back into the sheet ---------- */
 var NOTE_HOME={};
 function notesToSide(){
-  ["peSec","soapSec"].forEach(function(id){var el=$(id); if(!NOTE_HOME[id]){NOTE_HOME[id]=document.createComment(id); el.parentNode.insertBefore(NOTE_HOME[id],el);} $("sideNotes").appendChild(el);});
+  ["soapSec","peSec"].forEach(function(id){var el=$(id); if(!NOTE_HOME[id]){NOTE_HOME[id]=document.createComment(id); el.parentNode.insertBefore(NOTE_HOME[id],el);} $("sideNotes").appendChild(el);});
 }
 var notesWasHidden={};
 function notesToSheet(){
