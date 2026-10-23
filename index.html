@@ -351,6 +351,12 @@ body.resizing{cursor:col-resize;user-select:none}
 .evrow select{border:1px solid var(--rule);border-radius:5px;padding:3px 4px;font:12px var(--body);background:var(--paper);color:var(--muted);width:100%;min-width:0}
 .sidenotes .evrow b small{display:none}
 .evrow.abn .ev{color:var(--alert)}
+.evrow{grid-template-columns:auto minmax(0,1fr)!important}
+.evrow > b{cursor:pointer}
+.evchips{grid-column:1/-1;display:none;flex-wrap:wrap;gap:4px;padding:2px 0 4px}
+.evrow.open .evchips{display:flex}.evrow.open{background:var(--pen-soft);border-radius:6px;padding:3px 4px}
+.evchips button{border:1px solid var(--rule);background:var(--paper);color:var(--ink);border-radius:999px;padding:2px 9px;font:12.5px var(--body);cursor:pointer}
+.evchips button[aria-pressed="true"]{background:#0b6e99;border-color:#0b6e99;color:#fff}
 @media print{.evbox{border:0;padding:0;margin:0 0 3px}.evrow{grid-template-columns:auto 1fr;padding:0}.evrow select{display:none}.evrow .ev{border:0;font-size:13px}.evrow b small{display:none}}
 .soap{border:1px solid var(--rule);border-left:3px solid #6b4fa0;border-radius:6px;padding:2px 12px 8px;margin-top:10px;background:var(--panel)}
 .soap h2{display:flex;justify-content:space-between;align-items:center;gap:8px}
@@ -990,7 +996,7 @@ body.no-vitals .vitals{display:none}
       <button type="button" id="gUp">បង្កើតគណនីថ្មី</button>
       <button type="button" id="gReset">ភ្លេចពាក្យសម្ងាត់?</button>
     </div>
-    <p class="gate-note" id="gateNote">ព័ត៌មានអ្នកជំងឺមិនត្រូវបានផ្ញើទៅ cloud ទេ។ · v39</p>
+    <p class="gate-note" id="gateNote">ព័ត៌មានអ្នកជំងឺមិនត្រូវបានផ្ញើទៅ cloud ទេ។ · v40</p>
   </form>
 </div>
 
@@ -1092,7 +1098,7 @@ body.no-vitals .vitals{display:none}
       <p class="hint">ឯកសារត្រូវមានជួរឈរ៖ ICD 10 · EN · KH · FR។ បញ្ជីនេះរក្សាទុកក្នុង browser ហើយប្រើសម្រាប់ស្វែងរករោគវិនិច្ឆ័យទាំងអស់។</p>
     </fieldset>
     <div class="actions">
-      <span style="margin-right:auto;font:12px var(--body);color:var(--muted)">Rx Clinic v39</span>
+      <span style="margin-right:auto;font:12px var(--body);color:var(--muted)">Rx Clinic v40</span>
       <button class="btn alt" id="settingsClose" type="button">បិទ</button>
       <button class="btn" type="submit">រក្សាទុកការកំណត់</button>
     </div>
@@ -4729,51 +4735,82 @@ function dxAcBind(id){
 function dxBlank(){ ["fDx2","fDdx"].forEach(function(id){$(id).parentNode.classList.toggle("blank",!$(id).textContent.trim());}); }
 
 /* ---------- Evaluation (Cambodian/French clinical style): -EG, -Consciousness, -T&C … prefilled, with choices ---------- */
+/* [id, label, Khmer, options, multi, format]  format: kv "-Label : value" · line "-value" (one line each) · pre "-Label value" */
 var EV_FIELDS=[
- ["evEG","EG","État général",["Stable","Good","Fair","Poor (altered)","Critical"]],
- ["evCons","Consciousness","Conscience",["Conscious, GCS 15/15","Drowsy","Confused","GCS …/15","Unconscious"]],
- ["evTC","T&C","Téguments & conjonctives",["Well coloured","Pale","Jaundiced","Cyanosed","Flushed"]],
- ["evHyd","Hydration","Hydratation",["Well hydrated","Mild dehydration","Moderate dehydration","Severe dehydration"]],
- ["evOed","Oedema","Œdème",["No oedema","Lower limb oedema","Facial oedema","Generalised oedema"]],
- ["evNut","Nutrition","État nutritionnel",["Normal","Underweight","Malnourished","Overweight","Obese"]],
- ["evPain","Pain","Douleur",["No pain","Mild pain (1–3/10)","Moderate pain (4–6/10)","Severe pain (7–10/10)"]]];
-/* typical values for the diagnosis — [regex, {field: value}] */
-var EV_DX=[[/sepsis|meningit|severe malaria|cerebral/,{evEG:"Poor (altered)",evCons:"Drowsy"}],
- [/severe dehydration|volume depletion/,{evEG:"Poor (altered)",evHyd:"Severe dehydration",evCons:"Drowsy"}],
- [/dehydrat|gastroenter|diarrh|dysent|vomit|hyperemesis/,{evHyd:"Mild dehydration"}],
- [/dengue/,{evEG:"Fair",evHyd:"Mild dehydration",evTC:"Flushed"}],
- [/anaemia|anemia|thalass|haemorrhage|bleeding/,{evTC:"Pale"}],
- [/hepatitis|jaundice|leptospir/,{evTC:"Jaundiced"}],
- [/pneumon|asthma|copd|bronchiolit/,{evEG:"Fair"}],
- [/pre-eclampsia|nephrotic|heart failure/,{evOed:"Lower limb oedema"}],
- [/malnutrition/,{evNut:"Malnourished"}],
- [/pain|ache|colic|sprain|injury|wound|burn|fracture|abscess|dysmenor|renal colic|calcul|migraine|headache|tooth|otitis|pharyng|tonsil/,{evPain:"Moderate pain (4–6/10)"}],
- [/hypoglyc|seizure|convuls/,{evCons:"Drowsy"}]];
-var EV_KEY="rxTemplates.ev";
+ ["evEG","EG","ស្ថានភាពទូទៅ",["bon","stable","peu altéré","altéré","très altéré"],0,"kv"],
+ ["evCons","Conscience","ស្មារតី",["conscient, GCS 15/15","somnolent","agitations et confusion","obnubilé","coma (GCS …/15)","sous intubation oro-trachéale","sous sédation"],1,"cons"],
+ ["evTC","T et C","ស្បែក និងស្រោមភ្នែក",["colorés","pâles","subictère","ictère franc","cyanose","marbrures"],1,"kv"],
+ ["evHyd","Hydratation","ជាតិទឹក",["bien hydraté","déshydratation légère","déshydratation modérée","déshydratation sévère"],0,"kv"],
+ ["evResp","Signes respiratoires","រោគសញ្ញាផ្លូវដង្ហើម",["pas de dyspnée","oppression thoracique","dyspnée intense","polypnée","toux sèche","toux productive","hémoptysie"],1,"line"],
+ ["evPoum","Poumon","សួត",["MV bien perçu, pas de râles","râles sibilants à l'expiration","râles crépitants à l'inspiration","ronchi","diminution du MV","souffle tubaire","matité"],1,"kv"],
+ ["evTir","Tirage","ទ្រូងស្រុត",["pas de tirage","tirage intercostal","tirage sus-sternal","tirage sous-costal","battement des ailes du nez"],1,"tir"],
+ ["evCoeur","Cœur","បេះដូង",["B1B2 réguliers, pas de souffle pathologique","tachycardie","bradycardie","arythmie","souffle systolique"],1,"kv"],
+ ["evVentre","Ventre","ពោះ",["souple","sensible","sensible à l'épigastre","défense","distendu","hépatomégalie","splénomégalie"],1,"pre"],
+ ["evOed","Œdème","ហើម",["pas d'œdème","OMI","œdème facial","anasarque"],0,"kv"],
+ ["evDoul","Douleur","ការឈឺ",["pas de douleur","EVA 3/10","EVA 5/10","EVA 7/10","EVA 9/10"],0,"kv"],
+ ["evSelle","Selles","លាមក",["(+)","(-)","diarrhée","méléna"],0,"pre"],
+ ["evUrine","Urines","ទឹកនោម",["(+)","(-)","oligurie","hématurie"],0,"pre"],
+ ["evGaz","Gaz","ខ្យល់",["(+)","(-)"],0,"pre"]];
+/* typical findings by diagnosis */
+var EV_DX=[[/sepsis|meningit|severe malaria|cerebral/,{evEG:"altéré",evCons:"agitations et confusion"}],
+ [/severe dehydration|volume depletion/,{evEG:"altéré",evHyd:"déshydratation sévère",evCons:"somnolent"}],
+ [/dehydrat|gastroenter|diarrh|dysent/,{evHyd:"déshydratation légère",evSelle:"diarrhée",evVentre:"souple; sensible"}],
+ [/vomit|hyperemesis/,{evHyd:"déshydratation légère"}],
+ [/dengue/,{evEG:"peu altéré",evHyd:"déshydratation légère",evVentre:"souple; sensible"}],
+ [/pneumon/,{evEG:"peu altéré",evResp:"polypnée; toux productive",evPoum:"râles crépitants à l'inspiration"}],
+ [/asthma|copd|bronchiolit|wheez/,{evEG:"peu altéré",evResp:"oppression thoracique; dyspnée intense; polypnée; toux sèche",evPoum:"râles sibilants à l'expiration",evTir:"tirage intercostal"}],
+ [/bronchitis|cough/,{evResp:"toux productive",evPoum:"ronchi"}],
+ [/anaemia|anemia|thalass|haemorrhage/,{evTC:"pâles"}],
+ [/hepatitis|jaundice|leptospir/,{evTC:"ictère franc"}],
+ [/gastritis|dyspeps|reflux|gerd|peptic|heartburn/,{evVentre:"souple; sensible à l'épigastre"}],
+ [/colic|abdominal pain|appendic/,{evVentre:"souple; sensible"}],
+ [/constipat/,{evSelle:"(-)"}],
+ [/pre-eclampsia|nephrot|heart failure/,{evOed:"OMI"}],
+ [/hypoglyc|seizure|convuls/,{evCons:"somnolent"}],
+ [/pain|ache|sprain|injury|wound|burn|fracture|abscess|dysmenor|renal colic|calcul|migraine|tooth|otitis|pharyng|tonsil/,{evDoul:"EVA 5/10"}]];
+function evDefault(f){ return f[0]==="evVentre"?"souple":f[0]==="evSelle"||f[0]==="evUrine"||f[0]==="evGaz"?"(+)":f[0]==="evEG"?"stable":f[3][0]; }
 function evBuild(){
   var box=$("evRows"); box.textContent="";
   EV_FIELDS.forEach(function(f){
-    var row=mk("div","evrow"); var b=mk("b"); b.textContent="-"+f[1]+" :"; var sm=mk("small"); sm.textContent=f[2]; b.appendChild(sm);
+    var row=mk("div","evrow"); row.dataset.ev=f[0];
+    var b=mk("b"); b.textContent="-"+f[1]+(f[5]==="kv"||f[5]==="cons"?" :":""); var sm=mk("small"); sm.textContent=f[2]; b.appendChild(sm);
+    b.title="ចុចដើម្បីបើកជម្រើស"; b.onclick=function(){ var on=!row.classList.contains("open"); [].forEach.call(document.querySelectorAll(".evrow.open"),function(r){r.classList.remove("open");}); row.classList.toggle("open",on); };
     var v=mk("div","ev"); v.id=f[0]; v.contentEditable="true";
-    var sel=mk("select","noprint"); sel.setAttribute("aria-label",f[1]);
-    f[3].forEach(function(o){var op=document.createElement("option"); op.value=o; op.textContent=o; sel.appendChild(op);});
-    var oth=document.createElement("option"); oth.value="__"; oth.textContent="ផ្សេងៗ… (សរសេរ)"; sel.appendChild(oth);
-    sel.onchange=function(){ if(sel.value==="__"){ v.focus(); return; } v.textContent=sel.value; evMark(row,f); evSave(); };
-    v.addEventListener("input",function(){ sel.value=f[3].indexOf(v.textContent.trim())>-1?v.textContent.trim():"__"; evMark(row,f); evSave(); });
-    row.appendChild(b); row.appendChild(v); row.appendChild(sel); box.appendChild(row);
+    var ch=mk("div","evchips noprint");
+    f[3].forEach(function(o){ var c=mk("button"); c.type="button"; c.textContent=o;
+      c.onmousedown=function(e){ e.preventDefault(); var cur=evVals(v);
+        if(f[4]){ var i=cur.indexOf(o); if(i>-1) cur.splice(i,1); else { if(o===f[3][0]||o===evDefault(f)) cur=[]; else cur=cur.filter(function(x){return x!==f[3][0]&&x!==evDefault(f);}); cur.push(o);} if(!cur.length) cur=[evDefault(f)]; }
+        else cur=[o];
+        v.textContent=cur.join("; "); evMark(row,f); evSave(); evChips(row); };
+      ch.appendChild(c); });
+    v.addEventListener("input",function(){ evMark(row,f); evChips(row); evSave(); });
+    row.appendChild(b); row.appendChild(v); row.appendChild(ch); box.appendChild(row);
   });
 }
-function evMark(row,f){ row.classList.toggle("abn",row.querySelector(".ev").textContent.trim()!==f[3][0]); }
-function evSet(vals){ EV_FIELDS.forEach(function(f){ var v=$(f[0]), val=vals&&vals[f[0]]!=null?vals[f[0]]:f[3][0]; v.textContent=val;
-  var sel=v.parentNode.querySelector("select"); sel.value=f[3].indexOf(val)>-1?val:"__"; evMark(v.parentNode,f); }); evSave(); }
+function evVals(v){ return v.textContent.split(/\s*;\s*/).map(function(x){return x.trim();}).filter(Boolean); }
+function evChips(row){ var vals=evVals(row.querySelector(".ev")); [].forEach.call(row.querySelectorAll(".evchips button"),function(c){c.setAttribute("aria-pressed",String(vals.indexOf(c.textContent)>-1));}); }
+function evMark(row,f){ row.classList.toggle("abn",row.querySelector(".ev").textContent.trim()!==evDefault(f)); }
+function evSet(vals){ EV_FIELDS.forEach(function(f){ var v=$(f[0]), val=vals&&vals[f[0]]!=null&&vals[f[0]]!==""?vals[f[0]]:evDefault(f); v.textContent=val; evMark(v.parentNode,f); evChips(v.parentNode); }); evSave(); }
 function evApplyDx(){
   var cur=lib.find(function(x){return x.id===currentId;}), ctx=fold([cur?cur.name:"",$("fDx").textContent,$("fCo").textContent].join(" ")), o={};
   EV_DX.forEach(function(r){ if(r[0].test(ctx)) Object.keys(r[1]).forEach(function(k){ if(!(k in o)) o[k]=r[1][k]; }); });
   evSet(o);
 }
+var EV_KEY="rxTemplates.ev2";
 function evSave(){ var o={}; EV_FIELDS.forEach(function(f){o[f[0]]=$(f[0]).textContent.trim();}); try{localStorage.setItem(EV_KEY,JSON.stringify(o));}catch(e){} if(typeof soapAutoSoon==="function") soapAutoSoon(); }
 function evLoad(){ evBuild(); var o=null; try{o=JSON.parse(localStorage.getItem(EV_KEY)||"null");}catch(e){} if(o) evSet(o); else evApplyDx(); }
-function evText(){ return EV_FIELDS.map(function(f){var t=$(f[0])?$(f[0]).textContent.trim():""; return t?"-"+f[1]+" : "+t:"";}).filter(Boolean).join(", "); }
+function evLines(){
+  var out=[];
+  EV_FIELDS.forEach(function(f){ var v=$(f[0]); if(!v) return; var vals=evVals(v); if(!vals.length) return;
+    if(f[5]==="line") vals.forEach(function(x){ out.push("-"+x.charAt(0).toUpperCase()+x.slice(1)); });
+    else if(f[5]==="cons"){ out.push("-Conscience : "+vals[0]); vals.slice(1).forEach(function(x){ out.push("\t+ conscience : "+x); }); }
+    else if(f[5]==="tir"){ out.push(vals.length===1&&/^pas/.test(vals[0])?"-Pas de tirage":"-Tirage "+vals.map(function(x){return x.replace(/^tirage /,"");}).join(" et ")); }
+    else if(f[5]==="pre") out.push("-"+f[1]+" "+vals.join(", "));
+    else out.push("-"+f[1]+" : "+vals.join(", "));
+  });
+  return out;
+}
+function evText(){ return evLines().join("\n"); }
 
 /* ---------- quick search in the template-name box ---------- */
 var acIdx=-1;
