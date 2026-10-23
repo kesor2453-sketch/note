@@ -698,8 +698,8 @@ body.no-vitals .vitals{display:none}
         <button type="button" data-lang="frkh">FR+ខ្មែរ</button>
       </div>
       <button class="btn alt" id="newBtn" type="button">+ ថ្មី</button>
-      <button class="btn alt" id="peBtn" type="button" aria-pressed="false" title="បង្ហាញ / លាក់ Physical examination">🩺 PE</button>
-      <button class="btn alt" id="soapBtn" type="button" aria-pressed="false" title="បង្ហាញ / លាក់ SOAP note">📝 SOAP</button>
+      <button class="btn alt" id="peBtn" type="button" aria-pressed="true" title="បង្ហាញ / លាក់ Physical examination">🩺 PE</button>
+      <button class="btn alt" id="soapBtn" type="button" aria-pressed="true" title="បង្ហាញ / លាក់ SOAP note">📝 SOAP</button>
       <button class="btn alt" id="newPatientBtn" type="button">អ្នកជំងឺថ្មី</button>
       <button class="btn" id="printBtn" type="button">បោះពុម្ព</button>
       <div class="toast" id="toast" role="status" aria-live="polite"></div>
@@ -757,10 +757,9 @@ body.no-vitals .vitals{display:none}
         <label class="vbox"><span class="vl" data-fr="FR">RR</span><input id="vRr" type="text" inputmode="numeric" placeholder="18" autocomplete="off"><span class="vu">/min</span></label>
         <label class="vbox"><span class="vl">SpO₂</span><input id="vSpo2" type="text" inputmode="numeric" placeholder="98" autocomplete="off"><span class="vu">%</span></label>
       </section>
-      <section class="pe" id="peSec" hidden>
+      <section class="pe" id="peSec">
         <h2><span>Physical examination <span class="kh">· ការពិនិត្យរាងកាយ</span> <span class="pecount" id="peCount"></span></span>
           <span class="noprint pe-tools"><label class="soapprint"><input type="checkbox" id="pePrint"> បោះពុម្ព</label>
-          <button class="add" id="peReset" type="button" title="ដាក់លទ្ធផលពិនិត្យតាមរោគវិនិច្ឆ័យឡើងវិញ">↺ តាមរោគវិនិច្ឆ័យ</button>
           <button class="add" id="peHide" type="button">✕ លាក់</button></span></h2>
         <div id="peRows"></div>
       </section>
@@ -775,7 +774,7 @@ body.no-vitals .vitals{display:none}
         <div class="field wide"><label data-fr="Examens">Ix</label><div id="fInv" contenteditable="true" data-ph="Investigations"></div></div>
       </section>
 
-      <section class="soap" id="soapSec" hidden>
+      <section class="soap" id="soapSec">
         <h2><span>SOAP note <span class="kh">· កំណត់ត្រាពិនិត្យ</span> <span class="soapday" id="soapDay"></span></span>
           <span class="noprint soap-tools"><label class="soapprint"><input type="checkbox" id="soapPrint"> បោះពុម្ព SOAP</label>          <button class="add" id="soapHide" type="button">✕ លាក់</button></span></h2>
         <div class="soaprow"><b>S</b><label><span data-fr="Subjectif">Subjective</span> <span class="kh">· អ្នកជំងឺប្រាប់</span></label><div id="soapS" contenteditable="true" data-ph="Symptoms, history, what the patient reports"></div></div>
@@ -866,7 +865,7 @@ body.no-vitals .vitals{display:none}
       <button type="button" id="gUp">បង្កើតគណនីថ្មី</button>
       <button type="button" id="gReset">ភ្លេចពាក្យសម្ងាត់?</button>
     </div>
-    <p class="gate-note" id="gateNote">ព័ត៌មានអ្នកជំងឺមិនត្រូវបានផ្ញើទៅ cloud ទេ។ · v26</p>
+    <p class="gate-note" id="gateNote">ព័ត៌មានអ្នកជំងឺមិនត្រូវបានផ្ញើទៅ cloud ទេ។ · v27</p>
   </form>
 </div>
 
@@ -953,7 +952,7 @@ body.no-vitals .vitals{display:none}
       <p class="hint">ឯកសារត្រូវមានជួរឈរ៖ ICD 10 · EN · KH · FR។ បញ្ជីនេះរក្សាទុកក្នុង browser ហើយប្រើសម្រាប់ស្វែងរករោគវិនិច្ឆ័យទាំងអស់។</p>
     </fieldset>
     <div class="actions">
-      <span style="margin-right:auto;font:12px var(--body);color:var(--muted)">Rx Clinic v26</span>
+      <span style="margin-right:auto;font:12px var(--body);color:var(--muted)">Rx Clinic v27</span>
       <button class="btn alt" id="settingsClose" type="button">បិទ</button>
       <button class="btn" type="submit">រក្សាទុកការកំណត់</button>
     </div>
@@ -3984,7 +3983,7 @@ function newPatient(){
   if(!newPtArmed){newPtArmed=true;b.textContent="ចុចម្តងទៀតដើម្បីលុប";b.classList.add("danger");setTimeout(function(){newPtArmed=false;b.textContent="អ្នកជំងឺថ្មី";b.classList.remove("danger");},3500);return;}
   newPtArmed=false; b.textContent="អ្នកជំងឺថ្មី"; b.classList.remove("danger");
   PT_TEXT.forEach(function(id){$(id).textContent="";}); PT_VITAL.forEach(function(id){$(id).value="";});
-  ptModeManual=""; $("pPay").value=""; soapResetEdits(); peApplyDx(); showPe(false); SOAP_IDS.forEach(function(id){$(id).innerText="";}); showSoap(false); $("fHo").textContent=""; $("pDate").textContent=todayStr(); checkVitals(); savePatient(); renderSymChips(); $("pName").focus();
+  ptModeManual=""; $("pPay").value=""; soapResetEdits(); peApplyDx(); showPe(true); SOAP_IDS.forEach(function(id){$(id).innerText="";}); showSoap(true); $("fHo").textContent=""; $("pDate").textContent=todayStr(); checkVitals(); savePatient(); renderSymChips(); $("pName").focus();
   say("បានសម្អាតព័ត៌មានអ្នកជំងឺ");
 }
 
@@ -4052,7 +4051,7 @@ function loadSoap(){
   var o=null; try{o=JSON.parse(localStorage.getItem(SOAP_KEY)||"null");}catch(e){}
   SOAP_IDS.forEach(function(id){$(id).innerText=o&&o[id]?o[id]:""; if(o&&o.edited&&o.edited[id]) $(id).dataset.edited="1"; else delete $(id).dataset.edited;});
   $("soapPrint").checked=!!(o&&o.print); $("soapSec").classList.toggle("print-on",$("soapPrint").checked);
-  $("soapSec").hidden=!(o&&o.open); $("soapBtn").setAttribute("aria-pressed",String(!!(o&&o.open))); soapDayLabel();
+  $("soapSec").hidden=false; $("soapBtn").setAttribute("aria-pressed","true"); soapDayLabel();
 }
 var SOAP_KEY="rxTemplates.soap";
 
@@ -4243,7 +4242,7 @@ function peLoad(){
   var stored=false;
   [].forEach.call(document.querySelectorAll(".perow"),function(r){var v=o&&o.rows&&o.rows[r.dataset.sys]; if(v&&v[0]!=="ne"){peSet(r,v[0],v[1],false,true); stored=true;}});
   if(!stored) peApplyDx();
-  $("pePrint").checked=!!(o&&o.print); showPe(!!(o&&o.open)); peCount();
+  $("pePrint").checked=!!(o&&o.print); showPe(true); peCount();
 }
 function showPe(on){ $("peSec").hidden=!on; $("peBtn").setAttribute("aria-pressed",String(on)); if(on) peSuggest(); peSave(); }
 function peResetAll(){ peApplyDx(); }
@@ -4409,7 +4408,7 @@ $("newPatientBtn").onclick=newPatient;
 peLoad();
 $("peBtn").onclick=function(){showPe($("peSec").hidden);};
 $("peHide").onclick=function(){showPe(false);};
-$("peReset").onclick=function(){peApplyDx(); say("បានដាក់លទ្ធផលពិនិត្យតាមរោគវិនិច្ឆ័យ — សូមពិនិត្យ និងកែតាមអ្នកជំងឺ");};
+
 $("pePrint").addEventListener("change",peSave);
 ["soapS","soapO","soapA","soapP"].forEach(function(id){$(id).addEventListener("input",npcaCheck);});
 $("pPay").addEventListener("change",function(){npcaCheck(); npcaAudit();}); npcaCheck();
