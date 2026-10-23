@@ -254,12 +254,20 @@ tbody.rxitem.unsafe .namecell{box-shadow:inset 3px 0 0 var(--alert)}
 .notesize{display:flex;justify-content:flex-end;align-items:center;gap:4px;margin:0 0 6px;font:600 12px var(--kh);color:var(--muted)}
 .notesize button{border:1px solid var(--rule);background:var(--paper);color:var(--ink);border-radius:5px;min-width:30px;padding:2px 6px;font:700 13px var(--body);cursor:pointer}
 .notesize output{min-width:42px;text-align:center;font:600 12px var(--body);color:var(--ink)}
-.sheetwrap{display:block}
+.sheetwrap{display:block;position:relative}
+/* drag the left edge of the side panel to make it wider or narrower */
+.sidegrip{display:none;position:absolute;top:0;bottom:0;width:14px;margin-left:-14px;cursor:col-resize;z-index:7;touch-action:none}
+.sidegrip::before{content:"";position:absolute;left:5px;top:50%;width:4px;height:56px;margin-top:-28px;border-radius:3px;background:var(--rule);transition:background .15s}
+.sidegrip:hover::before,.sidegrip.drag::before{background:var(--pen)}
+body.resizing{cursor:col-resize;user-select:none}
+@media print{.sidegrip{display:none!important}}
 .sidenotes{margin-top:12px}
 .sidenotes:not(:has(section)){display:none}
 @media (min-width:1180px){
   #rxView{max-width:1440px}
-  .sheetwrap{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:14px;align-items:start}
+  .sheetwrap{display:grid;grid-template-columns:minmax(0,1fr) var(--sidew,380px);gap:14px;align-items:start}
+  #rxView{max-width:calc(1060px + var(--sidew,380px))}
+  .sidegrip{display:block}
   .sidenotes{margin-top:0;position:sticky;top:66px;max-height:calc(100vh - 80px);overflow:auto;padding-right:2px}
 }
 @media (min-width:1000px) and (max-width:1500px){ body.drawer-open .sheetwrap{grid-template-columns:minmax(0,1fr)} body.drawer-open .sidenotes{position:static;max-height:none} }
@@ -294,6 +302,25 @@ tbody.rxitem.unsafe .namecell{box-shadow:inset 3px 0 0 var(--alert)}
 @media (max-width:700px){.perow{grid-template-columns:1fr 120px}.perow .pv,.pechips{grid-column:1/-1}}
 @media print{.pe:not(.print-on){display:none!important}.pe{background:none;padding:0 0 4px;border-left-width:2px}.perow{grid-template-columns:150px 1fr;padding:1px 0}
   .perow select,.pechips{display:none!important}.perow .pv{font-size:13px}}
+.soaprow > b.L-s,.soaplog .L-s{color:#0b84c6}.soaprow > b.L-o,.soaplog .L-o{color:#17a05d}.soaprow > b.L-a,.soaplog .L-a{color:#e0445a}.soaprow > b.L-p,.soaplog .L-p{color:#6b5bd6}
+.soapadd{border-color:#6b4fa0!important;color:#6b4fa0!important;font-weight:700!important}
+.soaplog{margin-top:8px;border-top:1px solid var(--rule);padding-top:8px}
+.soaptabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px}
+.soaptabs button{border:0;background:var(--pen-soft);color:var(--pen);border-radius:6px;padding:4px 10px;font:600 12.5px var(--body);cursor:pointer}
+.soaptabs button[aria-pressed="true"]{background:#e8e3f8;color:#5b46b8;box-shadow:inset 0 -2px 0 #6b5bd6}
+.soaptabs button small{display:inline-block;margin-left:5px;background:#fff;border-radius:999px;padding:0 6px;font-size:11px}
+.soaptbl{overflow-x:auto;border:1px solid var(--rule);border-radius:8px;background:var(--paper)}
+.soapgrid{display:grid;grid-template-columns:repeat(4,minmax(150px,1fr)) auto;min-width:640px}
+.soapgrid > div{padding:7px 9px;border-bottom:1px solid var(--rule);font:13.5px var(--kh);white-space:pre-wrap;overflow-wrap:anywhere}
+.soapgrid .hd{font:700 11px var(--body);letter-spacing:.06em;color:var(--muted);text-transform:uppercase;background:var(--panel);white-space:normal}
+.soapgrid .hd i{display:inline-grid;place-items:center;width:17px;height:17px;border-radius:4px;color:#fff;font-style:normal;font-size:10px;margin-right:6px}
+.soapgrid .hd.L-s i{background:#0b84c6}.soapgrid .hd.L-o i{background:#17a05d}.soapgrid .hd.L-a i{background:#e0445a}.soapgrid .hd.L-p i{background:#6b5bd6}
+.soapgrid .tm{display:block;font:700 13px var(--body);color:var(--ink)}.soapgrid .tm small{font-weight:400;color:var(--muted);margin-left:4px}
+.soapgrid .dr{display:flex;flex-direction:column;gap:4px;align-items:flex-end}
+.soapgrid .dr span{background:#ede9fb;color:#5b46b8;border-radius:999px;padding:2px 9px;font:600 11.5px var(--body);white-space:nowrap}
+.soapgrid .dr button{border:0;background:none;color:var(--alert);cursor:pointer;font-size:13px}
+@media print{.soap.has-log .soaprow{display:none}.soaplog{border:0;padding:0}.soaptabs,.soapgrid .dr button{display:none}.soaptbl{overflow:visible;border:0}
+  .soapgrid{min-width:0;grid-template-columns:repeat(4,1fr) auto}.soapgrid > div{font-size:11px;padding:3px 5px}}
 .soap{border:1px solid var(--rule);border-left:3px solid #6b4fa0;border-radius:6px;padding:2px 12px 8px;margin-top:10px;background:var(--panel)}
 .soap h2{display:flex;justify-content:space-between;align-items:center;gap:8px}
 .soapday{font:600 12px var(--body);color:#6b4fa0;text-transform:none;letter-spacing:0}
@@ -829,11 +856,12 @@ body.no-vitals .vitals{display:none}
 
       <section class="soap" id="soapSec">
         <h2><span>SOAP note <span class="kh">· កំណត់ត្រាពិនិត្យ</span> <span class="soapday" id="soapDay"></span></span>
-          <span class="noprint soap-tools"><label class="soapprint"><input type="checkbox" id="soapPrint"> បោះពុម្ព SOAP</label>          <button class="add" id="soapHide" type="button">✕ លាក់</button></span></h2>
-        <div class="soaprow"><b>S</b><label><span data-fr="Subjectif">Subjective</span> <span class="kh">· អ្នកជំងឺប្រាប់</span></label><div id="soapS" contenteditable="true" data-ph="Symptoms, history, what the patient reports"></div></div>
-        <div class="soaprow"><b>O</b><label><span data-fr="Objectif">Objective</span> <span class="kh">· ការពិនិត្យ</span></label><div id="soapO" contenteditable="true" data-ph="Vital signs, examination, test results"></div></div>
-        <div class="soaprow"><b>A</b><label><span data-fr="Évaluation">Assessment</span> <span class="kh">· ការវាយតម្លៃ</span></label><div id="soapA" contenteditable="true" data-ph="Diagnosis / progress"></div></div>
-        <div class="soaprow"><b>P</b><label><span data-fr="Plan">Plan</span> <span class="kh">· ផែនការព្យាបាល</span></label><div id="soapP" contenteditable="true" data-ph="Treatment, tests, follow-up"></div></div>
+          <span class="noprint soap-tools"><button class="add soapadd" id="soapAdd" type="button" title="រក្សាទុក SOAP នេះជាកំណត់ត្រា (ម៉ោង + ថ្ងៃ)">＋ បញ្ចូល</button><label class="soapprint"><input type="checkbox" id="soapPrint"> បោះពុម្ព SOAP</label>          <button class="add" id="soapHide" type="button">✕ លាក់</button></span></h2>
+        <div class="soaprow"><b class="L-s">S</b><label><span data-fr="Subjectif">Subjective</span> <span class="kh">· អ្នកជំងឺប្រាប់</span></label><div id="soapS" contenteditable="true" data-ph="Symptoms, history, what the patient reports"></div></div>
+        <div class="soaprow"><b class="L-o">O</b><label><span data-fr="Objectif">Objective</span> <span class="kh">· ការពិនិត្យ</span></label><div id="soapO" contenteditable="true" data-ph="Vital signs, examination, test results"></div></div>
+        <div class="soaprow"><b class="L-a">A</b><label><span data-fr="Évaluation">Assessment / Evaluation</span> <span class="kh">· ការវាយតម្លៃ</span></label><div id="soapA" contenteditable="true" data-ph="Diagnosis / progress"></div></div>
+        <div class="soaprow"><b class="L-p">P</b><label><span data-fr="Traitement / Plan">Treatment / Plan</span> <span class="kh">· ការព្យាបាល / ផែនការ</span></label><div id="soapP" contenteditable="true" data-ph="Treatment, tests, follow-up"></div></div>
+        <div class="soaplog" id="soapLog" hidden></div>
       </section>
 
       <section class="proc" id="procSec" hidden>
@@ -898,6 +926,7 @@ body.no-vitals .vitals{display:none}
         </div>
       </footer>
     </main>
+    <div class="sidegrip noprint" id="sideGrip" title="អូសដើម្បីពង្រីក / បង្រួមទទឹង · ចុចពីរដងដើម្បីត្រឡប់ទំហំដើម" role="separator" aria-orientation="vertical"></div>
     <aside class="sidenotes" id="sideNotes" aria-label="Physical examination and SOAP note">
       <div class="notesize noprint">អក្សរ SOAP · PE <button type="button" id="noteMinus" title="តូចជាងនេះ">A−</button><output id="noteSizeOut">100%</output><button type="button" id="notePlus" title="ធំជាងនេះ">A+</button></div>
     </aside>
@@ -922,7 +951,7 @@ body.no-vitals .vitals{display:none}
       <button type="button" id="gUp">បង្កើតគណនីថ្មី</button>
       <button type="button" id="gReset">ភ្លេចពាក្យសម្ងាត់?</button>
     </div>
-    <p class="gate-note" id="gateNote">ព័ត៌មានអ្នកជំងឺមិនត្រូវបានផ្ញើទៅ cloud ទេ។ · v35</p>
+    <p class="gate-note" id="gateNote">ព័ត៌មានអ្នកជំងឺមិនត្រូវបានផ្ញើទៅ cloud ទេ។ · v37</p>
   </form>
 </div>
 
@@ -1024,7 +1053,7 @@ body.no-vitals .vitals{display:none}
       <p class="hint">ឯកសារត្រូវមានជួរឈរ៖ ICD 10 · EN · KH · FR។ បញ្ជីនេះរក្សាទុកក្នុង browser ហើយប្រើសម្រាប់ស្វែងរករោគវិនិច្ឆ័យទាំងអស់។</p>
     </fieldset>
     <div class="actions">
-      <span style="margin-right:auto;font:12px var(--body);color:var(--muted)">Rx Clinic v35</span>
+      <span style="margin-right:auto;font:12px var(--body);color:var(--muted)">Rx Clinic v37</span>
       <button class="btn alt" id="settingsClose" type="button">បិទ</button>
       <button class="btn" type="submit">រក្សាទុកការកំណត់</button>
     </div>
@@ -4062,7 +4091,7 @@ function newPatient(){
   if(!newPtArmed){newPtArmed=true;b.textContent="ចុចម្តងទៀតដើម្បីលុប";b.classList.add("danger");setTimeout(function(){newPtArmed=false;b.textContent="អ្នកជំងឺថ្មី";b.classList.remove("danger");},3500);return;}
   newPtArmed=false; b.textContent="អ្នកជំងឺថ្មី"; b.classList.remove("danger");
   PT_TEXT.forEach(function(id){$(id).textContent="";}); PT_VITAL.forEach(function(id){$(id).value="";});
-  ptModeManual=""; $("pPay").value=""; soapResetEdits(); peApplyDx(); showPe(true); SOAP_IDS.forEach(function(id){$(id).innerText="";}); showSoap(true); $("fHo").textContent=""; $("pDate").textContent=todayStr(); checkVitals(); savePatient(); renderSymChips(); $("pName").focus();
+  ptModeManual=""; soapLog=[]; soapLogSave(); $("pPay").value=""; soapResetEdits(); peApplyDx(); showPe(true); SOAP_IDS.forEach(function(id){$(id).innerText="";}); showSoap(true); $("fHo").textContent=""; $("pDate").textContent=todayStr(); checkVitals(); savePatient(); renderSymChips(); $("pName").focus();
   say("បានសម្អាតព័ត៌មានអ្នកជំងឺ");
 }
 
@@ -4090,7 +4119,7 @@ function admitDay(){
 
 /* ---------- SOAP note (hidden until the doctor clicks 📝 SOAP; printed only when shown) ---------- */
 var SOAP_IDS=["soapS","soapO","soapA","soapP"];
-function soapEmpty(){return SOAP_IDS.every(function(id){return !$(id).innerText.trim();});}
+function soapEmpty(){return !(typeof soapLog!=="undefined"&&soapLog.length)&&SOAP_IDS.every(function(id){return !$(id).innerText.trim();});}
 function soapCalc(){
   var co=$("fCo").textContent.trim(), ho=$("fHo").textContent.trim();
   var v=[["BP",$("vBp").value,"mmHg"],["P",$("vP").value,"/min"],["T",$("vT").value,"°C"],["RR",$("vRr").value,"/min"],["SpO₂",$("vSpo2").value,"%"]]
@@ -4551,6 +4580,43 @@ function fillFontSelects(){
     a[1].forEach(function(f){var o=document.createElement("option"); o.value=f[0]; o.textContent=f[1]; sel.appendChild(o);}); });
 }
 
+/* ---------- SOAP entries: "＋ បញ្ចូល" saves the current note with time; shown as an S | O | A | P table by day ---------- */
+var SOAP_LOG_KEY="rxTemplates.soapLog", soapLog=[], soapDaySel="";
+function soapLogLoad(){try{soapLog=JSON.parse(localStorage.getItem(SOAP_LOG_KEY)||"[]")||[];}catch(e){soapLog=[];} renderSoapLog();}
+function soapLogSave(){try{localStorage.setItem(SOAP_LOG_KEY,JSON.stringify(soapLog));}catch(e){} renderSoapLog(); if(typeof npcaCheck==="function") npcaCheck();}
+function soapLogAdd(){
+  var e={t:Date.now(),date:$("pDate").textContent.trim()||todayStr(),day:document.body.classList.contains("care-ipd")?($("pDay").textContent||""):"",doctor:SET.doctor||""};
+  SOAP_IDS.forEach(function(id){e[id]=$(id).innerText.trim();});
+  if(!e.soapS&&!e.soapO&&!e.soapA&&!e.soapP){say("SOAP នៅទទេ",true);return;}
+  soapLog.push(e); soapDaySel=e.date; soapLogSave(); soapResetEdits(); soapAutoSoon(); say("បានបញ្ចូល SOAP — "+new Date(e.t).toTimeString().slice(0,5));
+}
+function renderSoapLog(){
+  var box=$("soapLog"); if(!box) return; box.textContent=""; $("soapSec").classList.toggle("has-log",soapLog.length>0);
+  if(!soapLog.length){box.hidden=true;return;} box.hidden=false;
+  var days=[]; soapLog.forEach(function(e){ if(days.indexOf(e.date)<0) days.push(e.date); });
+  if(days.indexOf(soapDaySel)<0) soapDaySel=days[days.length-1];
+  var tabs=mk("div","soaptabs");
+  days.forEach(function(d,i){ var n=soapLog.filter(function(e){return e.date===d;}).length, b=mk("button"); b.type="button";
+    var dd=d.split("/"); b.textContent="Day"+(i+1)+"-"+(dd.length>1?dd[0]+"/"+dd[1]:d); var c=mk("small"); c.textContent=n; b.appendChild(c);
+    b.setAttribute("aria-pressed",String(d===soapDaySel)); b.onclick=function(){soapDaySel=d; renderSoapLog();}; tabs.appendChild(b); });
+  box.appendChild(tabs);
+  var wrap=mk("div","soaptbl"), g=mk("div","soapgrid");
+  [["L-s","S","Subjective"],["L-o","O","Objective"],["L-a","A","Assessment / Evaluation"],["L-p","P","Treatment / Plan"]].forEach(function(h){
+    var c=mk("div","hd "+h[0]), i=mk("i"); i.textContent=h[1]; c.appendChild(i); c.appendChild(document.createTextNode(h[2])); g.appendChild(c); });
+  g.appendChild(mk("div","hd"));
+  soapLog.forEach(function(e,idx){ if(e.date!==soapDaySel&&!document.body.classList.contains("printing")) return;
+    var tm=new Date(e.t), hh=("0"+tm.getHours()).slice(-2)+":"+("0"+tm.getMinutes()).slice(-2);
+    var cS=mk("div"), t=mk("span","tm"); t.textContent=hh; var sm=mk("small"); sm.textContent=e.date.slice(0,5)+(e.day?" · "+e.day:""); t.appendChild(sm); cS.appendChild(t); cS.appendChild(document.createTextNode(e.soapS||""));
+    var cO=mk("div"); cO.textContent=e.soapO||""; var cA=mk("div"); cA.textContent=e.soapA||""; var cP=mk("div"); cP.textContent=e.soapP||"";
+    var cD=mk("div","dr"); if(e.doctor){var dn=mk("span"); dn.textContent=e.doctor; cD.appendChild(dn);}
+    var del=mk("button"); del.type="button"; del.title="លុបកំណត់ត្រានេះ"; del.textContent="🗑";
+    del.onclick=function(){ if(del.dataset.armed){ soapLog.splice(idx,1); soapLogSave(); } else { del.dataset.armed="1"; del.textContent="លុប?"; setTimeout(function(){delete del.dataset.armed; del.textContent="🗑";},2500);} };
+    cD.appendChild(del);
+    [cS,cO,cA,cP,cD].forEach(function(c){g.appendChild(c);});
+  });
+  wrap.appendChild(g); box.appendChild(wrap);
+}
+
 /* ---------- quick search in the template-name box ---------- */
 var acIdx=-1;
 function quickSearch(){
@@ -4641,6 +4707,23 @@ loadPatient();
 PT_TEXT.forEach(function(id){$(id).addEventListener("input",savePatient);});
 PT_VITAL.forEach(function(id){$(id).addEventListener("input",function(){checkVitals();savePatient();});});
 $("newPatientBtn").onclick=newPatient;
+soapLogLoad(); $("soapAdd").onclick=soapLogAdd;
+window.addEventListener("beforeprint",function(){document.body.classList.add("printing"); renderSoapLog();});
+window.addEventListener("afterprint",function(){document.body.classList.remove("printing"); renderSoapLog();});
+/* ---------- resizable side panel (width kept on this device) ---------- */
+(function(){
+  var KEY="rxTemplates.sideWidth", grip=$("sideGrip"), side=$("sideNotes"), wrap=grip.parentNode, MIN=260, MAX=820, startX=0, startW=0;
+  function setW(w,save){ w=Math.round(Math.min(Math.min(MAX,wrap.clientWidth-420),Math.max(MIN,w))); document.documentElement.style.setProperty("--sidew",w+"px"); place(); if(save) try{localStorage.setItem(KEY,String(w));}catch(e){} }
+  function place(){ var visible=getComputedStyle(wrap).display==="grid"; grip.style.display=visible?"block":"none"; if(visible) grip.style.left=(side.offsetLeft-2)+"px"; }
+  try{ var w=parseFloat(localStorage.getItem(KEY)); if(w) document.documentElement.style.setProperty("--sidew",w+"px"); }catch(e){}
+  grip.addEventListener("pointerdown",function(e){ e.preventDefault(); startX=e.clientX; startW=side.getBoundingClientRect().width/((parseFloat(getComputedStyle(side).zoom)||1)); grip.setPointerCapture(e.pointerId); grip.classList.add("drag"); document.body.classList.add("resizing"); });
+  grip.addEventListener("pointermove",function(e){ if(!grip.classList.contains("drag")) return; setW(startW+(startX-e.clientX),false); });
+  function end(){ if(!grip.classList.contains("drag")) return; grip.classList.remove("drag"); document.body.classList.remove("resizing"); setW(parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--sidew"))||380,true); }
+  grip.addEventListener("pointerup",end); grip.addEventListener("pointercancel",end);
+  grip.addEventListener("dblclick",function(){ setW(380,true); });
+  window.addEventListener("resize",place); setTimeout(place,0); setInterval(place,1500);
+})();
+
 /* shadow under the sticky patient block once it is pinned */
 (function(){ var el=$("ptSticky"); if(!el||!window.IntersectionObserver) return;
   var probe=document.createElement("div"); probe.style.height="1px"; el.parentNode.insertBefore(probe,el);
