@@ -357,6 +357,10 @@ body.resizing{cursor:col-resize;user-select:none}
 .evrow.open .evchips{display:flex}.evrow.open{background:var(--pen-soft);border-radius:6px;padding:3px 4px}
 .evchips button{border:1px solid var(--rule);background:var(--paper);color:var(--ink);border-radius:999px;padding:2px 9px;font:12.5px var(--body);cursor:pointer}
 .evchips button[aria-pressed="true"]{background:#0b6e99;border-color:#0b6e99;color:#fff}
+.evh{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.evlang{margin-left:auto;display:inline-flex;border:1px solid #0b6e99;border-radius:5px;overflow:hidden}
+.evlang button{border:0;background:var(--paper);color:#0b6e99;font:700 11px var(--body);padding:2px 8px;cursor:pointer;letter-spacing:0}
+.evlang button[aria-pressed="true"]{background:#0b6e99;color:#fff}
 @media print{.evbox{border:0;padding:0;margin:0 0 3px}.evrow{grid-template-columns:auto 1fr;padding:0}.evrow select{display:none}.evrow .ev{border:0;font-size:13px}.evrow b small{display:none}}
 .soap{border:1px solid var(--rule);border-left:3px solid #6b4fa0;border-radius:6px;padding:2px 12px 8px;margin-top:10px;background:var(--panel)}
 .soap h2{display:flex;justify-content:space-between;align-items:center;gap:8px}
@@ -578,6 +582,7 @@ body.gated .app,body.gated .topbar,body.gated .view,body.gated .drawer{visibilit
 body.lang-en .kh-only, body.lang-en .kh{display:none}
 body.lang-kh .en-only, body.lang-kh .en{display:none}
 .fr,.fr-only{display:none}
+body.lang-kh .hl{display:none}
 body.lang-fr .en,body.lang-fr .en-only{display:none}
 body.lang-fr span.fr,body.lang-fr .fr-only{display:inline}
 body.lang-fr div.fr,body.lang-fr ul.fr,body.lang-fr ol.fr{display:block}
@@ -875,10 +880,10 @@ body.no-vitals .vitals{display:none}
       </section>
       </div>
       <section class="pe" id="peSec">
-        <h2><span>Physical examination <span class="kh">· ការពិនិត្យរាងកាយ</span> <span class="pecount" id="peCount"></span></span>
+        <h2><span><span class="hl" data-fr="Examen physique">Physical examination</span> <span class="kh">· ការពិនិត្យរាងកាយ</span> <span class="pecount" id="peCount"></span></span>
           <span class="noprint pe-tools"><label class="soapprint"><input type="checkbox" id="pePrint"> បោះពុម្ព</label>
           <button class="add" id="peHide" type="button">✕ លាក់</button></span></h2>
-        <div class="evbox" id="evBox"><div class="evh">Evaluation <span class="kh">· ការវាយតម្លៃទូទៅ</span></div><div id="evRows"></div></div>
+        <div class="evbox" id="evBox"><div class="evh"><span class="hl" data-fr="Évaluation">Evaluation</span> <span class="kh">· ការវាយតម្លៃទូទៅ</span></div><div id="evRows"></div></div>
         <div id="peRows"></div>
       </section>
       <section class="patient p-hx">
@@ -886,7 +891,7 @@ body.no-vitals .vitals{display:none}
         <div class="field"><label data-fr="Histoire">H/O</label><div id="fHo" contenteditable="true" data-ph="History of present illness"></div></div>
       </section>
       <section class="mh" id="mhSec">
-        <h2><span>Medical history <span class="kh">· ប្រវត្តិជំងឺ</span></span>
+        <h2><span><span class="hl" data-fr="Antécédents">Medical history</span> <span class="kh">· ប្រវត្តិជំងឺ</span></span>
           <span class="noprint soap-tools"><label class="soapprint"><input type="checkbox" id="mhPrint" checked> បោះពុម្ព</label><button class="add" id="mhToggle" type="button" title="បង្រួម / ពង្រីក">▾</button></span></h2>
         <div class="mhbody" id="mhRows"></div>
       </section>
@@ -900,7 +905,7 @@ body.no-vitals .vitals{display:none}
       </section>
 
       <section class="soap" id="soapSec">
-        <h2><span>SOAP note <span class="kh">· កំណត់ត្រាពិនិត្យ</span> <span class="soapday" id="soapDay"></span></span>
+        <h2><span><span class="hl" data-fr="Note SOAP">SOAP note</span> <span class="kh">· កំណត់ត្រាពិនិត្យ</span> <span class="soapday" id="soapDay"></span></span>
           <span class="noprint soap-tools"><label class="soapprint"><input type="checkbox" id="soapPrint"> បោះពុម្ព SOAP</label>          <button class="add" id="soapHide" type="button">✕ លាក់</button></span></h2>
         <div class="soaprow"><b class="L-s">S</b><label><span data-fr="Subjectif">Subjective</span> <span class="kh">· អ្នកជំងឺប្រាប់</span></label><div id="soapS" contenteditable="true" data-ph="Symptoms, history, what the patient reports"></div></div>
         <div class="soaprow"><b class="L-o">O</b><label><span data-fr="Objectif">Objective</span> <span class="kh">· ការពិនិត្យ</span></label><div id="soapO" contenteditable="true" data-ph="Vital signs, examination, test results"></div></div>
@@ -995,7 +1000,7 @@ body.no-vitals .vitals{display:none}
       <button type="button" id="gUp">បង្កើតគណនីថ្មី</button>
       <button type="button" id="gReset">ភ្លេចពាក្យសម្ងាត់?</button>
     </div>
-    <p class="gate-note" id="gateNote">ព័ត៌មានអ្នកជំងឺមិនត្រូវបានផ្ញើទៅ cloud ទេ។ · v41</p>
+    <p class="gate-note" id="gateNote">ព័ត៌មានអ្នកជំងឺមិនត្រូវបានផ្ញើទៅ cloud ទេ។ · v43</p>
   </form>
 </div>
 
@@ -1097,7 +1102,7 @@ body.no-vitals .vitals{display:none}
       <p class="hint">ឯកសារត្រូវមានជួរឈរ៖ ICD 10 · EN · KH · FR។ បញ្ជីនេះរក្សាទុកក្នុង browser ហើយប្រើសម្រាប់ស្វែងរករោគវិនិច្ឆ័យទាំងអស់។</p>
     </fieldset>
     <div class="actions">
-      <span style="margin-right:auto;font:12px var(--body);color:var(--muted)">Rx Clinic v41</span>
+      <span style="margin-right:auto;font:12px var(--body);color:var(--muted)">Rx Clinic v43</span>
       <button class="btn alt" id="settingsClose" type="button">បិទ</button>
       <button class="btn" type="submit">រក្សាទុកការកំណត់</button>
     </div>
@@ -3842,6 +3847,7 @@ function setLang(l){
   labelSelects(document,l);
   rxItems().forEach(updatePrint);
   if(typeof renderSymChips==="function") renderSymChips();
+  if(typeof notesRetranslate==="function") notesRetranslate();
   try{localStorage.setItem(LANG_KEY,l);}catch(e){}
 }
 
@@ -4166,10 +4172,10 @@ var SOAP_IDS=["soapS","soapO","soapA","soapP"];
 function soapEmpty(){return !(typeof soapLog!=="undefined"&&soapLog.length)&&SOAP_IDS.every(function(id){return !$(id).innerText.trim();});}
 function soapCalc(){
   var co=$("fCo").textContent.trim(), ho=$("fHo").textContent.trim();
-  var v=[["BP",$("vBp").value,"mmHg"],["P",$("vP").value,"/min"],["T",$("vT").value,"°C"],["RR",$("vRr").value,"/min"],["SpO₂",$("vSpo2").value,"%"]]
+  var v=[[SL("bp"),$("vBp").value,"mmHg"],[SL("p"),$("vP").value,"/min"],[SL("t"),$("vT").value,"°C"],[SL("rr"),$("vRr").value,"/min"],["SpO₂",$("vSpo2").value,"%"]]
     .filter(function(x){return x[1].trim();}).map(function(x){return x[0]+" "+x[1].trim()+(x[2]==="%"?"%":" "+x[2]);});
-  var wt=$("pWt").textContent.trim(); if(wt) v.push("Wt "+wt+(/kg/i.test(wt)?"":" kg"));
-  var pe=typeof peText==="function"?peText():[]; if($("peRows")&&$("peRows").children.length&&!pe.length) pe=["Physical examination: normal"];
+  var wt=$("pWt").textContent.trim(); if(wt) v.push(SL("wt")+" "+wt+(/kg/i.test(wt)?"":" kg"));
+  var pe=typeof peText==="function"?peText():[]; if($("peRows")&&$("peRows").children.length&&!pe.length) pe=[SL("pe")];
   var ev=typeof evText==="function"&&$("evRows")&&$("evRows").children.length?evText():""; if(ev) pe.unshift(ev);
   var rx=rxItems().map(rowData).filter(function(r){return r.drug;}).map(function(r){
     var sl=r.slots.map(function(x){return x||"0";}).join("-"); return "• "+r.drug+(r.slots.some(Boolean)?" "+sl:"")+(r.days?" × "+r.days+" d":"");});
@@ -4178,9 +4184,9 @@ function soapCalc(){
   return {soapS:[[co,ho].filter(Boolean).join(". ")].concat(mh).filter(Boolean).join("\n"),
     soapO:[v.join(", ")].concat(pe).filter(Boolean).join("\n"),
     soapA:[[$("fDx").textContent.trim(),$("fDxKh").textContent.trim()].filter(Boolean).join(" · ")].concat(
-      $("fDx2").textContent.trim()?["Secondary: "+$("fDx2").textContent.trim()]:[]).concat($("fDdx").textContent.trim()?["DDx: "+$("fDdx").textContent.trim()]:[]).concat(
-      rxItems().filter(function(t){return t.dataset.just;}).map(function(t){return "Needed: "+t.querySelector(".drug").textContent.trim()+" — "+t.dataset.just;})).filter(Boolean).join("\n"),
-    soapP:rx.concat(ix?["Ix: "+ix]:[]).concat(fu?[fu]:[]).join("\n")};
+      $("fDx2").textContent.trim()?[SL("sec")+$("fDx2").textContent.trim()]:[]).concat($("fDdx").textContent.trim()?[SL("ddx")+$("fDdx").textContent.trim()]:[]).concat(
+      rxItems().filter(function(t){return t.dataset.just;}).map(function(t){return SL("need")+t.querySelector(".drug").textContent.trim()+" — "+t.dataset.just;})).filter(Boolean).join("\n"),
+    soapP:rx.concat(ix?[SL("ix")+ix]:[]).concat(fu?[fu]:[]).join("\n")};
 }
 function soapAuto(){
   if(!$("soapS")) return; var c=soapCalc();
@@ -4357,11 +4363,12 @@ function peBuild(){
     var pv=mk("div","pv"); pv.contentEditable="true";
     var ch=mk("div","pechips noprint");
     var nb=mk("button","n"); nb.type="button"; nb.textContent="✓ Normal"; nb.onclick=function(){peSet(row,"normal",sy[3]); peOpen(row,false);}; ch.appendChild(nb);
-    sy[4].forEach(function(f){var b=mk("button"); b.type="button"; b.textContent=f; b.onclick=function(){peAdd(row,f);}; ch.appendChild(b);});
+    sy[4].forEach(function(f){var b=mk("button"); b.type="button"; b.dataset.en=f; b.textContent=trLabel(f); b.onclick=function(){peAdd(row,f);}; ch.appendChild(b);});
+    pn.textContent=trLabel(sy[1]); var sm2=mk("small"); sm2.textContent=langPrim()==="kh"?L1(sy[1],"fr"):sy[2]; pn.appendChild(sm2);
     sel.onchange=function(){ peSet(row,sel.value, sel.value==="normal"?sy[3]:""); peOpen(row,sel.value==="abnormal"); if(sel.value==="abnormal") pv.focus(); };
     sel.addEventListener("mousedown",function(){ peOpen(row,true); });
     sel.addEventListener("keydown",function(e){ if(e.key===" "||e.key==="Enter") peOpen(row,true); });
-    pv.addEventListener("input",function(){ if(row.dataset.st==="normal"&&pv.textContent.trim()!==sy[3]) peSet(row,"abnormal",pv.textContent,true); else peSave(); soapAutoSoon(); });
+    pv.addEventListener("input",function(){ if(row.dataset.st==="normal"&&fold(pv.textContent.trim())!==fold(trText(sy[3]))) peSet(row,"abnormal",pv.textContent,true); else peSave(); soapAutoSoon(); });
     row.appendChild(pn); row.appendChild(sel); row.appendChild(pv); row.appendChild(ch); box.appendChild(row);
     peSet(row,"normal",sy[3],false,true);
   });
@@ -4370,18 +4377,19 @@ function peOpen(row,on){ [].forEach.call(document.querySelectorAll(".perow.open"
 function peSet(row,st,txt,keepCaret,quiet){
   row.dataset.st=st; var sel=row.querySelector("select"), pv=row.querySelector(".pv");
   sel.value=st; sel.className="st-"+st;
-  if(!keepCaret) pv.textContent=txt;
+  if(!keepCaret) pv.textContent=trText(txt);
   if(quiet) return;
   peCount(); peSave(); soapAutoSoon();
 }
 function peAdd(row,f){
-  var pv=row.querySelector(".pv"), cur=row.dataset.st==="abnormal"?pv.textContent.trim():"";
-  if(cur.indexOf(f)>-1) return;
-  peSet(row,"abnormal",(cur?cur.replace(/[.;,\s]+$/,"")+", ":"")+f);
+  var pv=row.querySelector(".pv"), cur=row.dataset.st==="abnormal"?pv.textContent.split(" | ")[0].trim():"", add=L1(f,langPrim());
+  if(fold(cur).indexOf(fold(add))>-1) return;
+  peSet(row,"abnormal",(cur?cur.replace(/[.;,\s]+$/,"")+", ":"")+add);
 }
 function peCount(){
   var ab=[].filter.call(document.querySelectorAll(".perow"),function(r){return r.dataset.st==="abnormal";}).length;
-  $("peCount").textContent=ab?ab+" abnormal":"all normal";
+  var lg=typeof langPrim==="function"?langPrim():"en";
+  $("peCount").textContent=ab?ab+(lg==="fr"?" anormal(aux)":lg==="kh"?" មិនធម្មតា":" abnormal"):(lg==="fr"?"tout normal":lg==="kh"?"ធម្មតាទាំងអស់":"all normal");
   if(typeof npcaCheck==="function") npcaCheck();
 }
 function peSuggest(){
@@ -4390,7 +4398,7 @@ function peSuggest(){
 }
 function peText(){
   return [].slice.call(document.querySelectorAll(".perow")).filter(function(r){return r.dataset.st==="abnormal";}).map(function(r){
-    var sy=PE_SYS.find(function(x){return x[0]===r.dataset.sys;}); return sy[1]+": "+r.querySelector(".pv").textContent.trim();});
+    var sy=PE_SYS.find(function(x){return x[0]===r.dataset.sys;}); return trLabel(sy[1])+": "+r.querySelector(".pv").textContent.split(" | ")[0].trim();});
 }
 function peSave(){
   var o={open:!$("peSec").hidden,print:$("pePrint").checked,rows:{}};
@@ -4677,12 +4685,13 @@ var MH_KEY="rxTemplates.mh";
 function mhBuild(){
   var box=$("mhRows"); box.textContent="";
   MH_FIELDS.forEach(function(f){
-    var row=mk("div","mhrow"+(f[0]==="mhAll"?" allergy":"")); var lb=mk("label"); lb.textContent=f[1]; var sm=mk("small"); sm.textContent=f[2]; lb.appendChild(sm);
+    var row=mk("div","mhrow"+(f[0]==="mhAll"?" allergy":"")); var lb=mk("label"); lb.textContent=trLabel(f[1]); var sm=mk("small"); sm.textContent=langPrim()==="kh"?L1(f[1],"fr"):f[2]; lb.appendChild(sm);
     var v=mk("div","mv"); v.id=f[0]; v.contentEditable="true"; v.tabIndex=0;
     var ch=mk("div","mchips noprint");
-    f[3].forEach(function(c){ var b=mk("button"); b.type="button"; b.textContent=c; b.onmousedown=function(e){e.preventDefault();
-      var cur=v.textContent.trim(); if(/^(none|nkda|unknown)/i.test(c)||/^(none|nkda|unknown)/i.test(cur)) cur="";
-      if(fold(cur).indexOf(fold(c))<0) v.textContent=(cur?cur.replace(/[,;\s]+$/,"")+", ":"")+c; v.dispatchEvent(new Event("input"));}; ch.appendChild(b); });
+    f[3].forEach(function(c){ var b=mk("button"); b.type="button"; b.dataset.en=c; b.textContent=trLabel(c); b.onmousedown=function(e){e.preventDefault();
+      var cur=v.textContent.split(" | ")[0].trim(), curEn=fold(cur.split(/,\s*/).map(function(x){return TRX_REV[fold(x)]||x;}).join(", ")), add=L1(c,langPrim());
+      if(/^(none|nkda|unknown)/i.test(c)||/^(none|nkda|unknown)/i.test(curEn)) cur="";
+      if(fold(cur).indexOf(fold(add))<0) v.textContent=trText((cur?cur.replace(/[,;\s]+$/,"")+", ":"")+add); v.dispatchEvent(new Event("input"));}; ch.appendChild(b); });
     v.addEventListener("input",function(){ mhSave(); if(f[0]==="mhAll"&&$("pAllergy").textContent!==v.textContent){ $("pAllergy").textContent=v.textContent; $("pAllergy").dispatchEvent(new Event("input")); } });
     row.appendChild(lb); row.appendChild(v); row.appendChild(ch); box.appendChild(row);
   });
@@ -4702,8 +4711,7 @@ function mhLoad(){
 }
 function mhClear(){ MH_FIELDS.forEach(function(f){$(f[0]).textContent="";}); mhSave(); }
 function mhText(){
-  var ab={mhVac:"Vaccine",mhPmh:"PMH",mhPsh:"PSH",mhFh:"FH",mhSh:"SH",mhOth:"Other",mhAll:"Allergy"};
-  return MH_FIELDS.map(function(f){var t=$(f[0])?$(f[0]).textContent.trim():""; return t?ab[f[0]]+": "+t:"";}).filter(Boolean);
+  return MH_FIELDS.map(function(f){var t=$(f[0])?$(f[0]).textContent.split(" | ")[0].trim():""; return t?SL(f[0])+": "+t:"";}).filter(Boolean);
 }
 /* ---------- secondary / differential diagnosis: ICD-10 search ---------- */
 function dxCandidates(q){
@@ -4734,30 +4742,32 @@ function dxAcBind(id){
 function dxBlank(){ ["fDx2","fDdx"].forEach(function(id){$(id).parentNode.classList.toggle("blank",!$(id).textContent.trim());}); }
 
 /* ---------- Evaluation (Cambodian/French clinical style): -EG, -Consciousness, -T&C … prefilled, with choices ---------- */
-/* [id, label, Khmer, options, multi, format]  format: kv "-Label : value" · line "-value" (one line each) · pre "-Label value" */
+/* Evaluation in three languages. Field: [id, {fr,en,kh}, options [[fr,en,kh]…], multi, format, default index]
+   format: kv "-Label : value" · line "-value" each · pre "-Label value" · cons (extra lines "+ …") · tir */
 var EV_FIELDS=[
- ["evEG","EG","ស្ថានភាពទូទៅ",["bon","stable","peu altéré","altéré","très altéré"],0,"kv"],
- ["evCons","Conscience","ស្មារតី",["conscient, GCS 15/15","somnolent","agitations et confusion","obnubilé","coma (GCS …/15)","sous intubation oro-trachéale","sous sédation"],1,"cons"],
- ["evTC","T et C","ស្បែក និងស្រោមភ្នែក",["colorés","pâles","subictère","ictère franc","cyanose","marbrures"],1,"kv"],
- ["evHyd","Hydratation","ជាតិទឹក",["bien hydraté","déshydratation légère","déshydratation modérée","déshydratation sévère"],0,"kv"],
- ["evResp","Signes respiratoires","រោគសញ្ញាផ្លូវដង្ហើម",["pas de dyspnée","oppression thoracique","dyspnée intense","polypnée","toux sèche","toux productive","hémoptysie"],1,"line"],
- ["evPoum","Poumon","សួត",["MV bien perçu, pas de râles","râles sibilants à l'expiration","râles crépitants à l'inspiration","ronchi","diminution du MV","souffle tubaire","matité"],1,"kv"],
- ["evTir","Tirage","ទ្រូងស្រុត",["pas de tirage","tirage intercostal","tirage sus-sternal","tirage sous-costal","battement des ailes du nez"],1,"tir"],
- ["evCoeur","Cœur","បេះដូង",["B1B2 réguliers, pas de souffle pathologique","tachycardie","bradycardie","arythmie","souffle systolique"],1,"kv"],
- ["evVentre","Ventre","ពោះ",["souple","sensible","sensible à l'épigastre","défense","distendu","hépatomégalie","splénomégalie"],1,"pre"],
- ["evOed","Œdème","ហើម",["pas d'œdème","OMI","œdème facial","anasarque"],0,"kv"],
- ["evDoul","Douleur","ការឈឺ",["pas de douleur","EVA 3/10","EVA 5/10","EVA 7/10","EVA 9/10"],0,"kv"],
- ["evSelle","Selles","លាមក",["(+)","(-)","diarrhée","méléna"],0,"pre"],
- ["evUrine","Urines","ទឹកនោម",["(+)","(-)","oligurie","hématurie"],0,"pre"],
- ["evGaz","Gaz","ខ្យល់",["(+)","(-)"],0,"pre"]];
-/* typical findings by diagnosis */
+ ["evEG",{fr:"EG",en:"General condition",kh:"ស្ថានភាពទូទៅ"},[["bon","good","ល្អ"],["stable","stable","ស្ថិរភាព"],["peu altéré","slightly impaired","ធ្លាក់ចុះបន្តិច"],["altéré","impaired","ធ្លាក់ចុះ"],["très altéré","severely impaired","ធ្លាក់ចុះខ្លាំង"]],0,"kv",1],
+ ["evCons",{fr:"Conscience",en:"Consciousness",kh:"ស្មារតី"},[["conscient, GCS 15/15","conscious, GCS 15/15","ដឹងខ្លួន GCS 15/15"],["somnolent","drowsy","ងងុយ"],["agitations et confusion","agitation and confusion","រំជើបរំជួល និងវង្វេង"],["obnubilé","obtunded","ស្មារតីស្រពិចស្រពិល"],["coma (GCS …/15)","coma (GCS …/15)","សន្លប់ (GCS …/15)"],["sous intubation oro-trachéale","intubated (oro-tracheal)","ដាក់បំពង់ដង្ហើមតាមមាត់"],["sous sédation","sedated","ក្រោមថ្នាំសម្រួល"]],1,"cons",0],
+ ["evTC",{fr:"T et C",en:"Skin & conjunctivae",kh:"ស្បែក និងស្រោមភ្នែក"},[["colorés","well coloured","ពណ៌ធម្មតា"],["pâles","pale","ស្លេក"],["subictère","mild jaundice","លឿងស្រាល"],["ictère franc","frank jaundice","លឿងច្បាស់"],["cyanose","cyanosis","ស្វាយ"],["marbrures","mottling","ស្បែកមានស្នាមអុចៗ"]],1,"kv",0],
+ ["evHyd",{fr:"Hydratation",en:"Hydration",kh:"ជាតិទឹកក្នុងខ្លួន"},[["bien hydraté","well hydrated","មានជាតិទឹកគ្រប់គ្រាន់"],["déshydratation légère","mild dehydration","ខ្វះជាតិទឹកស្រាល"],["déshydratation modérée","moderate dehydration","ខ្វះជាតិទឹកមធ្យម"],["déshydratation sévère","severe dehydration","ខ្វះជាតិទឹកធ្ងន់"]],0,"kv",0],
+ ["evResp",{fr:"Signes respiratoires",en:"Respiratory signs",kh:"រោគសញ្ញាផ្លូវដង្ហើម"},[["pas de dyspnée","no dyspnoea","មិនហត់"],["oppression thoracique","chest tightness","តឹងទ្រូង"],["dyspnée intense","severe dyspnoea","ហត់ខ្លាំង"],["polypnée","tachypnoea","ដកដង្ហើមញាប់"],["toux sèche","dry cough","ក្អកស្ងួត"],["toux productive","productive cough","ក្អកមានស្លេស្ម"],["hémoptysie","haemoptysis","ក្អកចេញឈាម"]],1,"line",0],
+ ["evPoum",{fr:"Poumon",en:"Lungs",kh:"សួត"},[["MV bien perçu, pas de râles","good air entry, no added sounds","ខ្យល់ចូលល្អ គ្មានសូរមិនធម្មតា"],["râles sibilants à l'expiration","expiratory wheeze","សូរហួចពេលដកដង្ហើមចេញ"],["râles crépitants à l'inspiration","inspiratory crackles","សូរក្រេបៗពេលដកដង្ហើមចូល"],["ronchi","rhonchi","សូររ៉ូនស៊ី"],["diminution du MV","reduced air entry","ខ្យល់ចូលថយ"],["souffle tubaire","bronchial breathing","សូរដង្ហើមបំពង់"],["matité","dullness to percussion","គោះសូរស្ងួត"]],1,"kv",0],
+ ["evTir",{fr:"Tirage",en:"Chest indrawing",kh:"ទ្រូងស្រុត"},[["pas de tirage","none","គ្មាន"],["intercostal","intercostal","ចន្លោះឆ្អឹងជំនីរ"],["sus-sternal","suprasternal","លើឆ្អឹងទ្រូង"],["sous-costal","subcostal","ក្រោមឆ្អឹងជំនីរ"],["battement des ailes du nez","nasal flaring","ស្លាបច្រមុះញ័រ"]],1,"tir",0],
+ ["evCoeur",{fr:"Cœur",en:"Heart",kh:"បេះដូង"},[["B1B2 réguliers, pas de souffle pathologique","S1 S2 regular, no pathological murmur","S1 S2 ទៀងទាត់ គ្មានសូរមិនធម្មតា"],["tachycardie","tachycardia","បេះដូងដើរលឿន"],["bradycardie","bradycardia","បេះដូងដើរយឺត"],["arythmie","arrhythmia","ចង្វាក់មិនទៀង"],["souffle systolique","systolic murmur","សូរ murmur systolic"]],1,"kv",0],
+ ["evVentre",{fr:"Ventre",en:"Abdomen",kh:"ពោះ"},[["souple","soft","ទន់"],["sensible","tender","ឈឺពេលស្ទាប"],["sensible à l'épigastre","epigastric tenderness","ឈឺត្រង់ក្រពះពេលស្ទាប"],["défense","guarding","ពោះរឹងការពារ"],["distendu","distended","ពោះប៉ោង"],["hépatomégalie","hepatomegaly","ថ្លើមធំ"],["splénomégalie","splenomegaly","លំពែងធំ"]],1,"pre",0],
+ ["evOed",{fr:"Œdème",en:"Oedema",kh:"ហើម"},[["pas d'œdème","no oedema","មិនហើម"],["OMI","lower limb oedema","ហើមជើង"],["œdème facial","facial oedema","ហើមមុខ"],["anasarque","generalised oedema","ហើមពេញខ្លួន"]],0,"kv",0],
+ ["evDoul",{fr:"Douleur",en:"Pain",kh:"ការឈឺ"},[["pas de douleur","no pain","មិនឈឺ"],["EVA 3/10","pain score 3/10","ឈឺកម្រិត 3/10"],["EVA 5/10","pain score 5/10","ឈឺកម្រិត 5/10"],["EVA 7/10","pain score 7/10","ឈឺកម្រិត 7/10"],["EVA 9/10","pain score 9/10","ឈឺកម្រិត 9/10"]],0,"kv",0],
+ ["evSelle",{fr:"Selles",en:"Stool",kh:"លាមក"},[["(+)","(+)","(+)"],["(-)","(-)","(-)"],["diarrhée","diarrhoea","រាក"],["méléna","melaena","លាមកខ្មៅ"]],0,"pre",0],
+ ["evUrine",{fr:"Urines",en:"Urine",kh:"ទឹកនោម"},[["(+)","(+)","(+)"],["(-)","(-)","(-)"],["oligurie","oliguria","នោមតិច"],["hématurie","haematuria","នោមឈាម"]],0,"pre",0],
+ ["evGaz",{fr:"Gaz",en:"Flatus",kh:"ខ្យល់"},[["(+)","(+)","(+)"],["(-)","(-)","(-)"]],0,"pre",0]];
+var EV_LI={fr:0,en:1,kh:2}, EV_LANG="fr";
+/* typical findings by diagnosis (French option names; turned into choices) */
 var EV_DX=[[/sepsis|meningit|severe malaria|cerebral/,{evEG:"altéré",evCons:"agitations et confusion"}],
  [/severe dehydration|volume depletion/,{evEG:"altéré",evHyd:"déshydratation sévère",evCons:"somnolent"}],
  [/dehydrat|gastroenter|diarrh|dysent/,{evHyd:"déshydratation légère",evSelle:"diarrhée",evVentre:"souple; sensible"}],
  [/vomit|hyperemesis/,{evHyd:"déshydratation légère"}],
  [/dengue/,{evEG:"peu altéré",evHyd:"déshydratation légère",evVentre:"souple; sensible"}],
  [/pneumon/,{evEG:"peu altéré",evResp:"polypnée; toux productive",evPoum:"râles crépitants à l'inspiration"}],
- [/asthma|copd|bronchiolit|wheez/,{evEG:"peu altéré",evResp:"oppression thoracique; dyspnée intense; polypnée; toux sèche",evPoum:"râles sibilants à l'expiration",evTir:"tirage intercostal"}],
+ [/asthma|copd|bronchiolit|wheez/,{evEG:"peu altéré",evResp:"oppression thoracique; dyspnée intense; polypnée; toux sèche",evPoum:"râles sibilants à l'expiration",evTir:"intercostal"}],
  [/bronchitis|cough/,{evResp:"toux productive",evPoum:"ronchi"}],
  [/anaemia|anemia|thalass|haemorrhage/,{evTC:"pâles"}],
  [/hepatitis|jaundice|leptospir/,{evTC:"ictère franc"}],
@@ -4767,49 +4777,113 @@ var EV_DX=[[/sepsis|meningit|severe malaria|cerebral/,{evEG:"altéré",evCons:"a
  [/pre-eclampsia|nephrot|heart failure/,{evOed:"OMI"}],
  [/hypoglyc|seizure|convuls/,{evCons:"somnolent"}],
  [/pain|ache|sprain|injury|wound|burn|fracture|abscess|dysmenor|renal colic|calcul|migraine|tooth|otitis|pharyng|tonsil/,{evDoul:"EVA 5/10"}]];
-function evDefault(f){ return f[0]==="evVentre"?"souple":f[0]==="evSelle"||f[0]==="evUrine"||f[0]==="evGaz"?"(+)":f[0]==="evEG"?"stable":f[3][0]; }
+var EV_STATE={};   /* id → {sel:[option indexes], txt:"custom text" or ""} */
+function evF(id){return EV_FIELDS.find(function(f){return f[0]===id;});}
+function evOpt(f,i){ var p=f[2][i][EV_LI[EV_LANG]]; if(typeof langBi==="function"&&langBi()&&EV_LANG!=="kh"&&f[2][i][2]!==p&&!/^\(/.test(p)) p+=" ("+f[2][i][2]+")"; return p; }
+function evShown(f){ var st=EV_STATE[f[0]]||{sel:[f[5]],txt:""}; return st.txt?st.txt:st.sel.map(function(i){return evOpt(f,i);}).join("; "); }
 function evBuild(){
   var box=$("evRows"); box.textContent="";
   EV_FIELDS.forEach(function(f){
     var row=mk("div","evrow"); row.dataset.ev=f[0];
-    var b=mk("b"); b.textContent="-"+f[1]+(f[5]==="kv"||f[5]==="cons"?" :":""); var sm=mk("small"); sm.textContent=f[2]; b.appendChild(sm);
-    b.title="ចុចដើម្បីបើកជម្រើស"; b.onclick=function(){ var on=!row.classList.contains("open"); [].forEach.call(document.querySelectorAll(".evrow.open"),function(r){r.classList.remove("open");}); row.classList.toggle("open",on); };
+    var b=mk("b"); b.title="ចុចដើម្បីបើកជម្រើស";
+    b.onclick=function(){ var on=!row.classList.contains("open"); [].forEach.call(document.querySelectorAll(".evrow.open"),function(r){r.classList.remove("open");}); row.classList.toggle("open",on); };
     var v=mk("div","ev"); v.id=f[0]; v.contentEditable="true";
     var ch=mk("div","evchips noprint");
-    f[3].forEach(function(o){ var c=mk("button"); c.type="button"; c.textContent=o;
-      c.onmousedown=function(e){ e.preventDefault(); var cur=evVals(v);
-        if(f[4]){ var i=cur.indexOf(o); if(i>-1) cur.splice(i,1); else { if(o===f[3][0]||o===evDefault(f)) cur=[]; else cur=cur.filter(function(x){return x!==f[3][0]&&x!==evDefault(f);}); cur.push(o);} if(!cur.length) cur=[evDefault(f)]; }
-        else cur=[o];
-        v.textContent=cur.join("; "); evMark(row,f); evSave(); evChips(row); };
+    f[2].forEach(function(o,i){ var c=mk("button"); c.type="button"; c.dataset.i=i;
+      c.onmousedown=function(e){ e.preventDefault(); var st=EV_STATE[f[0]]||{sel:[f[5]],txt:""}, cur=st.txt?[]:st.sel.slice();
+        if(f[3]){ var k=cur.indexOf(i); if(k>-1) cur.splice(k,1); else { if(i===f[5]) cur=[]; else cur=cur.filter(function(x){return x!==f[5];}); cur.push(i);} if(!cur.length) cur=[f[5]]; }
+        else cur=[i];
+        EV_STATE[f[0]]={sel:cur,txt:""}; evPaint(row,f); evSave(); };
       ch.appendChild(c); });
-    v.addEventListener("input",function(){ evMark(row,f); evChips(row); evSave(); });
+    v.addEventListener("input",function(){ var t=v.textContent.trim();
+      /* typed text: keep as written unless it matches the choices exactly */
+      var parts=t.split(/\s*;\s*/).filter(Boolean), idx=parts.map(function(x){return f[2].findIndex(function(o){return o[EV_LI[EV_LANG]]===x;});});
+      EV_STATE[f[0]]=idx.length&&idx.every(function(x){return x>-1;})?{sel:idx,txt:""}:{sel:[],txt:t};
+      evPaint(row,f,true); evSave(); });
     row.appendChild(b); row.appendChild(v); row.appendChild(ch); box.appendChild(row);
   });
+  evLangSeg();
 }
-function evVals(v){ return v.textContent.split(/\s*;\s*/).map(function(x){return x.trim();}).filter(Boolean); }
-function evChips(row){ var vals=evVals(row.querySelector(".ev")); [].forEach.call(row.querySelectorAll(".evchips button"),function(c){c.setAttribute("aria-pressed",String(vals.indexOf(c.textContent)>-1));}); }
-function evMark(row,f){ row.classList.toggle("abn",row.querySelector(".ev").textContent.trim()!==evDefault(f)); }
-function evSet(vals){ EV_FIELDS.forEach(function(f){ var v=$(f[0]), val=vals&&vals[f[0]]!=null&&vals[f[0]]!==""?vals[f[0]]:evDefault(f); v.textContent=val; evMark(v.parentNode,f); evChips(v.parentNode); }); evSave(); }
+function evPaint(row,f,keepText){
+  var st=EV_STATE[f[0]]||{sel:[f[5]],txt:""}, b=row.querySelector("b"), L=f[1][EV_LANG];
+  b.textContent="-"+L+(f[4]==="kv"||f[4]==="cons"||f[4]==="tir"?" :":"");
+  var sm=mk("small"); sm.textContent=EV_LANG==="kh"?f[1].fr:f[1].kh; b.appendChild(sm);
+  if(!keepText) row.querySelector(".ev").textContent=evShown(f);
+  [].forEach.call(row.querySelectorAll(".evchips button"),function(c){ var i=+c.dataset.i; c.textContent=evOpt(f,i);
+    c.title=f[2][i].filter(function(x,j){return j!==EV_LI[EV_LANG];}).join(" · "); c.setAttribute("aria-pressed",String(!st.txt&&st.sel.indexOf(i)>-1)); });
+  row.classList.toggle("abn",!!st.txt||st.sel.length!==1||st.sel[0]!==f[5]);
+}
+function evPaintAll(){ EV_FIELDS.forEach(function(f){var v=$(f[0]); if(v) evPaint(v.parentNode,f);}); }
+function evLangSeg(){ return; /* follows the main language buttons */
+  var h=document.querySelector("#evBox .evh"); if(!h) return; var seg=h.querySelector(".evlang");
+  if(!seg){ seg=mk("span","evlang noprint"); [["fr","FR"],["en","EN"],["kh","ខ្មែរ"]].forEach(function(l){ var b=mk("button"); b.type="button"; b.dataset.l=l[0]; b.textContent=l[1];
+      b.onclick=function(){ EV_LANG=l[0]; evPaintAll(); evLangSeg(); evSave(); }; seg.appendChild(b); }); h.appendChild(seg); }
+  [].forEach.call(seg.querySelectorAll("button"),function(b){b.setAttribute("aria-pressed",String(b.dataset.l===EV_LANG));});
+}
+function evSet(vals){ EV_STATE={}; EV_FIELDS.forEach(function(f){ var x=vals&&vals[f[0]]; EV_STATE[f[0]]=x&&typeof x==="object"?{sel:x.sel||[],txt:x.txt||""}:{sel:[f[5]],txt:""}; }); evPaintAll(); evSave(); }
 function evApplyDx(){
   var cur=lib.find(function(x){return x.id===currentId;}), ctx=fold([cur?cur.name:"",$("fDx").textContent,$("fCo").textContent].join(" ")), o={};
-  EV_DX.forEach(function(r){ if(r[0].test(ctx)) Object.keys(r[1]).forEach(function(k){ if(!(k in o)) o[k]=r[1][k]; }); });
+  EV_DX.forEach(function(r){ if(r[0].test(ctx)) Object.keys(r[1]).forEach(function(k){ if(o[k]) return; var f=evF(k);
+    o[k]={sel:r[1][k].split(/\s*;\s*/).map(function(x){return f[2].findIndex(function(op){return op[0]===x;});}).filter(function(i){return i>-1;}),txt:""}; }); });
   evSet(o);
 }
-var EV_KEY="rxTemplates.ev2";
-function evSave(){ var o={}; EV_FIELDS.forEach(function(f){o[f[0]]=$(f[0]).textContent.trim();}); try{localStorage.setItem(EV_KEY,JSON.stringify(o));}catch(e){} if(typeof soapAutoSoon==="function") soapAutoSoon(); }
-function evLoad(){ evBuild(); var o=null; try{o=JSON.parse(localStorage.getItem(EV_KEY)||"null");}catch(e){} if(o) evSet(o); else evApplyDx(); }
+function evText(){ return evLines().join("\n"); }
+var EV_KEY="rxTemplates.ev3";
+function evSave(){ try{localStorage.setItem(EV_KEY,JSON.stringify({lang:EV_LANG,f:EV_STATE}));}catch(e){} if(typeof soapAutoSoon==="function") soapAutoSoon(); }
+function evLoad(){ var o=null; try{o=JSON.parse(localStorage.getItem(EV_KEY)||"null");}catch(e){} EV_LANG=langPrim(); evBuild(); if(o&&o.f) evSet(o.f); else evApplyDx(); }
 function evLines(){
-  var out=[];
-  EV_FIELDS.forEach(function(f){ var v=$(f[0]); if(!v) return; var vals=evVals(v); if(!vals.length) return;
-    if(f[5]==="line") vals.forEach(function(x){ out.push("-"+x.charAt(0).toUpperCase()+x.slice(1)); });
-    else if(f[5]==="cons"){ out.push("-Conscience : "+vals[0]); vals.slice(1).forEach(function(x){ out.push("\t+ conscience : "+x); }); }
-    else if(f[5]==="tir"){ out.push(vals.length===1&&/^pas/.test(vals[0])?"-Pas de tirage":"-Tirage "+vals.map(function(x){return x.replace(/^tirage /,"");}).join(" et ")); }
-    else if(f[5]==="pre") out.push("-"+f[1]+" "+vals.join(", "));
-    else out.push("-"+f[1]+" : "+vals.join(", "));
+  var out=[], li=EV_LI[EV_LANG];
+  EV_FIELDS.forEach(function(f){ var st=EV_STATE[f[0]]; if(!st) return; var L=f[1][EV_LANG];
+    if(st.txt){ out.push("-"+L+" : "+st.txt); return; }
+    var vals=st.sel.map(function(i){return evOpt(f,i);}); if(!vals.length) return;
+    if(f[4]==="line") vals.forEach(function(x){ out.push("-"+x.charAt(0).toUpperCase()+x.slice(1)); });
+    else if(f[4]==="cons"){ out.push("-"+L+" : "+vals[0]); vals.slice(1).forEach(function(x){ out.push("\t+ "+L.toLowerCase()+" : "+x); }); }
+    else if(f[4]==="tir"){ if(st.sel.length===1&&st.sel[0]===0) out.push(["-Pas de tirage","-No chest indrawing","-គ្មានទ្រូងស្រុត"][li]);
+      else out.push(["-Tirage ","-Chest indrawing: ","-ទ្រូងស្រុត៖ "][li]+vals.join([" et "," and "," និង "][li])); }
+    else if(f[4]==="pre") out.push("-"+L+" "+vals.join(", "));
+    else out.push("-"+L+" : "+vals.join(", "));
   });
   return out;
 }
-function evText(){ return evLines().join("\n"); }
+
+/* ---------- PE / medical history / evaluation / SOAP follow the language buttons (ខ្មែរ · EN · FR · EN+ខ្មែរ · FR+ខ្មែរ) ---------- */
+var TRX={"General Appearance":["Aspect général","រូបរាងទូទៅ"],"ENT (ORL)":["ORL","ត្រចៀក ច្រមុះ បំពង់ក"],"Cardiovascular System":["Appareil cardiovasculaire","បេះដូង និងសរសៃឈាម"],"Respiratory System":["Appareil respiratoire","ប្រព័ន្ធដង្ហើម"],"Gastro-Intestinal System":["Appareil digestif","ប្រព័ន្ធរំលាយអាហារ"],"Central Nervous System":["Système nerveux central","ប្រព័ន្ធប្រសាទកណ្តាល"],"Skin & Extremities":["Peau et extrémités","ស្បែក និងចុងដៃជើង"],"Urogenital System":["Appareil uro-génital","ប្រព័ន្ធទឹកនោម និងប្រដាប់បន្តពូជ"],"Mental Status":["État mental","ស្ថានភាពផ្លូវចិត្ត"],"Other body parts":["Autres","ផ្នែកផ្សេងៗ"],"Vaccine":["Vaccins","វ៉ាក់សាំង"],"Past Medical":["Antécédents médicaux","ជំងឺធ្លាប់មាន"],"Past Operation":["Antécédents chirurgicaux","ធ្លាប់វះកាត់"],"Family History":["Antécédents familiaux","ប្រវត្តិគ្រួសារ"],"Social History":["Mode de vie","ប្រវត្តិសង្គម"],"Other":["Autres","ផ្សេងៗ"],"Allergy":["Allergies","អាឡែកហ្ស៊ី"],"EPI complete":["PEV complet","វ៉ាក់សាំង PEV គ្រប់"],"Not up to date":["Pas à jour","មិនទាន់គ្រប់"],"COVID-19 vaccinated":["Vacciné COVID-19","បានចាក់វ៉ាក់សាំង COVID-19"],"Tetanus up to date":["Tétanos à jour","វ៉ាក់សាំងតេតាណូសគ្រប់"],"Hepatitis B vaccinated":["Vacciné hépatite B","បានចាក់វ៉ាក់សាំងរលាកថ្លើម B"],"Unknown":["Inconnu","មិនដឹង"],"Hypertension":["HTA","លើសសម្ពាធឈាម"],"Diabetes":["Diabète","ទឹកនោមផ្អែម"],"Asthma":["Asthme","ហឺត"],"COPD":["BPCO","COPD"],"Heart disease":["Cardiopathie","ជំងឺបេះដូង"],"Stroke":["AVC","ស្ទះសរសៃឈាមខួរក្បាល"],"Tuberculosis":["Tuberculose","របេង"],"Hepatitis B":["Hépatite B","រលាកថ្លើម B"],"Gastritis / ulcer":["Gastrite / ulcère","រលាកក្រពះ / ដំបៅក្រពះ"],"Kidney disease":["Maladie rénale","ជំងឺតម្រងនោម"],"Epilepsy":["Épilepsie","ឆ្កួតជ្រូក"],"None":["Aucun","គ្មាន"],"Appendectomy":["Appendicectomie","វះខ្នែងពោះវៀន"],"Caesarean section":["Césarienne","វះកាត់យកកូន"],"Cholecystectomy":["Cholécystectomie","វះកាត់ថង់ទឹកប្រមាត់"],"Hernia repair":["Cure de hernie","វះជួសជុលក្លូន"],"Fracture fixation":["Ostéosynthèse","វះកាត់ភ្ជាប់ឆ្អឹងបាក់"],"Cancer":["Cancer","មហារីក"],"Thalassaemia":["Thalassémie","ថាឡាសេមី"],"Non-smoker":["Non-fumeur","មិនជក់បារី"],"Smoker":["Fumeur","ជក់បារី"],"Ex-smoker":["Ex-fumeur","ធ្លាប់ជក់បារី"],"Alcohol occasionally":["Alcool occasionnel","ផឹកស្រាម្តងម្កាល"],"Alcohol daily":["Alcool quotidien","ផឹកស្រារាល់ថ្ងៃ"],"Farmer":["Agriculteur","កសិករ"],"Office worker":["Employé de bureau","បុគ្គលិកការិយាល័យ"],"Student":["Étudiant","សិស្ស / និស្សិត"],"Pregnant / breastfeeding":["Enceinte / allaitante","មានផ្ទៃពោះ / បំបៅដោះ"],"Current medicines: …":["Traitement en cours : …","ថ្នាំកំពុងប្រើ៖ …"],"Traditional medicine use":["Médecine traditionnelle","ប្រើថ្នាំបុរាណ"],"NKDA (no known drug allergy)":["Pas d'allergie médicamenteuse connue","គ្មានអាឡែកហ្ស៊ីថ្នាំ"],"Penicillin":["Pénicilline","Penicillin"],"Sulfa":["Sulfamides","Sulfa"],"NSAIDs / Aspirin":["AINS / Aspirine","NSAID / Aspirin"],"Cephalosporin":["Céphalosporines","Cephalosporin"],"Seafood":["Fruits de mer","គ្រឿងសមុទ្រ"],"Alert":["Éveillé","ភ្ញាក់ដឹងខ្លួន"],"oriented":["orienté","ស្គាល់ពេល ទីកន្លែង មនុស្ស"],"not in distress":["pas de détresse","មិនមានទុក្ខលំបាក"],"well hydrated":["bien hydraté","មានជាតិទឹកគ្រប់គ្រាន់"],"no pallor":["pas de pâleur","មិនស្លេក"],"no jaundice":["pas d'ictère","មិនលឿង"],"Ill-looking":["Aspect malade","មើលទៅឈឺ"],"In pain":["Douloureux","ឈឺចាប់"],"Lethargic":["Léthargique","ល្ហិតល្ហៃ"],"Pale":["Pâle","ស្លេក"],"Jaundiced":["Ictérique","លឿង"],"Dehydrated (sunken eyes":["Déshydraté (yeux enfoncés","ខ្វះជាតិទឹក (ភ្នែកស្រុត"],"dry mucosa)":["muqueuses sèches)","ភ្នាសស្ងួត)"],"Cyanosis":["Cyanose","ស្វាយ"],"Flushed / febrile":["Rouge / fébrile","ក្រហម / ក្តៅខ្លួន"],"Malnourished":["Dénutri","កង្វះអាហារូបត្ថម្ភ"],"Obese":["Obèse","ធាត់លើស"],"Ears":["Oreilles","ត្រចៀក"],"nose and throat normal":["nez et gorge normaux","ច្រមុះ និងបំពង់កធម្មតា"],"tonsils not enlarged":["amygdales non hypertrophiées","ទន្សិលមិនធំ"],"no cervical lymph nodes":["pas d'adénopathie cervicale","គ្មានកូនកណ្តុរក"],"Pharynx red":["Pharynx rouge","បំពង់កក្រហម"],"Tonsils enlarged with exudate":["Amygdales hypertrophiées avec exsudat","ទន្សិលធំមានខ្ទុះស"],"Tympanic membrane red / bulging":["Tympan rouge / bombé","ក្រដាសត្រចៀកក្រហម / ប៉ោង"],"Ear discharge":["Otorrhée","ហូរខ្ទុះត្រចៀក"],"Nasal discharge":["Rhinorrhée","ហៀរសំបោរ"],"Nasal congestion":["Obstruction nasale","តឹងច្រមុះ"],"Cervical lymph nodes enlarged":["Adénopathies cervicales","កូនកណ្តុរកធំ"],"Oral ulcers":["Ulcérations buccales","ដំបៅមាត់"],"Dental caries / abscess":["Carie / abcès dentaire","ធ្មេញពុក / អាប់សេធ្មេញ"],"S1 S2 regular":["B1 B2 réguliers","S1 S2 ទៀងទាត់"],"no murmur":["pas de souffle","គ្មានសូរ murmur"],"CRT < 2 s":["TRC < 2 s","CRT < 2 វិនាទី"],"peripheral pulses normal":["pouls périphériques normaux","ជីពចរដៃជើងធម្មតា"],"Tachycardia":["Tachycardie","បេះដូងដើរលឿន"],"Bradycardia":["Bradycardie","បេះដូងដើរយឺត"],"Irregular rhythm":["Rythme irrégulier","ចង្វាក់មិនទៀង"],"Murmur":["Souffle","សូរ murmur"],"CRT > 2 s":["TRC > 2 s","CRT > 2 វិនាទី"],"Weak peripheral pulses":["Pouls périphériques faibles","ជីពចរដៃជើងខ្សោយ"],"Raised JVP":["Turgescence jugulaire","សរសៃករីកធំ (JVP ខ្ពស់)"],"Leg oedema":["Œdème des membres inférieurs","ហើមជើង"],"Normal breath sounds both sides":["Murmure vésiculaire normal des deux côtés","សូរដង្ហើមធម្មតាទាំងសងខាង"],"no crackles":["pas de crépitants","គ្មានសូរក្រេបៗ"],"no wheeze":["pas de sibilants","គ្មានសូរហួច"],"no chest indrawing":["pas de tirage","គ្មានទ្រូងស្រុត"],"Tachypnoea":["Polypnée","ដកដង្ហើមញាប់"],"Chest indrawing":["Tirage","ទ្រូងស្រុត"],"Wheeze":["Sibilants","សូរហួច"],"Crackles right base":["Crépitants base droite","សូរក្រេបៗបាតសួតស្តាំ"],"Crackles left base":["Crépitants base gauche","សូរក្រេបៗបាតសួតឆ្វេង"],"Reduced air entry":["Diminution du murmure vésiculaire","ខ្យល់ចូលថយ"],"Bronchial breathing":["Souffle tubaire","សូរដង្ហើមបំពង់"],"Dull to percussion":["Matité à la percussion","គោះសូរស្ងួត"],"Accessory muscle use":["Mise en jeu des muscles accessoires","ប្រើសាច់ដុំជំនួយដកដង្ហើម"],"Abdomen soft":["Abdomen souple","ពោះទន់"],"non-tender":["indolore","មិនឈឺពេលស្ទាប"],"no organomegaly":["pas d'organomégalie","សរីរាង្គមិនធំ"],"bowel sounds normal":["bruits intestinaux normaux","សូរពោះវៀនធម្មតា"],"Epigastric tenderness":["Sensibilité épigastrique","ឈឺត្រង់ក្រពះពេលស្ទាប"],"Right iliac fossa tenderness":["Sensibilité de la fosse iliaque droite","ឈឺពោះក្រោមខាងស្តាំពេលស្ទាប"],"Right upper quadrant tenderness":["Sensibilité de l'hypochondre droit","ឈឺពោះលើខាងស្តាំពេលស្ទាប"],"Guarding / rebound":["Défense / rebond","ពោះរឹងការពារ / ឈឺពេលលែងដៃ"],"Distended":["Distendu","ពោះប៉ោង"],"Hepatomegaly":["Hépatomégalie","ថ្លើមធំ"],"Splenomegaly":["Splénomégalie","លំពែងធំ"],"Ascites":["Ascite","ទឹកក្នុងពោះ"],"Hyperactive bowel sounds":["Bruits intestinaux augmentés","សូរពោះវៀនខ្លាំង"],"Absent bowel sounds":["Silence abdominal","គ្មានសូរពោះវៀន"],"Conscious":["Conscient","ដឹងខ្លួន"],"GCS 15/15":["GCS 15/15","GCS 15/15"],"no focal deficit":["pas de déficit focal","គ្មានការខ្សោយផ្នែកណាមួយ"],"no neck stiffness":["pas de raideur de nuque","កមិនរឹង"],"GCS < 15":["GCS < 15","GCS < 15"],"Neck stiffness":["Raideur de nuque","រឹងក"],"Kernig / Brudzinski positive":["Kernig / Brudzinski positif","Kernig / Brudzinski វិជ្ជមាន"],"Focal weakness":["Déficit moteur focal","ខ្សោយផ្នែកណាមួយ"],"Facial palsy":["Paralysie faciale","ខ្វិនមុខ"],"Confusion":["Confusion","វង្វេង"],"Convulsion":["Convulsion","ប្រកាច់"],"Abnormal reflexes":["Réflexes anormaux","រ៉េផ្លិចមិនធម្មតា"],"Skin normal":["Peau normale","ស្បែកធម្មតា"],"no rash":["pas d'éruption","គ្មានកន្ទួល"],"no oedema":["pas d'œdème","មិនហើម"],"joints normal":["articulations normales","សន្លាក់ធម្មតា"],"Maculopapular rash":["Éruption maculo-papuleuse","កន្ទួលក្រហម"],"Petechiae":["Pétéchies","ចំណុចឈាមក្រោមស្បែក"],"Tourniquet test positive":["Test du garrot positif","តេស្ត Tourniquet វិជ្ជមាន"],"Urticaria":["Urticaire","កន្ទួលរមាស់ (Urticaria)"],"Wound / laceration":["Plaie / lacération","របួស / របួសដាច់"],"Cellulitis":["Cellulite","រលាកស្បែក និងជាលិកា"],"Abscess":["Abcès","អាប់សេ"],"Vesicles":["Vésicules","ពងទឹក"],"Joint swelling":["Gonflement articulaire","ហើមសន្លាក់"],"No costovertebral angle tenderness":["Pas de douleur à l'ébranlement lombaire","មិនឈឺត្រង់តម្រងនោមពេលគោះ"],"no suprapubic tenderness":["pas de sensibilité sus-pubienne","មិនឈឺពោះក្រោមពេលស្ទាប"],"Costovertebral angle tenderness":["Douleur à l'ébranlement lombaire","ឈឺត្រង់តម្រងនោមពេលគោះ"],"Suprapubic tenderness":["Sensibilité sus-pubienne","ឈឺពោះក្រោមពេលស្ទាប"],"Urethral discharge":["Écoulement urétral","ហូរខ្ទុះបង្ហួរនោម"],"Vaginal discharge":["Leucorrhées","ធ្លាក់ស"],"Genital ulcer":["Ulcération génitale","ដំបៅប្រដាប់ភេទ"],"Scrotal swelling":["Tuméfaction scrotale","ហើមពងស្វាស"],"Calm":["Calme","ស្ងប់"],"oriented to time":["orienté dans le temps","ស្គាល់ពេលវេលា"],"place and person":["l'espace et les personnes","ទីកន្លែង និងមនុស្ស"],"normal mood and speech":["humeur et discours normaux","អារម្មណ៍ និងការនិយាយធម្មតា"],"Anxious":["Anxieux","ថប់បារម្ភ"],"Low mood":["Humeur triste","អារម្មណ៍ធ្លាក់ចុះ"],"Agitated":["Agité","រំជើបរំជួល"],"Disoriented":["Désorienté","វង្វេងស្មារតី"],"Hallucinations":["Hallucinations","ការយល់ឃើញខុស"],"Suicidal ideation — assess risk":["Idées suicidaires — évaluer le risque","គំនិតចង់ធ្វើអត្តឃាត — វាយតម្លៃហានិភ័យ"],"Nothing abnormal detected":["Rien d'anormal","គ្មានអ្វីមិនធម្មតា"],"Conjunctiva red":["Conjonctive rouge","ស្រោមភ្នែកក្រហម"],"Eyes jaundiced":["Ictère conjonctival","ភ្នែកលឿង"],"Thyroid enlarged":["Goitre","ក្រពេញទីរ៉ូអ៊ីតធំ"],"Breast lump":["Nodule mammaire","ដុំក្នុងដោះ"],"Pregnant uterus":["Utérus gravide","ស្បូនមានផ្ទៃពោះ"],"fundal height ... cm":["hauteur utérine ... cm","កម្ពស់ស្បូន ... cm"],"Lymph nodes enlarged":["Adénopathies","កូនកណ្តុរធំ"],"Febrile":["Fébrile","ក្តៅខ្លួន"],"ill-looking":["aspect malade","មើលទៅឈឺ"],"crackles at lung base":["crépitants aux bases","សូរក្រេបៗបាតសួត"],"reduced air entry":["diminution du murmure vésiculaire","ខ្យល់ចូលថយ"],"bilateral wheeze and fine crackles":["sibilants et crépitants fins bilatéraux","សូរហួច និងសូរក្រេបៗទាំងសងខាង"],"Bilateral expiratory wheeze":["Sibilants expiratoires bilatéraux","សូរហួចពេលដកដង្ហើមចេញទាំងសងខាង"],"prolonged expiration":["expiration prolongée","ដកដង្ហើមចេញយូរ"],"Scattered rhonchi":["Ronchi diffus","សូររ៉ូនស៊ីរាយប៉ាយ"],"Weight loss":["Amaigrissement","ស្រកទម្ងន់"],"crackles at apex":["crépitants au sommet","សូរក្រេបៗកំពូលសួត"],"Nasal congestion with clear discharge":["Obstruction nasale avec rhinorrhée claire","តឹងច្រមុះ ហៀរសំបោរថ្លា"],"pharynx mildly red":["pharynx légèrement rouge","បំពង់កក្រហមបន្តិច"],"Purulent nasal discharge":["Rhinorrhée purulente","សំបោរមានខ្ទុះ"],"tenderness over maxillary sinuses":["sensibilité des sinus maxillaires","ឈឺពេលចុចលើប្រហោងឆ្អឹងថ្ពាល់"],"tonsils enlarged with exudate":["amygdales hypertrophiées avec exsudat","ទន្សិលធំមានខ្ទុះស"],"tender cervical lymph nodes":["adénopathies cervicales sensibles","កូនកណ្តុរកឈឺ"],"Tympanic membrane red and bulging":["Tympan rouge et bombé","ក្រដាសត្រចៀកក្រហម និងប៉ោង"],"Ear canal swollen and tender":["Conduit auditif œdématié et douloureux","ប្រឡាយត្រចៀកហើម និងឈឺ"],"pain on pulling the pinna":["douleur à la traction du pavillon","ឈឺពេលទាញស្លឹកត្រចៀក"],"Ear canal blocked by wax":["Bouchon de cérumen","ប្រឡាយត្រចៀកស្ទះដោយអាចម៍ត្រចៀក"],"Bleeding from anterior nasal septum":["Saignement de la cloison nasale antérieure","ហូរឈាមពីជញ្ជាំងច្រមុះខាងមុខ"],"Dental caries with gum swelling and tenderness":["Carie avec gencive gonflée et douloureuse","ធ្មេញពុក អញ្ចាញហើម និងឈឺ"],"Shallow painful oral ulcers":["Ulcérations buccales superficielles douloureuses","ដំបៅមាត់រាក់ៗ ឈឺ"],"White plaques on oral mucosa":["Plaques blanches sur la muqueuse buccale","ស្នាមសៗលើភ្នាសមាត់"],"Vesicles on palms and soles":["Vésicules palmo-plantaires","ពងទឹកលើបាតដៃ បាតជើង"],"flushed":["rouge","ក្រហម"],"Flushed skin":["Peau rouge","ស្បែកក្រហម"],"petechiae":["pétéchies","ចំណុចឈាមក្រោមស្បែក"],"tourniquet test positive":["test du garrot positif","តេស្ត Tourniquet វិជ្ជមាន"],"Mild abdominal tenderness":["Sensibilité abdominale légère","ឈឺពោះបន្តិចពេលស្ទាប"],"no ascites":["pas d'ascite","គ្មានទឹកក្នុងពោះ"],"pale":["pâle","ស្លេក"],"Diffuse abdominal tenderness":["Sensibilité abdominale diffuse","ឈឺពោះទូទាំងពេលស្ទាប"],"hepatosplenomegaly":["hépatosplénomégalie","ថ្លើម និងលំពែងធំ"],"lethargic":["léthargique","ល្ហិតល្ហៃ"],"Conjunctival suffusion":["Hyperhémie conjonctivale","ស្រោមភ្នែកក្រហម"],"calf muscle tenderness":["douleur des mollets","ឈឺសាច់ដុំកំភួនជើង"],"Vesicles at different stages":["Vésicules d'âges différents","ពងទឹកច្រើនដំណាក់កាល"],"mostly on trunk":["surtout sur le tronc","ភាគច្រើននៅដងខ្លួន"],"Painful grouped vesicles along one dermatome":["Vésicules groupées douloureuses sur un dermatome","ពងទឹកជាចង្កោមឈឺ តាមសរសៃប្រសាទមួយ"],"Mild dehydration":["Déshydratation légère","ខ្វះជាតិទឹកស្រាល"],"dry mucosa":["muqueuses sèches","ភ្នាសស្ងួត"],"mild diffuse tenderness":["sensibilité diffuse légère","ឈឺពោះទូទាំងបន្តិច"],"sunken eyes":["yeux enfoncés","ភ្នែកស្រុត"],"skin pinch goes back very slowly":["pli cutané persistant","ស្បែកចាប់ឡើងត្រឡប់យឺតខ្លាំង"],"weak pulse":["pouls faible","ជីពចរខ្សោយ"],"Lower abdominal tenderness":["Sensibilité du bas-ventre","ឈឺពោះក្រោមពេលស្ទាប"],"hyperactive bowel sounds":["bruits intestinaux augmentés","សូរពោះវៀនខ្លាំង"],"no guarding":["pas de défense","មិនរឹងការពារ"],"Diffuse cramping tenderness":["Sensibilité diffuse à type de crampes","ឈឺចុកពោះទូទាំង"],"no guarding or rebound":["pas de défense ni de rebond","មិនរឹងការពារ មិនឈឺពេលលែងដៃ"],"Soft abdomen":["Abdomen souple","ពោះទន់"],"stool palpable in left iliac fossa":["selles palpables en fosse iliaque gauche","ស្ទាបឃើញលាមកពោះក្រោមខាងឆ្វេង"],"Perianal: external haemorrhoids":["Région périanale : hémorroïdes externes","ជុំវិញរន្ធគូទ៖ ឫសដូងបាតខាងក្រៅ"],"Soft":["Souple","ទន់"],"mild periumbilical tenderness":["légère sensibilité périombilicale","ឈឺបន្តិចជុំវិញផ្ចិត"],"Tender hepatomegaly":["Hépatomégalie douloureuse","ថ្លើមធំ ឈឺពេលស្ទាប"],"no costovertebral angle tenderness":["pas de douleur à l'ébranlement lombaire","មិនឈឺត្រង់តម្រងនោមពេលគោះ"],"Cervical motion tenderness":["Douleur à la mobilisation du col","ឈឺពេលកម្រើកមាត់ស្បូន"],"lower abdominal tenderness":["sensibilité du bas-ventre","ឈឺពោះក្រោមពេលស្ទាប"],"BP raised":["TA élevée","សម្ពាធឈាមខ្ពស់"],"heart sounds normal":["bruits du cœur normaux","សូរបេះដូងធម្មតា"],"Brisk reflexes":["Réflexes vifs","រ៉េផ្លិចខ្លាំង"],"Oedema of face and hands":["Œdème du visage et des mains","ហើមមុខ និងដៃ"],"Sweating":["Sueurs","បែកញើស"],"confused":["confus","វង្វេង"],"Pale conjunctiva and palms":["Conjonctives et paumes pâles","ស្រោមភ្នែក និងបាតដៃស្លេក"],"Soft systolic flow murmur":["Souffle systolique fonctionnel","សូរ murmur systolic ស្រាល"],"Urticarial wheals":["Papules urticariennes","កន្ទួលរមាស់ប៉ោងៗ"],"Distressed":["En détresse","មានទុក្ខលំបាក"],"Generalised urticaria":["Urticaire généralisée","កន្ទួលរមាស់ពេញខ្លួន"],"Hypotension":["Hypotension","សម្ពាធឈាមទាប"],"tachycardia":["tachycardie","បេះដូងដើរលឿន"],"Papules and burrows on hands":["Papules et sillons sur les mains","គ្រាប់ និងផ្លូវកមលើដៃ"],"wrists":["poignets","កដៃ"],"waist":["taille","ចង្កេះ"],"Annular scaly plaque with raised edge":["Plaque annulaire squameuse à bordure surélevée","ស្នាមរង្វង់មានស្រកា គែមលើក"],"Honey-coloured crusted lesions":["Lésions croûteuses mélicériques","ដំបៅមានក្រមរពណ៌ទឹកឃ្មុំ"],"Warm":["Chaud","ក្តៅ"],"red":["rouge","ក្រហម"],"tender swelling with ill-defined edge":["tuméfaction douloureuse à bords mal limités","ហើមឈឺ គែមមិនច្បាស់"],"Fluctuant tender swelling":["Tuméfaction fluctuante douloureuse","ហើមទន់មានខ្ទុះ និងឈឺ"],"Comedones and inflamed papules on face":["Comédons et papules inflammatoires du visage","មុន និងគ្រាប់រលាកលើមុខ"],"Erythematous scaly itchy patches":["Plaques érythémato-squameuses prurigineuses","ស្នាមក្រហមមានស្រកា រមាស់"],"Burn wound":["Brûlure","របួសរលាក"],"blistering":["phlyctènes","ពងទឹក"],"Fang marks with local swelling":["Traces de crochets avec œdème local","ស្នាមចង្កូមពស់ ហើមកន្លែងខាំ"],"Bite wound":["Plaie de morsure","របួសសត្វខាំ"],"Laceration":["Lacération","របួសដាច់"],"clean edges":["bords nets","គែមស្អាត"],"Ingrown toenail with inflamed nail fold":["Ongle incarné avec bourrelet inflammatoire","ក្រចកដុះចូលសាច់ រលាកជុំវិញ"],"Mobile subcutaneous cyst with punctum":["Kyste sous-cutané mobile avec orifice","ដុំគីសក្រោមស្បែកកម្រើកបាន មានរន្ធ"],"Puncture wound":["Plaie punctiforme","របួសមុត"],"foreign body felt":["corps étranger palpable","ស្ទាបឃើញវត្ថុចម្លែក"],"Swelling and tenderness over lateral ankle":["Gonflement et douleur de la malléole externe","ហើម និងឈឺកជើងខាងក្រៅ"],"able to bear weight":["appui possible","អាចឈរដាក់ទម្ងន់បាន"],"Swelling and tenderness at injury site":["Gonflement et douleur au site du traumatisme","ហើម និងឈឺកន្លែងរបួស"],"Paraspinal muscle tenderness":["Contracture paravertébrale","ឈឺសាច់ដុំក្បែរឆ្អឹងខ្នង"],"straight leg raise negative":["Lasègue négatif","តេស្តលើកជើងត្រង់អវិជ្ជមាន"],"Paraspinal neck muscle tenderness":["Contracture paravertébrale cervicale","ឈឺសាច់ដុំក"],"normal power":["force normale","កម្លាំងធម្មតា"],"Knee crepitus":["Craquements du genou","ជង្គង់មានសូរក្រេប"],"no effusion":["pas d'épanchement","គ្មានទឹកក្នុងសន្លាក់"],"Red":["Rouge","ក្រហម"],"hot":["chaud","ក្តៅ"],"swollen joint":["articulation gonflée","សន្លាក់ហើម"],"Positive Dix-Hallpike":["Dix-Hallpike positif","តេស្ត Dix-Hallpike វិជ្ជមាន"],"Lower motor neurone facial palsy":["Paralysie faciale périphérique","ខ្វិនមុខប្រភេទ LMN"],"forehead involved":["front atteint","ថ្ងាសក៏ខ្វិនដែរ"],"Post-ictal drowsiness":["Somnolence post-critique","ងងុយក្រោយប្រកាច់"],"Kernig positive":["Kernig positif","Kernig វិជ្ជមាន"],"Conjunctiva red with discharge":["Conjonctive rouge avec sécrétions","ស្រោមភ្នែកក្រហម មានអាចម៍ភ្នែក"],"vision normal":["acuité visuelle normale","មើលឃើញធម្មតា"],"Tender swelling of eyelid margin":["Tuméfaction douloureuse du bord palpébral","ហើមឈឺគែមត្របកភ្នែក"],"low mood":["humeur triste","អារម្មណ៍ធ្លាក់ចុះ"],"fetal heart present":["BCF présents","មានចង្វាក់បេះដូងទារក"],"Uterus soft and boggy":["Utérus mou et mal rétracté","ស្បូនទន់ មិនរួញ"],"heavy vaginal bleeding":["saignement vaginal abondant","ហូរឈាមច្រើនតាមទ្វារមាស"],"Breast red":["Sein rouge","ដោះក្រហម"],"warm and tender":["chaud et douloureux","ក្តៅ និងឈឺ"]};
+var TRX_REV={}; Object.keys(TRX).forEach(function(en){ TRX_REV[fold(en)]=en; TRX_REV[fold(TRX[en][0])]=TRX_REV[fold(TRX[en][0])]||en; TRX_REV[fold(TRX[en][1])]=TRX_REV[fold(TRX[en][1])]||en; });
+function langPrim(){ var l=curLang(); return l==="both"?"en":l==="frkh"?"fr":l; }
+function langBi(){ var l=curLang(); return l==="both"||l==="frkh"; }
+function L1(en,lg){ var t=TRX[en]; if(!t) return en; return lg==="fr"?t[0]:lg==="kh"?t[1]:en; }
+function cap1(x,like){ return like&&/^[A-ZÀ-Ý]/.test(like)&&x?x.charAt(0).toUpperCase()+x.slice(1):x; }
+function trIn(text,lg){ return String(text||"").split(/,\s*/).map(function(tok,i){ var t=tok.trim(), en=TRX_REV[fold(t)]; if(!en) return t; var x=L1(en,lg);
+    if(i===0) return x.charAt(0).toUpperCase()+x.slice(1);
+    var latin=/^[A-Za-zÀ-ÿ]/.test(t), up=/^[A-ZÀ-Ý]/.test(t);
+    if((!latin||!up)&&/^[A-ZÀ-Ý][a-zà-ÿ]/.test(x)) x=x.charAt(0).toLowerCase()+x.slice(1);
+    return x; }).join(", "); }
+function trText(text){ var src=String(text||"").split(" | ")[0], p=trIn(src,langPrim()); if(langBi()){ var k=trIn(src,"kh"); if(fold(k)!==fold(p)) return p+" | "+k; } return p; }
+function trLabel(en){ var p=L1(en,langPrim()); return p; }
+var SOAP_LB={pe:["Physical examination: normal","Examen physique : normal","ការពិនិត្យរាងកាយ៖ ធម្មតា"],sec:["Secondary: ","Diag. secondaire : ","រោគវិនិច្ឆ័យបន្ទាប់បន្សំ៖ "],
+  ddx:["DDx: ","Diag. différentiel : ","រោគវិនិច្ឆ័យប្រៀបធៀប៖ "],need:["Needed: ","Nécessaire : ","ចាំបាច់៖ "],ix:["Ix: ","Examens : ","តេស្ត៖ "],wt:["Wt","Poids","ទម្ងន់"],
+  bp:["BP","TA","សម្ពាធ"],p:["P","Pouls","ជីពចរ"],t:["T","T","កម្តៅ"],rr:["RR","FR","ដង្ហើម"],
+  mhVac:["Vaccine","Vaccins","វ៉ាក់សាំង"],mhPmh:["PMH","ATCD médicaux","ជំងឺធ្លាប់មាន"],mhPsh:["PSH","ATCD chirurgicaux","ធ្លាប់វះកាត់"],mhFh:["FH","ATCD familiaux","ប្រវត្តិគ្រួសារ"],
+  mhSh:["SH","Mode de vie","ប្រវត្តិសង្គម"],mhOth:["Other","Autres","ផ្សេងៗ"],mhAll:["Allergy","Allergies","អាឡែកហ្ស៊ី"]};
+function SL(k){ var a=SOAP_LB[k], l=langPrim(); return l==="fr"?a[1]:l==="kh"?a[2]:a[0]; }
+function notesRetranslate(){
+  if($("peRows")) [].forEach.call(document.querySelectorAll(".perow"),function(r){ var sy=PE_SYS.find(function(x){return x[0]===r.dataset.sys;}); if(!sy) return;
+    var pn=r.querySelector(".pn"), sug=pn.classList.contains("sug"); pn.textContent=trLabel(sy[1]); var sm=mk("small"); sm.textContent=langPrim()==="kh"?L1(sy[1],"fr"):sy[2]; pn.appendChild(sm); pn.classList.toggle("sug",sug);
+    var pv=r.querySelector(".pv"); pv.textContent=trText(pv.textContent);
+    [].forEach.call(r.querySelectorAll(".pechips button"),function(b){ if(b.dataset.en) b.textContent=trLabel(b.dataset.en); }); });
+  if($("mhRows")) [].forEach.call(document.querySelectorAll(".mhrow"),function(r){ var f=MH_FIELDS.find(function(x){return x[0]===r.querySelector(".mv").id;}); if(!f) return;
+    var lb=r.querySelector("label"); lb.textContent=trLabel(f[1]); var sm=mk("small"); sm.textContent=langPrim()==="kh"?L1(f[1],"fr"):f[2]; lb.appendChild(sm);
+    var mv=r.querySelector(".mv"); mv.textContent=trText(mv.textContent);
+    [].forEach.call(r.querySelectorAll(".mchips button"),function(b){ if(b.dataset.en) b.textContent=trLabel(b.dataset.en); }); });
+  var NA={en:["Normal","Abnormal"],fr:["Normal","Anormal"],kh:["ធម្មតា","មិនធម្មតា"]}[langPrim()];
+  [].forEach.call(document.querySelectorAll(".perow select"),function(sel){ sel.options[0].textContent=NA[0]; sel.options[1].textContent=NA[1]; });
+  [].forEach.call(document.querySelectorAll(".pechips button.n"),function(b){ b.textContent="✓ "+NA[0]; });
+  if(typeof peCount==="function"&&$("peRows")) peCount();
+  if(typeof mhSave==="function"&&$("mhRows")) mhSave();
+  if(typeof peSave==="function"&&$("peRows")) peSave();
+  if(typeof evPaintAll==="function"&&$("evRows")){ EV_LANG=langPrim(); evPaintAll(); }
+  if(typeof soapAutoSoon==="function") soapAutoSoon();
+}
 
 /* ---------- quick search in the template-name box ---------- */
 var acIdx=-1;
