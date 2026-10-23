@@ -230,6 +230,29 @@ tbody.rxitem.unsafe .namecell{box-shadow:inset 3px 0 0 var(--alert)}
 .addrow{margin-top:8px;width:100%;border:1.5px dashed var(--pen);background:var(--pen-soft);color:var(--pen);border-radius:6px;padding:9px;font:600 14px var(--kh)}
 .addrow:hover{background:var(--paper)}
 
+.pe{border:1px solid var(--rule);border-left:3px solid #0b6e99;border-radius:6px;padding:2px 12px 8px;margin-top:10px;background:var(--panel)}
+.pe h2{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.pe-tools{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.pecount{font:600 12px var(--body);color:#0b6e99;text-transform:none;letter-spacing:0}
+.perow{display:grid;grid-template-columns:190px 132px 1fr;gap:4px 10px;align-items:start;padding:6px 0;border-top:1px dashed var(--rule)}
+.perow:first-child{border-top:0}
+.perow .pn{font:600 13px var(--body);color:var(--ink)}
+.perow .pn small{display:block;font:12px var(--kh);color:var(--muted)}
+.perow .pn.sug::after{content:" •";color:#0b6e99;font-weight:700}
+.perow select{border:1px solid var(--rule);border-radius:5px;padding:4px 6px;font:600 12.5px var(--body);background:var(--paper);color:var(--muted)}
+.perow select.st-normal{color:var(--ok);border-color:#9fd3b4}
+.perow select.st-abnormal{color:var(--alert);border-color:#e9a29c}
+.perow .pv{min-height:22px;font:15px var(--hand);color:var(--pen);outline:none;white-space:pre-wrap}
+.perow.st-ne .pv{color:#9aa3b5}
+.pechips{grid-column:3;display:flex;flex-wrap:wrap;gap:4px}
+.pechips button{border:1px solid var(--rule);background:var(--paper);color:var(--ink);border-radius:999px;padding:2px 9px;font:12px var(--body);cursor:pointer}
+.pechips button.n{border-color:#9fd3b4;color:var(--ok)}
+.pechips button:hover{border-color:var(--pen)}
+#peBtn[aria-pressed="true"]{background:#0b6e99;border-color:#0b6e99;color:#fff}
+.npcawarn{grid-column:1/-1;font:600 12px var(--kh);color:var(--alert)}
+@media (max-width:700px){.perow{grid-template-columns:1fr 120px}.perow .pv,.pechips{grid-column:1/-1}}
+@media print{.pe:not(.print-on){display:none!important}.pe{background:none;padding:0 0 4px;border-left-width:2px}.perow{grid-template-columns:150px 1fr;padding:1px 0}
+  .perow select,.pechips{display:none!important}.perow.st-ne{display:none}.perow .pv{font-size:13px}}
 .soap{border:1px solid var(--rule);border-left:3px solid #6b4fa0;border-radius:6px;padding:2px 12px 8px;margin-top:10px;background:var(--panel)}
 .soap h2{display:flex;justify-content:space-between;align-items:center;gap:8px}
 .soapday{font:600 12px var(--body);color:#6b4fa0;text-transform:none;letter-spacing:0}
@@ -356,6 +379,12 @@ header{padding-bottom:6px}
 .rxmark{font-size:36px}
 .patient,.vitals{gap:4px 12px;margin:8px 0 2px}
 .patient.p-id{grid-template-columns:2.2fr .7fr .8fr .9fr 1.3fr 1.3fr}
+.patient.p-pay{grid-template-columns:1.6fr 1.2fr 1fr;margin-top:4px}
+#pPay{border:1px solid var(--rule);border-radius:5px;padding:3px 6px;font:600 13px var(--kh);background:var(--paper);color:var(--pen);min-width:0;max-width:100%}
+.payprint{display:none;font:500 14px var(--kh);color:var(--pen)}
+body.no-pay .p-pay{display:none}
+@media print{.payprint{display:inline} .patient.p-pay:not(.has-pay){display:none}}
+
 .patient.p-hx{grid-template-columns:1fr 1fr}
 .patient.p-dx{grid-template-columns:1fr 1fr}
 .field > div{font-size:19px;min-height:23px}
@@ -666,6 +695,7 @@ body.no-vitals .vitals{display:none}
         <button type="button" data-lang="frkh">FR+ខ្មែរ</button>
       </div>
       <button class="btn alt" id="newBtn" type="button">+ ថ្មី</button>
+      <button class="btn alt" id="peBtn" type="button" aria-pressed="false" title="បង្ហាញ / លាក់ Physical examination">🩺 PE</button>
       <button class="btn alt" id="soapBtn" type="button" aria-pressed="false" title="បង្ហាញ / លាក់ SOAP note">📝 SOAP</button>
       <button class="btn alt" id="newPatientBtn" type="button">អ្នកជំងឺថ្មី</button>
       <button class="btn" id="printBtn" type="button">បោះពុម្ព</button>
@@ -692,6 +722,21 @@ body.no-vitals .vitals{display:none}
         <div class="field"><label data-fr="Allergies">Allergy</label><div id="pAllergy" contenteditable="true"></div></div>
         <div class="field"><label data-fr="Date">Date</label><div id="pDate" contenteditable="true"></div></div>
       </section>
+      <section class="patient p-pay">
+        <div class="field"><label data-fr="Prise en charge">Payment</label>
+          <select id="pPay" class="noprint" aria-label="Payment scheme (NPCA)">
+            <option value="">— ការទូទាត់ —</option>
+            <option value="self">បង់ផ្ទាល់ · Self-pay</option>
+            <option value="hef">HEF · មូលនិធិសមធម៌ (ប័ណ្ណ ID Poor)</option>
+            <option value="nssf">NSSF · ប.ស.ស</option>
+            <option value="ins">ធានារ៉ាប់រងឯកជន · Insurance</option>
+            <option value="free">ឥតគិតថ្លៃ · Free / exempt</option>
+            <option value="other">ផ្សេងៗ · Other</option>
+          </select><span class="payprint" id="pPayTxt"></span></div>
+        <div class="field"><label data-fr="N° carte">Card / ID</label><div id="pPayId" contenteditable="true" data-ph="លេខប័ណ្ណ HEF / NSSF"></div></div>
+        <div class="field npca-f"><label>NPCA</label><div id="pNpca" contenteditable="true" data-ph="Claim / ref. No."></div></div>
+        <div class="npcawarn noprint" id="npcaWarn" hidden></div>
+      </section>
       <section class="patient p-ipd ipd-only">
         <div class="field"><label data-fr="Service">Ward</label><div id="pWard" contenteditable="true"></div></div>
         <div class="field"><label data-fr="Lit">Bed</label><div id="pBed" contenteditable="true"></div></div>
@@ -708,6 +753,14 @@ body.no-vitals .vitals{display:none}
         <label class="vbox"><span class="vl">T°</span><input id="vT" type="text" inputmode="decimal" placeholder="37.0" autocomplete="off"><span class="vu">°C</span></label>
         <label class="vbox"><span class="vl" data-fr="FR">RR</span><input id="vRr" type="text" inputmode="numeric" placeholder="18" autocomplete="off"><span class="vu">/min</span></label>
         <label class="vbox"><span class="vl">SpO₂</span><input id="vSpo2" type="text" inputmode="numeric" placeholder="98" autocomplete="off"><span class="vu">%</span></label>
+      </section>
+      <section class="pe" id="peSec" hidden>
+        <h2><span>Physical examination <span class="kh">· ការពិនិត្យរាងកាយ</span> <span class="pecount" id="peCount"></span></span>
+          <span class="noprint pe-tools"><label class="soapprint"><input type="checkbox" id="pePrint"> បោះពុម្ព</label>
+          <button class="add" id="peAllNormal" type="button">✓ ធម្មតាទាំងអស់</button>
+          <button class="add" id="peReset" type="button">↺ Not examined</button>
+          <button class="add" id="peHide" type="button">✕ លាក់</button></span></h2>
+        <div id="peRows"></div>
       </section>
       <section class="patient p-hx">
         <div class="field"><label data-fr="Motif">C/O</label><div id="fCo" contenteditable="true"></div></div>
@@ -811,7 +864,7 @@ body.no-vitals .vitals{display:none}
       <button type="button" id="gUp">បង្កើតគណនីថ្មី</button>
       <button type="button" id="gReset">ភ្លេចពាក្យសម្ងាត់?</button>
     </div>
-    <p class="gate-note" id="gateNote">ព័ត៌មានអ្នកជំងឺមិនត្រូវបានផ្ញើទៅ cloud ទេ។ · v22</p>
+    <p class="gate-note" id="gateNote">ព័ត៌មានអ្នកជំងឺមិនត្រូវបានផ្ញើទៅ cloud ទេ។ · v24</p>
   </form>
 </div>
 
@@ -898,7 +951,7 @@ body.no-vitals .vitals{display:none}
       <p class="hint">ឯកសារត្រូវមានជួរឈរ៖ ICD 10 · EN · KH · FR។ បញ្ជីនេះរក្សាទុកក្នុង browser ហើយប្រើសម្រាប់ស្វែងរករោគវិនិច្ឆ័យទាំងអស់។</p>
     </fieldset>
     <div class="actions">
-      <span style="margin-right:auto;font:12px var(--body);color:var(--muted)">Rx Clinic v22</span>
+      <span style="margin-right:auto;font:12px var(--body);color:var(--muted)">Rx Clinic v24</span>
       <button class="btn alt" id="settingsClose" type="button">បិទ</button>
       <button class="btn" type="submit">រក្សាទុកការកំណត់</button>
     </div>
@@ -3561,6 +3614,7 @@ function fillSheet(t){
   PARTS={orders:null,dis:t.care==="ipd"?(t.dis?clone(t.dis):autoDis(t)):null}; SHEET_VIEW="orders";
   fillPart({rx:t.rx,advice:t.advice,red:t.red,follow:t.follow,frx:t.frx});
   $("tplName").value=t.name; $("tplGroup").value=t.group; $("tplCare").value=t.care||"opd"; applyCare();
+  if(typeof peSuggest==="function"&&$("peRows").children.length) peSuggest();
 }
 function readItems(ul){
   var li=[].map.call(ul.querySelectorAll("li"),function(x){return x.textContent.trim();}).filter(Boolean);
@@ -3627,6 +3681,7 @@ function setLang(l){
     e.textContent=l==="fr"?e.dataset.fr:l==="frkh"?(e.dataset.frkh||e.dataset.fr):e.dataset.orig; });
   if(l==="fr"||l==="frkh") syncFr();
   if(typeof showAppt==="function"&&$("apptDate")) showAppt();
+  if(typeof showPay==="function"&&$("pPay")) showPay();
   [].forEach.call(document.querySelectorAll(".seg button"),function(b){b.setAttribute("aria-pressed",String(b.dataset.lang===l));});
   labelSelects(document,l);
   rxItems().forEach(updatePrint);
@@ -3898,16 +3953,16 @@ function cloudSignIn(kind){
 }
 
 /* ---------- current patient & vital signs (kept on this device only, never sent to the cloud) ---------- */
-var PT_KEY="rxTemplates.patient", PT_TEXT=["pName","pAge","pSex","pWt","pAllergy","pDate","pWard","pBed","pAdmit"], PT_VITAL=["vBp","vP","vT","vRr","vSpo2"];
+var PT_KEY="rxTemplates.patient", PT_TEXT=["pName","pAge","pSex","pWt","pAllergy","pDate","pWard","pBed","pAdmit","pPayId","pNpca"], PT_VITAL=["vBp","vP","vT","vRr","vSpo2"];
 function todayStr(){var d=new Date(),z=function(n){return String(n).padStart(2,"0");};return z(d.getDate())+"/"+z(d.getMonth()+1)+"/"+d.getFullYear();}
 function savePatient(){
-  var o={ptMode:ptModeManual}; PT_TEXT.forEach(function(id){o[id]=$(id).textContent.trim();}); PT_VITAL.forEach(function(id){o[id]=$(id).value.trim();});
+  var o={ptMode:ptModeManual,pay:$("pPay").value}; showPay(); PT_TEXT.forEach(function(id){o[id]=$(id).textContent.trim();}); PT_VITAL.forEach(function(id){o[id]=$(id).value.trim();});
   try{localStorage.setItem(PT_KEY,JSON.stringify(o));}catch(e){}
 }
 function loadPatient(){
   var o=null; try{o=JSON.parse(localStorage.getItem(PT_KEY)||"null");}catch(e){}
   PT_TEXT.forEach(function(id){$(id).textContent=o&&o[id]?o[id]:"";}); if(!$("pDate").textContent) $("pDate").textContent=todayStr();
-  PT_VITAL.forEach(function(id){$(id).value=o&&o[id]?o[id]:"";}); checkVitals(); ptModeManual=o&&o.ptMode||"";
+  PT_VITAL.forEach(function(id){$(id).value=o&&o[id]?o[id]:"";}); checkVitals(); ptModeManual=o&&o.ptMode||""; $("pPay").value=o&&o.pay||""; showPay();
 }
 function checkVitals(){
   function flag(id,bad){$(id).closest(".vbox").classList.toggle("abn",!!bad);}
@@ -3924,7 +3979,7 @@ function newPatient(){
   if(!newPtArmed){newPtArmed=true;b.textContent="ចុចម្តងទៀតដើម្បីលុប";b.classList.add("danger");setTimeout(function(){newPtArmed=false;b.textContent="អ្នកជំងឺថ្មី";b.classList.remove("danger");},3500);return;}
   newPtArmed=false; b.textContent="អ្នកជំងឺថ្មី"; b.classList.remove("danger");
   PT_TEXT.forEach(function(id){$(id).textContent="";}); PT_VITAL.forEach(function(id){$(id).value="";});
-  ptModeManual=""; SOAP_IDS.forEach(function(id){$(id).innerText="";}); showSoap(false); $("fHo").textContent=""; $("pDate").textContent=todayStr(); checkVitals(); savePatient(); renderSymChips(); $("pName").focus();
+  ptModeManual=""; $("pPay").value=""; peResetAll(); showPe(false); SOAP_IDS.forEach(function(id){$(id).innerText="";}); showSoap(false); $("fHo").textContent=""; $("pDate").textContent=todayStr(); checkVitals(); savePatient(); renderSymChips(); $("pName").focus();
   say("បានសម្អាតព័ត៌មានអ្នកជំងឺ");
 }
 
@@ -3959,7 +4014,8 @@ function soapFill(){
   var v=[["BP",$("vBp").value,"mmHg"],["P",$("vP").value,"/min"],["T",$("vT").value,"°C"],["RR",$("vRr").value,"/min"],["SpO₂",$("vSpo2").value,"%"]]
     .filter(function(x){return x[1].trim();}).map(function(x){return x[0]+" "+x[1].trim()+(x[2]==="%"?"%":" "+x[2]);});
   var wt=$("pWt").textContent.trim(); if(wt) v.push("Wt "+wt+(/kg/i.test(wt)?"":" kg"));
-  $("soapO").innerText=v.join(", ")+($("fInv").textContent.trim()?(v.length?"\n":"")+"Ix: "+$("fInv").textContent.trim():"");
+  var pe=typeof peText==="function"?peText():[];
+  $("soapO").innerText=[v.join(", ")].concat(pe).concat($("fInv").textContent.trim()?["Ix: "+$("fInv").textContent.trim()]:[]).filter(Boolean).join("\n");
   $("soapA").innerText=[$("fDx").textContent.trim(),$("fDxKh").textContent.trim()].filter(Boolean).join(" · ");
   var rx=rxItems().map(rowData).filter(function(r){return r.drug;}).map(function(r){
     var sl=r.slots.map(function(x){return x||"0";}).join("-"); return "• "+r.drug+(r.slots.some(Boolean)?" "+sl:"")+(r.days?" × "+r.days+" d":"");});
@@ -3974,7 +4030,7 @@ function soapDayLabel(){
 function showSoap(on){
   $("soapSec").hidden=!on; $("soapBtn").setAttribute("aria-pressed",String(on));
   if(on){ soapDayLabel(); if(soapEmpty()) soapFill(); }
-  saveSoap();
+  saveSoap(); if(typeof npcaCheck==="function") npcaCheck();
 }
 function saveSoap(){
   $("soapSec").classList.toggle("print-on",$("soapPrint").checked);
@@ -3988,6 +4044,108 @@ function loadSoap(){
   $("soapSec").hidden=!(o&&o.open); $("soapBtn").setAttribute("aria-pressed",String(!!(o&&o.open))); soapDayLabel();
 }
 var SOAP_KEY="rxTemplates.soap";
+
+/* ---------- payment scheme (HEF / NSSF certified by NPCA) — kept on this device with the patient ---------- */
+var PAY_TXT={self:["Self-pay","បង់ផ្ទាល់","Paiement direct"],hef:["HEF (ID Poor)","មូលនិធិសមធម៌ HEF","Fonds d'équité (HEF)"],nssf:["NSSF","ប.ស.ស (NSSF)","NSSF"],
+  ins:["Private insurance","ធានារ៉ាប់រងឯកជន","Assurance privée"],free:["Free / exempt","ឥតគិតថ្លៃ","Gratuit / exonéré"],other:["Other","ផ្សេងៗ","Autre"]};
+function showPay(){
+  var v=$("pPay").value, t=PAY_TXT[v], l=curLang(), sec=document.querySelector(".p-pay");
+  $("pPayTxt").textContent=t?(l==="en"?t[0]:l==="fr"?t[2]:l==="frkh"?t[2]+" · "+t[1]:l==="both"?t[0]+" · "+t[1]:t[1]):"";
+  var any=!!(v||$("pPayId").textContent.trim()||$("pNpca").textContent.trim());
+  sec.classList.toggle("has-pay",any);
+  /* claim reference only matters for schemes certified by NPCA */
+  document.querySelector(".npca-f").style.opacity=(v==="hef"||v==="nssf"||$("pNpca").textContent.trim())?"1":".55";
+}
+
+/* ---------- Physical examination by system (NPCA / HIS style): Not examined · Normal · Abnormal + quick findings ---------- */
+var PE_SYS=[
+ ["gen","General Appearance","រូបរាងទូទៅ","Alert, oriented, not in distress, well hydrated, no pallor, no jaundice",
+  ["Ill-looking","In pain","Lethargic","Pale","Jaundiced","Dehydrated (sunken eyes, dry mucosa)","Cyanosis","Flushed / febrile","Malnourished","Obese"]],
+ ["ent","ENT (ORL)","ត្រចៀក ច្រមុះ បំពង់ក","Ears, nose and throat normal, tonsils not enlarged, no cervical lymph nodes",
+  ["Pharynx red","Tonsils enlarged with exudate","Tympanic membrane red / bulging","Ear discharge","Nasal discharge","Nasal congestion","Cervical lymph nodes enlarged","Oral ulcers","Dental caries / abscess"]],
+ ["cv","Cardiovascular System","បេះដូង និងសរសៃឈាម","S1 S2 regular, no murmur, CRT < 2 s, peripheral pulses normal",
+  ["Tachycardia","Bradycardia","Irregular rhythm","Murmur","CRT > 2 s","Weak peripheral pulses","Raised JVP","Leg oedema"]],
+ ["resp","Respiratory System","ផ្លូវដង្ហើម","Normal breath sounds both sides, no crackles, no wheeze, no chest indrawing",
+  ["Tachypnoea","Chest indrawing","Wheeze","Crackles right base","Crackles left base","Reduced air entry","Bronchial breathing","Dull to percussion","Accessory muscle use"]],
+ ["gi","Gastro-Intestinal System","ប្រព័ន្ធរំលាយអាហារ","Abdomen soft, non-tender, no organomegaly, bowel sounds normal",
+  ["Epigastric tenderness","Right iliac fossa tenderness","Right upper quadrant tenderness","Guarding / rebound","Distended","Hepatomegaly","Splenomegaly","Ascites","Hyperactive bowel sounds","Absent bowel sounds"]],
+ ["cns","Central Nervous System","ប្រព័ន្ធប្រសាទកណ្តាល","Conscious, GCS 15/15, no focal deficit, no neck stiffness",
+  ["GCS < 15","Neck stiffness","Kernig / Brudzinski positive","Focal weakness","Facial palsy","Confusion","Convulsion","Abnormal reflexes"]],
+ ["skin","Skin & Extremities","ស្បែក និងចុងដៃជើង","Skin normal, no rash, no oedema, joints normal",
+  ["Maculopapular rash","Petechiae","Tourniquet test positive","Urticaria","Wound / laceration","Cellulitis","Abscess","Vesicles","Joint swelling","Leg oedema"]],
+ ["uro","Urogenital System","ប្រព័ន្ធទឹកនោម និងប្រដាប់បន្តពូជ","No costovertebral angle tenderness, no suprapubic tenderness",
+  ["Costovertebral angle tenderness","Suprapubic tenderness","Urethral discharge","Vaginal discharge","Genital ulcer","Scrotal swelling"]],
+ ["mental","Mental Status","ស្ថានភាពផ្លូវចិត្ត","Calm, oriented to time, place and person, normal mood and speech",
+  ["Anxious","Low mood","Agitated","Disoriented","Hallucinations","Suicidal ideation — assess risk"]],
+ ["other","Other body parts","ផ្នែកផ្សេងៗ","Nothing abnormal detected",
+  ["Conjunctiva red","Eyes jaundiced","Thyroid enlarged","Breast lump","Pregnant uterus, fundal height ... cm","Lymph nodes enlarged"]]
+];
+var PE_GROUP={resp:["resp","ent"],ent:["ent"],cv:["cv"],gi:["gi"],gu:["uro"],skin:["skin"],wound:["skin"],msk:["skin"],neuro:["cns"],eye:["other"],
+  dental:["ent"],gyn:["uro"],obs:["gi","other"],peds:["gen","resp"],id:["gen","skin"],endo:["gen","cv"],heme:["gen"],emerg:["gen","cv","resp","cns"],general:["gen"]};
+var PE_KEY="rxTemplates.pe";
+function peBuild(){
+  var box=$("peRows"); box.textContent="";
+  PE_SYS.forEach(function(sy){
+    var row=mk("div","perow st-ne"); row.dataset.sys=sy[0];
+    var pn=mk("div","pn"); pn.textContent=sy[1]; var sm=mk("small"); sm.textContent=sy[2]; pn.appendChild(sm);
+    var sel=mk("select"); sel.setAttribute("aria-label",sy[1]);
+    [["ne","Not examined"],["normal","Normal"],["abnormal","Abnormal"]].forEach(function(o){var op=document.createElement("option");op.value=o[0];op.textContent=o[1];sel.appendChild(op);});
+    var pv=mk("div","pv"); pv.contentEditable="true"; pv.textContent="Not examined";
+    var ch=mk("div","pechips noprint");
+    var nb=mk("button","n"); nb.type="button"; nb.textContent="✓ Normal"; nb.onclick=function(){peSet(row,"normal",sy[3]);}; ch.appendChild(nb);
+    sy[4].forEach(function(f){var b=mk("button"); b.type="button"; b.textContent=f; b.onclick=function(){peAdd(row,f);}; ch.appendChild(b);});
+    sel.onchange=function(){ peSet(row,sel.value, sel.value==="normal"?sy[3]:sel.value==="ne"?"Not examined":(row.dataset.st==="abnormal"?pv.textContent:"")); if(sel.value==="abnormal") pv.focus(); };
+    pv.addEventListener("input",function(){ if(row.dataset.st==="ne"&&pv.textContent.trim()&&pv.textContent.trim()!=="Not examined") peSet(row,"abnormal",pv.textContent,true); else peSave(); });
+    row.appendChild(pn); row.appendChild(sel); row.appendChild(pv); row.appendChild(ch); box.appendChild(row);
+    row.dataset.st="ne";
+  });
+}
+function peSet(row,st,txt,keepCaret){
+  row.dataset.st=st; var sel=row.querySelector("select"), pv=row.querySelector(".pv");
+  sel.value=st; sel.className="st-"+st; row.classList.toggle("st-ne",st==="ne");
+  if(!keepCaret) pv.textContent=txt;
+  peCount(); peSave();
+}
+function peAdd(row,f){
+  var pv=row.querySelector(".pv"), cur=row.dataset.st==="abnormal"?pv.textContent.trim():"";
+  if(cur.indexOf(f)>-1) return;
+  peSet(row,"abnormal",(cur?cur.replace(/[.;,\s]+$/,"")+", ":"")+f);
+}
+function peCount(){
+  var rows=[].slice.call(document.querySelectorAll(".perow")), ex=rows.filter(function(r){return r.dataset.st!=="ne";}).length,
+      ab=rows.filter(function(r){return r.dataset.st==="abnormal";}).length;
+  $("peCount").textContent=ex+"/"+rows.length+(ab?" · "+ab+" abnormal":"");
+  if(typeof npcaCheck==="function") npcaCheck();
+}
+function peSuggest(){
+  var cur=lib.find(function(x){return x.id===currentId;}), want=cur?(PE_GROUP[cur.group]||[]):[];
+  [].forEach.call(document.querySelectorAll(".perow"),function(r){r.querySelector(".pn").classList.toggle("sug",want.indexOf(r.dataset.sys)>-1);});
+}
+function peText(){
+  return [].slice.call(document.querySelectorAll(".perow")).filter(function(r){return r.dataset.st!=="ne";}).map(function(r){
+    var sy=PE_SYS.find(function(x){return x[0]===r.dataset.sys;}); return sy[1]+": "+r.querySelector(".pv").textContent.trim();});
+}
+function peSave(){
+  var o={open:!$("peSec").hidden,print:$("pePrint").checked,rows:{}};
+  [].forEach.call(document.querySelectorAll(".perow"),function(r){o.rows[r.dataset.sys]=[r.dataset.st,r.querySelector(".pv").textContent];});
+  $("peSec").classList.toggle("print-on",$("pePrint").checked);
+  try{localStorage.setItem(PE_KEY,JSON.stringify(o));}catch(e){}
+}
+function peLoad(){
+  peBuild(); var o=null; try{o=JSON.parse(localStorage.getItem(PE_KEY)||"null");}catch(e){}
+  [].forEach.call(document.querySelectorAll(".perow"),function(r){var v=o&&o.rows&&o.rows[r.dataset.sys]; if(v) peSet(r,v[0],v[1]);});
+  $("pePrint").checked=!!(o&&o.print); showPe(!!(o&&o.open)); peCount();
+}
+function showPe(on){ $("peSec").hidden=!on; $("peBtn").setAttribute("aria-pressed",String(on)); if(on) peSuggest(); peSave(); }
+function peResetAll(){ [].forEach.call(document.querySelectorAll(".perow"),function(r){peSet(r,"ne","Not examined");}); }
+/* NPCA checks the record: SOAP and physical examination should be filled for HEF / NSSF patients */
+function npcaCheck(){
+  var w=$("npcaWarn"); if(!w) return; var v=$("pPay").value;
+  if(v!=="hef"&&v!=="nssf"){w.hidden=true;return;}
+  var miss=[]; if(typeof soapEmpty==="function"&&soapEmpty()) miss.push("SOAP");
+  if(!document.querySelector('.perow:not(.st-ne)')) miss.push("Physical examination");
+  w.textContent=miss.length?"⚠ NPCA: ខ្វះ "+miss.join(" និង ")+" — NPCA អាចបដិសេធការទូទាត់ (ចុច 📝 SOAP / 🩺 PE)":""; w.hidden=!miss.length;
+}
 
 /* ---------- quick search in the template-name box ---------- */
 var acIdx=-1;
@@ -4079,6 +4237,15 @@ loadPatient();
 PT_TEXT.forEach(function(id){$(id).addEventListener("input",savePatient);});
 PT_VITAL.forEach(function(id){$(id).addEventListener("input",function(){checkVitals();savePatient();});});
 $("newPatientBtn").onclick=newPatient;
+peLoad();
+$("peBtn").onclick=function(){showPe($("peSec").hidden);};
+$("peHide").onclick=function(){showPe(false);};
+$("peAllNormal").onclick=function(){ [].forEach.call(document.querySelectorAll(".perow"),function(r){ if(r.dataset.st==="ne"){var sy=PE_SYS.find(function(x){return x[0]===r.dataset.sys;}); peSet(r,"normal",sy[3]);} }); say("ប្រព័ន្ធដែលមិនទាន់ពិនិត្យ ត្រូវបានដាក់ Normal — សូមពិនិត្យឡើងវិញ"); };
+$("peReset").onclick=peResetAll;
+$("pePrint").addEventListener("change",peSave);
+["soapS","soapO","soapA","soapP"].forEach(function(id){$(id).addEventListener("input",npcaCheck);});
+$("pPay").addEventListener("change",npcaCheck); npcaCheck();
+$("pPay").addEventListener("change",savePatient);
 loadSoap();
 $("soapBtn").onclick=function(){showSoap($("soapSec").hidden);};
 $("soapHide").onclick=function(){showSoap(false);};
