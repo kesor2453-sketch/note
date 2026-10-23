@@ -901,12 +901,11 @@ body.no-vitals .vitals{display:none}
 
       <section class="soap" id="soapSec">
         <h2><span>SOAP note <span class="kh">· កំណត់ត្រាពិនិត្យ</span> <span class="soapday" id="soapDay"></span></span>
-          <span class="noprint soap-tools"><button class="add soapadd" id="soapAdd" type="button" title="រក្សាទុក SOAP នេះជាកំណត់ត្រា (ម៉ោង + ថ្ងៃ)">＋ បញ្ចូល</button><label class="soapprint"><input type="checkbox" id="soapPrint"> បោះពុម្ព SOAP</label>          <button class="add" id="soapHide" type="button">✕ លាក់</button></span></h2>
+          <span class="noprint soap-tools"><label class="soapprint"><input type="checkbox" id="soapPrint"> បោះពុម្ព SOAP</label>          <button class="add" id="soapHide" type="button">✕ លាក់</button></span></h2>
         <div class="soaprow"><b class="L-s">S</b><label><span data-fr="Subjectif">Subjective</span> <span class="kh">· អ្នកជំងឺប្រាប់</span></label><div id="soapS" contenteditable="true" data-ph="Symptoms, history, what the patient reports"></div></div>
         <div class="soaprow"><b class="L-o">O</b><label><span data-fr="Objectif">Objective</span> <span class="kh">· ការពិនិត្យ</span></label><div id="soapO" contenteditable="true" data-ph="Vital signs, examination, test results"></div></div>
         <div class="soaprow"><b class="L-a">A</b><label><span data-fr="Évaluation">Assessment / Evaluation</span> <span class="kh">· ការវាយតម្លៃ</span></label><div id="soapA" contenteditable="true" data-ph="Diagnosis / progress"></div></div>
         <div class="soaprow"><b class="L-p">P</b><label><span data-fr="Traitement / Plan">Treatment / Plan</span> <span class="kh">· ការព្យាបាល / ផែនការ</span></label><div id="soapP" contenteditable="true" data-ph="Treatment, tests, follow-up"></div></div>
-        <div class="soaplog" id="soapLog" hidden></div>
       </section>
 
       <section class="proc" id="procSec" hidden>
@@ -996,7 +995,7 @@ body.no-vitals .vitals{display:none}
       <button type="button" id="gUp">បង្កើតគណនីថ្មី</button>
       <button type="button" id="gReset">ភ្លេចពាក្យសម្ងាត់?</button>
     </div>
-    <p class="gate-note" id="gateNote">ព័ត៌មានអ្នកជំងឺមិនត្រូវបានផ្ញើទៅ cloud ទេ។ · v40</p>
+    <p class="gate-note" id="gateNote">ព័ត៌មានអ្នកជំងឺមិនត្រូវបានផ្ញើទៅ cloud ទេ។ · v41</p>
   </form>
 </div>
 
@@ -1098,7 +1097,7 @@ body.no-vitals .vitals{display:none}
       <p class="hint">ឯកសារត្រូវមានជួរឈរ៖ ICD 10 · EN · KH · FR។ បញ្ជីនេះរក្សាទុកក្នុង browser ហើយប្រើសម្រាប់ស្វែងរករោគវិនិច្ឆ័យទាំងអស់។</p>
     </fieldset>
     <div class="actions">
-      <span style="margin-right:auto;font:12px var(--body);color:var(--muted)">Rx Clinic v40</span>
+      <span style="margin-right:auto;font:12px var(--body);color:var(--muted)">Rx Clinic v41</span>
       <button class="btn alt" id="settingsClose" type="button">បិទ</button>
       <button class="btn" type="submit">រក្សាទុកការកំណត់</button>
     </div>
@@ -4640,7 +4639,7 @@ function soapLogAdd(){
   soapLog.push(e); soapDaySel=e.date; soapLogSave(); soapResetEdits(); soapAutoSoon(); say("បានបញ្ចូល SOAP — "+new Date(e.t).toTimeString().slice(0,5));
 }
 function renderSoapLog(){
-  var box=$("soapLog"); if(!box) return; box.textContent=""; $("soapSec").classList.toggle("has-log",soapLog.length>0);
+  var box=$("soapLog"); if(!box) return; /* table removed (v41) */ box.textContent=""; $("soapSec").classList.toggle("has-log",soapLog.length>0);
   if(!soapLog.length){box.hidden=true;return;} box.hidden=false;
   var days=[]; soapLog.forEach(function(e){ if(days.indexOf(e.date)<0) days.push(e.date); });
   if(days.indexOf(soapDaySel)<0) soapDaySel=days[days.length-1];
@@ -4907,9 +4906,7 @@ mhLoad(); $("mhPrint").addEventListener("change",mhSave);
 $("mhToggle").onclick=function(){ $("mhSec").classList.toggle("collapsed"); this.textContent=$("mhSec").classList.contains("collapsed")?"▸":"▾"; mhSave(); };
 $("pAllergy").addEventListener("input",function(){ if($("mhAll").textContent!==$("pAllergy").textContent){ $("mhAll").textContent=$("pAllergy").textContent; mhSave(); } });
 dxAcBind("fDx2"); dxAcBind("fDdx"); dxBlank(); ["fDx2","fDdx"].forEach(function(id){$(id).addEventListener("input",function(){ if(typeof soapAutoSoon==="function") soapAutoSoon(); });});
-soapLogLoad(); $("soapAdd").onclick=soapLogAdd;
-window.addEventListener("beforeprint",function(){document.body.classList.add("printing"); renderSoapLog();});
-window.addEventListener("afterprint",function(){document.body.classList.remove("printing"); renderSoapLog();});
+try{localStorage.removeItem(SOAP_LOG_KEY);}catch(e){}
 /* ---------- resizable side panel (width kept on this device) ---------- */
 (function(){
   var KEY="rxTemplates.sideWidth", grip=$("sideGrip"), side=$("sideNotes"), wrap=grip.parentNode, MIN=260, MAX=820, startX=0, startW=0;
