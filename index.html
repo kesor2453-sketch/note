@@ -788,6 +788,40 @@ tr.pgnow td{background:#fdf2f8;font-weight:700}
 .pgw td,.pgw th{padding:3px 6px}
 .pgw td.pgcur{background:#fdf2f8;font-weight:700;color:#9d174d}
 .pgok{color:#17663a}
+.stitbl td{font-size:12.5px;line-height:1.4}
+.stitbl td:first-child{width:150px}
+.pginp select{font:14px var(--kh);padding:5px 8px;border:1px solid var(--rule);border-radius:6px;background:var(--paper);color:var(--ink);max-width:420px}
+.pgnav{display:flex;flex-wrap:wrap;gap:4px;margin:6px 0 4px;position:sticky;top:-8px;z-index:2;background:var(--paper);padding:6px 0;border-bottom:1px solid var(--rule)}
+.pgnav button{border:1px solid #f3c4dc;background:#fdf2f8;color:#9d174d;border-radius:8px;padding:5px 11px;font:600 13px var(--kh);cursor:pointer}
+.pgnav button[aria-pressed=true]{background:#9d174d;color:#fff;border-color:#9d174d}
+.pgsec[hidden]{display:none}
+.procai{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:2px 0 8px;padding:6px 8px;border:1px dashed #a78bfa;border-radius:8px;background:#f5f3ff}
+.procai[hidden]{display:none}
+.procai .aitag{font:600 12.5px var(--kh);color:#6d28d9}
+.aichip{border:1px solid #a78bfa;background:#fff;color:#5b21b6;border-radius:14px;padding:3px 10px;font:600 12.5px var(--kh);cursor:pointer}
+.aichip:hover{background:#ede9fe}
+.procnotebox{margin-top:8px;border-top:1px dashed var(--rule);padding-top:6px}
+.procnotebox[hidden]{display:none}
+.pnh{display:flex;justify-content:space-between;align-items:center;font:12px var(--kh);color:var(--muted)}
+.procnote{white-space:pre-wrap;font:14px var(--hand);color:var(--pen);outline:none;min-height:40px;line-height:1.45}
+.aibtn{position:relative}
+.aibtn small{display:inline-block;margin-left:5px;min-width:18px;padding:0 5px;border-radius:9px;font:700 11px var(--body);background:#e5e7eb;color:#374151}
+.aibtn.aihi small{background:#dc2626;color:#fff}.aibtn.aimid small{background:#f59e0b;color:#fff}.aibtn.aiok small{background:#16a34a;color:#fff}
+.aibtn.aihi{border-color:#dc2626!important;animation:aipulse 1.6s ease-in-out 3}
+@keyframes aipulse{50%{box-shadow:0 0 0 4px rgba(220,38,38,.25)}}
+.aipanel{position:fixed;top:64px;right:12px;bottom:12px;width:min(420px,calc(100vw - 24px));z-index:70;background:var(--paper);color:var(--ink);border:1px solid var(--rule);border-radius:12px;box-shadow:0 18px 50px rgba(0,0,0,.25);display:flex;flex-direction:column;overflow:auto}
+.aipanel[hidden]{display:none}
+.aih{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;border-bottom:1px solid var(--rule);font:700 15px var(--kh);position:sticky;top:0;background:var(--paper);z-index:1}
+.aisum{display:flex;gap:6px;flex-wrap:wrap;padding:8px 12px}
+.aiprint{margin:0 12px 8px;padding:8px;border-radius:8px;background:#fef2f2;border:1px solid #fecaca;font:13px var(--kh);display:flex;flex-direction:column;gap:6px}
+.ailist{padding:0 12px}
+.aicat{font:700 12px var(--kh);color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin:10px 12px 4px}
+.ailist .aicat{margin:10px 0 4px}
+.aiitem{display:flex;justify-content:space-between;gap:8px;align-items:flex-start;padding:6px 8px;border-radius:7px;margin-bottom:4px;font:13px var(--kh);line-height:1.4;border-left:4px solid}
+.aiitem.hi{background:#fef2f2;border-color:#dc2626}.aiitem.mid{background:#fffbeb;border-color:#f59e0b}.aiitem.lo{background:#eff6ff;border-color:#3b82f6}
+.aitools{display:flex;gap:4px;flex-shrink:0}
+.aishort{display:flex;flex-wrap:wrap;gap:6px;padding:0 12px 10px}
+.aiflash{outline:3px solid #a78bfa!important;outline-offset:2px;transition:outline .2s}
 </style>
 </head>
 <body class="lang-both gated">
@@ -914,6 +948,7 @@ tr.pgnow td{background:#fdf2f8;font-weight:700}
       <button class="btn alt" id="payBtn" type="button" aria-pressed="false" title="ការទូទាត់ HEF / NSSF / NPCA">💳 ការទូទាត់</button>
       <button class="btn alt" id="peBtn" type="button" aria-pressed="true" title="បង្ហាញ / លាក់ Physical examination">🩺 PE</button>
       <button class="btn alt" id="soapBtn" type="button" aria-pressed="true" title="បង្ហាញ / លាក់ SOAP note">📝 SOAP</button>
+      <button class="btn alt aibtn" id="aiBtn" type="button" title="ជំនួយការពិនិត្យកំហុស">✨ AI</button>
       <button class="btn alt" id="repBtn" type="button" title="របាយការណ៍អ្នកជំងឺ · NPCA">📊</button>
       <button class="btn alt" id="pregBtn" type="button" title="គណនាថ្ងៃគ្រប់ខែ · EDD · LMP · សប្តាហ៍">🤰</button>
       <button class="btn alt" id="calcBtn" type="button" title="គណនាដូស · កុមារ · ICU · សេរ៉ូ">🧮 ដូស</button>
@@ -1022,9 +1057,11 @@ tr.pgnow td{background:#fdf2f8;font-weight:700}
           <ol class="proc-steps fr" id="procFr" contenteditable="true"></ol>
           <ol class="proc-steps kh" id="procKh" contenteditable="true"></ol>
         </div>
+        <div class="procnotebox" id="procNoteBox" hidden><div class="pnh"><b>✍ Procedure note · កំណត់ត្រាវះកាត់</b><button class="add noprint" id="procNoteGen" type="button">✨ សរសេរឡើងវិញ</button></div><div class="procnote" id="procNote" contenteditable="true"></div></div>
       </section>
 
       <h2><span data-fr="Traitement">Treatment</span> <span class="noprint" style="display:flex;gap:6px"><button class="add" id="addProc" type="button">+ ការវះកាត់តូច</button><button class="add" id="addRx" type="button">+ បន្ថែមថ្នាំ</button></span></h2>
+      <div class="procai noprint" id="procAiBar" hidden></div>
       <div class="symbar noprint" id="symBar">
         <div class="ptseg" id="ptSeg" role="group" aria-label="Patient type"></div>
         <span class="symlab">ព្យាបាលរោគសញ្ញា (WHO):</span>
@@ -1105,7 +1142,7 @@ tr.pgnow td{background:#fdf2f8;font-weight:700}
       <button type="button" id="gUp">បង្កើតគណនីថ្មី</button>
       <button type="button" id="gReset">ភ្លេចពាក្យសម្ងាត់?</button>
     </div>
-    <p class="gate-note" id="gateNote">ព័ត៌មានអ្នកជំងឺមិនត្រូវបានផ្ញើទៅ cloud ទេ។ · v50</p>
+    <p class="gate-note" id="gateNote">ព័ត៌មានអ្នកជំងឺមិនត្រូវបានផ្ញើទៅ cloud ទេ។ · v57</p>
   </form>
 </div>
 
@@ -1207,7 +1244,7 @@ tr.pgnow td{background:#fdf2f8;font-weight:700}
       <p class="hint">ឯកសារត្រូវមានជួរឈរ៖ ICD 10 · EN · KH · FR។ បញ្ជីនេះរក្សាទុកក្នុង browser ហើយប្រើសម្រាប់ស្វែងរករោគវិនិច្ឆ័យទាំងអស់។</p>
     </fieldset>
     <div class="actions">
-      <span style="margin-right:auto;font:12px var(--body);color:var(--muted)">Rx Clinic v50</span>
+      <span style="margin-right:auto;font:12px var(--body);color:var(--muted)">Rx Clinic v57</span>
       <button class="btn alt" id="settingsClose" type="button">បិទ</button>
       <button class="btn" type="submit">រក្សាទុកការកំណត់</button>
     </div>
@@ -3542,6 +3579,243 @@ Object.assign(DXI,{
  "z-pulledelbow":["កែងដៃរបូត (កុមារ)","Pronation douloureuse","pulled elbow child កែងដៃរបូត pronation douloureuse"]
 });
 
+/* ---------- v51: pregnancy ultrasound / ANC templates by trimester ---------- */
+var IFA=R("Ferrous sulfate 200 mg + Folic acid","tab","1-0-0","after-meals","30","Iron 60 mg + folic acid 400 mcg daily through pregnancy (WHO).");
+var CAL=R("Calcium carbonate 500 mg","tab","0-1-1","with-food","30","1–1.5 g calcium/day from 20 weeks (WHO, pre-eclampsia prevention). Not at the same time as iron.");
+var US_WARN=A("Bleeding, belly pain, fluid leaking, severe headache or blurred vision, swelling of face/hands, fever, baby moving less.","ធ្លាក់ឈាម ឈឺពោះ ធ្លាយទឹកភ្លោះ ឈឺក្បាលខ្លាំង ឬភ្នែកព្រិល ហើមមុខ/ដៃ គ្រុន កូនកម្រើកតិច។","Saignement, douleur abdominale, perte de liquide, céphalée intense ou vision floue, œdème du visage/mains, fièvre, bébé qui bouge moins.");
+DEFAULTS=DEFAULTS.concat([
+ T("q-us1","obs","Ultrasound · 1st trimester (11–14 weeks)","Pregnancy check, month 3","Supervision of normal first pregnancy (Z34.0) · Antenatal screening by ultrasound (Z36.3)",
+  "Ultrasound 11–14 w: intrauterine pregnancy, heartbeat, number of babies + chorionicity, CRL → EDD, nuchal translucency (NT), early major anomalies, uterus and ovaries. Bloods: Hb, blood group/Rh, HIV, syphilis, HBsAg; urine protein and glucose",
+  [IFA],
+  [A("Heartbeat is seen from about 6 weeks (vaginal scan) or 7 weeks (abdominal scan); normal 110–170/min.","ចង្វាក់បេះដូងឃើញចាប់ពីប្រហែល ៦ សប្តាហ៍ (អេកូទ្វារមាស) ឬ ៧ សប្តាហ៍ (អេកូលើពោះ); ធម្មតា ១១០–១៧០ ដង/នាទី។","L'activité cardiaque est visible vers 6 SA (voie vaginale) ou 7 SA (voie abdominale) ; normale 110–170/min."),
+   A("This scan confirms the due date (EDD) — keep the report.","អេកូនេះបញ្ជាក់ថ្ងៃគ្រប់ខែ (EDD) — រក្សាលទ្ធផលទុក។","Cette échographie fixe le terme (DPA) — gardez le compte rendu."),
+   A("Take iron + folic acid every day. Eat small frequent meals if nauseous.","លេបជាតិដែក + អាស៊ីតហ្វូលិករាល់ថ្ងៃ។ ញ៉ាំតិចៗញឹកញាប់ បើចង់ក្អួត។","Fer + acide folique chaque jour. Petits repas fréquents en cas de nausées."),
+   A("No alcohol, no smoking, no medicines without asking the doctor.","កុំផឹកស្រា កុំជក់បារី កុំប្រើថ្នាំដោយមិនសួរគ្រូពេទ្យ។","Pas d'alcool, pas de tabac, pas de médicament sans avis médical.")],
+  A("Bleeding or belly pain (ectopic or miscarriage), severe vomiting, fever.","ធ្លាក់ឈាម ឬឈឺពោះ (គភ៌ក្រៅស្បូន ឬរលូត) ក្អួតខ្លាំង គ្រុន។","Saignement ou douleur abdominale (GEU ou fausse couche), vomissements importants, fièvre."),
+  A("Follow-up: in 6 weeks — ANC at 20 weeks of pregnancy + anomaly ultrasound (18–22 w)","មកពិនិត្យវិញក្រោយ ៦ សប្តាហ៍ — ពិនិត្យផ្ទៃពោះនៅគភ៌ ២០ សប្តាហ៍ + អេកូរូបរាង (១៨–២២ សប្តាហ៍)","Suivi : dans 6 semaines — CPN à 20 SA + échographie morphologique (18–22 SA)")),
+ T("q-us2","obs","Ultrasound · 2nd trimester (18–22 weeks, anomaly scan)","Pregnancy check, month 5","Supervision of normal pregnancy (Z34.8) · Antenatal screening for malformation by ultrasound (Z36.3)",
+  "Anomaly ultrasound 18–22 w: head and brain, face and lip, spine, heart (4 chambers + outflow tracts), abdominal wall, stomach, kidneys, bladder, 4 limbs; biometry BPD, HC, AC, FL; placenta position (low-lying?), amniotic fluid, cervix length; sex if asked. OGTT at 24–28 w. Td vaccine",
+  [IFA,CAL],
+  [A("This is the most important scan: it checks the baby's organs.","អេកូនេះសំខាន់បំផុត៖ ពិនិត្យសរីរាង្គកូន។","C'est l'échographie la plus importante : elle vérifie les organes du bébé."),
+   A("Baby's sex is usually seen reliably at 18–22 weeks (not before 14 weeks).","ភេទកូនច្រើនមើលឃើញច្បាស់នៅ ១៨–២២ សប្តាហ៍ (មិនមែនមុន ១៤ សប្តាហ៍)។","Le sexe se voit en général de façon fiable à 18–22 SA (pas avant 14 SA)."),
+   A("Expected weight: about 220 g at 18 weeks, 330 g at 20 weeks, 480 g at 22 weeks.","ទម្ងន់រំពឹង៖ ប្រហែល ២២០ g នៅ ១៨ សប្តាហ៍ ៣៣០ g នៅ ២០ សប្តាហ៍ ៤៨០ g នៅ ២២ សប្តាហ៍។","Poids attendu : environ 220 g à 18 SA, 330 g à 20 SA, 480 g à 22 SA."),
+   A("You will feel the baby move from 18–20 weeks. Glucose test (OGTT) at 24–28 weeks.","អ្នកនឹងដឹងកូនកម្រើកចាប់ពី ១៨–២០ សប្តាហ៍។ តេស្តជាតិស្ករ (OGTT) នៅ ២៤–២៨ សប្តាហ៍។","Vous sentirez bouger le bébé vers 18–20 SA. Test de glycémie (HGPO) à 24–28 SA.")],
+  US_WARN,
+  A("Follow-up: in 4 weeks — OGTT at 24–28 w, ANC at 26 weeks of pregnancy","មកពិនិត្យវិញក្រោយ ៤ សប្តាហ៍ — តេស្តស្ករ ២៤–២៨ សប្តាហ៍ ពិនិត្យផ្ទៃពោះនៅគភ៌ ២៦ សប្តាហ៍","Suivi : dans 4 semaines — HGPO à 24–28 SA, CPN à 26 SA")),
+ T("q-us3","obs","Ultrasound · 3rd trimester (28–32 weeks, growth)","Pregnancy check, months 7–8","Supervision of normal pregnancy (Z34.8) · Antenatal screening for fetal growth retardation by ultrasound (Z36.4)",
+  "Growth ultrasound 28–32 w: estimated fetal weight + percentile (small / large for dates), amniotic fluid (AFI / deepest pocket), placenta position re-check, presentation, fetal movements; umbilical artery Doppler if growth restriction. Hb again, urine protein, BP",
+  [IFA,CAL],
+  [A("Expected weight: about 1.2 kg at 28 weeks, 1.6 kg at 30 weeks, 1.95 kg at 32 weeks (normal range ± 15%).","ទម្ងន់រំពឹង៖ ប្រហែល ១.២ kg នៅ ២៨ សប្តាហ៍ ១.៦ kg នៅ ៣០ សប្តាហ៍ ១.៩៥ kg នៅ ៣២ សប្តាហ៍ (ចន្លោះធម្មតា ± ១៥%)។","Poids attendu : environ 1,2 kg à 28 SA, 1,6 kg à 30 SA, 1,95 kg à 32 SA (normes ± 15 %)."),
+   A("Count baby's movements: at least 10 in 2 hours when the baby is awake.","រាប់ចលនាកូន៖ យ៉ាងហោចណាស់ ១០ ដងក្នុង ២ ម៉ោង ពេលកូនភ្ញាក់។","Comptez les mouvements : au moins 10 en 2 heures quand le bébé est éveillé."),
+   A("Sleep on your side, not flat on your back.","គេងផ្អៀងចំហៀង កុំគេងផ្ងារ។","Dormez sur le côté, pas à plat sur le dos."),
+   A("Prepare a birth plan: where to deliver, transport, money, blood donor.","រៀបចំផែនការសម្រាល៖ កន្លែងសម្រាល ការធ្វើដំណើរ ប្រាក់ អ្នកបរិច្ចាគឈាម។","Préparez le projet de naissance : lieu, transport, argent, donneur de sang.")],
+  US_WARN,
+  A("Follow-up: in 2–4 weeks — ANC at 34 and 36 weeks of pregnancy + ultrasound (36–38 w)","មកពិនិត្យវិញក្រោយ ២–៤ សប្តាហ៍ — ពិនិត្យផ្ទៃពោះនៅគភ៌ ៣៤ និង ៣៦ សប្តាហ៍ + អេកូ (៣៦–៣៨ សប្តាហ៍)","Suivi : dans 2–4 semaines — CPN à 34 et 36 SA + échographie (36–38 SA)")),
+ T("q-us4","obs","Ultrasound · before delivery (36–38 weeks / post-term)","Pregnancy check, month 9","Supervision of normal pregnancy (Z34.8) · Antenatal screening by ultrasound (Z36.9)",
+  "Ultrasound 36–38 w: presentation (cephalic / breech / transverse), estimated fetal weight, amniotic fluid, placenta (praevia → caesarean plan), cord around the neck if seen. ≥ 41 w: amniotic fluid + biophysical profile twice a week, refer for induction",
+  [IFA,CAL],
+  [A("Expected weight: about 2.8 kg at 36 weeks, 3.2 kg at 38 weeks, 3.6 kg at 40 weeks. Normal birth weight 2.5–4.0 kg.","ទម្ងន់រំពឹង៖ ប្រហែល ២.៨ kg នៅ ៣៦ សប្តាហ៍ ៣.២ kg នៅ ៣៨ សប្តាហ៍ ៣.៦ kg នៅ ៤០ សប្តាហ៍។ ទម្ងន់កើតធម្មតា ២.៥–៤.០ kg។","Poids attendu : environ 2,8 kg à 36 SA, 3,2 kg à 38 SA, 3,6 kg à 40 SA. Poids de naissance normal 2,5–4,0 kg."),
+   A("Breech or placenta over the cervix: delivery must be planned at a hospital.","ទារកនៅគូទ ឬសុកបាំងមាត់ស្បូន៖ ត្រូវរៀបចំសម្រាលនៅមន្ទីរពេទ្យ។","Siège ou placenta prævia : accouchement à planifier à l'hôpital."),
+   A("Come at once when labour starts: regular painful contractions, water breaks, or bleeding.","មកភ្លាមពេលឈឺពោះសម្រាល៖ ឈឺទៀងទាត់ ធ្លាយទឹកភ្លោះ ឬធ្លាក់ឈាម។","Venez dès le début du travail : contractions régulières, perte des eaux ou saignement."),
+   A("If not delivered by 41 weeks, come for monitoring and induction.","បើមិនទាន់សម្រាលដល់ ៤១ សប្តាហ៍ មកតាមដាន និងជំរុញការសម្រាល។","Si pas d'accouchement à 41 SA, venez pour surveillance et déclenchement.")],
+  US_WARN,
+  A("Follow-up: in 1 week, then every week until delivery","មកពិនិត្យវិញក្រោយ ១ សប្តាហ៍ រួចរៀងរាល់សប្តាហ៍ រហូតសម្រាល","Suivi : dans 1 semaine, puis chaque semaine jusqu'à l'accouchement"))
+]);
+Object.assign(DXI,{
+ "q-us1":["អេកូ · ត្រីមាសទី ១ (១១–១៤ សប្តាហ៍)","Échographie du 1er trimestre (11–14 SA)","ultrasound first trimester echo អេកូ ត្រីមាស ១ ផ្ទៃពោះ heartbeat CRL NT échographie"],
+ "q-us2":["អេកូ · ត្រីមាសទី ២ (១៨–២២ សប្តាហ៍ រូបរាង)","Échographie morphologique (18–22 SA)","ultrasound second trimester anomaly scan sex អេកូ ត្រីមាស ២ ភេទ រូបរាង morphologique"],
+ "q-us3":["អេកូ · ត្រីមាសទី ៣ (២៨–៣២ សប្តាហ៍ ការលូតលាស់)","Échographie de croissance (28–32 SA)","ultrasound third trimester growth weight អេកូ ត្រីមាស ៣ ទម្ងន់ croissance"],
+ "q-us4":["អេកូ · មុនសម្រាល (៣៦–៣៨ សប្តាហ៍)","Échographie avant l'accouchement (36–38 SA)","ultrasound term presentation breech អេកូ មុនសម្រាល ទីតាំងទារក présentation"]
+});
+
+/* ---------- v52: syphilis by population (WHO 2016) + vaccination visit ---------- */
+var SY_PARTNER=A("All sexual partners of the last 3 months (early) or 12 months (late) must be tested and treated.","ដៃគូរួមភេទក្នុងរយៈពេល ៣ ខែ (ដំណាក់កាលដំបូង) ឬ ១២ ខែ (ដំណាក់កាលយឺត) ត្រូវធ្វើតេស្ត និងព្យាបាល។","Tous les partenaires des 3 derniers mois (précoce) ou 12 mois (tardive) doivent être dépistés et traités.");
+var SY_JH=A("Fever, headache and body pain may occur within 24 hours after the injection (Jarisch–Herxheimer reaction) — take paracetamol; it is not an allergy.","អាចមានគ្រុន ឈឺក្បាល ឈឺខ្លួន ក្នុង ២៤ ម៉ោងក្រោយចាក់ (ប្រតិកម្ម Jarisch–Herxheimer) — លេប Paracetamol; មិនមែនអាឡែកហ្ស៊ីទេ។","Fièvre, céphalée, courbatures possibles dans les 24 h après l'injection (réaction de Jarisch-Herxheimer) — paracétamol ; ce n'est pas une allergie.");
+var SY_FU=A("Repeat RPR at 3, 6 and 12 months: the titre should fall 4-fold (e.g. 1:32 → 1:8) by 6–12 months.","ធ្វើ RPR ម្តងទៀតនៅ ៣ ៦ និង ១២ ខែ៖ titre ត្រូវចុះ ៤ ដង (ឧ. 1:32 → 1:8) ក្នុង ៦–១២ ខែ។","RPR de contrôle à 3, 6 et 12 mois : le titre doit baisser de 4 fois (ex. 1:32 → 1:8) en 6–12 mois.");
+var SY_NOSEX=A("No sex until 7 days after treatment and until partners are treated. Use condoms. Test for HIV.","កុំរួមភេទរហូត ៧ ថ្ងៃក្រោយព្យាបាល និងដៃគូព្យាបាលរួច។ ប្រើស្រោមអនាម័យ។ ធ្វើតេស្ត HIV។","Pas de rapports jusqu'à 7 jours après le traitement et le traitement des partenaires. Préservatif. Test VIH.");
+var SY_RED=A("Rash with fever, severe headache, vision or hearing change, weakness, difficulty breathing or swelling after injection.","កន្ទួលជាមួយគ្រុន ឈឺក្បាលខ្លាំង ភ្នែក ឬត្រចៀកប្រែប្រួល ខ្សោយ ពិបាកដកដង្ហើម ឬហើមក្រោយចាក់។","Éruption fébrile, céphalée intense, troubles visuels ou auditifs, faiblesse, gêne respiratoire ou gonflement après l'injection.");
+DEFAULTS=DEFAULTS.concat([
+ T("s-syph-late","id","Syphilis — late latent / unknown duration","Positive RPR and TPHA, no symptoms, infection over 2 years or unknown","Latent syphilis, unspecified as early or late (A53.0)","RPR titre, TPHA, HIV; neurological and eye examination",
+  [R("Benzathine penicillin 2.4 MU IM","vial","1-0-0-0","","3","2.4 MU deep IM (1.2 MU each buttock) ONCE A WEEK × 3 weeks (days 0, 7, 14). Watch 30 minutes."),
+   R("Doxycycline 100 mg","cap","1-0-1","after-meals","30","ONLY if penicillin allergy or not available (not in pregnancy / under 8 years): 100 mg twice daily × 30 days.")],
+  [SY_PARTNER,SY_JH,SY_FU,SY_NOSEX,A("Do not miss a weekly injection: if more than 14 days between doses, restart the series.","កុំខកខានការចាក់ប្រចាំសប្តាហ៍៖ បើលើស ១៤ ថ្ងៃរវាងដូស ត្រូវចាប់ផ្តើមឡើងវិញ។","Ne manquez pas l'injection hebdomadaire : si plus de 14 jours entre deux doses, recommencer la série.")],
+  SY_RED,A("Follow-up: day 7 and day 14 for injections, RPR at 3, 6, 12 months","មកចាក់ថ្ងៃទី ៧ និង ១៤ ធ្វើ RPR នៅ ៣ ៦ ១២ ខែ","Suivi : J7 et J14 pour les injections, RPR à 3, 6, 12 mois")),
+ T("s-syph-oral","id","Syphilis — oral treatment (penicillin allergy / no injection)","Positive syphilis test, penicillin allergy","Early syphilis, unspecified (A51.9)","RPR titre, TPHA, HIV; pregnancy test",
+  [R("Doxycycline 100 mg","cap","1-0-1","after-meals","14","Early syphilis (< 2 years): 14 days. Late or unknown: 30 days. NOT in pregnancy or under 8 years."),
+   R("Ceftriaxone 1 g","vial","1-0-0-0","q24h","10","Alternative: 1 g IM daily × 10–14 days.")],
+  [A("Benzathine penicillin injection is the best treatment. Oral doxycycline is used only if penicillin allergy or no penicillin.","ការចាក់ Benzathine penicillin គឺការព្យាបាលល្អបំផុត។ Doxycycline លេបប្រើតែពេលអាឡែកហ្ស៊ីប៉េនីស៊ីលីន ឬគ្មានប៉េនីស៊ីលីន។","La benzathine pénicilline injectable est le meilleur traitement. La doxycycline orale seulement en cas d'allergie ou de rupture."),
+   A("Take doxycycline with a full glass of water, stay upright 30 minutes, avoid milk and iron at the same time, protect from the sun.","លេប Doxycycline ជាមួយទឹកមួយកែវពេញ កុំដេក ៣០ នាទី កុំលេបជាមួយទឹកដោះគោ ឬជាតិដែក ការពារថ្ងៃ។","Prendre avec un grand verre d'eau, rester debout 30 minutes, pas en même temps que lait ou fer, se protéger du soleil."),
+   A("Every dose matters — missing doses can make the treatment fail.","ដូសនីមួយៗសំខាន់ — ខកខានដូសអាចធ្វើឱ្យការព្យាបាលបរាជ័យ។","Chaque dose compte — les oublis exposent à l'échec."),SY_PARTNER,SY_FU,SY_NOSEX],
+  SY_RED,fu("2 weeks")),
+ T("s-syph-preg","obs","Syphilis in pregnancy","Positive syphilis test at antenatal visit","Syphilis complicating pregnancy (O98.1)","RPR titre, TPHA, HIV, HBsAg; ultrasound (fetal signs: hydrops, big liver, big placenta)",
+  [R("Benzathine penicillin 2.4 MU IM","vial","1-0-0-0","stat","1","Early (< 2 years): ONCE. Late or unknown: once a week × 3. Treat on the SAME DAY as the positive test (rapid test). Best before 28 weeks."),
+   R("Erythromycin 500 mg","tab","1-1-1-1","after-meals","14","ONLY if penicillin allergy: 500 mg 4 times a day × 14 days (late: 30 days). Or ceftriaxone 1 g IM daily × 10–14 days. NO doxycycline in pregnancy. Non-penicillin treatment does not reliably treat the baby — the newborn must be treated.")],
+  [A("Treatment now protects your baby from congenital syphilis, stillbirth and early birth.","ការព្យាបាលឥឡូវនេះការពារកូនពីស្វាយពីកំណើត កូនស្លាប់ក្នុងផ្ទៃ និងកើតមិនគ្រប់ខែ។","Le traitement maintenant protège le bébé de la syphilis congénitale, de la mort in utero et de la prématurité."),
+   A("Fever or contractions in the 24 hours after injection can happen (Jarisch–Herxheimer) — come if contractions are strong or baby moves less.","អាចមានគ្រុន ឬរមួលស្បូនក្នុង ២៤ ម៉ោងក្រោយចាក់ — មកភ្លាម បើរមួលខ្លាំង ឬកូនកម្រើកតិច។","Fièvre ou contractions possibles dans les 24 h (Jarisch-Herxheimer) — consultez si contractions fortes ou bébé qui bouge moins."),
+   SY_PARTNER,A("Repeat RPR at 28–32 weeks and at delivery. Baby will be examined and tested at birth.","ធ្វើ RPR ម្តងទៀតនៅ ២៨–៣២ សប្តាហ៍ និងពេលសម្រាល។ កូននឹងត្រូវពិនិត្យ និងធ្វើតេស្តពេលកើត។","RPR de contrôle à 28–32 SA et à l'accouchement. Le bébé sera examiné et testé à la naissance."),SY_NOSEX],
+  A("Strong contractions, bleeding, fluid leaking, baby moving less, rash or difficulty breathing after injection.","រមួលស្បូនខ្លាំង ធ្លាក់ឈាម ធ្លាយទឹកភ្លោះ កូនកម្រើកតិច កន្ទួល ឬពិបាកដកដង្ហើមក្រោយចាក់។","Contractions fortes, saignement, perte de liquide, bébé qui bouge moins, éruption ou gêne respiratoire après l'injection."),
+  A("Follow-up: day 7 and 14 if 3 doses; RPR at 28–32 weeks and delivery","មកចាក់ថ្ងៃទី ៧ និង ១៤ បើ ៣ ដូស; RPR នៅ ២៨–៣២ សប្តាហ៍ និងពេលសម្រាល","Suivi : J7 et J14 si 3 doses ; RPR à 28–32 SA et à l'accouchement")),
+ IPD(T("s-syph-cong","peds","Congenital syphilis (newborn, IPD)","Newborn of mother with untreated / inadequately treated syphilis, or signs (rash, snuffles, big liver, jaundice)","Congenital syphilis, unspecified (A50.9)","Baby RPR (compare with mother's titre), CBC, liver tests, X-ray long bones; lumbar puncture if symptomatic",
+  [R("Benzylpenicillin (crystalline) 1 MU","vial","1-0-1","iv-slow","10","50,000 U/kg IV every 12 h in the first 7 days of life, then every 8 h — total 10 days (WHO). Dose: weight × 50,000 U."),
+   R("Procaine penicillin 3 MU","vial","1-0-0-0","q24h","10","Alternative: 50,000 U/kg IM once daily × 10 days.")],
+  [A("Complete all 10 days; if more than 1 day is missed, restart the course.","ព្យាបាលឱ្យគ្រប់ ១០ ថ្ងៃ; បើខកខានលើស ១ ថ្ងៃ ត្រូវចាប់ផ្តើមឡើងវិញ។","Traitement complet de 10 jours ; si plus d'un jour manqué, recommencer."),
+   A("Asymptomatic baby, normal exam, mother treated with benzathine penicillin ≥ 4 weeks before delivery: follow up only. Mother not or inadequately treated, baby well: benzathine penicillin 50,000 U/kg IM once (or full course per national guideline).","ទារកគ្មានរោគសញ្ញា ពិនិត្យធម្មតា ម្តាយបានចាក់ Benzathine ≥ ៤ សប្តាហ៍មុនសម្រាល៖ តាមដានប៉ុណ្ណោះ។ ម្តាយមិនបានព្យាបាល ឬព្យាបាលមិនគ្រប់ ទារកធម្មតា៖ Benzathine 50,000 U/kg IM ម្តង (ឬព្យាបាលពេញតាមគោលការណ៍ជាតិ)។","Bébé asymptomatique, examen normal, mère traitée par benzathine ≥ 4 semaines avant l'accouchement : surveillance. Mère non ou mal traitée, bébé normal : benzathine 50 000 U/kg IM dose unique (ou traitement complet selon le protocole national)."),
+   A("Breastfeeding is allowed. Mother and partner must be treated.","អាចបំបៅដោះបាន។ ម្តាយ និងប្តីត្រូវព្យាបាល។","Allaitement possible. Mère et partenaire doivent être traités."),
+   A("Baby RPR at 3, 6 and 12 months (should become negative).","ធ្វើ RPR ទារកនៅ ៣ ៦ និង ១២ ខែ (ត្រូវអវិជ្ជមាន)។","RPR du bébé à 3, 6 et 12 mois (doit se négativer).")],
+  A("Poor feeding, fever, convulsion, jaundice getting worse, difficulty breathing.","បៅតិច គ្រុន ប្រកាច់ លឿងកាន់តែខ្លាំង ពិបាកដកដង្ហើម។","Tète mal, fièvre, convulsion, ictère croissant, détresse respiratoire."),
+  A("Discharge when: 10 days of penicillin completed, feeding well.","ចេញពីពេទ្យ៖ ចាក់ប៉េនីស៊ីលីនគ្រប់ ១០ ថ្ងៃ បៅបានល្អ។","Sortie : 10 jours de pénicilline terminés, alimentation correcte."))),
+ T("s-syph-child","peds","Syphilis (child, acquired)","Positive syphilis test in a child","Early syphilis, unspecified (A51.9)","RPR titre, TPHA, HIV; safeguarding assessment",
+  [R("Benzathine penicillin 1.2 MU IM","vial","1-0-0-0","stat","1","50,000 U/kg deep IM once (max 2.4 MU). Late / unknown: once a week × 3. Penicillin allergy over 8 years: doxycycline 2 mg/kg twice daily (max 100 mg) × 14 days.")],
+  [A("Syphilis in a child after the newborn period may mean sexual abuse — assess safety and refer to child protection.","ស្វាយលើកុមារក្រោយវ័យទារក អាចបង្ហាញពីការរំលោភផ្លូវភេទ — វាយតម្លៃសុវត្ថិភាព និងបញ្ជូនទៅការការពារកុមារ។","Une syphilis chez l'enfant après la période néonatale peut signer un abus sexuel — évaluer la sécurité et signaler à la protection de l'enfance."),SY_JH,SY_FU],
+  SY_RED,fu("2 weeks")),
+ T("s-vacc-child","peds","Vaccination visit (child, EPI)","Routine vaccination","Need for immunization (Z27.8)","Check vaccination card; weight; ask about previous reactions",
+  [W(R("Paracetamol syrup 120 mg/5 ml","ml","1-1-1-1","prn","2","15 mg/kg if fever or pain after vaccination. Do not give before vaccination."),"15/24/1000")],
+  [A("Mild fever, crying and a sore red spot where the needle went are normal for 1–2 days.","គ្រុនបន្តិច យំ និងក្រហមឈឺកន្លែងចាក់ ១–២ ថ្ងៃគឺធម្មតា។","Légère fièvre, pleurs et rougeur douloureuse au point d'injection 1–2 jours : normal."),
+   A("BCG makes a small blister then a scar after 2–6 weeks — do not cover or squeeze it.","BCG ធ្វើឱ្យមានពងតូច រួចស្លាកស្នាមក្រោយ ២–៦ សប្តាហ៍ — កុំបិទ ឬច្របាច់។","Le BCG donne une petite pustule puis une cicatrice après 2–6 semaines — ne pas couvrir ni presser."),
+   A("Keep the vaccination card and come on the next date.","រក្សាប័ណ្ណវ៉ាក់សាំង ហើយមកតាមថ្ងៃណាត់។","Gardez le carnet de vaccination et revenez à la date prévue."),
+   A("Continue breastfeeding.","បន្តបំបៅដោះ។","Poursuivez l'allaitement.")],
+  A("High fever over 39 °C, convulsion, swelling of face or difficulty breathing, crying for more than 3 hours, very sleepy.","គ្រុនលើស ៣៩ °C ប្រកាច់ ហើមមុខ ឬពិបាកដកដង្ហើម យំលើស ៣ ម៉ោង ងងុយខ្លាំង។","Fièvre > 39 °C, convulsion, gonflement du visage ou gêne respiratoire, pleurs > 3 heures, somnolence."),
+  A("Follow-up: next vaccination date on the card","មកតាមថ្ងៃចាក់វ៉ាក់សាំងបន្ទាប់ក្នុងប័ណ្ណ","Suivi : prochaine vaccination selon le carnet")),
+ T("s-tetwound","wound","Tetanus prophylaxis (wound)","Wound, tetanus vaccination status checked","Need for immunization against tetanus alone (Z23.5)","Number of previous tetanus doses and date of last dose",
+  [R("Td vaccine 0.5 ml IM","amp","1-0-0-0","stat","1","Deltoid. Give if < 3 doses / unknown, or last dose > 10 years (clean minor wound) or > 5 years (other wounds)."),
+   R("Tetanus immunoglobulin 250 IU IM","amp","1-0-0-0","stat","1","ONLY if < 3 doses / unknown AND dirty / deep / puncture / burn wound. 500 IU if > 24 h old or heavily contaminated. Other arm from Td.")],
+  [A("Complete the tetanus series: dose 2 after 4 weeks, dose 3 after 6 months.","ចាក់ឱ្យគ្រប់៖ ដូសទី ២ ក្រោយ ៤ សប្តាហ៍ ដូសទី ៣ ក្រោយ ៦ ខែ។","Compléter la vaccination : 2e dose à 4 semaines, 3e dose à 6 mois."),
+   A("Keep the wound clean and come for dressing.","រក្សារបួសឱ្យស្អាត និងមកប្តូររុំ។","Gardez la plaie propre et revenez pour le pansement.")],
+  A("Jaw stiffness, difficulty swallowing, muscle spasms — emergency.","រឹងថ្គាម ពិបាកលេប សាច់ដុំរមួលកន្ត្រាក់ — បន្ទាន់។","Raideur de la mâchoire, difficulté à avaler, spasmes — urgence."),
+  A("Follow-up: Td dose 2 in 4 weeks","មកចាក់ Td ដូសទី ២ ក្រោយ ៤ សប្តាហ៍","Suivi : 2e dose de Td dans 4 semaines"))
+]);
+Object.assign(DXI,{
+ "s-syph-late":["ស្វាយលាក់ខ្លួនយឺត / មិនដឹងរយៈពេល","Syphilis latente tardive","syphilis late latent benzathine weekly ស្វាយ syphilis tardive"],
+ "s-syph-oral":["ស្វាយ — ថ្នាំលេប (អាឡែកហ្ស៊ីប៉េនីស៊ីលីន)","Syphilis — traitement oral (allergie)","syphilis oral doxycycline penicillin allergy ស្វាយ ថ្នាំលេប syphilis doxycycline"],
+ "s-syph-preg":["ស្វាយពេលមានផ្ទៃពោះ","Syphilis pendant la grossesse","syphilis pregnancy antenatal ស្វាយ ផ្ទៃពោះ syphilis grossesse"],
+ "s-syph-cong":["ស្វាយពីកំណើត (ទារក IPD)","Syphilis congénitale","congenital syphilis newborn ស្វាយពីកំណើត ទារក syphilis congénitale"],
+ "s-syph-child":["ស្វាយ (កុមារ)","Syphilis de l'enfant","syphilis child ស្វាយ កុមារ syphilis enfant"],
+ "s-vacc-child":["ចាក់វ៉ាក់សាំងកុមារ (EPI)","Vaccination de l'enfant (PEV)","vaccination child epi vaccine វ៉ាក់សាំង កុមារ vaccination PEV"],
+ "s-tetwound":["ការពារតេតាណូស (របួស)","Prophylaxie antitétanique","tetanus prophylaxis wound td tig តេតាណូស របួស tétanos"]
+});
+
+/* ---------- v53: diseases common in Cambodia (WHO / CNM / CDC-MOH) — doctor to check national guideline ---------- */
+var REPORT=A("Notifiable disease: report to the provincial health department / MOH CDC hotline 115.","ជំងឺត្រូវរាយការណ៍៖ រាយការណ៍ទៅមន្ទីរសុខាភិបាលខេត្ត / CDC ក្រសួងសុខាភិបាល លេខ ១១៥។","Maladie à déclaration obligatoire : déclarer au département provincial / ligne CDC du ministère 115.");
+var RAWFISH=A("Do not eat raw or fermented fish (prahok, koy trey) unless well cooked.","កុំញ៉ាំត្រីឆៅ ឬត្រីមិនឆ្អិន (ប្រហុក ភ្លាត្រី) លុះត្រាតែចម្អិនឱ្យឆ្អិន។","Ne pas manger de poisson cru ou fermenté (prahok, koy trey) non cuit.");
+var BOOTS=A("Wear boots in rice fields and mud; cover cuts.","ពាក់ស្បែកជើងកវែងពេលនៅស្រែ និងភក់; បិទរបួស។","Portez des bottes dans les rizières et la boue ; couvrez les plaies.");
+DEFAULTS=DEFAULTS.concat([
+ IPD(T("c-melioid","id","Melioidosis (IPD)","Fever, pneumonia, abscess (liver, spleen, parotid), diabetic rice farmer","Melioidosis, unspecified (A24.4)","Blood, pus, sputum and urine culture (tell the lab: Burkholderia pseudomallei), CBC, glucose, chest X-ray, abdominal ultrasound",
+  [R("Ceftazidime 1 g","vial","2-2-2","q8h","14","2 g IV every 8 h (child 50 mg/kg, max 2 g) for at least 10–14 days. Severe / ICU: meropenem 1 g IV every 8 h (child 25 mg/kg)."),
+   R("Paracetamol 500 mg","tab","1-1-1-1","prn","5","")],
+  [A("Drain abscesses. Control blood sugar.","បង្ហូរអាប់សេ។ គ្រប់គ្រងជាតិស្ករ។","Drainer les abcès. Contrôler la glycémie."),A("Intensive IV phase at least 10–14 days, longer if deep abscess, bone or brain.","ព្យាបាលតាមសរសៃយ៉ាងតិច ១០–១៤ ថ្ងៃ យូរជាងនេះបើអាប់សេជ្រៅ ឆ្អឹង ឬខួរក្បាល។","Phase IV d'au moins 10–14 jours, plus si abcès profond, os ou cerveau."),
+   A("Then oral eradication for 3 months — relapse is common if stopped early.","បន្ទាប់មកលេបថ្នាំ ៣ ខែ — កើតឡើងវិញញឹកញាប់បើឈប់មុន។","Puis éradication orale 3 mois — rechute fréquente si arrêt précoce."),BOOTS],
+  A("Shock, breathlessness, confusion, no urine — ICU.","ស្ទុះ ហត់ វង្វេង មិននោម — ICU។","Choc, dyspnée, confusion, anurie — réanimation."),
+  A("Discharge when: afebrile, improving, IV course done, on oral eradication.","ចេញពីពេទ្យ៖ គ្មានគ្រុន ធូរ ចាក់គ្រប់ ហើយលេបថ្នាំបន្ត។","Sortie : apyrexie, amélioration, phase IV terminée, relais oral."))),
+ T("c-murine","id","Murine typhus","Fever, headache, rash, city or market (rats)","Typhus fever due to Rickettsia typhi (A75.2)","CBC, liver tests; dengue NS1 / malaria test to exclude",
+  [R("Doxycycline 100 mg","cap","1-0-1","after-meals","7","Child under 8 / pregnancy: azithromycin 500 mg once daily × 3 days (child 10 mg/kg)."),R("Paracetamol 500 mg","tab","1-1-1-1","prn","3","")],
+  [A("Fever usually improves within 48–72 hours.","គ្រុនជាធម្មតាធូរក្នុង ៤៨–៧២ ម៉ោង។","La fièvre baisse en général en 48–72 heures."),A("Control rats and fleas at home.","កម្ចាត់កណ្តុរ និងចៃឆ្កែនៅផ្ទះ។","Lutter contre les rats et les puces à la maison.")],
+  A("Breathlessness, confusion, jaundice, no improvement after 3 days.","ហត់ វង្វេង លឿង មិនធូរក្រោយ ៣ ថ្ងៃ។","Dyspnée, confusion, ictère, pas d'amélioration après 3 jours."),fu("3 days")),
+ T("c-cholera","gi","Cholera / acute watery diarrhoea (severe)","Profuse watery 'rice-water' diarrhoea, vomiting","Cholera, unspecified (A00.9)","Stool rapid test / culture, electrolytes, creatinine",
+  [R("Ringer lactate 1000 ml","bag","1-1-1","iv-drip","1","Severe dehydration: 100 ml/kg (30 ml/kg in 30 min, then 70 ml/kg in 2.5 h); then ORS."),R("ORS (low osmolarity)","sachet","","prn","","After each stool."),
+   R("Doxycycline 100 mg","cap","3-0-0-0","stat","1","300 mg ONCE (adults). Pregnancy / child: azithromycin 1 g once (child 20 mg/kg)."),R("Zinc 20 mg dispersible","tab","1-0-0","","10","Children: 10–14 days (under 6 months: 10 mg).")],
+  [A("Drink ORS after every stool. Continue eating and breastfeeding.","ផឹក ORS ក្រោយបន្ទោរបង់ម្តងៗ។ បន្តញ៉ាំ និងបំបៅដោះ។","SRO après chaque selle. Continuer à manger et allaiter."),A("Boil water, wash hands with soap, use a latrine.","ដាំទឹកឱ្យពុះ លាងដៃនឹងសាប៊ូ ប្រើបង្គន់។","Faire bouillir l'eau, se laver les mains, utiliser des latrines."),REPORT],
+  A("Very weak, sunken eyes, no urine for 6 hours, cannot drink.","ខ្សោយខ្លាំង ភ្នែកស្រុត មិននោម ៦ ម៉ោង មិនអាចផឹក។","Grande faiblesse, yeux creux, pas d'urine depuis 6 h, ne peut pas boire."),fu("1 day")),
+ T("c-fluke","gi","Liver fluke (Opisthorchis)","Right upper abdominal discomfort, eats raw / fermented fish","Opisthorchiasis (B66.0)","Stool microscopy (eggs), liver tests, ultrasound (bile ducts)",
+  [R("Praziquantel 600 mg","tab","1-1-1","after-meals","1","25 mg/kg 3 times in ONE day (or 40 mg/kg single dose). Not under 4 years; postpone in first trimester.")],
+  [RAWFISH,A("Family members who eat the same food should be treated too.","សមាជិកគ្រួសារដែលញ៉ាំដូចគ្នាគួរព្យាបាលដែរ។","Les membres de la famille mangeant la même chose doivent aussi être traités."),A("Dizziness or stomach upset for a few hours after the tablets is common.","វិលមុខ ឬឈឺក្រពះពីរបីម៉ោងក្រោយលេបថ្នាំ គឺធម្មតា។","Vertiges ou troubles digestifs quelques heures après les comprimés : fréquents.")],
+  A("Jaundice, weight loss, fever with right abdominal pain (cholangitis / cancer).","លឿង ស្រកទម្ងន់ គ្រុនជាមួយឈឺពោះខាងស្តាំ។","Ictère, perte de poids, fièvre avec douleur de l'hypochondre droit."),fu("1 month")),
+ T("c-schisto","gi","Schistosomiasis (S. mekongi)","Lives near the Mekong (Kratie, Stung Treng), abdominal pain, diarrhoea, big liver/spleen","Schistosomiasis due to Schistosoma mekongi (B65.8)","Stool microscopy (Kato-Katz), CBC (eosinophils), ultrasound",
+  [R("Praziquantel 600 mg","tab","1-0-1","after-meals","1","60 mg/kg in 2 doses on ONE day (40 mg/kg single dose in mass treatment). From 4 years.")],
+  [A("Avoid bathing or washing in the river where possible.","ជៀសវាងងូតទឹក ឬបោកខោអាវក្នុងទន្លេ បើអាច។","Éviter de se baigner ou laver dans le fleuve si possible."),A("Use a latrine.","ប្រើបង្គន់។","Utiliser des latrines."),A("Repeat treatment in 6–12 months if still exposed.","ព្យាបាលម្តងទៀតក្រោយ ៦–១២ ខែ បើនៅប៉ះពាល់។","Retraiter dans 6–12 mois si exposition persistante.")],
+  A("Vomiting blood, swollen belly, black stools.","ក្អួតឈាម ពោះប៉ោង លាមកខ្មៅ។","Hématémèse, ventre gonflé, méléna."),fu("1 month")),
+ T("c-strongy","gi","Strongyloides / hookworm","Abdominal pain, diarrhoea, itchy rash, anaemia, eosinophilia","Strongyloidiasis (B78.9) / Hookworm (B76.9)","Stool microscopy (repeat ×3), CBC (eosinophils, Hb)",
+  [R("Ivermectin 3 mg","tab","1-0-0","empty","2","200 mcg/kg once daily × 2 days (Strongyloides). Not under 15 kg or in pregnancy. Check for Loa loa only if from Africa."),
+   R("Albendazole 400 mg","tab","1-0-0","","1","Hookworm: 400 mg once (child 1–2 y: 200 mg). Strongyloides if no ivermectin: 400 mg twice daily × 7 days."),
+   R("Ferrous sulfate 200 mg + Folic acid","tab","1-0-0","after-meals","90","If anaemic.")],
+  [BOOTS,A("Wear shoes; use a latrine.","ពាក់ស្បែកជើង; ប្រើបង្គន់។","Portez des chaussures ; utilisez des latrines."),A("Strongyloides must be treated before steroids or chemotherapy (risk of severe infection).","ត្រូវព្យាបាល Strongyloides មុនប្រើស្តេរ៉ូអ៊ីត ឬគីមីព្យាបាល (អាចឆ្លងធ្ងន់)។","Traiter Strongyloides avant corticoïdes ou chimiothérapie (risque d'hyperinfection).")],
+  A("Fever with cough and abdominal pain on steroids, very pale, breathless.","គ្រុនជាមួយក្អក និងឈឺពោះពេលប្រើស្តេរ៉ូអ៊ីត ស្លេកខ្លាំង ហត់។","Fièvre, toux et douleur abdominale sous corticoïdes, pâleur intense, dyspnée."),fu("1 month")),
+ T("c-vivax","id","Malaria P. vivax (radical cure)","Positive RDT / smear for P. vivax","Plasmodium vivax malaria without complication (B51.9)","RDT / smear, G6PD test (quantitative if available), Hb, pregnancy test",
+  [R("Artesunate-pyronaridine (Pyramax) 60/180 mg","tab","1-0-0","after-meals","3","Once daily × 3 days by weight band (national first-line ACT): 20–24 kg 1 tab, 24–45 kg 2, 45–65 kg 3, ≥ 65 kg 4."),
+   R("Primaquine 15 mg","tab","1-0-0","with-food","14","ONLY if G6PD normal: 0.25 mg/kg daily × 14 days (or 0.5 mg/kg × 7 days). G6PD deficient: 0.75 mg/kg ONCE A WEEK × 8 weeks under supervision. NOT in pregnancy, infants < 6 months, or breastfeeding a baby < 6 months.")],
+  [A("Take primaquine with food. Stop and come if urine turns dark (cola colour) or you become very pale or breathless.","លេប Primaquine ជាមួយអាហារ។ ឈប់ហើយមកភ្លាម បើទឹកនោមខ្មៅ (ពណ៌កូកាកូឡា) ស្លេកខ្លាំង ឬហត់។","Prendre la primaquine avec un repas. Arrêter et consulter si urines foncées (couleur cola), pâleur ou essoufflement."),
+   A("Primaquine prevents relapse from the liver — finish all 14 days.","Primaquine ការពារកុំឱ្យកើតឡើងវិញពីថ្លើម — លេបឱ្យគ្រប់ ១៤ ថ្ងៃ។","La primaquine prévient les rechutes hépatiques — terminer les 14 jours."),A("Sleep under an insecticide-treated net, especially in the forest.","គេងក្នុងមុងជ្រលក់ថ្នាំ ជាពិសេសនៅព្រៃ។","Dormir sous moustiquaire imprégnée, surtout en forêt."),REPORT],
+  A("Dark urine, jaundice, confusion, convulsion, vomiting all tablets, breathlessness.","ទឹកនោមខ្មៅ លឿង វង្វេង ប្រកាច់ ក្អួតថ្នាំទាំងអស់ ហត់។","Urines foncées, ictère, confusion, convulsion, vomit tous les comprimés, dyspnée."),fu("3 days")),
+ T("c-h5n1","id","Suspected avian influenza (H5N1)","Fever, cough, breathlessness after contact with sick / dead poultry","Influenza due to identified zoonotic influenza virus (J09)","Isolate. Throat + nasal swab for H5 PCR (call CDC 115 before sampling), chest X-ray, SpO₂",
+  [R("Oseltamivir 75 mg","cap","1-0-1","after-meals","5","Start at once — do not wait for the result. Child: ≤ 15 kg 30 mg, 15–23 kg 45 mg, 23–40 kg 60 mg, > 40 kg 75 mg twice daily."),R("Paracetamol 500 mg","tab","1-1-1-1","prn","5","No aspirin in children.")],
+  [A("Isolate the patient; staff wear N95 / mask, gloves, gown, eye protection.","ដាក់អ្នកជំងឺឱ្យនៅដាច់ដោយឡែក; បុគ្គលិកពាក់ N95 ស្រោមដៃ អាវ និងវ៉ែនតាការពារ។","Isoler le patient ; personnel avec N95, gants, blouse, lunettes."),
+   A("Do not touch, cook or eat sick or dead poultry; wash hands with soap.","កុំប៉ះ ចម្អិន ឬញ៉ាំមាន់ទាឈឺ ឬងាប់; លាងដៃនឹងសាប៊ូ។","Ne pas toucher, cuisiner ni manger de volailles malades ou mortes ; se laver les mains."),
+   A("Family contacts: watch for fever for 10 days; oseltamivir prophylaxis per CDC advice.","អ្នកនៅផ្ទះ៖ តាមដានគ្រុន ១០ ថ្ងៃ; ថ្នាំការពារតាមការណែនាំ CDC។","Contacts familiaux : surveiller la fièvre 10 jours ; prophylaxie selon le CDC."),REPORT],
+  A("Breathlessness, SpO₂ below 94%, confusion — refer to the referral hospital ICU now.","ហត់ SpO₂ ក្រោម ៩៤% វង្វេង — បញ្ជូនទៅ ICU មន្ទីរពេទ្យបង្អែកភ្លាម។","Dyspnée, SpO₂ < 94 %, confusion — transférer en réanimation immédiatement."),fu("1 day")),
+ T("c-pep","id","HIV post-exposure prophylaxis (PEP)","Needle-stick, sexual exposure or assault within 72 hours","Contact with and (suspected) exposure to HIV (Z20.6)","HIV rapid test (baseline), HBsAg, creatinine, pregnancy test; source HIV status if known",
+  [R("Tenofovir 300 mg + Lamivudine 300 mg + Dolutegravir 50 mg (TLD)","tab","1-0-0","","28","One tablet daily × 28 days. Start as soon as possible, best within 2 hours, not after 72 hours.")],
+  [A("Take every day for 28 days — do not stop early.","លេបរាល់ថ្ងៃ ២៨ ថ្ងៃ — កុំឈប់មុន។","Prendre chaque jour pendant 28 jours — ne pas arrêter."),A("Use condoms and do not donate blood until the 3-month test is negative.","ប្រើស្រោមអនាម័យ និងកុំបរិច្ចាគឈាម រហូតតេស្ត ៣ ខែអវិជ្ជមាន។","Préservatif et pas de don de sang jusqu'au test négatif à 3 mois."),
+   A("Needle-stick: wash with soap and water, do not squeeze or use bleach. Hepatitis B vaccine if not immune.","ចាក់ម្ជុល៖ លាងនឹងសាប៊ូ និងទឹក កុំច្របាច់ ឬប្រើ bleach។ ចាក់វ៉ាក់សាំង HepB បើមិនទាន់មានភាពស៊ាំ។","Piqûre : laver à l'eau et au savon, ne pas presser, pas d'eau de Javel. Vaccin hépatite B si non immunisé."),
+   A("Sexual assault: also emergency contraception and STI treatment; refer for support.","ករណីរំលោភ៖ ថ្នាំពន្យារកំណើតបន្ទាន់ និងព្យាបាលកាមរោគផង; បញ្ជូនទៅជំនួយ។","Agression sexuelle : contraception d'urgence et traitement IST ; orienter vers un soutien.")],
+  A("Rash, yellow eyes, severe vomiting, fever with rash in the first weeks.","កន្ទួល ភ្នែកលឿង ក្អួតខ្លាំង គ្រុនជាមួយកន្ទួល ក្នុងសប្តាហ៍ដំបូង។","Éruption, ictère, vomissements importants, fièvre avec éruption."),A("Follow-up: HIV test at 4–6 weeks and 3 months","ធ្វើតេស្ត HIV នៅ ៤–៦ សប្តាហ៍ និង ៣ ខែ","Suivi : test VIH à 4–6 semaines et 3 mois")),
+ IPD(T("c-je","neuro","Suspected Japanese encephalitis (IPD, refer)","Fever, headache, confusion, seizures, child in rice-farming area","Japanese encephalitis (A83.0)","CSF + serum JE IgM (send to national lab), CBC, glucose, malaria test, lumbar puncture if no contraindication",
+  [R("Ceftriaxone 1 g","vial","2-0-0-0","q24h","3","Until bacterial meningitis is excluded: 2 g IV daily (child 100 mg/kg/day)."),R("Paracetamol 500 mg","tab","1-1-1-1","prn","3","Child 15 mg/kg."),R("Diazepam 10 mg","amp","","iv-slow","1","Seizure: 0.2–0.3 mg/kg IV slowly or 0.5 mg/kg rectal.")],
+  [A("No specific antiviral: airway, oxygen, fluids, glucose, control seizures and fever.","គ្មានថ្នាំកម្ចាត់វីរុស៖ ផ្លូវដង្ហើម អុកស៊ីសែន សេរ៉ូ ស្ករ គ្រប់គ្រងការប្រកាច់ និងគ្រុន។","Pas d'antiviral : voies aériennes, oxygène, hydratation, glycémie, contrôle des convulsions et de la fièvre."),IO_CHART,
+   A("Prevention: JE vaccine at 9 months; mosquito nets.","ការពារ៖ វ៉ាក់សាំង JE នៅ ៩ ខែ; មុង។","Prévention : vaccin JE à 9 mois ; moustiquaires."),REPORT],
+  A("Coma, repeated seizures, breathing problems — refer to paediatric / adult ICU.","សន្លប់ ប្រកាច់ច្រើនដង ពិបាកដកដង្ហើម — បញ្ជូនទៅ ICU។","Coma, convulsions répétées, troubles respiratoires — transfert en réanimation."),
+  A("Discharge when: conscious, no seizures 48 h, eating; rehabilitation plan.","ចេញពីពេទ្យ៖ ដឹងខ្លួន មិនប្រកាច់ ៤៨ ម៉ោង ញ៉ាំបាន; ផែនការស្តារ។","Sortie : conscient, sans convulsion 48 h, s'alimente ; plan de rééducation."))),
+ IPD(T("c-tetanus","emerg","Tetanus (IPD, refer)","Jaw stiffness, spasms, wound in the last weeks, not vaccinated","Other tetanus (A35) · Neonatal tetanus (A33)","Clinical diagnosis; wound inspection; glucose",
+  [R("Tetanus immunoglobulin 500 IU IM","amp","1-0-0-0","stat","1","Single dose (WHO); some protocols 3000–6000 IU. Td vaccine at another site."),
+   R("Metronidazole 500 mg IV","bag","1-1-1","q8h","7","7–10 days (child 7.5 mg/kg every 8 h)."),R("Diazepam 10 mg","amp","","iv-slow","1","Spasms: 0.1–0.2 mg/kg IV every 1–4 h as needed; watch breathing.")],
+  [A("Quiet, dark room; minimal handling. Clean and debride the wound.","បន្ទប់ស្ងាត់ ងងឹត; ប៉ះពាល់តិចបំផុត។ សម្អាត និងកាត់សាច់ងាប់ចេញពីរបួស។","Chambre calme et sombre ; manipulations minimales. Parer la plaie."),A("NG tube for feeding; magnesium sulfate if severe spasms (ICU).","ដាក់បំពង់ច្រមុះសម្រាប់អាហារ; MgSO₄ បើរមួលខ្លាំង (ICU)។","Sonde nasogastrique ; sulfate de magnésium si spasmes sévères (réanimation)."),
+   A("Tetanus does not give immunity — complete 3 doses of Td.","តេតាណូសមិនផ្តល់ភាពស៊ាំ — ចាក់ Td ឱ្យគ្រប់ ៣ ដូស។","Le tétanos n'immunise pas — compléter 3 doses de Td."),REPORT],
+  A("Spasms affecting breathing, SpO₂ falling — airway, refer to ICU now.","រមួលប៉ះពាល់ការដកដង្ហើម SpO₂ ចុះ — ផ្លូវដង្ហើម បញ្ជូនទៅ ICU ភ្លាម។","Spasmes gênant la respiration, SpO₂ en baisse — voies aériennes, réanimation."),
+  A("Discharge when: no spasms, eating, vaccination started.","ចេញពីពេទ្យ៖ គ្មានការរមួល ញ៉ាំបាន បានចាប់ផ្តើមចាក់វ៉ាក់សាំង។","Sortie : sans spasmes, s'alimente, vaccination débutée."))),
+ IPD(T("c-beriberi","peds","Infantile beriberi (thiamine deficiency)","Breastfed infant 1–6 months: hoarse cry, vomiting, fast breathing, puffy, poor feeding","Thiamine deficiency (beriberi) (E51.1)","Clinical; response to thiamine within hours confirms; glucose, chest X-ray",
+  [R("Thiamine (Vitamin B1) 100 mg/ml","amp","1-0-0-0","stat","1","Infant: 50–100 mg IV slowly or IM at once (heart failure / shock). Then 10 mg daily by mouth × 6 weeks."),
+   R("Thiamine (Vitamin B1) 100 mg","tab","1-0-0","","42","MOTHER: 100 mg daily × 6 weeks, then a B1-rich diet. Continue breastfeeding.")],
+  [A("Improvement within hours after thiamine confirms the diagnosis.","ធូរក្នុងរយៈពេលពីរបីម៉ោងក្រោយចាក់ Thiamine បញ្ជាក់រោគវិនិច្ឆ័យ។","L'amélioration en quelques heures après la thiamine confirme le diagnostic."),
+   A("Mother: eat meat, fish, eggs, beans, unpolished rice; avoid only polished white rice after delivery; limit tea / betel.","ម្តាយ៖ ញ៉ាំសាច់ ត្រី ពង សណ្តែក អង្ករមិនស; កុំញ៉ាំតែបាយសសុទ្ធក្រោយសម្រាល; កាត់បន្ថយតែ / ស្លាម្លូ។","Mère : viande, poisson, œufs, légumineuses, riz non poli ; éviter le seul riz blanc après l'accouchement ; limiter thé et bétel."),
+   A("Do not stop breastfeeding.","កុំឈប់បំបៅដោះ។","Ne pas arrêter l'allaitement.")],
+  A("Fast breathing, blue colour, very sleepy, not feeding — emergency.","ដកដង្ហើមញាប់ ស្វាយ ងងុយខ្លាំង មិនបៅ — បន្ទាន់។","Respiration rapide, cyanose, somnolence, ne tète pas — urgence."),
+  A("Discharge when: feeding well, no breathing problem, mother on thiamine.","ចេញពីពេទ្យ៖ បៅបានល្អ គ្មានបញ្ហាដកដង្ហើម ម្តាយកំពុងលេប Thiamine។","Sortie : tète bien, pas de détresse respiratoire, mère sous thiamine."))),
+ IPD(T("c-methanol","emerg","Methanol poisoning (rice wine, IPD)","Drank home-made / bulk rice wine: vomiting, blurred vision, breathlessness, confusion — often several people","Toxic effect of methanol (T51.1)","Blood gas / bicarbonate (metabolic acidosis), glucose, creatinine, electrolytes, osmolar gap; methanol level if available",
+  [R("Ethanol 40% (whisky / vodka)","ml","","stat","1","If no fomepizole: loading 2 ml/kg by mouth / NG, then 0.2 ml/kg/h (0.5 ml/kg/h in heavy drinkers); target blood ethanol 1 g/l. Fomepizole if available: 15 mg/kg IV."),
+   R("Sodium bicarbonate 8.4%","amp","","iv-slow","1","1–2 mmol/kg IV if pH < 7.3."),R("Folic acid 5 mg","tab","1-1-1-1","","2","50 mg IV every 6 h if available (folinic acid better).")],
+  [A("Refer urgently for haemodialysis (acidosis, vision problems, kidney failure).","បញ្ជូនបន្ទាន់ដើម្បីលាងឈាម (acidosis បញ្ហាភ្នែក តម្រងនោមខ្សោយ)។","Transférer en urgence pour hémodialyse (acidose, troubles visuels, insuffisance rénale)."),
+   A("Find everyone who drank from the same source.","ស្វែងរកអ្នកដែលផឹកពីប្រភពដូចគ្នាទាំងអស់។","Rechercher toutes les personnes ayant bu la même boisson."),IO_CHART,REPORT],
+  A("Coma, seizures, blindness, severe acidosis — ICU / dialysis now.","សន្លប់ ប្រកាច់ ពិការភ្នែក acidosis ធ្ងន់ — ICU / លាងឈាមភ្លាម។","Coma, convulsions, cécité, acidose sévère — réanimation / dialyse immédiatement."),
+  A("Discharge when: acidosis corrected, eyes checked, alcohol counselling.","ចេញពីពេទ្យ៖ acidosis ត្រឡប់ធម្មតា ពិនិត្យភ្នែក ប្រឹក្សាស្រា។","Sortie : acidose corrigée, bilan ophtalmologique, conseil sur l'alcool."))),
+ T("c-ala","gi","Amoebic liver abscess","Fever, right upper abdominal pain, tender big liver","Amoebic liver abscess (A06.4)","Ultrasound liver, CBC, liver tests, amoebic serology; chest X-ray",
+  [R("Metronidazole 500 mg","tab","1-1-1","after-meals","10","750 mg 3 times daily × 10 days (child 35–50 mg/kg/day in 3 doses)."),R("Paracetamol 500 mg","tab","1-1-1-1","prn","5",""),
+   R("Paromomycin 250 mg","cap","2-2-2","","7","After metronidazole, to clear the gut (25–35 mg/kg/day in 3 doses), if available.")],
+  [NO_ALC,HYG,A("Large abscess (> 5 cm, left lobe) or no improvement in 72 h: ultrasound-guided aspiration.","អាប់សេធំ (> ៥ cm ឬថ្លើមឆ្វេង) ឬមិនធូរក្នុង ៧២ ម៉ោង៖ បូមខ្ទុះតាមអេកូ។","Abcès volumineux (> 5 cm, lobe gauche) ou pas d'amélioration en 72 h : ponction échoguidée.")],
+  A("Severe pain, breathlessness, shock — rupture risk, refer.","ឈឺខ្លាំង ហត់ ស្ទុះ — អាចផ្ទុះ បញ្ជូន។","Douleur intense, dyspnée, choc — risque de rupture, transférer."),fu("3 days"))
+]);
+DIS("c-melioid",[R("Co-trimoxazole 960 mg (800/160)","tab","2-0-2","after-meals","84","Eradication 12 weeks: > 60 kg 2 tabs twice daily; 40–60 kg 1½ tabs twice daily; child 8/40 mg/kg twice daily (max 320/1600 mg). Check CBC and potassium."),R("Folic acid 5 mg","tab","1-0-0","","84","")],
+ [A("Take the tablets for the full 12 weeks — relapse is common if stopped early.","លេបថ្នាំឱ្យគ្រប់ ១២ សប្តាហ៍ — កើតឡើងវិញញឹកញាប់បើឈប់មុន។","Prendre les comprimés 12 semaines — rechute fréquente si arrêt précoce."),A("Keep diabetes controlled.","គ្រប់គ្រងទឹកនោមផ្អែមឱ្យល្អ។","Bien contrôler le diabète."),BOOTS],
+ A("Fever again, cough, new abscess, rash or yellow eyes on the tablets.","គ្រុនម្តងទៀត ក្អក អាប់សេថ្មី កន្ទួល ឬភ្នែកលឿងពេលលេបថ្នាំ។","Fièvre récidivante, toux, nouvel abcès, éruption ou ictère sous traitement."),A("Follow-up: every 2–4 weeks with CBC","មកពិនិត្យរៀងរាល់ ២–៤ សប្តាហ៍ ជាមួយ CBC","Suivi : toutes les 2–4 semaines avec NFS"));
+Object.assign(DXI,{
+ "c-melioid":["មេលីអូអ៊ីដូស៊ីស (Melioidosis)","Mélioïdose","melioidosis burkholderia abscess parotid មេលីអូអ៊ីដូស៊ីស mélioïdose"],
+ "c-murine":["គ្រុនរីកេតស៊ី (Murine typhus)","Typhus murin","murine typhus rickettsia គ្រុនរីកេតស៊ី typhus murin"],
+ "c-cholera":["អាសន្នរោគ / រាករូសទឹក","Choléra","cholera watery diarrhoea អាសន្នរោគ រាកទឹក choléra"],
+ "c-fluke":["ព្រូនថ្លើម (Opisthorchis)","Opisthorchiose (douve du foie)","liver fluke opisthorchis prahok ព្រូនថ្លើម ប្រហុក douve"],
+ "c-schisto":["ជំងឺស្ក៊ីស្តូ (S. mekongi)","Schistosomose (S. mekongi)","schistosomiasis mekongi kratie stung treng ស្ក៊ីស្តូ schistosomose"],
+ "c-strongy":["ព្រូនទំពក់ / Strongyloides","Strongyloïdose / ankylostomose","strongyloides hookworm ivermectin ព្រូនទំពក់ anguillulose ankylostome"],
+ "c-vivax":["គ្រុនចាញ់ P. vivax","Paludisme à P. vivax","malaria vivax primaquine g6pd គ្រុនចាញ់ paludisme vivax"],
+ "c-h5n1":["សង្ស័យផ្តាសាយបក្សី (H5N1)","Suspicion de grippe aviaire (H5N1)","avian influenza bird flu h5n1 ផ្តាសាយបក្សី មាន់ងាប់ grippe aviaire"],
+ "c-pep":["PEP ការពារ HIV ក្រោយប៉ះពាល់","Prophylaxie post-exposition VIH","hiv pep needle stick rape ម្ជុលចាក់ ការពារ HIV PEP"],
+ "c-je":["សង្ស័យរលាកខួរក្បាលជប៉ុន (JE)","Suspicion d'encéphalite japonaise","japanese encephalitis je រលាកខួរក្បាល encéphalite japonaise"],
+ "c-tetanus":["ជំងឺតេតាណូស","Tétanos","tetanus trismus spasm តេតាណូស រឹងថ្គាម tétanos"],
+ "c-beriberi":["ខ្វះវីតាមីន B1 ទារក (Beriberi)","Béribéri infantile","infantile beriberi thiamine b1 ខ្វះវីតាមីន B1 béribéri"],
+ "c-methanol":["ពុលស្រា Methanol","Intoxication au méthanol","methanol poisoning rice wine ពុលស្រា méthanol"],
+ "c-ala":["អាប់សេថ្លើមអាមីប","Abcès amibien du foie","amoebic liver abscess អាប់សេថ្លើម abcès amibien"]
+});
+
+/* ---------- v54: suspected fetal growth restriction ---------- */
+DEFAULTS=DEFAULTS.concat([
+ T("q-fgr","obs","Suspected fetal growth restriction (small baby)","Fundal height small for dates / ultrasound weight < 10th percentile","Maternal care for poor fetal growth (O36.5)",
+  "Confirm dates (early scan). Ultrasound: EFW + AC percentile, amniotic fluid (DVP / AFI), umbilical artery Doppler (± MCA, CPR), anomaly check. BP, urine protein, Hb, syphilis / HIV / malaria test. CTG if available",
+  [IFA,CAL],
+  [A("Count baby's movements every day: at least 10 in 2 hours. Fewer movements — come the same day.","រាប់ចលនាកូនរាល់ថ្ងៃ៖ យ៉ាងតិច ១០ ដងក្នុង ២ ម៉ោង។ កម្រើកតិច — មកថ្ងៃនោះតែម្តង។","Comptez les mouvements chaque jour : au moins 10 en 2 heures. Moins de mouvements — consultez le jour même."),
+   A("Ultrasound for growth every 2 weeks; amniotic fluid and Doppler every 1–2 weeks (more often if abnormal).","អេកូការលូតលាស់រៀងរាល់ ២ សប្តាហ៍; ទឹកភ្លោះ និង Doppler រៀងរាល់ ១–២ សប្តាហ៍ (ញឹកជាងនេះបើមិនធម្មតា)។","Échographie de croissance toutes les 2 semaines ; liquide et Doppler toutes les 1–2 semaines (plus souvent si anormal)."),
+   A("Eat enough (extra meal, protein), take iron and calcium, rest, sleep on your side. Stop smoking and alcohol.","ញ៉ាំឱ្យគ្រប់ (បន្ថែមអាហារ ប្រូតេអ៊ីន) លេបជាតិដែក និង Calcium សម្រាក គេងផ្អៀង។ ឈប់ជក់បារី និងស្រា។","Mangez suffisamment (repas supplémentaire, protéines), fer et calcium, repos, dormir sur le côté. Arrêter tabac et alcool."),
+   A("Check BP at every visit (pre-eclampsia is a common cause).","វាស់សម្ពាធរាល់ពេលមក (ក្រឡាភ្លើងជាមូលហេតុញឹកញាប់)។","Tension à chaque visite (la pré-éclampsie est une cause fréquente)."),
+   A("If birth before 34 weeks is likely: steroids for the baby's lungs (dexamethasone 6 mg IM every 12 h × 4) and deliver in a hospital with a neonatal unit.","បើអាចសម្រាលមុន ៣៤ សប្តាហ៍៖ ចាក់ស្តេរ៉ូអ៊ីតសម្រាប់សួតកូន (dexamethasone 6 mg IM រៀងរាល់ ១២ ម៉ោង × ៤) និងសម្រាលនៅមន្ទីរពេទ្យមានផ្នែកទារក។","Si naissance probable avant 34 SA : corticoïdes (dexaméthasone 6 mg IM /12 h × 4) et accouchement dans une maternité avec néonatologie.")],
+  A("Baby moving less, bleeding, belly pain, headache or blurred vision, high BP, fluid leaking.","កូនកម្រើកតិច ធ្លាក់ឈាម ឈឺពោះ ឈឺក្បាល ឬភ្នែកព្រិល សម្ពាធឡើង ធ្លាយទឹកភ្លោះ។","Bébé qui bouge moins, saignement, douleur abdominale, céphalée ou vision floue, HTA, perte de liquide."),
+  A("Follow-up: in 1–2 weeks with ultrasound and Doppler","មកពិនិត្យវិញក្រោយ ១–២ សប្តាហ៍ ជាមួយអេកូ និង Doppler","Suivi : dans 1–2 semaines avec échographie et Doppler"))
+]);
+Object.assign(DXI,{"q-fgr":["សង្ស័យកូនលូតលាស់យឺត (IUGR / FGR)","Suspicion de retard de croissance intra-utérin","fetal growth restriction iugr fgr small baby កូនតូច លូតលាស់យឺត RCIU hypotrophie"]});
+
 var PROC_DROP=/incision and drainage|^wound cleaning|^wash wound|^crepe bandage/i;
 function applyProc(t){
   var pr=PROCS[t.id]; if(!pr) return false;
@@ -5020,7 +5294,7 @@ function newPatient(){
   if(!newPtArmed){newPtArmed=true;b.textContent="ចុចម្តងទៀតដើម្បីលុប";b.classList.add("danger");setTimeout(function(){newPtArmed=false;b.textContent="អ្នកជំងឺថ្មី";b.classList.remove("danger");},3500);return;}
   newPtArmed=false; b.textContent="អ្នកជំងឺថ្មី"; b.classList.remove("danger");
   PT_TEXT.forEach(function(id){$(id).textContent="";}); PT_VITAL.forEach(function(id){$(id).value="";});
-  ptModeManual=""; mhClear(); dxBlank(); soapLog=[]; soapLogSave(); $("pPay").value=""; if(typeof PG==="object"){ PG.lmp=PG.edd=PG.gaw=PG.gad=PG.gaOn=""; PG.cyc=28; PG.mode="lmp"; } soapResetEdits(); if(typeof evolClear==="function") evolClear(); peApplyDx(); if(typeof evNewPatient==="function") evNewPatient(); showPe(true); SOAP_IDS.forEach(function(id){$(id).innerText="";}); showSoap(true); $("fHo").textContent=""; $("pDate").textContent=todayStr(); checkVitals(); savePatient(); renderSymChips(); $("pName").focus();
+  ptModeManual=""; mhClear(); dxBlank(); soapLog=[]; soapLogSave(); $("pPay").value=""; if(typeof VX==="object"){ VX.dob=""; VX.bite=""; VX.td="0"; } if(typeof PG==="object"){ PG.lmp=PG.edd=PG.gaw=PG.gad=PG.gaOn=""; PG.cyc=28; PG.mode="lmp"; } soapResetEdits(); if(typeof evolClear==="function") evolClear(); peApplyDx(); if(typeof evNewPatient==="function") evNewPatient(); showPe(true); SOAP_IDS.forEach(function(id){$(id).innerText="";}); showSoap(true); $("fHo").textContent=""; $("pDate").textContent=todayStr(); checkVitals(); savePatient(); renderSymChips(); $("pName").focus();
   say("បានសម្អាតព័ត៌មានអ្នកជំងឺ");
 }
 
@@ -5802,7 +6076,7 @@ function calcBuild(){
   var ov=mk("div","calcov noprint"); ov.id="calcOv"; ov.hidden=true;
   ov.innerHTML='<div class="calcbox" role="dialog" aria-label="Dose calculator"><div class="calch"><b id="cTitle"></b><button type="button" class="calcx" id="cClose" aria-label="Close">✕</button></div>'+
    '<div class="calcbar"><label class="cwt"><span id="cWtL"></span> <input id="cWt" type="text" inputmode="decimal" autocomplete="off" placeholder="kg"> kg</label><span id="cAge" class="cage"></span>'+
-   '<span class="ctabs" id="cTabs"><button type="button" data-t="ped"></button><button type="button" data-t="icu"></button><button type="button" data-t="fluid"></button><button type="button" data-t="preg"></button></span></div>'+
+   '<span class="ctabs" id="cTabs"><button type="button" data-t="ped"></button><button type="button" data-t="icu"></button><button type="button" data-t="fluid"></button><button type="button" data-t="preg"></button><button type="button" data-t="vac"></button><button type="button" data-t="sti"></button></span></div>'+
    '<div class="calcbody" id="cBody"></div><div class="calcfoot" id="cFoot"></div></div>';
   document.body.appendChild(ov);
   ov.addEventListener("mousedown",function(e){ if(e.target===ov) ov.hidden=true; });
@@ -5816,11 +6090,11 @@ function calcRender(keepFocus){
   $("cTitle").textContent=cL(["🧮 Dose calculator","🧮 Calcul des doses","🧮 គណនាដូស"]);
   $("cWtL").textContent=cL(["Weight","Poids","ទម្ងន់"]);
   var a=ptAgeYears(); $("cAge").textContent=a!==null?cL(["Age","Âge","អាយុ"])+": "+(a<1?cR(a*12,0)+cL([" mo"," mois"," ខែ"]):cR(a,1)+cL([" y"," ans"," ឆ្នាំ"])):"";
-  var lab={ped:["👶 Child","👶 Enfant","👶 កុមារ"],icu:["🏥 ICU infusion","🏥 Réa · IVSE","🏥 ICU · ម៉ាស៊ីន"],fluid:["💧 IV fluids","💧 Solutés","💧 សេរ៉ូ"],preg:["🤰 Pregnancy dates","🤰 Grossesse (terme)","🤰 ថ្ងៃគ្រប់ខែ"]};
+  var lab={ped:["👶 Child","👶 Enfant","👶 កុមារ"],icu:["🏥 ICU infusion","🏥 Réa · IVSE","🏥 ICU · ម៉ាស៊ីន"],fluid:["💧 IV fluids","💧 Solutés","💧 សេរ៉ូ"],preg:["🤰 Pregnancy dates","🤰 Grossesse (terme)","🤰 ថ្ងៃគ្រប់ខែ"],vac:["💉 Vaccines","💉 Vaccins","💉 វ៉ាក់សាំង"],sti:["🦠 STI · WHO","🦠 IST · OMS","🦠 កាមរោគ · WHO"]};
   [].forEach.call(document.querySelectorAll("#cTabs button"),function(b){ b.textContent=cL(lab[b.dataset.t]); b.setAttribute("aria-pressed",String(b.dataset.t===CSTATE.tab)); });
   $("cFoot").textContent=cL(["⚠ Check every dose against the patient, the product label and national guidelines before giving.","⚠ Vérifiez chaque dose (patient, notice, recommandations nationales) avant administration.","⚠ សូមពិនិត្យដូសនីមួយៗជាមួយអ្នកជំងឺ ស្លាកថ្នាំ និងគោលការណ៍ជាតិ មុនពេលឱ្យ។"]);
-  if(CSTATE.tab==="ped") calcPed(); else if(CSTATE.tab==="icu") calcIcu(); else if(CSTATE.tab==="preg") calcPreg(); else calcFluid();
-  var wl=document.querySelector("#calcOv .cwt"); if(wl) wl.style.visibility=CSTATE.tab==="preg"?"hidden":"";
+  if(CSTATE.tab==="ped") calcPed(); else if(CSTATE.tab==="icu") calcIcu(); else if(CSTATE.tab==="preg") calcPreg(); else if(CSTATE.tab==="vac") calcVac(); else if(CSTATE.tab==="sti") calcSti(); else calcFluid();
+  var wl=document.querySelector("#calcOv .cwt"); if(wl) wl.style.visibility=CSTATE.tab==="preg"||(CSTATE.tab==="vac"&&VX.pop!=="bite")?"hidden":"";
 }
 function cNeedWt(box){ var e=mk("div","cempty"); e.textContent=cL(["Enter the weight (kg) to calculate.","Saisir le poids (kg) pour calculer.","សូមដាក់ទម្ងន់ (kg) ដើម្បីគណនា។"]); box.appendChild(e); }
 function calcPed(){
@@ -6273,7 +6547,7 @@ function repPrint(){
 
 
 /* ---------- v48: pregnancy dates — from LMP, EDD, or gestational age (by date or ultrasound) ---------- */
-var PG={mode:"lmp",lmp:"",edd:"",gaw:"",gad:"",gaOn:"",cyc:28,ref:""};
+var PG={sec:"anc",mode:"lmp",lmp:"",edd:"",gaw:"",gad:"",gaOn:"",cyc:28,ref:""};
 function pgD(iso){ var m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(iso||""); if(!m) return null; var d=new Date(+m[1],+m[2]-1,+m[3]); d.setHours(12,0,0,0); return d; }
 function pgIso(d){ return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
 function pgDmy(d){ return String(d.getDate()).padStart(2,"0")+"/"+String(d.getMonth()+1).padStart(2,"0")+"/"+d.getFullYear(); }
@@ -6330,6 +6604,13 @@ function pgOut(){
   ].forEach(function(x){ var d=mk("div","reptile"), s=mk("span"); s.textContent=cL(x[0]); var bb=mk("b"); bb.textContent=x[1]; var sm=mk("small"); sm.textContent=x[2]; d.appendChild(s); d.appendChild(bb); d.appendChild(sm); big.appendChild(d); });
   out.appendChild(big);
   if(warn){ var w=mk("div","cempty"); w.style.color="#b42318"; w.textContent="⚠ "+warn; out.appendChild(w); }
+  /* v55: sub-menu */
+  var root=out, nav=mk("div","pgnav noprint"), secW=mk("div"), SECS={};
+  var PGS=function(k){ if(!SECS[k]){ SECS[k]=mk("div","pgsec"); SECS[k].dataset.sec=k; secW.appendChild(SECS[k]); } return SECS[k]; };
+  var NAV=[["anc",["🗓 ANC visits","🗓 CPN","🗓 ពិនិត្យផ្ទៃពោះ"]],["us",["🩻 Ultrasound","🩻 Échographies","🩻 អេកូ"]],["baby",["💓 Heartbeat · sex","💓 Cœur · sexe","💓 ចង្វាក់បេះដូង · ភេទ"]],["weight",["⚖ Baby weight","⚖ Poids fœtal","⚖ ទម្ងន់កូន"]],["fgr",["📉 Small baby (FGR)","📉 RCIU","📉 កូនលូតលាស់យឺត"]],["all",["☰ All","☰ Tout","☰ ទាំងអស់"]]];
+  var navPaint=function(){ [].forEach.call(nav.children,function(b){ b.setAttribute("aria-pressed",String(b.dataset.k===PG.sec)); }); Object.keys(SECS).forEach(function(k){ SECS[k].hidden=PG.sec!=="all"&&k!==PG.sec; }); };
+  NAV.forEach(function(n){ var b=mk("button"); b.type="button"; b.dataset.k=n[0]; b.textContent=cL(n[1]); b.onclick=function(){ PG.sec=n[0]; navPaint(); var bx=$("cBody"); if(bx) bx.scrollTop=Math.min(bx.scrollTop,nav.offsetTop-8); }; nav.appendChild(b); });
+  root.appendChild(nav); root.appendChild(secW); out=PGS("anc");
   var t=mk("table","ctable"), hr=mk("tr"); [["Week","SA","សប្តាហ៍"],["Date","Date","កាលបរិច្ឆេទ"],["Visit / test (WHO ANC)","Consultation / examen (OMS)","ការពិនិត្យ / តេស្ត (WHO)"]].forEach(function(h){ var th=mk("th"); th.textContent=cL(h); hr.appendChild(th); });
   var th0=mk("thead"); th0.appendChild(hr); t.appendChild(th0); var tb=mk("tbody"); t.appendChild(tb);
   [[[8,12],["ANC 1: confirm pregnancy, BP, Hb, HIV/syphilis/HBsAg, blood group, urine; iron-folic acid","CPN 1 : confirmer, TA, Hb, VIH/syphilis/AgHBs, groupe, urines ; fer-acide folique","ពិនិត្យលើកទី ១៖ បញ្ជាក់ផ្ទៃពោះ សម្ពាធ Hb HIV/ស្វាយ/HBsAg ក្រុមឈាម ទឹកនោម; ជាតិដែក-អាស៊ីតហ្វូលិក"]],
@@ -6345,6 +6626,7 @@ function pgOut(){
     var c1=mk("td"), c2=mk("td"), c3=mk("td"); c1.textContent=r[0][0]===r[0][1]?r[0][0]:r[0][0]+"–"+r[0][1]; c2.textContent=r[0][0]===r[0][1]?pgDmy(a):pgDmy(a)+" – "+pgDmy(z); c3.textContent=cL(r[1]);
     tr.appendChild(c1); tr.appendChild(c2); tr.appendChild(c3); tb.appendChild(tr); });
   out.appendChild(t);
+  out=PGS("us");
   /* ultrasound schedule and what to check */
   var US=[[[11,14],["Month 3 · first-trimester scan","3e mois · écho du 1er trimestre","ខែទី ៣ · អេកូត្រីមាសទី ១"],
      ["Intrauterine pregnancy, heartbeat (viability), number of babies and chorionicity, CRL → confirm EDD, nuchal translucency, major early anomalies, uterus and ovaries.","Grossesse intra-utérine, activité cardiaque, nombre d'embryons et chorionicité, LCC → datation, clarté nucale, malformations majeures précoces, utérus et ovaires.","គភ៌ក្នុងស្បូន ចង្វាក់បេះដូង ចំនួនទារក និងសុក (chorionicity) វាស់ CRL → បញ្ជាក់ EDD, NT ក, ពិការធំៗដំបូង, ស្បូន និងអូវែរ។"]],
@@ -6369,6 +6651,7 @@ function pgOut(){
     [c1,c2,c3,c4].forEach(function(c){tr.appendChild(c);}); utb.appendChild(tr); });
   out.appendChild(ut);
   var ex=mk("div","cnote"); ex.textContent=cL(["Extra scan any time if: bleeding or pain in early pregnancy (rule out ectopic), reduced movements, high BP, diabetes, twins, fundal height not matching dates (± 3 cm), previous caesarean (placenta over the scar), fall or trauma.","Écho supplémentaire si : saignement ou douleur au 1er trimestre (GEU), diminution des mouvements, HTA, diabète, jumeaux, hauteur utérine discordante (± 3 cm), utérus cicatriciel (placenta sur cicatrice), traumatisme.","អេកូបន្ថែមពេលណាក៏បាន បើ៖ ធ្លាក់ឈាម ឬឈឺពោះខែដំបូង (គភ៌ក្រៅស្បូន) ទារកកម្រើកតិច សម្ពាធឡើង ទឹកនោមផ្អែម កូនភ្លោះ កម្ពស់ស្បូនមិនត្រូវនឹងអាយុគភ៌ (± ៣ cm) ធ្លាប់វះកាត់ (សុកលើស្នាមវះ) ដួល ឬរបួស។"]); out.appendChild(ex);
+  out=PGS("baby");
   /* fetal reference: heartbeat, weight by week, sex */
   var HW={10:35,11:45,12:58,13:73,14:93,15:117,16:146,17:181,18:223,19:273,20:331,21:399,22:478,23:568,24:670,25:785,26:913,27:1055,28:1210,29:1379,30:1559,31:1751,32:1953,33:2162,34:2377,35:2595,36:2813,37:3028,38:3236,39:3435,40:3619,41:3770,42:3900};
   var gw=Math.floor(ga/7), gfrac=(ga%7)/7;
@@ -6380,6 +6663,7 @@ function pgOut(){
    [["Birth weight","Poids de naissance","ទម្ងន់កើត"],["Normal 2.5–4.0 kg · < 2.5 kg low birth weight · > 4.0 kg large (check diabetes). Ultrasound weight can be off by ± 10–15%.","Normal 2,5–4,0 kg · < 2,5 kg faible poids · > 4,0 kg macrosomie (diabète ?). Le poids échographique varie de ± 10–15 %.","ធម្មតា ២.៥–៤.០ kg · < ២.៥ kg ទម្ងន់ទាប · > ៤.០ kg ធំ (ពិនិត្យទឹកនោមផ្អែម)។ ទម្ងន់ពីអេកូអាចខុស ± ១០–១៥%។"]]
   ].forEach(function(r){ var tr=mk("tr"), a=mk("td"), b=mk("td"); var bb=mk("b"); bb.textContent=cL(r[0]); a.appendChild(bb); a.style.width="130px"; b.textContent=cL(r[1]); b.className="pgwhat"; tr.appendChild(a); tr.appendChild(b); hb.appendChild(tr); });
   out.appendChild(hb);
+  out=PGS("weight");
   /* weight check */
   var ck=mk("div","ccustom"), wi=mk("input"), wo=mk("b"); wi.placeholder="g"; wi.inputMode="numeric"; wi.style.width="80px";
   ck.appendChild(document.createTextNode(cL(["Ultrasound weight (EFW): ","Poids échographique (EPF) : ","ទម្ងន់ពីអេកូ (EFW)៖ "]))); ck.appendChild(wi); ck.appendChild(document.createTextNode(" g → ")); ck.appendChild(wo);
@@ -6399,6 +6683,20 @@ function pgOut(){
       [a,b,c].forEach(function(x){ if(on) x.className+=" pgcur"; tr.appendChild(x); }); }); wtb.appendChild(tr); }
   out.appendChild(wt);
   var src=mk("div","cnote"); src.textContent=cL(["Weights: Hadlock 1991 50th percentile; range ≈ ± 15% (≈ 10th–90th percentile). Cambodian babies are often slightly smaller — follow the growth curve over time.","Poids : Hadlock 1991, 50e percentile ; normes ≈ ± 15 % (≈ 10e–90e). Les bébés cambodgiens sont souvent un peu plus petits — suivre la courbe.","ទម្ងន់៖ Hadlock 1991 percentile ទី ៥០; ចន្លោះ ≈ ± ១៥% (≈ percentile ១០–៩០)។ ទារកខ្មែរច្រើនតូចជាងបន្តិច — តាមដានខ្សែកោងការលូតលាស់។"]); out.appendChild(src);
+  /* v55: small baby (FGR) monitoring */
+  out=PGS("fgr");
+  var fh=mk("h4"); fh.className="pgh"; fh.textContent="📉 "+cL(["Suspected fetal growth restriction: how to follow","Suspicion de RCIU : surveillance","សង្ស័យកូនលូតលាស់យឺត៖ របៀបតាមដាន"]); out.appendChild(fh);
+  var FG=[[["1. Confirm","1. Confirmer","១. បញ្ជាក់"],["EFW or AC < 10th percentile (< 3rd = severe). Check dates with the early scan (CRL). Repeat growth scan after 2 weeks — never sooner.","EPF ou PA < 10e percentile (< 3e = sévère). Vérifier le terme (LCC précoce). Contrôle de croissance à 2 semaines, pas avant.","EFW ឬ AC < percentile ១០ (< ៣ = ធ្ងន់)។ ពិនិត្យអាយុគភ៌ពីអេកូដំបូង (CRL)។ ធ្វើអេកូម្តងទៀតក្រោយ ២ សប្តាហ៍ — កុំឆាប់ជាងនេះ។"]],
+   [["2. Look for causes","2. Rechercher la cause","២. ស្វែងរកមូលហេតុ"],["Mother: high BP / pre-eclampsia (BP, urine protein), anaemia, poor nutrition, smoking, alcohol, chronic disease. Infection: syphilis, HIV, malaria, CMV. Baby: anomalies (anomaly scan), twins. Placenta: Doppler.","Mère : HTA / pré-éclampsie (TA, protéinurie), anémie, dénutrition, tabac, alcool, maladie chronique. Infection : syphilis, VIH, paludisme, CMV. Fœtus : malformations, gémellité. Placenta : Doppler.","ម្តាយ៖ សម្ពាធឡើង / ក្រឡាភ្លើង (សម្ពាធ ប្រូតេអ៊ីនទឹកនោម) ស្លេកស្លាំង កង្វះអាហារ បារី ស្រា ជំងឺរ៉ាំរ៉ៃ។ ការឆ្លង៖ ស្វាយ HIV គ្រុនចាញ់ CMV។ កូន៖ ពិការភាព កូនភ្លោះ។ សុក៖ Doppler។"]],
+   [["3. Monitor","3. Surveiller","៣. តាមដាន"],["Kick count daily (≥ 10 in 2 h). Growth scan every 2 weeks. Amniotic fluid every 1–2 weeks. BP and urine protein every visit. CTG 1–2 × / week if available.","Mouvements actifs chaque jour (≥ 10 en 2 h). Croissance /2 semaines. Liquide /1–2 semaines. TA et protéinurie à chaque visite. RCF 1–2 × / semaine si disponible.","រាប់ចលនាកូនរាល់ថ្ងៃ (≥ ១០ ក្នុង ២ ម៉ោង)។ អេកូការលូតលាស់រៀងរាល់ ២ សប្តាហ៍។ ទឹកភ្លោះរៀងរាល់ ១–២ សប្តាហ៍។ សម្ពាធ និងប្រូតេអ៊ីនរាល់ពេលមក។ CTG ១–២ ដង/សប្តាហ៍ បើមាន។"]],
+   [["4. Umbilical artery Doppler","4. Doppler ombilical","៤. Doppler ទងផ្ចិត"],["Normal → every 1–2 weeks · PI > 95th → twice a week · absent end-diastolic flow (AEDF) → admit, daily monitoring · reversed (REDF) → plan delivery. From 32 w also MCA / CPR.","Normal → /1–2 semaines · IP > 95e → 2 × / semaine · diastole nulle → hospitaliser, surveillance quotidienne · reverse flow → extraction. Dès 32 SA : ACM / RCP.","ធម្មតា → រៀងរាល់ ១–២ សប្តាហ៍ · PI > ៩៥ → ២ ដង/សប្តាហ៍ · AEDF → សម្រាកពេទ្យ តាមដានរាល់ថ្ងៃ · REDF → រៀបចំសម្រាល។ ពី ៣២ សប្តាហ៍ មើល MCA / CPR។"]],
+   [["5. Treat & prepare","5. Traiter et préparer","៥. ព្យាបាល និងរៀបចំ"],["Nutrition, iron, calcium, rest, sleep on the side; treat anaemia / infection; stop smoking. Delivery likely < 34 w: dexamethasone 6 mg IM / 12 h × 4. < 32 w: MgSO₄ for neuroprotection. Refer to a hospital with a neonatal unit if < 32 w, abnormal Doppler, low fluid or pre-eclampsia.","Nutrition, fer, calcium, repos, décubitus latéral ; traiter anémie / infection ; arrêt du tabac. Naissance probable < 34 SA : dexaméthasone 6 mg IM /12 h × 4. < 32 SA : MgSO₄ neuroprotecteur. Transfert en maternité avec néonatologie si < 32 SA, Doppler anormal, oligoamnios ou pré-éclampsie.","អាហារ ជាតិដែក Calcium សម្រាក គេងផ្អៀង; ព្យាបាលស្លេកស្លាំង / ការឆ្លង; ឈប់ជក់បារី។ អាចសម្រាល < ៣៤ សប្តាហ៍៖ dexamethasone 6 mg IM រៀងរាល់ ១២ ម៉ោង × ៤។ < ៣២ សប្តាហ៍៖ MgSO₄ ការពារខួរក្បាល។ បញ្ជូនទៅមន្ទីរពេទ្យមានផ្នែកទារក បើ < ៣២ សប្តាហ៍ Doppler មិនធម្មតា ទឹកភ្លោះតិច ឬក្រឡាភ្លើង។"]],
+   [["6. When to deliver (≈ ISUOG / RCOG)","6. Quand accoucher (≈ ISUOG / RCOG)","៦. ពេលសម្រាល (≈ ISUOG / RCOG)"],["Normal Doppler, 3rd–10th percentile → 38–39 w · < 3rd percentile → 37–38 w · UA PI > 95th → ~37 w · AEDF → 32–34 w · REDF → 30–32 w (tertiary centre) · earlier if abnormal CTG, severe oligohydramnios or severe pre-eclampsia.","Doppler normal, 3e–10e percentile → 38–39 SA · < 3e → 37–38 SA · IP > 95e → ~37 SA · diastole nulle → 32–34 SA · reverse flow → 30–32 SA (niveau 3) · plus tôt si RCF anormal, oligoamnios sévère ou pré-éclampsie sévère.","Doppler ធម្មតា percentile ៣–១០ → ៣៨–៣៩ សប្តាហ៍ · < percentile ៣ → ៣៧–៣៨ · PI > ៩៥ → ~៣៧ · AEDF → ៣២–៣៤ · REDF → ៣០–៣២ (មន្ទីរពេទ្យកម្រិតខ្ពស់) · មុននេះបើ CTG មិនធម្មតា ទឹកភ្លោះតិចខ្លាំង ឬក្រឡាភ្លើងធ្ងន់។"]]];
+  var ft=mk("table","ctable"); FG.forEach(function(r){ var tr=mk("tr"), a=mk("td"), b=mk("td"); var bb=mk("b"); bb.textContent=cL(r[0]); a.appendChild(bb); a.style.width="150px"; b.textContent=cL(r[1]); b.className="pgwhat"; tr.appendChild(a); tr.appendChild(b); ft.appendChild(tr); });
+  out.appendChild(ft);
+  if(lib.some(function(x){return x.id==="q-fgr";})){ var ub=mk("button","cadd"); ub.type="button"; ub.style.marginTop="8px"; ub.textContent="📋 "+cL(["Open the template “Suspected fetal growth restriction”","Ouvrir le modèle « Suspicion de RCIU »","បើកគំរូ «សង្ស័យកូនលូតលាស់យឺត»"]);
+    ub.onclick=function(){ $("calcOv").hidden=true; openTemplate("q-fgr"); }; out.appendChild(ub); }
+  out=root; navPaint();
   var row=mk("div","pgact"), put=mk("button","cadd"); put.type="button"; put.textContent=cL(["+ Write in H/O","+ Écrire dans l'histoire","+ ដាក់ក្នុង H/O"]);
   put.onclick=function(){ var lmpD=PG.mode==="lmp"&&pgD(PG.lmp)?pgD(PG.lmp):b0;
     var line="LMP "+pgDmy(lmpD)+" · GA "+pgWdShort(Math.max(0,ga))+" · EDD "+pgDmy(edd);
@@ -6410,6 +6708,383 @@ function pgOut(){
     say("📅 "+wk+cL([" weeks → "," SA → "," សប្តាហ៍ → "])+pgDmy(dt)); };
   row.appendChild(put); row.appendChild(appt); out.appendChild(row);
 }
+
+
+/* ---------- v52: vaccines (WHO / Cambodia EPI) for children, pregnancy, adults + STI treatment table (WHO) ---------- */
+var VX={pop:"child",dob:"",td:"0",bite:"",bcat:"3",prev:"0",rig:"h"};
+/* [age in days, vaccine, dose, route + site, note] */
+var VAC_CHILD=[
+ [0,"BCG","0.05 ml",["ID · left upper arm","ID · bras gauche","ចាក់ក្នុងស្បែក · ដៃឆ្វេង"],["Under 1 year 0.05 ml. Not if HIV with symptoms.","< 1 an 0,05 ml. Pas si VIH symptomatique.","ក្រោម ១ ឆ្នាំ 0.05 ml។ មិនឱ្យបើ HIV មានរោគសញ្ញា។"]],
+ [0,"Hepatitis B (birth dose)","0.5 ml (10 mcg)",["IM · right thigh","IM · cuisse droite","IM · ភ្លៅស្តាំ"],["Within 24 hours of birth (best), up to 7 days.","Dans les 24 h (idéal), jusqu'à 7 jours.","ក្នុង ២៤ ម៉ោងក្រោយកើត (ល្អបំផុត) រហូតដល់ ៧ ថ្ងៃ។"]],
+ [42,"Pentavalent 1 (DTP-HepB-Hib)","0.5 ml",["IM · left thigh","IM · cuisse gauche","IM · ភ្លៅឆ្វេង"],["",""," "]],
+ [42,"PCV 1 (pneumococcal)","0.5 ml",["IM · right thigh","IM · cuisse droite","IM · ភ្លៅស្តាំ"],["",""," "]],
+ [42,"OPV 1 (polio)","2 drops",["Oral","Orale","តាមមាត់"],["",""," "]],
+ [42,"Rotavirus 1","1.5–2 ml",["Oral","Orale","តាមមាត់"],["If in the national schedule.","Si inclus au calendrier national.","បើមានក្នុងកាលវិភាគជាតិ។"]],
+ [70,"Pentavalent 2","0.5 ml",["IM · left thigh","IM · cuisse gauche","IM · ភ្លៅឆ្វេង"],["At least 4 weeks after dose 1.","≥ 4 semaines après la dose 1.","យ៉ាងតិច ៤ សប្តាហ៍ក្រោយដូស ១។"]],
+ [70,"PCV 2","0.5 ml",["IM · right thigh","IM · cuisse droite","IM · ភ្លៅស្តាំ"],["",""," "]],
+ [70,"OPV 2","2 drops",["Oral","Orale","តាមមាត់"],["",""," "]],
+ [70,"Rotavirus 2","1.5–2 ml",["Oral","Orale","តាមមាត់"],["If in the national schedule.","Si inclus au calendrier national.","បើមានក្នុងកាលវិភាគជាតិ។"]],
+ [98,"Pentavalent 3","0.5 ml",["IM · left thigh","IM · cuisse gauche","IM · ភ្លៅឆ្វេង"],["",""," "]],
+ [98,"PCV 3","0.5 ml",["IM · right thigh","IM · cuisse droite","IM · ភ្លៅស្តាំ"],["",""," "]],
+ [98,"OPV 3","2 drops",["Oral","Orale","តាមមាត់"],["",""," "]],
+ [98,"IPV 1 (inactivated polio)","0.5 ml",["IM · right thigh (2.5 cm from PCV)","IM · cuisse droite (à 2,5 cm du PCV)","IM · ភ្លៅស្តាំ (ឆ្ងាយពី PCV 2.5 cm)"],["",""," "]],
+ [182,"Vitamin A","100,000 IU",["Oral","Orale","តាមមាត់"],["6–11 months; then 200,000 IU every 6 months to 59 months.","6–11 mois ; puis 200 000 UI tous les 6 mois jusqu'à 59 mois.","៦–១១ ខែ; បន្ទាប់មក 200,000 IU រៀងរាល់ ៦ ខែ ដល់ ៥៩ ខែ។"]],
+ [274,"MR 1 (measles-rubella)","0.5 ml",["SC · right upper arm","SC · bras droit","ចាក់ក្រោមស្បែក · ដៃស្តាំ"],["Live vaccine.","Vaccin vivant.","វ៉ាក់សាំងរស់។"]],
+ [274,"JE (Japanese encephalitis)","0.5 ml",["SC · left upper arm","SC · bras gauche","ចាក់ក្រោមស្បែក · ដៃឆ្វេង"],["Live attenuated SA 14-14-2.","Vivant atténué SA 14-14-2.","វ៉ាក់សាំងរស់ SA 14-14-2។"]],
+ [274,"IPV 2","0.5 ml",["IM · thigh","IM · cuisse","IM · ភ្លៅ"],["WHO: 2nd IPV ≥ 4 months after IPV 1, if in the national schedule.","OMS : 2e VPI ≥ 4 mois après la 1re, si prévu.","WHO៖ IPV ទី ២ ≥ ៤ ខែក្រោយទី ១ បើមានក្នុងកាលវិភាគជាតិ។"]],
+ [548,"MR 2","0.5 ml",["SC · upper arm","SC · bras","ចាក់ក្រោមស្បែក · ដៃ"],["",""," "]],
+ [548,"DTP booster","0.5 ml",["IM · thigh / deltoid","IM · cuisse / deltoïde","IM · ភ្លៅ / ស្មា"],["WHO: 12–23 months, if in the national schedule.","OMS : 12–23 mois, si prévu.","WHO៖ ១២–២៣ ខែ បើមានក្នុងកាលវិភាគជាតិ។"]],
+ [3287,"HPV (girls 9–14 y)","0.5 ml",["IM · deltoid","IM · deltoïde","IM · ស្មា"],["WHO 2022: one dose is enough for girls 9–14 years.","OMS 2022 : une dose suffit chez les filles de 9–14 ans.","WHO 2022៖ ក្មេងស្រី ៩–១៤ ឆ្នាំ ចាក់មួយដូសគ្រប់គ្រាន់។"]]];
+var VAC_PREG=[
+ ["Td (tetanus-diphtheria)","0.5 ml",["IM · deltoid","IM · deltoïde","IM · ស្មា"],["See the schedule above. Protects mother and newborn from tetanus.","Voir calendrier ci-dessus. Protège la mère et le nouveau-né du tétanos.","មើលកាលវិភាគខាងលើ។ ការពារម្តាយ និងទារកពីតេតាណូស។"]],
+ ["Influenza (inactivated)","0.5 ml",["IM · deltoid","IM · deltoïde","IM · ស្មា"],["Any trimester, each season.","À tout trimestre, chaque saison.","ត្រីមាសណាក៏បាន រៀងរាល់រដូវ។"]],
+ ["Tdap (if available)","0.5 ml",["IM · deltoid","IM · deltoïde","IM · ស្មា"],["27–36 weeks: protects the baby from whooping cough. Can replace one Td dose.","27–36 SA : protège le bébé de la coqueluche. Peut remplacer une dose de Td.","២៧–៣៦ សប្តាហ៍៖ ការពារកូនពីក្អកមាន់។ អាចជំនួស Td មួយដូស។"]],
+ ["Hepatitis B (if not immune and at risk)","1 ml (20 mcg)",["IM · deltoid","IM · deltoïde","IM · ស្មា"],["0, 1, 6 months. Safe in pregnancy.","0, 1, 6 mois. Sans danger pendant la grossesse.","០ ១ ៦ ខែ។ មានសុវត្ថិភាពពេលមានផ្ទៃពោះ។"]],
+ ["COVID-19 (per national guideline)","per product",["IM · deltoid","IM · deltoïde","IM · ស្មា"],["Allowed in pregnancy.","Autorisé pendant la grossesse.","អាចចាក់ពេលមានផ្ទៃពោះ។"]],
+ ["Rabies post-exposure","per schedule below",["IM / ID","IM / ID","IM / ID"],["Never withhold after a bite — pregnancy is not a contraindication.","Ne jamais différer après une morsure — la grossesse n'est pas une contre-indication.","កុំពន្យារក្រោយត្រូវខាំ — ផ្ទៃពោះមិនមែនជាហាមឃាត់ទេ។"]],
+ ["✕ NOT in pregnancy: MR / MMR, varicella, BCG, live JE, yellow fever (unless high risk), HPV (postpone)","—",["—","—","—"],["Live vaccines: wait until after delivery. Avoid pregnancy for 1 month after MR.","Vaccins vivants : après l'accouchement. Éviter une grossesse 1 mois après le RR.","វ៉ាក់សាំងរស់៖ រង់ចាំក្រោយសម្រាល។ ជៀសវាងមានផ្ទៃពោះ ១ ខែក្រោយ MR។"]]];
+var VAC_ADULT=[
+ ["Td booster","0.5 ml",["IM · deltoid","IM · deltoïde","IM · ស្មា"],["3-dose primary series if never vaccinated (0, 1, 6–12 months); booster for wounds (see tetanus table).","Primo-vaccination 3 doses (0, 1, 6–12 mois) si jamais vacciné ; rappel selon la plaie.","បើមិនធ្លាប់ចាក់៖ ៣ ដូស (០ ១ ៦–១២ ខែ); ចាក់បន្ថែមពេលរបួស (មើលតារាងតេតាណូស)។"]],
+ ["Hepatitis B","1 ml (20 mcg) · ≤ 19 y: 0.5 ml",["IM · deltoid","IM · deltoïde","IM · ស្មា"],["0, 1, 6 months. Check HBsAg first. Health workers: check anti-HBs after.","0, 1, 6 mois. AgHBs avant. Soignants : anti-HBs après.","០ ១ ៦ ខែ។ ធ្វើ HBsAg មុន។ បុគ្គលិកសុខាភិបាល៖ ពិនិត្យ anti-HBs ក្រោយ។"]],
+ ["Influenza (inactivated)","0.5 ml",["IM · deltoid","IM · deltoïde","IM · ស្មា"],["Every year: over 65, chronic disease, health workers, pregnancy.","Chaque année : > 65 ans, maladies chroniques, soignants, grossesse.","រៀងរាល់ឆ្នាំ៖ លើស ៦៥ ឆ្នាំ ជំងឺរ៉ាំរ៉ៃ បុគ្គលិកសុខាភិបាល ផ្ទៃពោះ។"]],
+ ["Pneumococcal (PCV / PPSV23)","0.5 ml",["IM · deltoid","IM · deltoïde","IM · ស្មា"],["Over 65, diabetes, chronic heart / lung / kidney / liver disease, no spleen, HIV.","> 65 ans, diabète, maladie chronique cœur/poumon/rein/foie, asplénie, VIH.","លើស ៦៥ ឆ្នាំ ទឹកនោមផ្អែម ជំងឺរ៉ាំរ៉ៃបេះដូង/សួត/តម្រងនោម/ថ្លើម គ្មានលំពែង HIV។"]],
+ ["Typhoid conjugate (TCV)","0.5 ml",["IM · deltoid","IM · deltoïde","IM · ស្មា"],["Single dose, 6 months – 45 years.","Dose unique, 6 mois – 45 ans.","មួយដូស អាយុ ៦ ខែ – ៤៥ ឆ្នាំ។"]],
+ ["HPV","0.5 ml",["IM · deltoid","IM · deltoïde","IM · ស្មា"],["Women up to 26 (catch-up): 1–2 doses per national programme.","Femmes jusqu'à 26 ans (rattrapage) : 1–2 doses selon le programme.","ស្ត្រីរហូតដល់ ២៦ ឆ្នាំ៖ ១–២ ដូស តាមកម្មវិធីជាតិ។"]],
+ ["Rabies pre-exposure","1 dose IM or 0.1 ml ID",["IM deltoid / ID","IM deltoïde / ID","IM ស្មា / ID"],["Days 0 and 7 (WHO): vets, lab staff, children in high-risk areas.","J0 et J7 (OMS) : vétérinaires, laborantins, enfants en zone à risque.","ថ្ងៃ ០ និង ៧ (WHO)៖ ពេទ្យសត្វ បុគ្គលិកមន្ទីរពិសោធន៍ កុមារតំបន់ហានិភ័យ។"]],
+ ["COVID-19","per product",["IM · deltoid","IM · deltoïde","IM · ស្មា"],["Per national guideline (older adults and high risk).","Selon recommandations nationales (âgés et à risque).","តាមគោលការណ៍ជាតិ (មនុស្សចាស់ និងហានិភ័យខ្ពស់)។"]]];
+function vxTable(head,rows){ var t=mk("table","ctable"), hr=mk("tr"); head.forEach(function(h){ var th=mk("th"); th.textContent=cL(h); hr.appendChild(th); });
+  var th0=mk("thead"); th0.appendChild(hr); t.appendChild(th0); var tb=mk("tbody"); t.appendChild(tb);
+  rows.forEach(function(r){ var tr=mk("tr"); if(r.cls) tr.className=r.cls; r.c.forEach(function(c,i){ var td=mk("td"); if(i===0){ var b=mk("b"); b.textContent=c; td.appendChild(b); } else td.textContent=c; if(r.small&&i===r.c.length-1) td.className="pgwhat"; tr.appendChild(td); }); tb.appendChild(tr); });
+  return t; }
+function vxH(box,txt){ var h=mk("h4"); h.className="pgh"; h.textContent=txt; box.appendChild(h); }
+function calcVac(){
+  var box=$("cBody"); box.textContent=""; var today=visitDate();
+  var seg=mk("div","pgmodes");
+  [["child",["👶 Child (EPI)","👶 Enfant (PEV)","👶 កុមារ (EPI)"]],["preg",["🤰 Pregnant woman","🤰 Femme enceinte","🤰 ស្ត្រីមានផ្ទៃពោះ"]],["adult",["🧑 Adult","🧑 Adulte","🧑 មនុស្សធំ"]],["bite",["🐕 Rabies / tetanus (wound)","🐕 Rage / tétanos (plaie)","🐕 ឆ្កែឆ្កួត / តេតាណូស (របួស)"]]].forEach(function(m){
+    var b=mk("button"); b.type="button"; b.textContent=cL(m[1]); b.setAttribute("aria-pressed",String(VX.pop===m[0])); b.onclick=function(){ VX.pop=m[0]; calcVac(); }; seg.appendChild(b); });
+  box.appendChild(seg);
+  if(VX.pop==="child"){
+    var inp=mk("div","pginp"), l=mk("label"), s=mk("span"), d=mk("input"); s.textContent=cL(["Date of birth","Date de naissance","ថ្ងៃខែឆ្នាំកំណើត"]); d.type="date"; d.value=VX.dob; d.oninput=function(){ VX.dob=d.value; calcVac(); }; l.appendChild(s); l.appendChild(d); inp.appendChild(l);
+    var dob=pgD(VX.dob), ageTxt=mk("div","cage"); if(dob){ var ad=pgDiff(today,dob); ageTxt.textContent=cL(["Age: ","Âge : ","អាយុ៖ "])+(ad<98?Math.floor(ad/7)+cL([" weeks"," semaines"," សប្តាហ៍"]):ad<730?Math.floor(ad/30.44)+cL([" months"," mois"," ខែ"]):Math.floor(ad/365.25)+cL([" years"," ans"," ឆ្នាំ"])); inp.appendChild(ageTxt); }
+    box.appendChild(inp);
+    var lab=function(a){ return a===0?cL(["Birth","Naissance","ពេលកើត"]):a<180?Math.round(a/7)+cL([" weeks"," sem."," សប្តាហ៍"]):a<3000?Math.round(a/30.44)+cL([" months"," mois"," ខែ"]):"9–14 "+cL(["years","ans","ឆ្នាំ"]); };
+    var rows=VAC_CHILD.map(function(v){ var due=dob?pgAdd(dob,v[0]):null, st="";
+      if(due){ var dd=pgDiff(today,due); st=dd<-7?cL(["upcoming","à venir","មិនទាន់ដល់"]):dd<=28?cL(["DUE NOW","À FAIRE","ដល់ពេល"]):cL(["past — check card, catch up if missed","passé — vérifier le carnet, rattraper si oublié","កន្លងហើយ — ពិនិត្យប័ណ្ណ ចាក់តាមក្រោយបើខកខាន"]); }
+      return {c:[v[1],lab(v[0]),due?pgDmy(due):"",v[2],cL(v[3]),st?st+(cL(v[4]).trim()?" · "+cL(v[4]):""):cL(v[4])],small:1,cls:due?(pgDiff(today,due)<-7?"":pgDiff(today,due)<=28?"pgnow":""):""}; });
+    box.appendChild(vxTable([["Vaccine","Vaccin","វ៉ាក់សាំង"],["Age","Âge","អាយុ"],["Due date","Date","ថ្ងៃត្រូវចាក់"],["Dose","Dose","ដូស"],["Route · site","Voie · site","វិធីចាក់ · កន្លែង"],["Status / note","Statut / note","ស្ថានភាព / ចំណាំ"]],rows));
+    var n=mk("div","cnote"); n.textContent=cL(["Minimum 4 weeks between doses of the same vaccine. Several vaccines can be given on the same day at different sites. Missed doses: give now, do not restart the series. Fever or mild illness is not a reason to delay. Schedule follows WHO / Cambodia NIP — check the current national card.","Intervalle minimal 4 semaines entre doses d'un même vaccin. Plusieurs vaccins le même jour à des sites différents. Dose oubliée : la faire, sans recommencer. Fièvre ou maladie bénigne : pas de report. Calendrier OMS / PNV Cambodge — vérifier la carte nationale.","យ៉ាងតិច ៤ សប្តាហ៍រវាងដូសនៃវ៉ាក់សាំងដដែល។ អាចចាក់ច្រើនមុខថ្ងៃតែមួយ ខុសកន្លែង។ ខកខាន៖ ចាក់ឥឡូវ មិនចាំបាច់ចាប់ផ្តើមឡើងវិញ។ គ្រុនតិចៗ ឬជំងឺស្រាល មិនមែនហេតុផលពន្យារ។ កាលវិភាគតាម WHO / កម្មវិធីជាតិកម្ពុជា — ពិនិត្យប័ណ្ណជាតិបច្ចុប្បន្ន។"]); box.appendChild(n);
+  } else if(VX.pop==="preg"){
+    vxH(box,"💉 "+cL(["Td schedule in pregnancy (WHO)","Calendrier Td pendant la grossesse (OMS)","កាលវិភាគ Td ពេលមានផ្ទៃពោះ (WHO)"]));
+    var inp2=mk("div","pginp"), l2=mk("label"), s2=mk("span"), sel=mk("select"); s2.textContent=cL(["Previous tetanus (TT/Td) doses","Doses antérieures (VAT/Td)","ចំនួនដូស TT/Td ពីមុន"]);
+    ["0 / unknown","1","2","3","4","5+"].forEach(function(x,i){ var o=mk("option"); o.value=i; o.textContent=x; if(String(i)===VX.td) o.selected=true; sel.appendChild(o); }); sel.onchange=function(){ VX.td=sel.value; calcVac(); };
+    l2.appendChild(s2); l2.appendChild(sel); inp2.appendChild(l2); box.appendChild(inp2);
+    var prior=+VX.td, gaps=[0,28,182,365,365], when=[["first contact in pregnancy","dès le 1er contact","ពិនិត្យលើកដំបូង"],["≥ 4 weeks after Td1 (and ≥ 2 weeks before delivery)","≥ 4 sem. après Td1 (et ≥ 2 sem. avant l'accouchement)","≥ ៤ សប្តាហ៍ក្រោយ Td1 (និង ≥ ២ សប្តាហ៍មុនសម្រាល)"],["≥ 6 months after Td2 (or next pregnancy)","≥ 6 mois après Td2 (ou grossesse suivante)","≥ ៦ ខែក្រោយ Td2 (ឬផ្ទៃពោះបន្ទាប់)"],["≥ 1 year after Td3","≥ 1 an après Td3","≥ ១ ឆ្នាំក្រោយ Td3"],["≥ 1 year after Td4","≥ 1 an après Td4","≥ ១ ឆ្នាំក្រោយ Td4"]], prot=[["none","aucune","គ្មាន"],["none","aucune","គ្មាន"],["3 years","3 ans","៣ ឆ្នាំ"],["5 years","5 ans","៥ ឆ្នាំ"],["10 years","10 ans","១០ ឆ្នាំ"],["lifelong (child-bearing years)","toute la période reproductive","ពេញមួយជីវិតបន្តពូជ"]];
+    var rows2=[], dt=today; for(var i=prior;i<5;i++){ dt=i===prior?today:pgAdd(dt,gaps[i]); rows2.push({c:["Td"+(i+1),i===prior?cL(["today","aujourd'hui","ថ្ងៃនេះ"])+" · "+pgDmy(dt):"≥ "+pgDmy(dt),cL(when[i]),cL(prot[i+1])],cls:i===prior?"pgnow":"",small:1}); }
+    if(prior>=5) rows2.push({c:["—",cL(["No Td needed","Pas de Td nécessaire","មិនចាំបាច់ចាក់ Td"]),cL(["Fully protected (5 doses)","Protégée (5 doses)","ការពារពេញ (៥ ដូស)"]),""]});
+    box.appendChild(vxTable([["Dose","Dose","ដូស"],["Date","Date","កាលបរិច្ឆេទ"],["When","Quand","ពេល"],["Protection","Protection","ការពារបាន"]],rows2));
+    var n2=mk("div","cnote"); n2.textContent=cL(["Td 0.5 ml IM deltoid. In this pregnancy give at least the next dose (and Td2 if < 2 doses before). Childhood DTP 3 doses = 3 previous doses.","Td 0,5 ml IM deltoïde. Faire au moins la dose suivante (et Td2 si < 2 doses). DTC 3 doses dans l'enfance = 3 doses.","Td 0.5 ml IM ស្មា។ ក្នុងផ្ទៃពោះនេះ ចាក់យ៉ាងហោចណាស់ដូសបន្ទាប់ (និង Td2 បើពីមុន < ២ ដូស)។ DTP ៣ ដូសពេលតូច = ៣ ដូសពីមុន។"]); box.appendChild(n2);
+    vxH(box,"🤰 "+cL(["Other vaccines in pregnancy","Autres vaccins pendant la grossesse","វ៉ាក់សាំងផ្សេងពេលមានផ្ទៃពោះ"]));
+    box.appendChild(vxTable([["Vaccine","Vaccin","វ៉ាក់សាំង"],["Dose","Dose","ដូស"],["Route · site","Voie · site","វិធីចាក់ · កន្លែង"],["Note","Note","ចំណាំ"]],VAC_PREG.map(function(v){ return {c:[v[0],v[1],cL(v[2]),cL(v[3])],small:1,cls:/^✕/.test(v[0])?"repbad":""}; })));
+  } else if(VX.pop==="adult"){
+    box.appendChild(vxTable([["Vaccine","Vaccin","វ៉ាក់សាំង"],["Dose","Dose","ដូស"],["Route · site","Voie · site","វិធីចាក់ · កន្លែង"],["Who / schedule","Qui / calendrier","អ្នកណា / កាលវិភាគ"]],VAC_ADULT.map(function(v){ return {c:[v[0],v[1],cL(v[2]),cL(v[3])],small:1}; })));
+  } else {
+    /* rabies PEP (WHO 2018) */
+    vxH(box,"🐕 "+cL(["Rabies post-exposure prophylaxis (WHO 2018)","Prophylaxie post-exposition rage (OMS 2018)","ការការពារក្រោយត្រូវខាំ ឆ្កែឆ្កួត (WHO 2018)"]));
+    var inp3=mk("div","pginp");
+    var l3=mk("label"), s3=mk("span"), bd=mk("input"); s3.textContent=cL(["Day 0 (first dose)","J0 (1re dose)","ថ្ងៃទី ០ (ដូសដំបូង)"]); bd.type="date"; bd.value=VX.bite||pgIso(today); bd.oninput=function(){ VX.bite=bd.value; calcVac(); }; l3.appendChild(s3); l3.appendChild(bd); inp3.appendChild(l3);
+    var l4=mk("label"), s4=mk("span"), cs=mk("select"); s4.textContent=cL(["WHO category","Catégorie OMS","ថ្នាក់ WHO"]);
+    [["1",["I — touch / lick on intact skin","I — contact / léchage peau saine","I — ប៉ះ / លិទ្ធលើស្បែកល្អ"]],["2",["II — nibble, minor scratch without bleeding","II — mordillage, griffure sans saignement","II — ខាំស្រាល ឆ្កឹះមិនហូរឈាម"]],["3",["III — bite / scratch with bleeding, lick on broken skin or mucosa, bat","III — morsure / griffure saignante, léchage muqueuse, chauve-souris","III — ខាំ / ឆ្កឹះហូរឈាម លិទ្ធលើរបួស ឬភ្នាស ប្រចៀវ"]]].forEach(function(c){ var o=mk("option"); o.value=c[0]; o.textContent=cL(c[1]); if(c[0]===VX.bcat) o.selected=true; cs.appendChild(o); });
+    cs.onchange=function(){ VX.bcat=cs.value; calcVac(); }; l4.appendChild(s4); l4.appendChild(cs); inp3.appendChild(l4);
+    var l5=mk("label"), s5=mk("span"), pv=mk("select"); s5.textContent=cL(["Previously vaccinated (full rabies series)?","Déjà vacciné (série complète) ?","ធ្លាប់ចាក់វ៉ាក់សាំងឆ្កែឆ្កួតគ្រប់?"]);
+    [["0",["No","Non","ទេ"]],["1",["Yes","Oui","បាទ/ចាស"]]].forEach(function(c){ var o=mk("option"); o.value=c[0]; o.textContent=cL(c[1]); if(c[0]===VX.prev) o.selected=true; pv.appendChild(o); }); pv.onchange=function(){ VX.prev=pv.value; calcVac(); };
+    l5.appendChild(s5); l5.appendChild(pv); inp3.appendChild(l5); box.appendChild(inp3);
+    var d0=pgD(VX.bite||pgIso(today));
+    if(VX.bcat==="1"){ var e=mk("div","cempty"); e.textContent=cL(["Category I: wash the skin; no vaccine needed.","Catégorie I : laver la peau ; pas de vaccin.","ថ្នាក់ I៖ លាងស្បែក មិនចាំបាច់ចាក់។"]); box.appendChild(e); }
+    else {
+      var rowsR=[]; var addR=function(day,id,im){ rowsR.push({c:[cL(["Day ","J","ថ្ងៃទី "])+day,pgDmy(pgAdd(d0,day)),id,im],cls:pgDiff(pgAdd(d0,day),today)===0?"pgnow":""}); };
+      if(VX.prev==="1"){ addR(0,"0.1 ml ID × 1 site","1 vial IM"); addR(3,"0.1 ml ID × 1 site","1 vial IM"); }
+      else { addR(0,"0.1 ml ID × 2 sites","1 vial IM (deltoid / thigh)"); addR(3,"0.1 ml ID × 2 sites","1 vial IM"); addR(7,"0.1 ml ID × 2 sites","1 vial IM"); rowsR.push({c:[cL(["Day 14–28","J14–28","ថ្ងៃទី ១៤–២៨"]),pgDmy(pgAdd(d0,14))+" – "+pgDmy(pgAdd(d0,28)),"—","1 vial IM"]}); }
+      box.appendChild(vxTable([["Visit","Visite","ការមក"],["Date","Date","កាលបរិច្ឆេទ"],["Intradermal (1-week, 2-site)","Intradermique (1 semaine, 2 sites)","ចាក់ក្នុងស្បែក (ID)"],["Intramuscular (Essen 4-dose)","Intramusculaire (Essen 4 doses)","ចាក់សាច់ដុំ (IM)"]],rowsR));
+      if(VX.bcat==="3"&&VX.prev!=="1"){
+        var w=cWt(), rl=mk("div","ccustom"), rs=mk("select"), ro=mk("b");
+        [["h",["HRIG 20 IU/kg (150 IU/ml)","IGHR 20 UI/kg (150 UI/ml)","HRIG 20 IU/kg (150 IU/ml)"]],["e",["ERIG 40 IU/kg (200 IU/ml)","IGR équine 40 UI/kg (200 UI/ml)","ERIG 40 IU/kg (200 IU/ml)"]]].forEach(function(c){ var o=mk("option"); o.value=c[0]; o.textContent=cL(c[1]); if(c[0]===VX.rig) o.selected=true; rs.appendChild(o); });
+        rs.onchange=function(){ VX.rig=rs.value; calcVac(); };
+        rl.appendChild(document.createTextNode(cL(["Rabies immunoglobulin (day 0, or up to day 7): ","Immunoglobulines (J0, au plus tard J7) : ","RIG (ថ្ងៃទី ០ ឬយឺតបំផុតថ្ងៃទី ៧)៖ "]))); rl.appendChild(rs); rl.appendChild(document.createTextNode(" → ")); rl.appendChild(ro);
+        if(w){ var iu=(VX.rig==="h"?20:40)*w, ml=iu/(VX.rig==="h"?150:200); ro.textContent=cFmt(iu)+" IU = "+cFmt(ml)+" ml ("+w+" kg)"; } else ro.textContent=cL(["enter weight (kg) at the top","saisir le poids en haut","ដាក់ទម្ងន់ (kg) ខាងលើ"]);
+        box.appendChild(rl);
+        var rn=mk("div","cnote"); rn.textContent=cL(["Infiltrate as much as possible INTO and AROUND the wound(s); do not give the remainder IM far away (WHO 2018). Never in the same syringe or site as the vaccine. Check your product's IU/ml.","Infiltrer au maximum DANS et AUTOUR des plaies ; le reste n'est pas injecté à distance (OMS 2018). Jamais dans la même seringue ni le même site que le vaccin. Vérifier la concentration du produit.","ចាក់ RIG ចូល និងជុំវិញរបួសឱ្យបានច្រើនបំផុត មិនចាំបាច់ចាក់ដែលនៅសល់ IM ឆ្ងាយ (WHO 2018)។ កុំលាយ ឬចាក់កន្លែងដូចវ៉ាក់សាំង។ ពិនិត្យ IU/ml របស់ផលិតផល។"]); box.appendChild(rn);
+      }
+      var wn=mk("div","cnote"); wn.textContent=cL(["Wash the wound with soap and running water 15 minutes immediately. Same schedule for children and pregnant women. Observe the dog 10 days if possible — do not wait to start.","Laver la plaie 15 minutes à l'eau et au savon. Même schéma chez l'enfant et la femme enceinte. Observer le chien 10 jours si possible — sans retarder le traitement.","លាងរបួសដោយសាប៊ូ និងទឹកហូរ ១៥ នាទីភ្លាម។ កាលវិភាគដូចគ្នាសម្រាប់កុមារ និងស្ត្រីមានផ្ទៃពោះ។ តាមដានឆ្កែ ១០ ថ្ងៃបើអាច — កុំរង់ចាំមុនចាប់ផ្តើម។"]); box.appendChild(wn);
+    }
+    vxH(box,"🩹 "+cL(["Tetanus after a wound (WHO)","Tétanos après une plaie (OMS)","តេតាណូសក្រោយរបួស (WHO)"]));
+    box.appendChild(vxTable([["Previous tetanus doses","Doses antérieures","ដូសតេតាណូសពីមុន"],["Clean minor wound","Plaie propre mineure","របួសស្អាតតូច"],["Other wounds (dirty, deep, bite, burn)","Autres plaies (sale, profonde, morsure, brûlure)","របួសផ្សេង (កខ្វក់ ជ្រៅ ខាំ រលាក)"]],[
+      {c:[cL(["Unknown or < 3","Inconnu ou < 3","មិនដឹង ឬ < ៣"]),"Td: "+cL(["YES · TIG: no","OUI · IGT : non","ចាក់ · TIG៖ ទេ"]),"Td: "+cL(["YES · TIG 250 IU IM: YES","OUI · IGT 250 UI IM : OUI","ចាក់ · TIG 250 IU IM៖ ចាក់"])],small:1},
+      {c:["≥ 3","Td "+cL(["if last dose > 10 years","si dernière dose > 10 ans","បើដូសចុងក្រោយ > ១០ ឆ្នាំ"]),"Td "+cL(["if last dose > 5 years · TIG: no","si dernière dose > 5 ans · IGT : non","បើដូសចុងក្រោយ > ៥ ឆ្នាំ · TIG៖ ទេ"])],small:1}]));
+  }
+}
+/* STI treatment (WHO 2016 / 2021 / 2024) */
+var STI_T=[
+ [["Syphilis — early (< 2 years)","Syphilis précoce (< 2 ans)","ស្វាយដំណាក់កាលដំបូង (< ២ ឆ្នាំ)"],
+  ["Benzathine penicillin 2.4 MU IM once. Alt.: doxycycline 100 mg × 2/day × 14 d · ceftriaxone 1 g IM/day × 10–14 d · procaine penicillin 1.2 MU IM/day × 10–14 d","Benzathine pénicilline 2,4 MUI IM dose unique. Alt. : doxycycline 100 mg × 2/j × 14 j · ceftriaxone 1 g IM/j × 10–14 j · procaïne 1,2 MUI IM/j × 10–14 j","Benzathine penicillin 2.4 MU IM ម្តង។ ជំនួស៖ doxycycline 100 mg ២ ដង/ថ្ងៃ × ១៤ ថ្ងៃ · ceftriaxone 1 g IM/ថ្ងៃ × ១០–១៤ ថ្ងៃ"],
+  ["Benzathine penicillin 2.4 MU IM once, same day. Allergy: erythromycin 500 mg × 4/day × 14 d or ceftriaxone 1 g IM × 10–14 d → treat newborn. NO doxycycline.","Benzathine 2,4 MUI IM dose unique, le jour même. Allergie : érythromycine 500 mg × 4/j × 14 j ou ceftriaxone 1 g IM × 10–14 j → traiter le nouveau-né. PAS de doxycycline.","Benzathine 2.4 MU IM ម្តង ថ្ងៃតែមួយ។ អាឡែកហ្ស៊ី៖ erythromycin 500 mg ៤ ដង/ថ្ងៃ × ១៤ ថ្ងៃ ឬ ceftriaxone 1 g IM × ១០–១៤ ថ្ងៃ → ព្យាបាលទារក។ ហាម doxycycline។"],
+  ["Benzathine penicillin 50,000 U/kg IM once (max 2.4 MU). Assess for abuse.","Benzathine 50 000 U/kg IM dose unique (max 2,4 MUI). Rechercher un abus.","Benzathine 50,000 U/kg IM ម្តង (អតិ. 2.4 MU)។ វាយតម្លៃការរំលោភ។"],"bpg1"],
+ [["Syphilis — late latent / unknown","Syphilis latente tardive / inconnue","ស្វាយយឺត / មិនដឹងរយៈពេល"],
+  ["Benzathine penicillin 2.4 MU IM weekly × 3. Alt.: doxycycline 100 mg × 2/day × 30 d · procaine 1.2 MU IM/day × 20 d","Benzathine 2,4 MUI IM/semaine × 3. Alt. : doxycycline 100 mg × 2/j × 30 j · procaïne 1,2 MUI IM/j × 20 j","Benzathine 2.4 MU IM ម្តង/សប្តាហ៍ × ៣។ ជំនួស៖ doxycycline 100 mg ២ ដង/ថ្ងៃ × ៣០ ថ្ងៃ"],
+  ["Benzathine penicillin 2.4 MU IM weekly × 3. Allergy: erythromycin 500 mg × 4/day × 30 d → treat newborn.","Benzathine 2,4 MUI IM/semaine × 3. Allergie : érythromycine 500 mg × 4/j × 30 j → traiter le nouveau-né.","Benzathine 2.4 MU IM ម្តង/សប្តាហ៍ × ៣។ អាឡែកហ្ស៊ី៖ erythromycin 500 mg ៤ ដង/ថ្ងៃ × ៣០ ថ្ងៃ → ព្យាបាលទារក។"],
+  ["Benzathine penicillin 50,000 U/kg IM weekly × 3.","Benzathine 50 000 U/kg IM/semaine × 3.","Benzathine 50,000 U/kg IM ម្តង/សប្តាហ៍ × ៣។"],"bpg3"],
+ [["Congenital syphilis (newborn)","Syphilis congénitale","ស្វាយពីកំណើត"],["—","—","—"],["—","—","—"],
+  ["Benzylpenicillin 50,000 U/kg IV q12h (days 1–7) then q8h, total 10 d · or procaine penicillin 50,000 U/kg IM daily × 10 d.","Pénicilline G 50 000 U/kg IV /12 h (J1–7) puis /8 h, total 10 j · ou procaïne 50 000 U/kg IM/j × 10 j.","Benzylpenicillin 50,000 U/kg IV រៀងរាល់ ១២ ម៉ោង (ថ្ងៃ ១–៧) រួច ៨ ម៉ោង សរុប ១០ ថ្ងៃ · ឬ procaine 50,000 U/kg IM/ថ្ងៃ × ១០ ថ្ងៃ។"],"pen"],
+ [["Gonorrhoea","Gonococcie","រោគប្រមេះ"],
+  ["Ceftriaxone 1 g IM once (WHO 2024). If no ceftriaxone: cefixime 800 mg PO once. Treat chlamydia too if not excluded.","Ceftriaxone 1 g IM dose unique (OMS 2024). Sinon : céfixime 800 mg PO. Traiter aussi Chlamydia si non exclue.","Ceftriaxone 1 g IM ម្តង (WHO 2024)។ គ្មាន៖ cefixime 800 mg លេបម្តង។ ព្យាបាល chlamydia ផង។"],
+  ["Ceftriaxone 1 g IM once (+ azithromycin 1 g for chlamydia).","Ceftriaxone 1 g IM (+ azithromycine 1 g pour Chlamydia).","Ceftriaxone 1 g IM ម្តង (+ azithromycin 1 g សម្រាប់ chlamydia)។"],
+  ["≤ 45 kg: ceftriaxone 25–50 mg/kg IM once (max 250 mg); > 45 kg: adult dose · newborn eye infection: 50 mg/kg IM once (max 125 mg). Assess for abuse.","≤ 45 kg : ceftriaxone 25–50 mg/kg IM (max 250 mg) ; > 45 kg : dose adulte · ophtalmie néonatale : 50 mg/kg IM (max 125 mg). Rechercher un abus.","≤ 45 kg៖ ceftriaxone 25–50 mg/kg IM ម្តង (អតិ. 250 mg); > 45 kg៖ ដូសមនុស្សធំ · ទារកភ្នែកឡើងខ្ទុះ៖ 50 mg/kg IM (អតិ. 125 mg)។ វាយតម្លៃការរំលោភ។"],"cro"],
+ [["Chlamydia","Chlamydia","Chlamydia"],
+  ["Doxycycline 100 mg × 2/day × 7 d (or azithromycin 1 g once).","Doxycycline 100 mg × 2/j × 7 j (ou azithromycine 1 g).","Doxycycline 100 mg ២ ដង/ថ្ងៃ × ៧ ថ្ងៃ (ឬ azithromycin 1 g ម្តង)។"],
+  ["Azithromycin 1 g once (or amoxicillin 500 mg × 3/day × 7 d). NO doxycycline.","Azithromycine 1 g (ou amoxicilline 500 mg × 3/j × 7 j). PAS de doxycycline.","Azithromycin 1 g ម្តង (ឬ amoxicillin 500 mg ៣ ដង/ថ្ងៃ × ៧ ថ្ងៃ)។ ហាម doxycycline។"],
+  ["Azithromycin 20 mg/kg once (max 1 g) · newborn conjunctivitis / pneumonia: azithromycin 20 mg/kg once daily × 3 d.","Azithromycine 20 mg/kg (max 1 g) · conjonctivite / pneumopathie néonatale : 20 mg/kg/j × 3 j.","Azithromycin 20 mg/kg ម្តង (អតិ. 1 g) · ទារក៖ 20 mg/kg ម្តង/ថ្ងៃ × ៣ ថ្ងៃ។"],"azi"],
+ [["Trichomonas","Trichomonase","Trichomonas"],
+  ["Metronidazole 500 mg × 2/day × 7 d (or 2 g once).","Métronidazole 500 mg × 2/j × 7 j (ou 2 g).","Metronidazole 500 mg ២ ដង/ថ្ងៃ × ៧ ថ្ងៃ (ឬ 2 g ម្តង)។"],
+  ["Metronidazole 500 mg × 2/day × 7 d (safe in pregnancy).","Métronidazole 500 mg × 2/j × 7 j (autorisé).","Metronidazole 500 mg ២ ដង/ថ្ងៃ × ៧ ថ្ងៃ (មានសុវត្ថិភាព)។"],
+  ["Metronidazole 5 mg/kg × 3/day × 7 d (max 2 g/day). Assess for abuse.","Métronidazole 5 mg/kg × 3/j × 7 j (max 2 g/j). Rechercher un abus.","Metronidazole 5 mg/kg ៣ ដង/ថ្ងៃ × ៧ ថ្ងៃ (អតិ. 2 g/ថ្ងៃ)។ វាយតម្លៃការរំលោភ។"],"mtz"],
+ [["Bacterial vaginosis","Vaginose bactérienne","Bacterial vaginosis"],
+  ["Metronidazole 500 mg × 2/day × 7 d (or 2 g once). Partner not treated.","Métronidazole 500 mg × 2/j × 7 j (ou 2 g). Pas de traitement du partenaire.","Metronidazole 500 mg ២ ដង/ថ្ងៃ × ៧ ថ្ងៃ (ឬ 2 g)។ មិនបាច់ព្យាបាលដៃគូ។"],
+  ["Metronidazole 500 mg × 2/day × 7 d.","Métronidazole 500 mg × 2/j × 7 j.","Metronidazole 500 mg ២ ដង/ថ្ងៃ × ៧ ថ្ងៃ។"],["—","—","—"],""],
+ [["Vaginal candidiasis","Candidose vaginale","ផ្សិតទ្វារមាស"],
+  ["Clotrimazole 500 mg vaginal once (or 100 mg × 6 nights) · or fluconazole 150 mg PO once.","Clotrimazole 500 mg ovule unique (ou 100 mg × 6 soirs) · ou fluconazole 150 mg PO.","Clotrimazole 500 mg ទ្វារមាសម្តង (ឬ 100 mg × ៦ យប់) · ឬ fluconazole 150 mg លេបម្តង។"],
+  ["Clotrimazole 100 mg vaginal × 7 nights. NO oral fluconazole.","Clotrimazole 100 mg ovule × 7 soirs. PAS de fluconazole oral.","Clotrimazole 100 mg ទ្វារមាស × ៧ យប់។ ហាម fluconazole លេប។"],["—","—","—"],""],
+ [["Genital herpes","Herpès génital","Herpès ប្រដាប់ភេទ"],
+  ["First episode: aciclovir 400 mg × 3/day × 7–10 d · recurrence: 400 mg × 3/day × 5 d.","1er épisode : aciclovir 400 mg × 3/j × 7–10 j · récurrence : × 5 j.","លើកដំបូង៖ aciclovir 400 mg ៣ ដង/ថ្ងៃ × ៧–១០ ថ្ងៃ · កើតឡើងវិញ៖ × ៥ ថ្ងៃ។"],
+  ["Aciclovir (same dose); from 36 weeks 400 mg × 3/day until delivery if recurrent. Lesions at labour → caesarean.","Aciclovir (même dose) ; dès 36 SA 400 mg × 3/j si récidives. Lésions au travail → césarienne.","Aciclovir (ដូសដូចគ្នា); ពី ៣៦ សប្តាហ៍ 400 mg ៣ ដង/ថ្ងៃ រហូតសម្រាល បើកើតញឹក។ មានដំបៅពេលសម្រាល → វះកាត់។"],
+  ["Aciclovir 20 mg/kg × 4/day (max 400 mg) × 7–10 d. Newborn herpes → IV, refer.","Aciclovir 20 mg/kg × 4/j (max 400 mg) × 7–10 j. Herpès néonatal → IV, transférer.","Aciclovir 20 mg/kg ៤ ដង/ថ្ងៃ (អតិ. 400 mg) × ៧–១០ ថ្ងៃ។ ទារក → IV បញ្ជូន។"],""],
+ [["PID (pelvic infection)","Infection génitale haute","រលាកអាងត្រគាក (PID)"],
+  ["Ceftriaxone 1 g IM once + doxycycline 100 mg × 2/day × 14 d + metronidazole 500 mg × 2/day × 14 d.","Ceftriaxone 1 g IM + doxycycline 100 mg × 2/j × 14 j + métronidazole 500 mg × 2/j × 14 j.","Ceftriaxone 1 g IM ម្តង + doxycycline 100 mg ២ ដង/ថ្ងៃ × ១៤ ថ្ងៃ + metronidazole 500 mg ២ ដង/ថ្ងៃ × ១៤ ថ្ងៃ។"],
+  ["Rare — admit / refer (exclude ectopic). No doxycycline.","Rare — hospitaliser / transférer (exclure GEU). Pas de doxycycline.","កម្រ — សម្រាកពេទ្យ / បញ្ជូន (បដិសេធគភ៌ក្រៅស្បូន)។ ហាម doxycycline។"],["—","—","—"],""],
+ [["Hepatitis B (mother HBsAg +)","Hépatite B (mère AgHBs +)","រលាកថ្លើម B (ម្តាយ HBsAg +)"],["—","—","—"],
+  ["Tenofovir 300 mg daily from 24–28 weeks to delivery (WHO 2024, when HBV DNA is high or not testable).","Ténofovir 300 mg/j de 24–28 SA à l'accouchement (OMS 2024, si ADN VHB élevé ou non dosable).","Tenofovir 300 mg/ថ្ងៃ ពី ២៤–២៨ សប្តាហ៍ ដល់សម្រាល (WHO 2024 បើ HBV DNA ខ្ពស់ ឬធ្វើតេស្តមិនបាន)។"],
+  ["Newborn: HepB vaccine 0.5 ml IM within 24 h (+ HBIG 0.5 ml IM if available), then routine doses; breastfeeding OK.","Nouveau-né : vaccin HB 0,5 ml IM < 24 h (+ IgHB 0,5 ml si disponible) ; allaitement possible.","ទារក៖ វ៉ាក់សាំង HepB 0.5 ml IM ក្នុង ២៤ ម៉ោង (+ HBIG 0.5 ml បើមាន) បន្តតាមកាលវិភាគ; អាចបំបៅដោះ។"],""]];
+function calcSti(){
+  var box=$("cBody"); box.textContent=""; var w=cWt();
+  var t=vxTable([["Infection","Infection","ជំងឺ"],["Adult","Adulte","មនុស្សធំ"],["Pregnant","Grossesse","មានផ្ទៃពោះ"],["Child / newborn","Enfant / nouveau-né","កុមារ / ទារក"]],STI_T.map(function(r){
+    var child=cL(r[3]);
+    if(w&&r[4]){ var c={bpg1:"→ "+Math.round(Math.min(50000*w,2400000)).toLocaleString("en")+" U",bpg3:"→ "+Math.round(Math.min(50000*w,2400000)).toLocaleString("en")+" U / "+cL(["week","semaine","សប្តាហ៍"]),pen:"→ "+Math.round(50000*w).toLocaleString("en")+" U / "+cL(["dose","dose","ដង"]),cro:"→ "+(w>45?"1 g":cFmt(Math.min(50*w,250))+" mg"),azi:"→ "+cFmt(Math.min(20*w,1000))+" mg",mtz:"→ "+cFmt(Math.min(5*w,666))+" mg × 3"}[r[4]]; if(c) child+=" ["+w+" kg "+c+"]"; }
+    return {c:[cL(r[0]),cL(r[1]),cL(r[2]),child],small:0}; }));
+  t.classList.add("stitbl"); box.appendChild(t);
+  var n=mk("div","cnote"); n.textContent=cL(["Always: test for HIV, syphilis and hepatitis B; treat partners; condoms; no sex until 7 days after treatment of both. WHO 2016 (syphilis, chlamydia), WHO 2024 (gonorrhoea, hepatitis B). Enter the weight at the top to calculate child doses.","Toujours : dépister VIH, syphilis, hépatite B ; traiter les partenaires ; préservatif ; pas de rapports avant 7 jours après le traitement des deux. OMS 2016 (syphilis, chlamydia), OMS 2024 (gonococcie, hépatite B). Saisir le poids pour les doses pédiatriques.","ជានិច្ច៖ ធ្វើតេស្ត HIV ស្វាយ និងរលាកថ្លើម B; ព្យាបាលដៃគូ; ស្រោមអនាម័យ; កុំរួមភេទរហូត ៧ ថ្ងៃក្រោយទាំងពីរព្យាបាល។ WHO 2016 (ស្វាយ chlamydia), WHO 2024 (ប្រមេះ រលាកថ្លើម B)។ ដាក់ទម្ងន់ខាងលើ ដើម្បីគណនាដូសកុមារ។"]); box.appendChild(n);
+}
+
+
+/* ---------- v56: ✨ smart assistant for minor surgery — suggests the procedure from the diagnosis and writes the procedure note (offline, on this device) ---------- */
+var PROC_AI=[
+ [/lacerat|cut wound|open wound|wound of|s01\.|s11\.|s21\.|s31\.|s41\.|s51\.|s61\.|s71\.|s81\.|s91\.|t14\.1|របួសដាច់|ដេររបួស|plaie/,"d-wound"],
+ [/abscess|furuncle|carbuncle|boil\b|l02|អាប់សេ|បូស|abcès/,"n-abscess"],
+ [/\bburn|t2[0-5]\.|t30|t31|រលាកភ្លើង|រលាកទឹកក្តៅ|brûlure/,"n-burn"],
+ [/bite|w54|rabies|ខាំ|morsure/,"d-dogbite"],
+ [/epistaxis|nosebleed|r04\.0|ច្រមុះហូរឈាម|épistaxis/,"n-epistaxis"],
+ [/sprain|s93|s83\.|រមួល|entorse/,"d-sprain"],
+ [/snake|t63\.0|ពស់|serpent/,"n-snakebite"],
+ [/ingrown|l60\.0|ក្រចកដុះចូល|incarné/,"n-ingrown"],
+ [/epidermoid|sebaceous|l72\.|គីសស្បែក|kyste/,"n-cyst"],
+ [/foreign body.*(skin|soft|subcut)|t14\.0|វត្ថុចម្លែក|corps étranger cutané/,"n-fb"],
+ [/ear ?wax|cerumen|h61\.2|ក្អែលត្រចៀក|bouchon/,"n-earwax"],
+ [/phimosis|paraphimosis|circumcis|n47|កាត់ស្បែក|circoncision/,"z-circum"],
+ [/lipoma|d17\.|ដុំខ្លាញ់|lipome/,"z-lipoma"],
+ [/suture removal|removal of sutures|z48\.0.*suture|ដកចំណង|ablation des fils/,"z-sutrem"],
+ [/dressing|z48\.0|ប្តូររុំ|pansement/,"z-dressing"],
+ [/thrombosed|k64\.5|ឬសដូងបាតកក|thrombose hémorroïd/,"z-thrombhem"],
+ [/subungual|s60\.1|ក្រោមក្រចក|sous-unguéal/,"z-subungual"],
+ [/naevus|nevus|mole|skin tag|acrochordon|d22\.|d23\.|ប្រជ្រុយ|ស្បែកដុះ/,"z-skinlesion"],
+ [/bartholin|n75\./,"z-bartholin"],
+ [/implant|z30\.0.*implant|កងស្បូនដៃ/,"z-implant"],
+ [/tongue.?tie|ankyloglossia|q38\.1|ចំណងអណ្តាត|frein de langue/,"z-frenotomy"],
+ [/fracture.*(radius|wrist|forearm)|s52\.|បាក់.*កដៃ|fracture du poignet/,"z-wrist"],
+ [/pulled elbow|s53\.0|កែងដៃរបូត|pronation douloureuse/,"z-pulledelbow"],
+ [/paronychia|l03\.0|រលាកជុំវិញក្រចក|périonyxis|panaris/,"x-paronychia"],
+ [/wart|b07|ឬស\b|verrue/,"x-warts"],
+ [/chalazion|h00\.1/,"y-chalazion"],
+ [/urinary retention|r33|នោមមិនចេញ|rétention/,"y-retention"]];
+function procAiCtx(){ var cur=lib.find(function(x){return x.id===currentId;}); return fold([$("fDx").textContent,$("fDx2").textContent,$("fCo").textContent,cur?cur.name:""].join(" ")); }
+function procAiSuggest(){ var ctx=procAiCtx(), out=[]; if(!ctx.trim()) return out;
+  PROC_AI.forEach(function(r){ if(r[0].test(ctx)&&PROCS[r[1]]&&out.indexOf(r[1])<0) out.push(r[1]); }); return out.slice(0,3); }
+function procAiName(id){ var n=PROCS[id].name, l=langPrim(); return l==="kh"?n[1]:l==="fr"?frOf(n[0]):n[0]; }
+function procAiRender(){
+  var bar=$("procAiBar"); if(!bar) return; bar.textContent="";
+  var ids=procAiSuggest(), shown=!$("procSec").hidden, curName=$("procNameEn").textContent.trim();
+  if(!ids.length){ bar.hidden=true; return; }
+  if(shown&&ids.some(function(id){return PROCS[id].name[0]===curName;})){ bar.hidden=true; return; }
+  var lb=mk("span","aitag"); lb.textContent="✨ "+cL(["Suggested from the diagnosis:","Suggéré d'après le diagnostic :","ណែនាំតាមរោគវិនិច្ឆ័យ៖"]); bar.appendChild(lb);
+  ids.forEach(function(id){ var b=mk("button","aichip"); b.type="button"; b.textContent="✂ "+procAiName(id); b.title=cL(["Insert the protocol and write the procedure note","Insérer le protocole et rédiger le compte rendu","បញ្ចូលពិធីការ និងសរសេរកំណត់ត្រាវះកាត់"]);
+    b.onclick=function(){ fillProc(clone(PROCS[id])); if(typeof syncFr==="function") syncFr(); procNoteWrite(id,true); procAiRender(); $("procSec").scrollIntoView({block:"start",behavior:"smooth"}); say("✨ "+procAiName(id)); };
+    bar.appendChild(b); });
+  bar.hidden=false;
+}
+/* procedure note (compte rendu opératoire) */
+function procNoteText(id){
+  var l=langPrim(), L=function(a){return l==="fr"?a[1]:l==="kh"?a[2]:a[0];};
+  var w=ptWeight(), now=new Date(), hh=("0"+now.getHours()).slice(-2)+":"+("0"+now.getMinutes()).slice(-2);
+  var nm=id&&PROCS[id]?procAiName(id):($("procNameEn").textContent.trim()||"—"), dx=$("fDx").textContent.trim()||"—";
+  var digit=/ingrown|paronychia|subungual|circum|frenotomy|z-circum|x-paronychia|n-ingrown|z-subungual/.test(id||"");
+  var noAne=/z-sutrem|z-dressing|z-pulledelbow|z-subungual|n-earwax|d-sprain|n-snakebite|z-frenotomy|z-wrist/.test(id||"");
+  var ane=noAne?L(["none required","aucune","មិនចាំបាច់"]):"Lidocaine 1% "+(digit?L(["WITHOUT adrenaline (digital / penile block)","SANS adrénaline (bloc digital / pénien)","គ្មាន adrenaline (block ម្រាម / លិង្គ)"]):"")+" ___ ml"+(w?" ("+L(["max","max","អតិ."])+" "+cFmt(Math.min(3*w,200)/10)+" ml = 3 mg/kg × "+w+" kg)":"");
+  var rx=rxItems().map(rowData).filter(function(r){return r.drug;}).map(function(r){return r.drug;}).join(", ");
+  var fu=((l==="kh"&&$("fFollowKh"))?$("fFollowKh"):(l==="fr"&&$("fFollowFr"))?$("fFollowFr"):$("fFollowEn")).textContent.trim();
+  var lines=[
+    L(["PROCEDURE NOTE","COMPTE RENDU OPÉRATOIRE","កំណត់ត្រាវះកាត់តូច"])+" — "+($("pDate").textContent.trim()||todayStr())+" "+hh,
+    L(["Procedure: ","Geste : ","វិធីសាស្ត្រ៖ "])+nm,
+    L(["Indication / diagnosis: ","Indication / diagnostic : ","ការចង្អុលបង្ហាញ / រោគវិនិច្ឆ័យ៖ "])+dx,
+    L(["Consent: verbal / written consent obtained after explaining risks.","Consentement : obtenu (oral / écrit) après information sur les risques.","ការយល់ព្រម៖ បានពន្យល់ហានិភ័យ និងទទួលការយល់ព្រម (មាត់ / សរសេរ)។"]),
+    L(["Allergies: ","Allergies : ","អាឡែកហ្ស៊ី៖ "])+($("pAllergy").textContent.trim()||L(["none known","aucune connue","មិនដឹង / គ្មាន"])),
+    L(["Asepsis: povidone-iodine, sterile gloves and drapes.","Asepsie : povidone iodée, gants et champs stériles.","អនាម័យ៖ povidone-iodine ស្រោមដៃ និងក្រណាត់មាប់មគ។"]),
+    L(["Anaesthesia: ","Anesthésie : ","ថ្នាំស្ពឹក៖ "])+ane,
+    L(["Findings: ","Constatations : ","អ្វីដែលរកឃើញ៖ "])+"___",
+    L(["Technique: as per protocol above","Technique : selon le protocole ci-dessus","បច្ចេកទេស៖ តាមពិធីការខាងលើ"])+(id==="d-wound"?L(["; ___ sutures, nylon ___/0",", ___ points, nylon ___/0","; ចំណង ___ nylon ___/0"]):"")+(l==="kh"?"។":"."),
+    L(["Blood loss: minimal. Complications: none.","Saignement : minime. Complications : aucune.","ការបាត់បង់ឈាម៖ តិចតួច។ ផលវិបាក៖ គ្មាន។"]),
+    L(["Specimen: ","Prélèvement : ","សំណាក៖ "])+(/z-skinlesion|z-lipoma|n-cyst/.test(id||"")?L(["sent for histology","envoyé en anatomopathologie","បានផ្ញើពិនិត្យជាលិកា"]):/n-abscess|z-bartholin/.test(id||"")?L(["pus for culture if recurrent","pus en culture si récidive","ខ្ទុះបណ្តុះមេរោគ បើកើតញឹក"]):L(["none","aucun","គ្មាន"])),
+    L(["Post-procedure: ","Après le geste : ","ក្រោយវះ៖ "])+(rx||"—")+". "+L(["Patient stable, wound care explained.","Patient stable, soins de plaie expliqués.","អ្នកជំងឺស្ថិរភាព បានពន្យល់ការថែទាំរបួស។"]),
+    fu?fu:""].filter(Boolean);
+  return lines.join("\n");
+}
+function procNoteWrite(id,force){ var n=$("procNote"); if(!n) return; if(n.dataset.edited&&!force) return; delete n.dataset.edited;
+  n.innerText=procNoteText(id||procIdFromName()); $("procNoteBox").hidden=false; }
+function procIdFromName(){ var en=$("procNameEn").textContent.trim(); return Object.keys(PROCS).find(function(k){return PROCS[k].name[0]===en;})||""; }
+(function(){
+  var t; var run=function(){ clearTimeout(t); t=setTimeout(procAiRender,300); };
+  ["fDx","fDx2","fCo"].forEach(function(id){ var e=$(id); if(e) e.addEventListener("input",run); });
+  var n=$("procNote"); if(n) n.addEventListener("input",function(){ n.dataset.edited="1"; });
+  var b=$("procNoteGen"); if(b) b.onclick=function(){ procNoteWrite("",true); say("✨ "+cL(["Procedure note written","Compte rendu rédigé","បានសរសេរកំណត់ត្រាវះកាត់"])); };
+  var origFill=fillProc; fillProc=function(pr){ origFill(pr); var nb=$("procNoteBox"); if(nb){ if(!pr){ nb.hidden=true; $("procNote").innerText=""; delete $("procNote").dataset.edited; } else setTimeout(function(){ procNoteWrite(procIdFromName()); },0); } procAiRender(); };
+  setTimeout(procAiRender,500);
+})();
+
+
+/* ---------- v57: ✨ assistant — checks the prescription for errors, notifies, and offers shortcuts (offline, on this device) ---------- */
+var AI_LIM=[ /* [regex, adult max mg/day, child max mg/kg/day, label] */
+ [/paracetamol|acetaminophen/,4000,75,"Paracetamol"],[/ibuprofen/,2400,40,"Ibuprofen"],[/diclofenac/,150,3,"Diclofenac"],[/mefenamic/,1500,0,"Mefenamic acid"],
+ [/tramadol/,400,8,"Tramadol"],[/metformin/,3000,0,"Metformin"],[/amlodipine/,10,0,"Amlodipine"],[/chlorphen/,24,0.35,"Chlorphenamine"],
+ [/metoclopramide/,30,0.5,"Metoclopramide"],[/domperidone/,30,0.75,"Domperidone"],[/omeprazole/,80,0,"Omeprazole"],[/cetirizine/,20,0,"Cetirizine"],[/loratadine/,10,0,"Loratadine"]];
+var AI_INTER=[ /* [regex A, regex B, level, [en,fr,kh]] */
+ [/warfarin/,/ibuprofen|diclofenac|naproxen|mefenamic|meloxicam|aspirin|ketorolac/,"hi",["Warfarin + NSAID/aspirin: high bleeding risk.","Warfarine + AINS/aspirine : risque hémorragique élevé.","Warfarin + NSAID/Aspirin៖ ហានិភ័យហូរឈាមខ្ពស់។"]],
+ [/sildenafil|tadalafil/,/nitroglycerin|isosorbide|nitrate/,"hi",["Sildenafil + nitrate: dangerous drop in BP — never together.","Sildénafil + dérivé nitré : hypotension grave — contre-indiqué.","Sildenafil + Nitrate៖ សម្ពាធធ្លាក់ខ្លាំង — ហាមប្រើជាមួយគ្នា។"]],
+ [/enalapril|lisinopril|captopril|perindopril|ramipril|losartan|valsartan|telmisartan/,/spironolactone|potassium chloride|amiloride/,"mid",["ACE inhibitor / ARB + spironolactone / potassium: risk of high potassium — check K⁺ and creatinine.","IEC / ARA2 + spironolactone / potassium : hyperkaliémie — contrôler K⁺ et créatinine.","ACEI/ARB + Spironolactone/K⁺៖ K⁺ អាចឡើង — ពិនិត្យ K⁺ និង creatinine។"]],
+ [/clarithromycin|erythromycin/,/simvastatin|atorvastatin|lovastatin/,"mid",["Clarithromycin/erythromycin + statin: muscle damage risk — pause the statin during the antibiotic.","Clarithromycine/érythromycine + statine : rhabdomyolyse — suspendre la statine.","Clarithromycin/Erythromycin + Statin៖ ហានិភ័យខូចសាច់ដុំ — ផ្អាក Statin ពេលប្រើថ្នាំអង់ទីប៊ីយ៉ូទិក។"]],
+ [/fluconazole|ketoconazole|itraconazole/,/simvastatin|atorvastatin/,"mid",["Azole antifungal + statin: muscle damage risk.","Antifongique azolé + statine : risque musculaire.","ថ្នាំផ្សិត Azole + Statin៖ ហានិភ័យខូចសាច់ដុំ។"]],
+ [/tramadol/,/sertraline|fluoxetine|paroxetine|escitalopram|amitriptyline|ondansetron/,"mid",["Tramadol + SSRI / amitriptyline: serotonin syndrome and seizure risk.","Tramadol + ISRS / amitriptyline : syndrome sérotoninergique, convulsions.","Tramadol + SSRI/Amitriptyline៖ ហានិភ័យ serotonin syndrome និងប្រកាច់។"]],
+ [/ciprofloxacin|levofloxacin|ofloxacin|doxycycline|tetracycline/,/ferrous|iron|calcium|antacid|aluminium|magnesium|zinc/,"lo",["Quinolone / doxycycline with iron, calcium, zinc or antacid: take 2 hours apart.","Quinolone / doxycycline avec fer, calcium, zinc ou antiacide : espacer de 2 heures.","Quinolone/Doxycycline ជាមួយជាតិដែក Calcium Zinc ឬថ្នាំក្រពះ៖ លេបឃ្លាតគ្នា ២ ម៉ោង។"]],
+ [/diazepam|alprazolam|lorazepam|clonazepam|midazolam/,/morphine|tramadol|codeine|fentanyl|pethidine/,"mid",["Benzodiazepine + opioid: breathing depression — lowest doses, monitor.","Benzodiazépine + opioïde : dépression respiratoire — doses minimales, surveiller.","Benzodiazepine + Opioid៖ ដកដង្ហើមខ្សោយ — ដូសទាបបំផុត តាមដាន។"]],
+ [/methotrexate/,/cotrimoxazole|co-trimoxazole|trimethoprim/,"hi",["Methotrexate + co-trimoxazole: severe bone-marrow toxicity.","Méthotrexate + cotrimoxazole : toxicité médullaire grave.","Methotrexate + Co-trimoxazole៖ ពុលខួរឆ្អឹងធ្ងន់។"]],
+ [/ceftriaxone/,/calcium gluconate|calcium chloride|ringer/,"mid",["Ceftriaxone with IV calcium (incl. Ringer lactate) in the same line: precipitate — never mix; in newborns avoid together.","Ceftriaxone et calcium IV (dont Ringer lactate) dans la même voie : précipité — ne jamais mélanger ; à éviter chez le nouveau-né.","Ceftriaxone ជាមួយ Calcium IV (រួម Ringer lactate) ក្នុងខ្សែតែមួយ៖ កកជាដុំ — កុំលាយ; ទារកកុំប្រើជាមួយគ្នា។"]],
+ [/allopurinol/,/azathioprine|mercaptopurine/,"hi",["Allopurinol + azathioprine: toxic — reduce azathioprine by 75% or avoid.","Allopurinol + azathioprine : toxique — réduire de 75 % ou éviter.","Allopurinol + Azathioprine៖ ពុល — កាត់ azathioprine ៧៥% ឬជៀសវាង។"]]];
+var AI_QT=/azithromycin|clarithromycin|erythromycin|ciprofloxacin|levofloxacin|moxifloxacin|ondansetron|domperidone|haloperidol|amiodarone|chloroquine|quinine|fluconazole|methadone/;
+var AI_NSAID=/ibuprofen|diclofenac|naproxen|mefenamic|meloxicam|piroxicam|celecoxib|etoricoxib|ketorolac/, AI_ACE=/enalapril|lisinopril|captopril|perindopril|ramipril|losartan|valsartan|telmisartan/, AI_DIUR=/furosemide|hydrochlorothiazide|indapamide|spironolactone/;
+var AI_ELDER=[[/diazepam|alprazolam|lorazepam|clonazepam/,["Benzodiazepine in age ≥ 65: falls and confusion — avoid or lowest dose.","Benzodiazépine ≥ 65 ans : chutes, confusion — éviter.","Benzodiazepine អាយុ ≥ ៦៥៖ ដួល វង្វេង — ជៀសវាង ឬដូសទាប។"]],
+ [/amitriptyline|chlorphen|promethazine|hydroxyzine|diphenhydramine|dimenhydrinate/,["Sedating anticholinergic in age ≥ 65: confusion, urine retention — prefer loratadine / cetirizine.","Anticholinergique sédatif ≥ 65 ans : confusion, rétention — préférer loratadine / cétirizine.","ថ្នាំ anticholinergic អាយុ ≥ ៦៥៖ វង្វេង នោមមិនចេញ — ប្រើ loratadine/cetirizine ជំនួស។"]],
+ [/glibenclamide/,["Glibenclamide in age ≥ 65: prolonged low sugar — prefer gliclazide.","Glibenclamide ≥ 65 ans : hypoglycémies prolongées — préférer gliclazide.","Glibenclamide អាយុ ≥ ៦៥៖ ស្ករធ្លាក់យូរ — ប្រើ gliclazide ជំនួស។"]]];
+function aiMg(drug,unit){ var d=fold(drug), m;
+  if(unit==="ml"&&(m=/(\d+(?:\.\d+)?)\s*mg\s*\/\s*(\d+(?:\.\d+)?)\s*ml/.exec(d))) return +m[1]/+m[2];
+  if((unit==="tab"||unit==="cap"||unit==="sachet"||unit==="supp")&&(m=/(\d+(?:\.\d+)?)\s*mg/.exec(d))&&!/\+/.test(d.slice(0,m.index))) return +m[1];
+  return null; }
+function aiSlotsSum(r){ return r.slots.reduce(function(a,v){ var n=parseFloat(String(v||"").replace(",",".")); return a+(isNaN(n)?0:n); },0); }
+var AI_LAST=[];
+function aiIssues(){
+  var out=[], add=function(lvl,cat,msg,go,fix,fixL){ out.push({lvl:lvl,cat:cat,msg:msg,go:go,fix:fix,fixL:fixL}); };
+  var mode=ptMode(), age=ptAgeYears(), w=ptWeight(), care=$("tplCare").value, dx=$("fDx").textContent.trim(), ctx=typeof symContext==="function"?symContext():fold(dx);
+  var rows=rxItems().filter(function(tb){return rowData(tb).drug;});
+  var CAT={pt:["Patient","Patient","អ្នកជំងឺ"],vs:["Vital signs","Signes vitaux","សញ្ញាជីវិត"],dx:["Diagnosis","Diagnostic","រោគវិនិច្ឆ័យ"],rx:["Medicines","Médicaments","ថ្នាំ"],ia:["Interactions","Interactions","អន្តរកម្មថ្នាំ"],np:["NPCA","NPCA","NPCA"],ipd:["IPD","IPD","IPD"]};
+  /* patient */
+  if(!$("pName").textContent.trim()) add("lo",CAT.pt,cL(["No patient name.","Nom du patient manquant.","មិនទាន់មានឈ្មោះអ្នកជំងឺ។"]),"pName");
+  if(age===null) add("mid",CAT.pt,cL(["No age — child / pregnancy safety checks cannot run.","Âge manquant — contrôles enfant / grossesse impossibles.","គ្មានអាយុ — មិនអាចពិនិត្យសុវត្ថិភាពកុមារ / ផ្ទៃពោះ។"]),"pAge");
+  if(mode==="child"&&!w) add("hi",CAT.pt,cL(["Child without weight — doses cannot be calculated.","Enfant sans poids — doses non calculables.","កុមារគ្មានទម្ងន់ — មិនអាចគណនាដូស។"]),"pWt");
+  if(!$("pAllergy").textContent.trim()&&rows.length) add("mid",CAT.pt,cL(["Allergy not recorded — ask and write NKDA if none.","Allergies non renseignées — demander, écrire « aucune » si besoin.","មិនទាន់កត់អាឡែកហ្ស៊ី — សួរ ហើយសរសេរ NKDA បើគ្មាន។"]),"pAllergy");
+  if(mode==="preg"&&!/LMP|DDR|EDD|GA \d/i.test($("fHo").textContent)) add("lo",CAT.pt,cL(["Pregnancy: no LMP / EDD / weeks recorded.","Grossesse : DDR / DPA / terme non notés.","ផ្ទៃពោះ៖ មិនទាន់កត់ LMP / EDD / សប្តាហ៍។"]),"fHo",function(){ calcOpen("preg"); },"🤰 "+cL(["Calculate","Calculer","គណនា"]));
+  /* vitals */
+  var vs=["vBp","vP","vT","vRr","vSpo2"].filter(function(id){return $(id).value.trim();}).length;
+  if(!vs) add("mid",CAT.vs,cL(["No vital signs recorded.","Aucun signe vital noté.","មិនទាន់មានសញ្ញាជីវិត។"]),"vBp");
+  var sp=vNum("vSpo2"), sb=vSbp(), tt=vNum("vT");
+  if(sp!==null&&sp<92) add("hi",CAT.vs,cL(["SpO₂ "+sp+"% — oxygen, consider admission / referral.","SpO₂ "+sp+" % — oxygène, envisager hospitalisation / transfert.","SpO₂ "+sp+"% — អុកស៊ីសែន ពិចារណាសម្រាកពេទ្យ / បញ្ជូន។"]),"vSpo2");
+  if(sb!==null&&sb<90) add("hi",CAT.vs,cL(["Systolic BP "+sb+" — possible shock.","TAS "+sb+" — choc possible.","សម្ពាធ "+sb+" — អាចស្ទុះ។"]),"vBp");
+  if(sb!==null&&sb>=180) add("hi",CAT.vs,cL(["BP ≥ 180 — hypertensive urgency / emergency?","TA ≥ 180 — poussée hypertensive ?","សម្ពាធ ≥ ១៨០ — សម្ពាធឡើងបន្ទាន់?"]),"vBp");
+  if(mode!=="child"&&typeof news2==="function"){ var n=news2(); if(n&&n[0]>=5) add(n[0]>=7?"hi":"mid",CAT.vs,"NEWS2 "+n[0]+" — "+cL(n[0]>=7?["emergency review, consider IPD / ICU.","évaluation urgente, envisager IPD / réa.","ពិនិត្យបន្ទាន់ ពិចារណា IPD / ICU។"]:["urgent review.","réévaluation urgente.","ត្រូវពិនិត្យបន្ទាន់។"]),"vRr"); }
+  if(mode==="child"&&typeof pedVitals==="function") pedVitals().forEach(function(t){ add("mid",CAT.vs,t,"vRr"); });
+  if(mode==="child"&&tt!==null&&tt>=39&&age!==null&&age<0.25) add("hi",CAT.vs,cL(["Fever in an infant under 3 months — full assessment, consider admission.","Fièvre < 3 mois — bilan complet, hospitalisation à discuter.","គ្រុនលើទារកក្រោម ៣ ខែ — ពិនិត្យពេញលេញ ពិចារណាសម្រាកពេទ្យ។"]),"vT");
+  /* diagnosis */
+  if(!dx&&rows.length) add("hi",CAT.dx,cL(["No diagnosis.","Pas de diagnostic.","គ្មានរោគវិនិច្ឆ័យ។"]),"fDx");
+  else if(dx&&!codeOf(dx)) add("lo",CAT.dx,cL(["Diagnosis without ICD-10 code (needed for NPCA / report).","Diagnostic sans code CIM-10 (NPCA / rapport).","រោគវិនិច្ឆ័យគ្មានកូដ ICD-10 (ត្រូវការសម្រាប់ NPCA / របាយការណ៍)។"]),"fDx");
+  if(!$("fCo").textContent.trim()) add("mid",CAT.dx,cL(["No chief complaint (C/O).","Motif de consultation manquant.","គ្មាន C/O (មូលហេតុមកពិនិត្យ)។"]),"fCo");
+  if(rows.length&&!$("fFollowEn").textContent.trim()&&!($("fFollowKh")&&$("fFollowKh").textContent.trim())) add("lo",CAT.dx,cL(["No follow-up advice.","Pas de consigne de suivi.","គ្មានការណាត់ / តាមដាន។"]),"fFollowEn");
+  if(typeof procAiSuggest==="function"&&$("procSec").hidden){ var ps=procAiSuggest(); if(ps.length) add("lo",CAT.dx,cL(["Procedure suggested for this diagnosis: ","Geste suggéré pour ce diagnostic : ","វិធីវះដែលណែនាំសម្រាប់រោគវិនិច្ឆ័យនេះ៖ "])+procAiName(ps[0]),"procAiBar",function(){ fillProc(clone(PROCS[ps[0]])); if(typeof syncFr==="function") syncFr(); procNoteWrite(ps[0],true); },"✂ "+cL(["Insert","Insérer","បញ្ចូល"])); }
+  /* medicines */
+  var allergy=($("pAllergy").textContent||"");
+  rows.forEach(function(tb,i){ var r=rowData(tb), d=fold(r.drug), nm=(i+1)+". "+r.drug;
+    safetyIssues(r,mode,age,ctx,allergy).forEach(function(x){ add("hi",CAT.rx,nm+" — "+x,tb); });
+    var timeless=/prn|stat|cont|iv-drip/.test(r.time||"")||["apply","drop","spray","puff","bag","vacc"].indexOf(r.unit)>-1;
+    if(!r.slots.some(function(v){return v&&v!=="0";})&&!/stat/.test(r.time||"")&&r.unit!=="vacc") add("mid",CAT.rx,nm+" — "+cL(["no dose / times filled.","posologie non remplie.","មិនទាន់ដាក់ដូស / ពេលលេប។"]),tb);
+    if(!r.days&&!timeless&&!r.total) add("lo",CAT.rx,nm+" — "+cL(["number of days missing.","durée manquante.","ខ្វះចំនួនថ្ងៃ។"]),tb);
+    var mg=aiMg(r.drug,r.unit), sum=aiSlotsSum(r);
+    if(mg&&sum){ var daily=mg*sum; AI_LIM.forEach(function(l){ if(!l[0].test(d)) return;
+      if(mode==="child"&&w&&l[2]&&daily>l[2]*w*1.05) add("hi",CAT.rx,nm+" — "+cL(["daily dose ","dose journalière ","ដូសក្នុងមួយថ្ងៃ "])+cFmt(daily)+" mg = "+cFmt(daily/w)+" mg/kg/"+cL(["day","j","ថ្ងៃ"])+" > "+l[2]+" mg/kg ("+l[3]+")",tb);
+      else if((mode!=="child"||(w&&w>=40))&&daily>l[1]*1.02) add("hi",CAT.rx,nm+" — "+cL(["daily dose ","dose journalière ","ដូសក្នុងមួយថ្ងៃ "])+cFmt(daily)+" mg > max "+l[1]+" mg ("+l[3]+")",tb); }); }
+    if(age!==null&&age>=65) AI_ELDER.forEach(function(e){ if(e[0].test(d)) add("mid",CAT.rx,nm+" — "+cL(e[1]),tb); });
+    var nb=tb.querySelector(".npcachk.bad"); if(nb) add("mid",CAT.np,nm+" — "+nb.textContent.replace(/^⚠\s*NPCA[^:]*:\s*/,"").split("✓")[0].split("✕")[0].trim(),tb);
+  });
+  /* duplicates & interactions */
+  var names=rows.map(function(tb){return fold(rowData(tb).drug);});
+  if(typeof CLASS_DUP!=="undefined") CLASS_DUP.forEach(function(c){ var hit=names.filter(function(n){return c[1].test(n)&&!/gel|cream|drop|ointment|eye|ear/.test(n);}); var std=typeof stdGenerics==="function"?stdGenerics():[]; if(hit.length>1&&!hit.every(function(h){return std.indexOf(gname(h))>-1;})) add("mid",CAT.ia,cL(["Two medicines of the same class (","Deux médicaments de la même classe (","ថ្នាំក្រុមដូចគ្នាពីរមុខ ("])+c[0]+"): "+hit.map(function(h){return h.split(/\s+/)[0];}).join(" + "),null); });
+  AI_INTER.forEach(function(x){ if(names.some(function(n){return x[0].test(n);})&&names.some(function(n){return x[1].test(n);})) add(x[2],CAT.ia,cL(x[3]),null); });
+  var qt=names.filter(function(n){return AI_QT.test(n);}); if(qt.length>=2) add("mid",CAT.ia,cL(["QT-prolonging combination: ","Association allongeant le QT : ","ថ្នាំពីរមុខដែលពន្លូត QT៖ "])+qt.map(function(h){return h.split(/\s+/)[0];}).join(" + ")+cL([" — ECG if heart disease.",". ECG si cardiopathie."," — ធ្វើ ECG បើមានជំងឺបេះដូង។"]),null);
+  if(names.some(function(n){return AI_NSAID.test(n);})&&names.some(function(n){return AI_ACE.test(n);})&&names.some(function(n){return AI_DIUR.test(n);})) add("hi",CAT.ia,cL(["NSAID + ACE inhibitor/ARB + diuretic ('triple whammy'): acute kidney injury risk.","AINS + IEC/ARA2 + diurétique : insuffisance rénale aiguë.","NSAID + ACEI/ARB + ថ្នាំបញ្ចុះទឹក៖ ហានិភ័យតម្រងនោមខ្សោយស្រួចស្រាវ។"]),null);
+  if(names.some(function(n){return /metronidazole|tinidazole/.test(n);})&&!/alcohol|ស្រា|alcool/i.test(($("adviceEn").textContent||"")+($("adviceKh")?$("adviceKh").textContent:""))) add("lo",CAT.ia,cL(["Metronidazole: add advice 'No alcohol during and 48 h after'.","Métronidazole : ajouter « pas d'alcool pendant et 48 h après ».","Metronidazole៖ បន្ថែមការណែនាំ «កុំផឹកស្រា ពេលលេប និង ៤៨ ម៉ោងក្រោយ»។"]),"adviceEn",function(){ var ul=$("adviceEn"), li=mk("li"); li.textContent="No alcohol during treatment and for 48 hours after."; ul.appendChild(li); var uk=$("adviceKh"); if(uk){ var lk=mk("li"); lk.textContent="កុំផឹកស្រា ពេលលេបថ្នាំ និង ៤៨ ម៉ោងក្រោយ។"; uk.appendChild(lk); } if(typeof syncFr==="function") syncFr(); ul.dispatchEvent(new Event("input",{bubbles:true})); },"+ "+cL(["Add","Ajouter","បន្ថែម"]));
+  /* IPD documents */
+  if(care==="ipd"&&typeof npcaIpdMissing==="function") npcaIpdMissing().forEach(function(m){ add("mid",CAT.ipd,cL(["Missing: ","Manquant : ","ខ្វះ៖ "])+m,"evolSec",/évolution|evolution|វិវត្តន៍/i.test(m)&&typeof evolAdd==="function"?function(){ evolAdd(); }:null,"+ "+cL(["Today","Aujourd'hui","ថ្ងៃនេះ"])); });
+  var rank={hi:0,mid:1,lo:2}; out.sort(function(a,b){return rank[a.lvl]-rank[b.lvl];});
+  return out;
+}
+function aiGo(t){ var el=typeof t==="string"?$(t):t; if(!el) return; el.scrollIntoView({block:"center",behavior:"smooth"}); el.classList.add("aiflash"); setTimeout(function(){ el.classList.remove("aiflash"); },1600);
+  var f=el.matches&&el.matches("input,[contenteditable=true]")?el:el.querySelector&&el.querySelector("input,[contenteditable=true]"); if(f) setTimeout(function(){ try{ f.focus(); }catch(e){} },350); }
+function aiBadge(){ var b=$("aiBtn"); if(!b) return; var iss=AI_LAST=aiIssues(), hi=iss.filter(function(x){return x.lvl==="hi";}).length, n=iss.filter(function(x){return x.lvl!=="lo";}).length;
+  var s=b.querySelector("small"); if(!s){ s=mk("small"); b.appendChild(s); } s.textContent=n?String(n):"✓"; b.classList.toggle("aihi",hi>0); b.classList.toggle("aimid",!hi&&n>0); b.classList.toggle("aiok",!n);
+  b.title=hi?cL([hi+" serious issue(s)",hi+" problème(s) grave(s)","បញ្ហាធ្ងន់ "+hi]):n?cL([n+" warning(s)",n+" alerte(s)","ការព្រមាន "+n]):cL(["No problem found","Aucun problème","មិនឃើញបញ្ហា"]);
+  if($("aiPanel")&&!$("aiPanel").hidden) aiRender(); }
+var aiT; function aiSoon(){ clearTimeout(aiT); aiT=setTimeout(aiBadge,500); }
+function aiOpen(printMode){ var p=$("aiPanel"); if(!p){ p=mk("aside","aipanel noprint"); p.id="aiPanel"; document.body.appendChild(p); } p.hidden=false; p.dataset.print=printMode?"1":""; aiRender(); }
+function aiRender(){
+  var p=$("aiPanel"); if(!p) return; p.textContent=""; var iss=AI_LAST=aiIssues();
+  var h=mk("div","aih"), t=mk("b"); t.textContent="✨ "+cL(["Assistant — check","Assistant — contrôle","ជំនួយការ — ពិនិត្យកំហុស"]); h.appendChild(t);
+  var x=mk("button","calcx"); x.type="button"; x.textContent="✕"; x.onclick=function(){ p.hidden=true; }; h.appendChild(x); p.appendChild(h);
+  var hi=iss.filter(function(i){return i.lvl==="hi";}).length, mid=iss.filter(function(i){return i.lvl==="mid";}).length, lo=iss.length-hi-mid;
+  var sm=mk("div","aisum"); [["hi","🔴",hi,["serious","graves","ធ្ងន់"]],["mid","🟠",mid,["check","à vérifier","ត្រូវពិនិត្យ"]],["lo","🔵",lo,["tips","conseils","ណែនាំ"]]].forEach(function(z){ var s=mk("span","schip "+z[0]); s.textContent=z[1]+" "+z[2]+" "+cL(z[3]); sm.appendChild(s); }); p.appendChild(sm);
+  if(p.dataset.print==="1"){ var pw=mk("div","aiprint"), msg=mk("div"); msg.textContent=hi?cL(["⚠ Serious problems found. Fix them or print anyway.","⚠ Problèmes graves détectés. Corriger ou imprimer quand même.","⚠ មានបញ្ហាធ្ងន់។ កែ ឬបោះពុម្ពទោះយ៉ាងណា។"]):cL(["Ready to print.","Prêt à imprimer.","រួចរាល់សម្រាប់បោះពុម្ព។"]); pw.appendChild(msg);
+    var pb=mk("button","btn"); pb.type="button"; pb.textContent="🖨 "+cL(["Print anyway","Imprimer quand même","បោះពុម្ពទោះយ៉ាងណា"]); pb.onclick=function(){ p.hidden=true; AI_PRINT_OK=Date.now(); window.print(); }; pw.appendChild(pb); p.appendChild(pw); }
+  if(!iss.length){ var ok=mk("div","cempty"); ok.textContent="✓ "+cL(["No problem found. Still review the doses yourself.","Aucun problème détecté. Vérifiez quand même les doses.","មិនឃើញបញ្ហា។ សូមពិនិត្យដូសដោយខ្លួនឯងផង។"]); p.appendChild(ok); }
+  var list=mk("div","ailist"); var lastCat="";
+  iss.forEach(function(i){ var c=cL(i.cat); if(c!==lastCat){ var ch=mk("div","aicat"); ch.textContent=c; list.appendChild(ch); lastCat=c; }
+    var it=mk("div","aiitem "+i.lvl), m=mk("span"); m.textContent=i.msg; it.appendChild(m);
+    var tools=mk("span","aitools");
+    if(i.fix){ var fb=mk("button","cadd"); fb.type="button"; fb.textContent=i.fixL||"Fix"; fb.onclick=function(e){ e.stopPropagation(); i.fix(); setTimeout(aiBadge,300); }; tools.appendChild(fb); }
+    if(i.go){ var gb=mk("button","cadd"); gb.type="button"; gb.textContent="→"; gb.title=cL(["Go to","Aller à","ទៅ"]); gb.onclick=function(e){ e.stopPropagation(); aiGo(i.go); }; tools.appendChild(gb); it.style.cursor="pointer"; it.onclick=function(){ aiGo(i.go); }; }
+    it.appendChild(tools); list.appendChild(it); });
+  p.appendChild(list);
+  /* shortcuts to save work */
+  var sh=mk("div","aicat"); sh.textContent="⚡ "+cL(["Shortcuts","Raccourcis","ផ្លូវកាត់"]); p.appendChild(sh);
+  var sc=mk("div","aishort"), mode=ptMode();
+  var S=function(lbl,fn){ var b=mk("button","aichip"); b.type="button"; b.textContent=lbl; b.onclick=fn; sc.appendChild(b); };
+  if(mode==="child") S("👶 "+cL(["Child doses","Doses enfant","ដូសកុមារ"]),function(){ calcOpen("ped"); });
+  if(mode==="preg") S("🤰 "+cL(["Pregnancy dates","Terme","ថ្ងៃគ្រប់ខែ"]),function(){ calcOpen("preg"); });
+  S("💧 "+cL(["IV fluids","Solutés","សេរ៉ូ"]),function(){ calcOpen("fluid"); });
+  if($("tplCare").value==="ipd") S("📝 "+cL(["Add today's evolution","Ajouter l'évolution du jour","បញ្ចូលការវិវត្តន៍ថ្ងៃនេះ"]),function(){ evolAdd(); aiRender(); });
+  if(typeof procAiSuggest==="function"&&procAiSuggest().length) S("✂ "+cL(["Suggested procedure","Geste suggéré","វិធីវះដែលណែនាំ"]),function(){ aiGo("procAiBar"); });
+  S("🦠 STI · WHO",function(){ calcOpen("sti"); });
+  S("📊 "+cL(["Today's report","Rapport du jour","របាយការណ៍ថ្ងៃនេះ"]),function(){ REP.p="today"; repOpen(); });
+  p.appendChild(sc);
+  var ft=mk("div","calcfoot"); ft.textContent=cL(["Automatic checks on this device — they help but do not replace the doctor's judgement.","Contrôles automatiques sur cet appareil — une aide, pas un remplacement du jugement médical.","ការពិនិត្យស្វ័យប្រវត្តិលើឧបករណ៍នេះ — ជួយបាន តែមិនជំនួសការសម្រេចរបស់វេជ្ជបណ្ឌិតទេ។"]); p.appendChild(ft);
+}
+var AI_PRINT_OK=0;
+function aiPrint(){ aiBadge(); var hi=AI_LAST.some(function(x){return x.lvl==="hi";}); if(hi&&Date.now()-AI_PRINT_OK>60000) aiOpen(true); else window.print(); }
+(function(){
+  var b=$("aiBtn"); if(b) b.onclick=function(){ var p=$("aiPanel"); if(p&&!p.hidden) p.hidden=true; else aiOpen(false); };
+  ["input","change"].forEach(function(ev){ var sh=$("sheet"); if(sh) sh.addEventListener(ev,aiSoon); });
+  ["tplCare","pPay"].forEach(function(id){ var e=$(id); if(e) e.addEventListener("change",aiSoon); });
+  document.addEventListener("click",function(e){ if(e.target.closest&&e.target.closest("#rxTable,#symBar,#tplAc,.aichip,#list,#sresults")) aiSoon(); });
+  setTimeout(aiBadge,800);
+})();
 
 /* ---------- PE / medical history / evaluation / SOAP follow the language buttons (ខ្មែរ · EN · FR · EN+ខ្មែរ · FR+ខ្មែរ) ---------- */
 var TRX={"General Appearance":["Aspect général","រូបរាងទូទៅ"],"ENT (ORL)":["ORL","ត្រចៀក ច្រមុះ បំពង់ក"],"Cardiovascular System":["Appareil cardiovasculaire","បេះដូង និងសរសៃឈាម"],"Respiratory System":["Appareil respiratoire","ប្រព័ន្ធដង្ហើម"],"Gastro-Intestinal System":["Appareil digestif","ប្រព័ន្ធរំលាយអាហារ"],"Central Nervous System":["Système nerveux central","ប្រព័ន្ធប្រសាទកណ្តាល"],"Skin & Extremities":["Peau et extrémités","ស្បែក និងចុងដៃជើង"],"Urogenital System":["Appareil uro-génital","ប្រព័ន្ធទឹកនោម និងប្រដាប់បន្តពូជ"],"Mental Status":["État mental","ស្ថានភាពផ្លូវចិត្ត"],"Other body parts":["Autres","ផ្នែកផ្សេងៗ"],"Vaccine":["Vaccins","វ៉ាក់សាំង"],"Past Medical":["Antécédents médicaux","ជំងឺធ្លាប់មាន"],"Past Operation":["Antécédents chirurgicaux","ធ្លាប់វះកាត់"],"Family History":["Antécédents familiaux","ប្រវត្តិគ្រួសារ"],"Social History":["Mode de vie","ប្រវត្តិសង្គម"],"Other":["Autres","ផ្សេងៗ"],"Allergy":["Allergies","អាឡែកហ្ស៊ី"],"EPI complete":["PEV complet","វ៉ាក់សាំង PEV គ្រប់"],"Not up to date":["Pas à jour","មិនទាន់គ្រប់"],"COVID-19 vaccinated":["Vacciné COVID-19","បានចាក់វ៉ាក់សាំង COVID-19"],"Tetanus up to date":["Tétanos à jour","វ៉ាក់សាំងតេតាណូសគ្រប់"],"Hepatitis B vaccinated":["Vacciné hépatite B","បានចាក់វ៉ាក់សាំងរលាកថ្លើម B"],"Unknown":["Inconnu","មិនដឹង"],"Hypertension":["HTA","លើសសម្ពាធឈាម"],"Diabetes":["Diabète","ទឹកនោមផ្អែម"],"Asthma":["Asthme","ហឺត"],"COPD":["BPCO","COPD"],"Heart disease":["Cardiopathie","ជំងឺបេះដូង"],"Stroke":["AVC","ស្ទះសរសៃឈាមខួរក្បាល"],"Tuberculosis":["Tuberculose","របេង"],"Hepatitis B":["Hépatite B","រលាកថ្លើម B"],"Gastritis / ulcer":["Gastrite / ulcère","រលាកក្រពះ / ដំបៅក្រពះ"],"Kidney disease":["Maladie rénale","ជំងឺតម្រងនោម"],"Epilepsy":["Épilepsie","ឆ្កួតជ្រូក"],"None":["Aucun","គ្មាន"],"Appendectomy":["Appendicectomie","វះខ្នែងពោះវៀន"],"Caesarean section":["Césarienne","វះកាត់យកកូន"],"Cholecystectomy":["Cholécystectomie","វះកាត់ថង់ទឹកប្រមាត់"],"Hernia repair":["Cure de hernie","វះជួសជុលក្លូន"],"Fracture fixation":["Ostéosynthèse","វះកាត់ភ្ជាប់ឆ្អឹងបាក់"],"Cancer":["Cancer","មហារីក"],"Thalassaemia":["Thalassémie","ថាឡាសេមី"],"Non-smoker":["Non-fumeur","មិនជក់បារី"],"Smoker":["Fumeur","ជក់បារី"],"Ex-smoker":["Ex-fumeur","ធ្លាប់ជក់បារី"],"Alcohol occasionally":["Alcool occasionnel","ផឹកស្រាម្តងម្កាល"],"Alcohol daily":["Alcool quotidien","ផឹកស្រារាល់ថ្ងៃ"],"Farmer":["Agriculteur","កសិករ"],"Office worker":["Employé de bureau","បុគ្គលិកការិយាល័យ"],"Student":["Étudiant","សិស្ស / និស្សិត"],"Pregnant / breastfeeding":["Enceinte / allaitante","មានផ្ទៃពោះ / បំបៅដោះ"],"Current medicines: …":["Traitement en cours : …","ថ្នាំកំពុងប្រើ៖ …"],"Traditional medicine use":["Médecine traditionnelle","ប្រើថ្នាំបុរាណ"],"NKDA (no known drug allergy)":["Pas d'allergie médicamenteuse connue","គ្មានអាឡែកហ្ស៊ីថ្នាំ"],"Penicillin":["Pénicilline","Penicillin"],"Sulfa":["Sulfamides","Sulfa"],"NSAIDs / Aspirin":["AINS / Aspirine","NSAID / Aspirin"],"Cephalosporin":["Céphalosporines","Cephalosporin"],"Seafood":["Fruits de mer","គ្រឿងសមុទ្រ"],"Alert":["Éveillé","ភ្ញាក់ដឹងខ្លួន"],"oriented":["orienté","ស្គាល់ពេល ទីកន្លែង មនុស្ស"],"not in distress":["pas de détresse","មិនមានទុក្ខលំបាក"],"well hydrated":["bien hydraté","មានជាតិទឹកគ្រប់គ្រាន់"],"no pallor":["pas de pâleur","មិនស្លេក"],"no jaundice":["pas d'ictère","មិនលឿង"],"Ill-looking":["Aspect malade","មើលទៅឈឺ"],"In pain":["Douloureux","ឈឺចាប់"],"Lethargic":["Léthargique","ល្ហិតល្ហៃ"],"Pale":["Pâle","ស្លេក"],"Jaundiced":["Ictérique","លឿង"],"Dehydrated (sunken eyes":["Déshydraté (yeux enfoncés","ខ្វះជាតិទឹក (ភ្នែកស្រុត"],"dry mucosa)":["muqueuses sèches)","ភ្នាសស្ងួត)"],"Cyanosis":["Cyanose","ស្វាយ"],"Flushed / febrile":["Rouge / fébrile","ក្រហម / ក្តៅខ្លួន"],"Malnourished":["Dénutri","កង្វះអាហារូបត្ថម្ភ"],"Obese":["Obèse","ធាត់លើស"],"Ears":["Oreilles","ត្រចៀក"],"nose and throat normal":["nez et gorge normaux","ច្រមុះ និងបំពង់កធម្មតា"],"tonsils not enlarged":["amygdales non hypertrophiées","ទន្សិលមិនធំ"],"no cervical lymph nodes":["pas d'adénopathie cervicale","គ្មានកូនកណ្តុរក"],"Pharynx red":["Pharynx rouge","បំពង់កក្រហម"],"Tonsils enlarged with exudate":["Amygdales hypertrophiées avec exsudat","ទន្សិលធំមានខ្ទុះស"],"Tympanic membrane red / bulging":["Tympan rouge / bombé","ក្រដាសត្រចៀកក្រហម / ប៉ោង"],"Ear discharge":["Otorrhée","ហូរខ្ទុះត្រចៀក"],"Nasal discharge":["Rhinorrhée","ហៀរសំបោរ"],"Nasal congestion":["Obstruction nasale","តឹងច្រមុះ"],"Cervical lymph nodes enlarged":["Adénopathies cervicales","កូនកណ្តុរកធំ"],"Oral ulcers":["Ulcérations buccales","ដំបៅមាត់"],"Dental caries / abscess":["Carie / abcès dentaire","ធ្មេញពុក / អាប់សេធ្មេញ"],"S1 S2 regular":["B1 B2 réguliers","S1 S2 ទៀងទាត់"],"no murmur":["pas de souffle","គ្មានសូរ murmur"],"CRT < 2 s":["TRC < 2 s","CRT < 2 វិនាទី"],"peripheral pulses normal":["pouls périphériques normaux","ជីពចរដៃជើងធម្មតា"],"Tachycardia":["Tachycardie","បេះដូងដើរលឿន"],"Bradycardia":["Bradycardie","បេះដូងដើរយឺត"],"Irregular rhythm":["Rythme irrégulier","ចង្វាក់មិនទៀង"],"Murmur":["Souffle","សូរ murmur"],"CRT > 2 s":["TRC > 2 s","CRT > 2 វិនាទី"],"Weak peripheral pulses":["Pouls périphériques faibles","ជីពចរដៃជើងខ្សោយ"],"Raised JVP":["Turgescence jugulaire","សរសៃករីកធំ (JVP ខ្ពស់)"],"Leg oedema":["Œdème des membres inférieurs","ហើមជើង"],"Normal breath sounds both sides":["Murmure vésiculaire normal des deux côtés","សូរដង្ហើមធម្មតាទាំងសងខាង"],"no crackles":["pas de crépitants","គ្មានសូរក្រេបៗ"],"no wheeze":["pas de sibilants","គ្មានសូរហួច"],"no chest indrawing":["pas de tirage","គ្មានទ្រូងស្រុត"],"Tachypnoea":["Polypnée","ដកដង្ហើមញាប់"],"Chest indrawing":["Tirage","ទ្រូងស្រុត"],"Wheeze":["Sibilants","សូរហួច"],"Crackles right base":["Crépitants base droite","សូរក្រេបៗបាតសួតស្តាំ"],"Crackles left base":["Crépitants base gauche","សូរក្រេបៗបាតសួតឆ្វេង"],"Reduced air entry":["Diminution du murmure vésiculaire","ខ្យល់ចូលថយ"],"Bronchial breathing":["Souffle tubaire","សូរដង្ហើមបំពង់"],"Dull to percussion":["Matité à la percussion","គោះសូរស្ងួត"],"Accessory muscle use":["Mise en jeu des muscles accessoires","ប្រើសាច់ដុំជំនួយដកដង្ហើម"],"Abdomen soft":["Abdomen souple","ពោះទន់"],"non-tender":["indolore","មិនឈឺពេលស្ទាប"],"no organomegaly":["pas d'organomégalie","សរីរាង្គមិនធំ"],"bowel sounds normal":["bruits intestinaux normaux","សូរពោះវៀនធម្មតា"],"Epigastric tenderness":["Sensibilité épigastrique","ឈឺត្រង់ក្រពះពេលស្ទាប"],"Right iliac fossa tenderness":["Sensibilité de la fosse iliaque droite","ឈឺពោះក្រោមខាងស្តាំពេលស្ទាប"],"Right upper quadrant tenderness":["Sensibilité de l'hypochondre droit","ឈឺពោះលើខាងស្តាំពេលស្ទាប"],"Guarding / rebound":["Défense / rebond","ពោះរឹងការពារ / ឈឺពេលលែងដៃ"],"Distended":["Distendu","ពោះប៉ោង"],"Hepatomegaly":["Hépatomégalie","ថ្លើមធំ"],"Splenomegaly":["Splénomégalie","លំពែងធំ"],"Ascites":["Ascite","ទឹកក្នុងពោះ"],"Hyperactive bowel sounds":["Bruits intestinaux augmentés","សូរពោះវៀនខ្លាំង"],"Absent bowel sounds":["Silence abdominal","គ្មានសូរពោះវៀន"],"Conscious":["Conscient","ដឹងខ្លួន"],"GCS 15/15":["GCS 15/15","GCS 15/15"],"no focal deficit":["pas de déficit focal","គ្មានការខ្សោយផ្នែកណាមួយ"],"no neck stiffness":["pas de raideur de nuque","កមិនរឹង"],"GCS < 15":["GCS < 15","GCS < 15"],"Neck stiffness":["Raideur de nuque","រឹងក"],"Kernig / Brudzinski positive":["Kernig / Brudzinski positif","Kernig / Brudzinski វិជ្ជមាន"],"Focal weakness":["Déficit moteur focal","ខ្សោយផ្នែកណាមួយ"],"Facial palsy":["Paralysie faciale","ខ្វិនមុខ"],"Confusion":["Confusion","វង្វេង"],"Convulsion":["Convulsion","ប្រកាច់"],"Abnormal reflexes":["Réflexes anormaux","រ៉េផ្លិចមិនធម្មតា"],"Skin normal":["Peau normale","ស្បែកធម្មតា"],"no rash":["pas d'éruption","គ្មានកន្ទួល"],"no oedema":["pas d'œdème","មិនហើម"],"joints normal":["articulations normales","សន្លាក់ធម្មតា"],"Maculopapular rash":["Éruption maculo-papuleuse","កន្ទួលក្រហម"],"Petechiae":["Pétéchies","ចំណុចឈាមក្រោមស្បែក"],"Tourniquet test positive":["Test du garrot positif","តេស្ត Tourniquet វិជ្ជមាន"],"Urticaria":["Urticaire","កន្ទួលរមាស់ (Urticaria)"],"Wound / laceration":["Plaie / lacération","របួស / របួសដាច់"],"Cellulitis":["Cellulite","រលាកស្បែក និងជាលិកា"],"Abscess":["Abcès","អាប់សេ"],"Vesicles":["Vésicules","ពងទឹក"],"Joint swelling":["Gonflement articulaire","ហើមសន្លាក់"],"No costovertebral angle tenderness":["Pas de douleur à l'ébranlement lombaire","មិនឈឺត្រង់តម្រងនោមពេលគោះ"],"no suprapubic tenderness":["pas de sensibilité sus-pubienne","មិនឈឺពោះក្រោមពេលស្ទាប"],"Costovertebral angle tenderness":["Douleur à l'ébranlement lombaire","ឈឺត្រង់តម្រងនោមពេលគោះ"],"Suprapubic tenderness":["Sensibilité sus-pubienne","ឈឺពោះក្រោមពេលស្ទាប"],"Urethral discharge":["Écoulement urétral","ហូរខ្ទុះបង្ហួរនោម"],"Vaginal discharge":["Leucorrhées","ធ្លាក់ស"],"Genital ulcer":["Ulcération génitale","ដំបៅប្រដាប់ភេទ"],"Scrotal swelling":["Tuméfaction scrotale","ហើមពងស្វាស"],"Calm":["Calme","ស្ងប់"],"oriented to time":["orienté dans le temps","ស្គាល់ពេលវេលា"],"place and person":["l'espace et les personnes","ទីកន្លែង និងមនុស្ស"],"normal mood and speech":["humeur et discours normaux","អារម្មណ៍ និងការនិយាយធម្មតា"],"Anxious":["Anxieux","ថប់បារម្ភ"],"Low mood":["Humeur triste","អារម្មណ៍ធ្លាក់ចុះ"],"Agitated":["Agité","រំជើបរំជួល"],"Disoriented":["Désorienté","វង្វេងស្មារតី"],"Hallucinations":["Hallucinations","ការយល់ឃើញខុស"],"Suicidal ideation — assess risk":["Idées suicidaires — évaluer le risque","គំនិតចង់ធ្វើអត្តឃាត — វាយតម្លៃហានិភ័យ"],"Nothing abnormal detected":["Rien d'anormal","គ្មានអ្វីមិនធម្មតា"],"Conjunctiva red":["Conjonctive rouge","ស្រោមភ្នែកក្រហម"],"Eyes jaundiced":["Ictère conjonctival","ភ្នែកលឿង"],"Thyroid enlarged":["Goitre","ក្រពេញទីរ៉ូអ៊ីតធំ"],"Breast lump":["Nodule mammaire","ដុំក្នុងដោះ"],"Pregnant uterus":["Utérus gravide","ស្បូនមានផ្ទៃពោះ"],"fundal height ... cm":["hauteur utérine ... cm","កម្ពស់ស្បូន ... cm"],"Lymph nodes enlarged":["Adénopathies","កូនកណ្តុរធំ"],"Febrile":["Fébrile","ក្តៅខ្លួន"],"ill-looking":["aspect malade","មើលទៅឈឺ"],"crackles at lung base":["crépitants aux bases","សូរក្រេបៗបាតសួត"],"reduced air entry":["diminution du murmure vésiculaire","ខ្យល់ចូលថយ"],"bilateral wheeze and fine crackles":["sibilants et crépitants fins bilatéraux","សូរហួច និងសូរក្រេបៗទាំងសងខាង"],"Bilateral expiratory wheeze":["Sibilants expiratoires bilatéraux","សូរហួចពេលដកដង្ហើមចេញទាំងសងខាង"],"prolonged expiration":["expiration prolongée","ដកដង្ហើមចេញយូរ"],"Scattered rhonchi":["Ronchi diffus","សូររ៉ូនស៊ីរាយប៉ាយ"],"Weight loss":["Amaigrissement","ស្រកទម្ងន់"],"crackles at apex":["crépitants au sommet","សូរក្រេបៗកំពូលសួត"],"Nasal congestion with clear discharge":["Obstruction nasale avec rhinorrhée claire","តឹងច្រមុះ ហៀរសំបោរថ្លា"],"pharynx mildly red":["pharynx légèrement rouge","បំពង់កក្រហមបន្តិច"],"Purulent nasal discharge":["Rhinorrhée purulente","សំបោរមានខ្ទុះ"],"tenderness over maxillary sinuses":["sensibilité des sinus maxillaires","ឈឺពេលចុចលើប្រហោងឆ្អឹងថ្ពាល់"],"tonsils enlarged with exudate":["amygdales hypertrophiées avec exsudat","ទន្សិលធំមានខ្ទុះស"],"tender cervical lymph nodes":["adénopathies cervicales sensibles","កូនកណ្តុរកឈឺ"],"Tympanic membrane red and bulging":["Tympan rouge et bombé","ក្រដាសត្រចៀកក្រហម និងប៉ោង"],"Ear canal swollen and tender":["Conduit auditif œdématié et douloureux","ប្រឡាយត្រចៀកហើម និងឈឺ"],"pain on pulling the pinna":["douleur à la traction du pavillon","ឈឺពេលទាញស្លឹកត្រចៀក"],"Ear canal blocked by wax":["Bouchon de cérumen","ប្រឡាយត្រចៀកស្ទះដោយអាចម៍ត្រចៀក"],"Bleeding from anterior nasal septum":["Saignement de la cloison nasale antérieure","ហូរឈាមពីជញ្ជាំងច្រមុះខាងមុខ"],"Dental caries with gum swelling and tenderness":["Carie avec gencive gonflée et douloureuse","ធ្មេញពុក អញ្ចាញហើម និងឈឺ"],"Shallow painful oral ulcers":["Ulcérations buccales superficielles douloureuses","ដំបៅមាត់រាក់ៗ ឈឺ"],"White plaques on oral mucosa":["Plaques blanches sur la muqueuse buccale","ស្នាមសៗលើភ្នាសមាត់"],"Vesicles on palms and soles":["Vésicules palmo-plantaires","ពងទឹកលើបាតដៃ បាតជើង"],"flushed":["rouge","ក្រហម"],"Flushed skin":["Peau rouge","ស្បែកក្រហម"],"petechiae":["pétéchies","ចំណុចឈាមក្រោមស្បែក"],"tourniquet test positive":["test du garrot positif","តេស្ត Tourniquet វិជ្ជមាន"],"Mild abdominal tenderness":["Sensibilité abdominale légère","ឈឺពោះបន្តិចពេលស្ទាប"],"no ascites":["pas d'ascite","គ្មានទឹកក្នុងពោះ"],"pale":["pâle","ស្លេក"],"Diffuse abdominal tenderness":["Sensibilité abdominale diffuse","ឈឺពោះទូទាំងពេលស្ទាប"],"hepatosplenomegaly":["hépatosplénomégalie","ថ្លើម និងលំពែងធំ"],"lethargic":["léthargique","ល្ហិតល្ហៃ"],"Conjunctival suffusion":["Hyperhémie conjonctivale","ស្រោមភ្នែកក្រហម"],"calf muscle tenderness":["douleur des mollets","ឈឺសាច់ដុំកំភួនជើង"],"Vesicles at different stages":["Vésicules d'âges différents","ពងទឹកច្រើនដំណាក់កាល"],"mostly on trunk":["surtout sur le tronc","ភាគច្រើននៅដងខ្លួន"],"Painful grouped vesicles along one dermatome":["Vésicules groupées douloureuses sur un dermatome","ពងទឹកជាចង្កោមឈឺ តាមសរសៃប្រសាទមួយ"],"Mild dehydration":["Déshydratation légère","ខ្វះជាតិទឹកស្រាល"],"dry mucosa":["muqueuses sèches","ភ្នាសស្ងួត"],"mild diffuse tenderness":["sensibilité diffuse légère","ឈឺពោះទូទាំងបន្តិច"],"sunken eyes":["yeux enfoncés","ភ្នែកស្រុត"],"skin pinch goes back very slowly":["pli cutané persistant","ស្បែកចាប់ឡើងត្រឡប់យឺតខ្លាំង"],"weak pulse":["pouls faible","ជីពចរខ្សោយ"],"Lower abdominal tenderness":["Sensibilité du bas-ventre","ឈឺពោះក្រោមពេលស្ទាប"],"hyperactive bowel sounds":["bruits intestinaux augmentés","សូរពោះវៀនខ្លាំង"],"no guarding":["pas de défense","មិនរឹងការពារ"],"Diffuse cramping tenderness":["Sensibilité diffuse à type de crampes","ឈឺចុកពោះទូទាំង"],"no guarding or rebound":["pas de défense ni de rebond","មិនរឹងការពារ មិនឈឺពេលលែងដៃ"],"Soft abdomen":["Abdomen souple","ពោះទន់"],"stool palpable in left iliac fossa":["selles palpables en fosse iliaque gauche","ស្ទាបឃើញលាមកពោះក្រោមខាងឆ្វេង"],"Perianal: external haemorrhoids":["Région périanale : hémorroïdes externes","ជុំវិញរន្ធគូទ៖ ឫសដូងបាតខាងក្រៅ"],"Soft":["Souple","ទន់"],"mild periumbilical tenderness":["légère sensibilité périombilicale","ឈឺបន្តិចជុំវិញផ្ចិត"],"Tender hepatomegaly":["Hépatomégalie douloureuse","ថ្លើមធំ ឈឺពេលស្ទាប"],"no costovertebral angle tenderness":["pas de douleur à l'ébranlement lombaire","មិនឈឺត្រង់តម្រងនោមពេលគោះ"],"Cervical motion tenderness":["Douleur à la mobilisation du col","ឈឺពេលកម្រើកមាត់ស្បូន"],"lower abdominal tenderness":["sensibilité du bas-ventre","ឈឺពោះក្រោមពេលស្ទាប"],"BP raised":["TA élevée","សម្ពាធឈាមខ្ពស់"],"heart sounds normal":["bruits du cœur normaux","សូរបេះដូងធម្មតា"],"Brisk reflexes":["Réflexes vifs","រ៉េផ្លិចខ្លាំង"],"Oedema of face and hands":["Œdème du visage et des mains","ហើមមុខ និងដៃ"],"Sweating":["Sueurs","បែកញើស"],"confused":["confus","វង្វេង"],"Pale conjunctiva and palms":["Conjonctives et paumes pâles","ស្រោមភ្នែក និងបាតដៃស្លេក"],"Soft systolic flow murmur":["Souffle systolique fonctionnel","សូរ murmur systolic ស្រាល"],"Urticarial wheals":["Papules urticariennes","កន្ទួលរមាស់ប៉ោងៗ"],"Distressed":["En détresse","មានទុក្ខលំបាក"],"Generalised urticaria":["Urticaire généralisée","កន្ទួលរមាស់ពេញខ្លួន"],"Hypotension":["Hypotension","សម្ពាធឈាមទាប"],"tachycardia":["tachycardie","បេះដូងដើរលឿន"],"Papules and burrows on hands":["Papules et sillons sur les mains","គ្រាប់ និងផ្លូវកមលើដៃ"],"wrists":["poignets","កដៃ"],"waist":["taille","ចង្កេះ"],"Annular scaly plaque with raised edge":["Plaque annulaire squameuse à bordure surélevée","ស្នាមរង្វង់មានស្រកា គែមលើក"],"Honey-coloured crusted lesions":["Lésions croûteuses mélicériques","ដំបៅមានក្រមរពណ៌ទឹកឃ្មុំ"],"Warm":["Chaud","ក្តៅ"],"red":["rouge","ក្រហម"],"tender swelling with ill-defined edge":["tuméfaction douloureuse à bords mal limités","ហើមឈឺ គែមមិនច្បាស់"],"Fluctuant tender swelling":["Tuméfaction fluctuante douloureuse","ហើមទន់មានខ្ទុះ និងឈឺ"],"Comedones and inflamed papules on face":["Comédons et papules inflammatoires du visage","មុន និងគ្រាប់រលាកលើមុខ"],"Erythematous scaly itchy patches":["Plaques érythémato-squameuses prurigineuses","ស្នាមក្រហមមានស្រកា រមាស់"],"Burn wound":["Brûlure","របួសរលាក"],"blistering":["phlyctènes","ពងទឹក"],"Fang marks with local swelling":["Traces de crochets avec œdème local","ស្នាមចង្កូមពស់ ហើមកន្លែងខាំ"],"Bite wound":["Plaie de morsure","របួសសត្វខាំ"],"Laceration":["Lacération","របួសដាច់"],"clean edges":["bords nets","គែមស្អាត"],"Ingrown toenail with inflamed nail fold":["Ongle incarné avec bourrelet inflammatoire","ក្រចកដុះចូលសាច់ រលាកជុំវិញ"],"Mobile subcutaneous cyst with punctum":["Kyste sous-cutané mobile avec orifice","ដុំគីសក្រោមស្បែកកម្រើកបាន មានរន្ធ"],"Puncture wound":["Plaie punctiforme","របួសមុត"],"foreign body felt":["corps étranger palpable","ស្ទាបឃើញវត្ថុចម្លែក"],"Swelling and tenderness over lateral ankle":["Gonflement et douleur de la malléole externe","ហើម និងឈឺកជើងខាងក្រៅ"],"able to bear weight":["appui possible","អាចឈរដាក់ទម្ងន់បាន"],"Swelling and tenderness at injury site":["Gonflement et douleur au site du traumatisme","ហើម និងឈឺកន្លែងរបួស"],"Paraspinal muscle tenderness":["Contracture paravertébrale","ឈឺសាច់ដុំក្បែរឆ្អឹងខ្នង"],"straight leg raise negative":["Lasègue négatif","តេស្តលើកជើងត្រង់អវិជ្ជមាន"],"Paraspinal neck muscle tenderness":["Contracture paravertébrale cervicale","ឈឺសាច់ដុំក"],"normal power":["force normale","កម្លាំងធម្មតា"],"Knee crepitus":["Craquements du genou","ជង្គង់មានសូរក្រេប"],"no effusion":["pas d'épanchement","គ្មានទឹកក្នុងសន្លាក់"],"Red":["Rouge","ក្រហម"],"hot":["chaud","ក្តៅ"],"swollen joint":["articulation gonflée","សន្លាក់ហើម"],"Positive Dix-Hallpike":["Dix-Hallpike positif","តេស្ត Dix-Hallpike វិជ្ជមាន"],"Lower motor neurone facial palsy":["Paralysie faciale périphérique","ខ្វិនមុខប្រភេទ LMN"],"forehead involved":["front atteint","ថ្ងាសក៏ខ្វិនដែរ"],"Post-ictal drowsiness":["Somnolence post-critique","ងងុយក្រោយប្រកាច់"],"Kernig positive":["Kernig positif","Kernig វិជ្ជមាន"],"Conjunctiva red with discharge":["Conjonctive rouge avec sécrétions","ស្រោមភ្នែកក្រហម មានអាចម៍ភ្នែក"],"vision normal":["acuité visuelle normale","មើលឃើញធម្មតា"],"Tender swelling of eyelid margin":["Tuméfaction douloureuse du bord palpébral","ហើមឈឺគែមត្របកភ្នែក"],"low mood":["humeur triste","អារម្មណ៍ធ្លាក់ចុះ"],"fetal heart present":["BCF présents","មានចង្វាក់បេះដូងទារក"],"Uterus soft and boggy":["Utérus mou et mal rétracté","ស្បូនទន់ មិនរួញ"],"heavy vaginal bleeding":["saignement vaginal abondant","ហូរឈាមច្រើនតាមទ្វារមាស"],"Breast red":["Sein rouge","ដោះក្រហម"],"warm and tender":["chaud et douloureux","ក្តៅ និងឈឺ"]};
@@ -6432,6 +7107,7 @@ var SOAP_LB={pe:["Physical examination: normal","Examen physique : normal","ក�
   mhSh:["SH","Mode de vie","ប្រវត្តិសង្គម"],mhOth:["Other","Autres","ផ្សេងៗ"],mhAll:["Allergy","Allergies","អាឡែកហ្ស៊ី"]};
 function SL(k){ var a=SOAP_LB[k], l=langPrim(); return l==="fr"?a[1]:l==="kh"?a[2]:a[0]; }
 function notesRetranslate(){
+  if(typeof procAiRender==="function"){ procAiRender(); if($("procNote")&&!$("procNote").dataset.edited&&!$("procSec").hidden) procNoteWrite(procIdFromName()); }
   if(typeof renderEvol==="function"){ renderEvol(); procPickFill(); procAneUpdate(); }
   if($("peRows")) [].forEach.call(document.querySelectorAll(".perow"),function(r){ var sy=PE_SYS.find(function(x){return x[0]===r.dataset.sys;}); if(!sy) return;
     var pn=r.querySelector(".pn"), sug=pn.classList.contains("sug"); pn.textContent=trLabel(sy[1]); var sm=mk("small"); sm.textContent=langPrim()==="kh"?L1(sy[1],"fr"):sy[2]; pn.appendChild(sm); pn.classList.toggle("sug",sug);
@@ -6634,7 +7310,7 @@ function pickCare(c){activeCare=c; renderLib();}
 $("tplCare").addEventListener("change",applyCare);
 [].forEach.call(document.querySelectorAll("#viewSeg button"),function(b){b.onclick=function(){setView(b.dataset.v);};});
 $("saveBtn").onclick=saveCurrent; $("saveNewBtn").onclick=saveNew; $("deleteBtn").onclick=del;
-$("newBtn").onclick=newBlank; $("printBtn").onclick=function(){window.print();};
+$("newBtn").onclick=newBlank; $("printBtn").onclick=function(){ if(typeof aiPrint==="function") aiPrint(); else window.print(); };
 $("settingsBtn").onclick=openSettings; $("sheetHead").onclick=openSettings; $("tileSettings").onclick=openSettings;
 [].forEach.call(document.querySelectorAll("[data-go]"),function(b){b.addEventListener("click",function(){go(b.dataset.go); if(b.dataset.go==="rx"&&!isWide()) closeDrawer();});});
 [].forEach.call(document.querySelectorAll("[data-panel]"),function(b){b.addEventListener("click",function(){openDrawer(b.dataset.panel);});});
