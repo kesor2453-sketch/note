@@ -837,6 +837,29 @@ tr.pgpast2 td{color:var(--muted)}
 .vacdoses li{margin:2px 0}
 .vacdoses li.pgnow{font-weight:700;color:#9d174d}
 .vacdoses li.pgpast2{color:var(--muted)}
+.toolrow{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 0}
+.toolrow button{flex:1 1 auto;border:1px solid var(--rule);background:var(--panel);color:var(--ink);border-radius:8px;padding:7px 12px;font:600 13.5px var(--kh);cursor:pointer;white-space:nowrap}
+.toolrow button:hover{border-color:var(--pen);color:var(--pen)}
+.toolrow button[aria-pressed=true]{background:var(--pen);color:#fff;border-color:var(--pen)}
+.toolrow button[data-t=preg]{border-color:#f3c4dc}.toolrow button[data-t=vac]{border-color:#bbf7d0}.toolrow button[data-t=sti]{border-color:#fde68a}.toolrow button[data-t=icu]{border-color:#fecaca}
+@media (max-width:640px){.toolrow button{flex:1 1 calc(33% - 6px);padding:6px 6px;font-size:12.5px}}
+.sxpt{font:12.5px var(--kh);color:var(--muted);margin:4px 0 6px}
+.sxchips{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px}
+.sxchips button{border:1px solid var(--rule);background:var(--paper);color:var(--ink);border-radius:14px;padding:3px 10px;font:12.5px var(--kh);cursor:pointer}
+.sxchips button[aria-pressed=true]{background:#0b6e99;color:#fff;border-color:#0b6e99}
+.sxrow{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.sxrow .cq{margin:0;flex:1 1 220px}
+.sxcard{border:1px solid var(--rule);border-radius:10px;padding:8px 10px;margin:6px 0;background:var(--paper)}
+.sxcard.sxtop{border-color:#0b6e99;box-shadow:0 0 0 2px rgba(11,110,153,.12)}
+.sxh{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.sxh b{font:700 14px var(--kh);flex:1 1 220px}
+.sxbar{width:90px;height:7px;border-radius:4px;background:#e5e7eb;overflow:hidden;display:inline-block}
+.sxbar i{display:block;height:100%;background:#0b6e99}
+.sxdet{margin-top:4px}
+.sxdet[hidden]{display:none}
+.sxline{font:12.5px var(--kh);margin:3px 0;line-height:1.45}
+.sxline b{font-weight:700}
+.sxred{color:#b42318}
 </style>
 </head>
 <body class="lang-both gated">
@@ -965,11 +988,20 @@ tr.pgpast2 td{color:var(--muted)}
       <button class="btn alt" id="soapBtn" type="button" aria-pressed="true" title="បង្ហាញ / លាក់ SOAP note">📝 SOAP</button>
       <button class="btn alt aibtn" id="aiBtn" type="button" title="ជំនួយការពិនិត្យកំហុស">✨ AI</button>
       <button class="btn alt" id="repBtn" type="button" title="របាយការណ៍អ្នកជំងឺ · NPCA">📊</button>
-      <button class="btn alt" id="pregBtn" type="button" title="គណនាថ្ងៃគ្រប់ខែ · EDD · LMP · សប្តាហ៍">🤰</button>
-      <button class="btn alt" id="calcBtn" type="button" title="គណនាដូស · កុមារ · ICU · សេរ៉ូ">🧮 ដូស</button>
+      <button class="btn alt" id="pregBtn" hidden type="button" title="គណនាថ្ងៃគ្រប់ខែ · EDD · LMP · សប្តាហ៍">🤰</button>
+      <button class="btn alt" id="calcBtn" hidden type="button" title="គណនាដូស · កុមារ · ICU · សេរ៉ូ">🧮 ដូស</button>
       <button class="btn alt" id="newPatientBtn" type="button">អ្នកជំងឺថ្មី</button>
       <button class="btn" id="printBtn" type="button">បោះពុម្ព</button>
       <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    </div>
+    <div class="toolrow noprint" id="toolRow" role="toolbar" aria-label="Calculators">
+      <button type="button" data-t="sym">🔎 រោគសញ្ញា → Dx</button>
+      <button type="button" data-t="ped">👶 កុមារ</button>
+      <button type="button" data-t="icu">🏥 ICU · ម៉ាស៊ីន</button>
+      <button type="button" data-t="fluid">💧 សេរ៉ូ</button>
+      <button type="button" data-t="preg">🤰 ថ្ងៃគ្រប់ខែ</button>
+      <button type="button" data-t="vac">💉 វ៉ាក់សាំង</button>
+      <button type="button" data-t="sti">🦠 កាមរោគ · WHO</button>
     </div>
 
     <div class="sheetwrap">
@@ -1157,7 +1189,7 @@ tr.pgpast2 td{color:var(--muted)}
       <button type="button" id="gUp">បង្កើតគណនីថ្មី</button>
       <button type="button" id="gReset">ភ្លេចពាក្យសម្ងាត់?</button>
     </div>
-    <p class="gate-note" id="gateNote">ព័ត៌មានអ្នកជំងឺមិនត្រូវបានផ្ញើទៅ cloud ទេ។ · v58</p>
+    <p class="gate-note" id="gateNote">ព័ត៌មានអ្នកជំងឺមិនត្រូវបានផ្ញើទៅ cloud ទេ។ · v61</p>
   </form>
 </div>
 
@@ -1259,7 +1291,7 @@ tr.pgpast2 td{color:var(--muted)}
       <p class="hint">ឯកសារត្រូវមានជួរឈរ៖ ICD 10 · EN · KH · FR។ បញ្ជីនេះរក្សាទុកក្នុង browser ហើយប្រើសម្រាប់ស្វែងរករោគវិនិច្ឆ័យទាំងអស់។</p>
     </fieldset>
     <div class="actions">
-      <span style="margin-right:auto;font:12px var(--body);color:var(--muted)">Rx Clinic v58</span>
+      <span style="margin-right:auto;font:12px var(--body);color:var(--muted)">Rx Clinic v61</span>
       <button class="btn alt" id="settingsClose" type="button">បិទ</button>
       <button class="btn" type="submit">រក្សាទុកការកំណត់</button>
     </div>
@@ -6081,6 +6113,8 @@ var CICU=[
 var CSTATE={tab:"ped",q:"",str:{},icu:{}};
 function cWt(){ var v=parseFloat(String(($("cWt")&&$("cWt").value)||"").replace(",",".")); return isNaN(v)||v<=0?null:v; }
 function cMgkg(d,w){ return Array.isArray(d[2])?(w<d[2][1]?d[2][0]:d[2][2]):d[2]; }
+function toolRowPaint(){ var lab={sym:["🔎 Symptoms → Dx","🔎 Symptômes → Dx","🔎 រោគសញ្ញា → Dx"],ped:["👶 Child","👶 Enfant","👶 កុមារ"],icu:["🏥 ICU infusion","🏥 Réa · IVSE","🏥 ICU · ម៉ាស៊ីន"],fluid:["💧 IV fluids","💧 Solutés","💧 សេរ៉ូ"],preg:["🤰 Pregnancy dates","🤰 Grossesse (terme)","🤰 ថ្ងៃគ្រប់ខែ"],vac:["💉 Vaccines","💉 Vaccins","💉 វ៉ាក់សាំង"],sti:["🦠 STI · WHO","🦠 IST · OMS","🦠 កាមរោគ · WHO"]};
+  var ov=$("calcOv"), open=ov&&!ov.hidden; [].forEach.call(document.querySelectorAll("#toolRow button"),function(b){ b.textContent=cL(lab[b.dataset.t]); b.setAttribute("aria-pressed",String(open&&b.dataset.t===CSTATE.tab)); }); }
 function calcOpen(tab){
   var ov=$("calcOv"); if(!ov){ ov=calcBuild(); }
   if(typeof tab==="string") CSTATE.tab=tab; else if(!CSTATE.opened&&ptMode()==="preg") CSTATE.tab="preg"; CSTATE.opened=1;
@@ -6091,7 +6125,7 @@ function calcBuild(){
   var ov=mk("div","calcov noprint"); ov.id="calcOv"; ov.hidden=true;
   ov.innerHTML='<div class="calcbox" role="dialog" aria-label="Dose calculator"><div class="calch"><b id="cTitle"></b><button type="button" class="calcx" id="cClose" aria-label="Close">✕</button></div>'+
    '<div class="calcbar"><label class="cwt"><span id="cWtL"></span> <input id="cWt" type="text" inputmode="decimal" autocomplete="off" placeholder="kg"> kg</label><span id="cAge" class="cage"></span>'+
-   '<span class="ctabs" id="cTabs"><button type="button" data-t="ped"></button><button type="button" data-t="icu"></button><button type="button" data-t="fluid"></button><button type="button" data-t="preg"></button><button type="button" data-t="vac"></button><button type="button" data-t="sti"></button></span></div>'+
+   '<span class="ctabs" id="cTabs"><button type="button" data-t="sym"></button><button type="button" data-t="ped"></button><button type="button" data-t="icu"></button><button type="button" data-t="fluid"></button><button type="button" data-t="preg"></button><button type="button" data-t="vac"></button><button type="button" data-t="sti"></button></span></div>'+
    '<div class="calcbody" id="cBody"></div><div class="calcfoot" id="cFoot"></div></div>';
   document.body.appendChild(ov);
   ov.addEventListener("mousedown",function(e){ if(e.target===ov) ov.hidden=true; });
@@ -6105,11 +6139,12 @@ function calcRender(keepFocus){
   $("cTitle").textContent=cL(["🧮 Dose calculator","🧮 Calcul des doses","🧮 គណនាដូស"]);
   $("cWtL").textContent=cL(["Weight","Poids","ទម្ងន់"]);
   var a=ptAgeYears(); $("cAge").textContent=a!==null?cL(["Age","Âge","អាយុ"])+": "+(a<1?cR(a*12,0)+cL([" mo"," mois"," ខែ"]):cR(a,1)+cL([" y"," ans"," ឆ្នាំ"])):"";
-  var lab={ped:["👶 Child","👶 Enfant","👶 កុមារ"],icu:["🏥 ICU infusion","🏥 Réa · IVSE","🏥 ICU · ម៉ាស៊ីន"],fluid:["💧 IV fluids","💧 Solutés","💧 សេរ៉ូ"],preg:["🤰 Pregnancy dates","🤰 Grossesse (terme)","🤰 ថ្ងៃគ្រប់ខែ"],vac:["💉 Vaccines","💉 Vaccins","💉 វ៉ាក់សាំង"],sti:["🦠 STI · WHO","🦠 IST · OMS","🦠 កាមរោគ · WHO"]};
+  var lab={sym:["🔎 Symptoms → Dx","🔎 Symptômes → Dx","🔎 រោគសញ្ញា → Dx"],ped:["👶 Child","👶 Enfant","👶 កុមារ"],icu:["🏥 ICU infusion","🏥 Réa · IVSE","🏥 ICU · ម៉ាស៊ីន"],fluid:["💧 IV fluids","💧 Solutés","💧 សេរ៉ូ"],preg:["🤰 Pregnancy dates","🤰 Grossesse (terme)","🤰 ថ្ងៃគ្រប់ខែ"],vac:["💉 Vaccines","💉 Vaccins","💉 វ៉ាក់សាំង"],sti:["🦠 STI · WHO","🦠 IST · OMS","🦠 កាមរោគ · WHO"]};
   [].forEach.call(document.querySelectorAll("#cTabs button"),function(b){ b.textContent=cL(lab[b.dataset.t]); b.setAttribute("aria-pressed",String(b.dataset.t===CSTATE.tab)); });
+  toolRowPaint();
   $("cFoot").textContent=cL(["⚠ Check every dose against the patient, the product label and national guidelines before giving.","⚠ Vérifiez chaque dose (patient, notice, recommandations nationales) avant administration.","⚠ សូមពិនិត្យដូសនីមួយៗជាមួយអ្នកជំងឺ ស្លាកថ្នាំ និងគោលការណ៍ជាតិ មុនពេលឱ្យ។"]);
-  if(CSTATE.tab==="ped") calcPed(); else if(CSTATE.tab==="icu") calcIcu(); else if(CSTATE.tab==="preg") calcPreg(); else if(CSTATE.tab==="vac") calcVac(); else if(CSTATE.tab==="sti") calcSti(); else calcFluid();
-  var wl=document.querySelector("#calcOv .cwt"); if(wl) wl.style.visibility=CSTATE.tab==="preg"||(CSTATE.tab==="vac"&&VX.pop!=="bite")?"hidden":"";
+  if(CSTATE.tab==="sym") calcSym(); else if(CSTATE.tab==="ped") calcPed(); else if(CSTATE.tab==="icu") calcIcu(); else if(CSTATE.tab==="preg") calcPreg(); else if(CSTATE.tab==="vac") calcVac(); else if(CSTATE.tab==="sti") calcSti(); else calcFluid();
+  var wl=document.querySelector("#calcOv .cwt"); if(wl) wl.style.visibility=CSTATE.tab==="preg"||CSTATE.tab==="sym"||(CSTATE.tab==="vac"&&VX.pop!=="bite")?"hidden":"";
 }
 function cNeedWt(box){ var e=mk("div","cempty"); e.textContent=cL(["Enter the weight (kg) to calculate.","Saisir le poids (kg) pour calculer.","សូមដាក់ទម្ងន់ (kg) ដើម្បីគណនា។"]); box.appendChild(e); }
 function calcPed(){
@@ -6352,6 +6387,7 @@ function evNewPatient(){ EV_GCS=[4,5,6]; if(typeof evApplyDx==="function"&&$("ev
   ["vBp","vP","vT","vRr","vSpo2","pAge","pWt"].forEach(function(id){ var e=$(id); if(e) e.addEventListener("input",function(){ clearTimeout(window.__evsT); window.__evsT=setTimeout(function(){ evModeApply(); soapAutoSoon(); },250); }); });
   var b=$("calcBtn"); if(b) b.onclick=function(){ calcOpen(); };
   var pb=$("pregBtn"); if(pb) pb.onclick=function(){ calcOpen("preg"); };
+  var tr=$("toolRow"); if(tr) [].forEach.call(tr.querySelectorAll("button"),function(b){ b.onclick=function(){ calcOpen(b.dataset.t); }; });
 })();
 
 
@@ -6920,8 +6956,52 @@ var STI_T=[
  [["Hepatitis B (mother HBsAg +)","Hépatite B (mère AgHBs +)","រលាកថ្លើម B (ម្តាយ HBsAg +)"],["—","—","—"],
   ["Tenofovir 300 mg daily from 24–28 weeks to delivery (WHO 2024, when HBV DNA is high or not testable).","Ténofovir 300 mg/j de 24–28 SA à l'accouchement (OMS 2024, si ADN VHB élevé ou non dosable).","Tenofovir 300 mg/ថ្ងៃ ពី ២៤–២៨ សប្តាហ៍ ដល់សម្រាល (WHO 2024 បើ HBV DNA ខ្ពស់ ឬធ្វើតេស្តមិនបាន)។"],
   ["Newborn: HepB vaccine 0.5 ml IM within 24 h (+ HBIG 0.5 ml IM if available), then routine doses; breastfeeding OK.","Nouveau-né : vaccin HB 0,5 ml IM < 24 h (+ IgHB 0,5 ml si disponible) ; allaitement possible.","ទារក៖ វ៉ាក់សាំង HepB 0.5 ml IM ក្នុង ២៤ ម៉ោង (+ HBIG 0.5 ml បើមាន) បន្តតាមកាលវិភាគ; អាចបំបៅដោះ។"],""]];
+/* v60: follow-up after STI treatment — [when, what to check, failure / action], same order as STI_T */
+var STI_FU=[
+ [["RPR at 3, 6 and 12 months (pregnancy: monthly or at 28–32 w and delivery).","RPR à 3, 6 et 12 mois (grossesse : mensuel ou à 28–32 SA et à l'accouchement).","RPR នៅ ៣ ៦ និង ១២ ខែ (ផ្ទៃពោះ៖ រៀងរាល់ខែ ឬ ២៨–៣២ សប្តាហ៍ និងពេលសម្រាល)។"],
+  ["Use the same RPR test and compare the TITRE. Cure = 4-fold fall (e.g. 1:32 → 1:8) by 6–12 months. TPHA stays positive for life — do not use it to follow. Symptoms: chancre heals in 1–2 weeks, rash in weeks.","Même technique RPR, comparer le TITRE. Guérison = baisse de 4 fois (ex. 1:32 → 1:8) en 6–12 mois. TPHA reste positif à vie — ne pas l'utiliser pour le suivi. Le chancre guérit en 1–2 semaines.","ប្រើតេស្ត RPR ដដែល ហើយប្រៀបធៀប TITRE។ ជាសះ = titre ចុះ ៤ ដង (ឧ. 1:32 → 1:8) ក្នុង ៦–១២ ខែ។ TPHA វិជ្ជមានពេញមួយជីវិត — កុំប្រើវាតាមដាន។ ដំបៅជាក្នុង ១–២ សប្តាហ៍។"],
+  ["Titre rises 4-fold, or does not fall 4-fold by 12 months, or symptoms return: re-test HIV, retreat with benzathine 2.4 MU weekly × 3; neurological or eye signs → lumbar puncture / refer (neurosyphilis). Re-check partner.","Titre × 4, absence de baisse de 4 fois à 12 mois ou récidive : VIH, retraitement benzathine 2,4 MUI/semaine × 3 ; signes neurologiques / oculaires → PL / transfert (neurosyphilis). Revoir le partenaire.","titre ឡើង ៤ ដង ឬមិនចុះ ៤ ដងក្នុង ១២ ខែ ឬរោគសញ្ញាត្រឡប់៖ ធ្វើតេស្ត HIV ម្តងទៀត ព្យាបាលឡើងវិញ benzathine 2.4 MU ម្តង/សប្តាហ៍ × ៣; មានសញ្ញាសរសៃប្រសាទ ឬភ្នែក → ចាក់ខួរឆ្អឹងខ្នង / បញ្ជូន។ ពិនិត្យដៃគូម្តងទៀត។"]],
+ [["RPR at 6, 12 and 24 months.","RPR à 6, 12 et 24 mois.","RPR នៅ ៦ ១២ និង ២៤ ខែ។"],
+  ["Titre falls more slowly in late syphilis; a low stable titre (≤ 1:4, 'serofast') may remain. Check that all 3 weekly injections were given (no gap > 14 days).","Baisse plus lente en syphilis tardive ; un titre bas stable (≤ 1:4, « cicatrice sérologique ») peut persister. Vérifier les 3 injections (intervalle ≤ 14 jours).","titre ចុះយឺតក្នុងស្វាយយឺត; titre ទាបថេរ (≤ 1:4) អាចនៅ។ ពិនិត្យថាបានចាក់គ្រប់ ៣ ដង (ចន្លោះ ≤ ១៤ ថ្ងៃ)។"],
+  ["Titre rises 4-fold or new symptoms: HIV test, lumbar puncture if available, retreat.","Titre × 4 ou nouveaux symptômes : VIH, PL si possible, retraitement.","titre ឡើង ៤ ដង ឬរោគសញ្ញាថ្មី៖ តេស្ត HIV ចាក់ខួរឆ្អឹងខ្នងបើអាច ព្យាបាលឡើងវិញ។"]],
+ [["Baby RPR at 3, 6 and 12 months; growth and development at every visit; hearing and eye check.","RPR du bébé à 3, 6 et 12 mois ; croissance et développement ; audition et yeux.","RPR ទារកនៅ ៣ ៦ និង ១២ ខែ; ការលូតលាស់ និងការអភិវឌ្ឍរាល់ពេល; ពិនិត្យការស្តាប់ និងភ្នែក។"],
+  ["RPR should fall by 3 months and be negative by 6 months (mother's antibodies). Abnormal CSF at birth → repeat LP at 6 months.","RPR en baisse à 3 mois et négatif à 6 mois (anticorps maternels). LCR anormal à la naissance → PL à 6 mois.","RPR ត្រូវចុះនៅ ៣ ខែ ហើយអវិជ្ជមាននៅ ៦ ខែ (អង់ទីគ័រម្តាយ)។ CSF មិនធម្មតាពេលកើត → ចាក់ខួរឆ្អឹងខ្នងម្តងទៀតនៅ ៦ ខែ។"],
+  ["Titre stable or rising at 6–12 months: re-evaluate (LP) and give a full 10-day course again; refer to paediatrics.","Titre stable ou en hausse à 6–12 mois : réévaluer (PL) et refaire 10 jours ; avis pédiatrique.","titre ថេរ ឬឡើងនៅ ៦–១២ ខែ៖ វាយតម្លៃម្តងទៀត (LP) ហើយព្យាបាល ១០ ថ្ងៃម្តងទៀត; បញ្ជូនទៅកុមារ។"]],
+ [["Review in 3–7 days only if symptoms persist. Retest at 3 months (reinfection). Pregnancy or throat infection: test of cure 7–14 days after (NAAT ≥ 14 days).","Revoir à 3–7 jours seulement si symptômes persistants. Nouveau test à 3 mois. Grossesse ou atteinte pharyngée : test de contrôle à 7–14 jours (TAAN ≥ 14 j).","ពិនិត្យវិញក្រោយ ៣–៧ ថ្ងៃ បើរោគសញ្ញានៅ។ ធ្វើតេស្តម្តងទៀតនៅ ៣ ខែ (ឆ្លងម្តងទៀត)។ ផ្ទៃពោះ ឬឆ្លងក៖ តេស្តបញ្ជាក់ជាសះក្រោយ ៧–១៤ ថ្ងៃ (NAAT ≥ ១៤ ថ្ងៃ)។"],
+  ["Discharge and burning should stop in 2–3 days. Ask: partner treated? sex without condom since treatment?","Écoulement et brûlures disparaissent en 2–3 jours. Partenaire traité ? Rapports non protégés depuis ?","ធ្លាក់ខ្ទុះ និងឈឺពេលនោមត្រូវឈប់ក្នុង ២–៣ ថ្ងៃ។ សួរ៖ ដៃគូបានព្យាបាលហើយឬនៅ? មានរួមភេទគ្មានស្រោមក្រោយព្យាបាលទេ?"],
+  ["Still symptoms after 3–5 days with no new exposure: swab for CULTURE and sensitivity (resistance), treat chlamydia / trichomonas, report suspected treatment failure.","Symptômes après 3–5 jours sans nouvelle exposition : CULTURE + antibiogramme (résistance), traiter Chlamydia / Trichomonas, déclarer l'échec.","នៅមានរោគសញ្ញាក្រោយ ៣–៥ ថ្ងៃ គ្មានការប៉ះពាល់ថ្មី៖ យកសំណាកបណ្តុះមេរោគ (ធន់ថ្នាំ) ព្យាបាល chlamydia / trichomonas រាយការណ៍ការព្យាបាលបរាជ័យ។"]],
+ [["No test of cure needed (except pregnancy: NAAT ≥ 4 weeks after). Retest at 3 months.","Pas de test de contrôle (sauf grossesse : TAAN ≥ 4 semaines après). Nouveau test à 3 mois.","មិនចាំបាច់តេស្តបញ្ជាក់ជាសះ (លើកលែងផ្ទៃពោះ៖ NAAT ≥ ៤ សប្តាហ៍ក្រោយ)។ ធ្វើតេស្តម្តងទៀតនៅ ៣ ខែ។"],
+  ["Symptoms resolve in 1–2 weeks. Do not test earlier than 3–4 weeks (dead bacteria still detected).","Symptômes résolus en 1–2 semaines. Pas de test avant 3–4 semaines (ADN résiduel).","រោគសញ្ញាបាត់ក្នុង ១–២ សប្តាហ៍។ កុំធ្វើតេស្តមុន ៣–៤ សប្តាហ៍ (នៅឃើញមេរោគងាប់)។"],
+  ["Persistent symptoms: check adherence and partner; consider Mycoplasma genitalium or gonorrhoea; refer.","Symptômes persistants : observance, partenaire ; penser à Mycoplasma genitalium ou gonocoque.","រោគសញ្ញានៅ៖ ពិនិត្យការលេបថ្នាំ និងដៃគូ; គិតពី Mycoplasma genitalium ឬប្រមេះ; បញ្ជូន។"]],
+ [["Women: retest within 3 months (reinfection is common).","Femmes : nouveau test dans les 3 mois (réinfection fréquente).","ស្ត្រី៖ ធ្វើតេស្តម្តងទៀតក្នុង ៣ ខែ (ឆ្លងម្តងទៀតញឹកញាប់)។"],
+  ["Discharge and itching stop within a week. No alcohol during and 48 h after metronidazole.","Écoulement et prurit disparaissent en une semaine. Pas d'alcool pendant et 48 h après.","ធ្លាក់ស និងរមាស់ឈប់ក្នុង ១ សប្តាហ៍។ កុំផឹកស្រាពេលលេប និង ៤៨ ម៉ោងក្រោយ។"],
+  ["Persists: partner treated? Then metronidazole 2 g daily × 7 days; culture / refer if still positive.","Persistance : partenaire traité ? Puis métronidazole 2 g/j × 7 j ; culture / avis si échec.","នៅមាន៖ ដៃគូបានព្យាបាល? បន្ទាប់មក metronidazole 2 g/ថ្ងៃ × ៧ ថ្ងៃ; បណ្តុះមេរោគ / បញ្ជូនបើនៅមាន។"]],
+ [["No routine follow-up. Come back if symptoms return.","Pas de suivi systématique. Revenir si récidive.","មិនចាំបាច់មកតាមដាន។ មកវិញបើរោគសញ្ញាត្រឡប់។"],
+  ["Fishy smell and discharge should stop. Recurrence is common (30–50% in 3 months).","Odeur et pertes disparaissent. Récidive fréquente (30–50 % en 3 mois).","ក្លិនត្រី និងធ្លាក់សត្រូវបាត់។ កើតឡើងវិញញឹកញាប់ (៣០–៥០% ក្នុង ៣ ខែ)។"],
+  ["≥ 3 episodes a year: metronidazole gel twice weekly for 4–6 months; avoid douching.","≥ 3 épisodes/an : métronidazole gel 2 ×/semaine pendant 4–6 mois ; éviter les douches vaginales.","≥ ៣ ដង/ឆ្នាំ៖ metronidazole gel ២ ដង/សប្តាហ៍ រយៈពេល ៤–៦ ខែ; កុំលាងក្នុងទ្វារមាស។"]],
+ [["No routine follow-up.","Pas de suivi systématique.","មិនចាំបាច់មកតាមដាន។"],
+  ["Itching and white discharge improve in 2–3 days.","Prurit et pertes blanches s'améliorent en 2–3 jours.","រមាស់ និងធ្លាក់សក្រាស់ធូរក្នុង ២–៣ ថ្ងៃ។"],
+  ["≥ 4 episodes a year: check glucose (diabetes), HIV, steroid / antibiotic use; culture; fluconazole 150 mg weekly × 6 months (not in pregnancy).","≥ 4 épisodes/an : glycémie, VIH, corticoïdes / antibiotiques ; culture ; fluconazole 150 mg/semaine × 6 mois (pas pendant la grossesse).","≥ ៤ ដង/ឆ្នាំ៖ ពិនិត្យស្ករ (ទឹកនោមផ្អែម) HIV ការប្រើស្តេរ៉ូអ៊ីត / អង់ទីប៊ីយ៉ូទិក; បណ្តុះមេរោគ; fluconazole 150 mg/សប្តាហ៍ × ៦ ខែ (មិនមែនពេលមានផ្ទៃពោះ)។"]],
+ [["Review in 5–7 days if lesions are not healing.","Revoir à 5–7 jours si les lésions ne cicatrisent pas.","ពិនិត្យវិញក្រោយ ៥–៧ ថ្ងៃ បើដំបៅមិនជា។"],
+  ["Ulcers heal in 1–2 weeks (first episode up to 3 weeks). Ask about frequency of recurrences. Test HIV and syphilis.","Ulcérations cicatrisées en 1–2 semaines (primo-infection jusqu'à 3). Fréquence des récurrences. VIH et syphilis.","ដំបៅជាក្នុង ១–២ សប្តាហ៍ (លើកដំបូងរហូតដល់ ៣ សប្តាហ៍)។ សួរពីភាពញឹកញាប់នៃការកើតឡើងវិញ។ តេស្ត HIV និងស្វាយ។"],
+  ["≥ 6 recurrences a year: suppressive aciclovir 400 mg twice daily, review after 6–12 months. Not healing: HIV, resistant virus → refer. Pregnancy: plan from 36 weeks.","≥ 6 récurrences/an : aciclovir suppressif 400 mg × 2/j, réévaluer à 6–12 mois. Non cicatrisation : VIH, résistance → avis. Grossesse : plan dès 36 SA.","≥ ៦ ដង/ឆ្នាំ៖ aciclovir ការពារ 400 mg ២ ដង/ថ្ងៃ ពិនិត្យវិញក្រោយ ៦–១២ ខែ។ មិនជា៖ HIV វីរុសធន់ → បញ្ជូន។ ផ្ទៃពោះ៖ រៀបចំពី ៣៦ សប្តាហ៍។"]],
+ [["Review after 72 hours (must improve), then at the end of 14 days.","Revoir à 72 heures (amélioration obligatoire), puis en fin de traitement (14 j).","ពិនិត្យវិញក្រោយ ៧២ ម៉ោង (ត្រូវធូរ) រួចពេលចប់ ១៤ ថ្ងៃ។"],
+  ["At 72 h: fever down, less pelvic and cervical motion tenderness. Pregnancy test. Partner treated. Retest gonorrhoea / chlamydia at 3 months if positive.","À 72 h : apyrexie, moins de douleur pelvienne et à la mobilisation utérine. Test de grossesse. Partenaire traité. Recontrôle gonocoque / Chlamydia à 3 mois si positifs.","ក្រោយ ៧២ ម៉ោង៖ គ្រុនចុះ ឈឺអាងត្រគាក និងឈឺពេលកម្រើកមាត់ស្បូនតិចជាងមុន។ តេស្តផ្ទៃពោះ។ ដៃគូបានព្យាបាល។ តេស្តប្រមេះ / chlamydia ម្តងទៀតនៅ ៣ ខែ បើវិជ្ជមាន។"],
+  ["No improvement at 72 h: admit for IV treatment, ultrasound (tubo-ovarian abscess, ectopic), remove IUD if present after 72 h without response.","Pas d'amélioration à 72 h : hospitaliser (IV), échographie (abcès tubo-ovarien, GEU), retirer le DIU si échec.","មិនធូរក្រោយ ៧២ ម៉ោង៖ សម្រាកពេទ្យ ចាក់ IV អេកូ (អាប់សេ tubo-ovarian គភ៌ក្រៅស្បូន) ដក IUD បើគ្មានការឆ្លើយតប។"]],
+ [["Mother: ALT 1–3 months after delivery (flare after stopping tenofovir). Baby: HBsAg + anti-HBs at 9–12 months.","Mère : ALAT 1–3 mois après l'accouchement (poussée à l'arrêt du ténofovir). Bébé : AgHBs + anti-HBs à 9–12 mois.","ម្តាយ៖ ALT ១–៣ ខែក្រោយសម្រាល (អាចឡើងពេលឈប់ tenofovir)។ ទារក៖ HBsAg + anti-HBs នៅ ៩–១២ ខែ។"],
+  ["Baby: check all HepB vaccine doses given (birth + 3 doses). Mother: liver check every 6 months long-term.","Bébé : vérifier toutes les doses de vaccin HB (naissance + 3). Mère : bilan hépatique tous les 6 mois.","ទារក៖ ពិនិត្យថាបានចាក់វ៉ាក់សាំង HepB គ្រប់ (ពេលកើត + ៣ ដូស)។ ម្តាយ៖ ពិនិត្យថ្លើមរៀងរាល់ ៦ ខែ។"],
+  ["Baby HBsAg positive: infected → refer to hepatitis clinic. Anti-HBs < 10: repeat vaccine series and retest.","Bébé AgHBs + : infecté → consultation hépatite. Anti-HBs < 10 : refaire la vaccination et recontrôler.","ទារក HBsAg វិជ្ជមាន៖ ឆ្លង → បញ្ជូនគ្លីនិករលាកថ្លើម។ Anti-HBs < 10៖ ចាក់វ៉ាក់សាំងម្តងទៀត ហើយធ្វើតេស្តឡើងវិញ។"]]];
+var STI_VIEW="rx";
 function calcSti(){
   var box=$("cBody"); box.textContent=""; var w=cWt();
+  var nav=mk("div","pgnav"); [["rx",["💊 Treatment","💊 Traitement","💊 ការព្យាបាល"]],["fu",["🔍 Follow-up after treatment","🔍 Suivi après traitement","🔍 ពិនិត្យក្រោយព្យាបាល"]]].forEach(function(m){ var b=mk("button"); b.type="button"; b.textContent=cL(m[1]); b.setAttribute("aria-pressed",String(STI_VIEW===m[0])); b.onclick=function(){ STI_VIEW=m[0]; calcSti(); }; nav.appendChild(b); });
+  box.appendChild(nav);
+  if(STI_VIEW==="fu"){
+    var tf=vxTable([["Infection","Infection","ជំងឺ"],["When to review","Quand revoir","ពេលមកពិនិត្យ"],["What to check","Quoi vérifier","ត្រូវមើលអ្វីខ្លះ"],["If not cured → action","Si échec → conduite","បើមិនជា → ត្រូវធ្វើ"]],STI_T.map(function(r,i){ var f=STI_FU[i]||[["","",""],["","",""],["","",""]]; return {c:[cL(r[0]),cL(f[0]),cL(f[1]),cL(f[2])],small:0}; }));
+    tf.classList.add("stitbl"); box.appendChild(tf);
+    var all=mk("div","cempty"); all.textContent=cL(["For every STI: repeat HIV and syphilis tests at 3 months (window period); confirm partner(s) treated; no sex until 7 days after both are treated; condoms; offer HPV and hepatitis B vaccination.","Pour toute IST : refaire VIH et syphilis à 3 mois (fenêtre) ; vérifier le traitement du/des partenaire(s) ; pas de rapports avant 7 jours après le traitement des deux ; préservatifs ; proposer vaccins HPV et hépatite B.","កាមរោគគ្រប់ប្រភេទ៖ ធ្វើតេស្ត HIV និងស្វាយម្តងទៀតនៅ ៣ ខែ (រយៈពេលលាក់ខ្លួន); បញ្ជាក់ថាដៃគូបានព្យាបាល; កុំរួមភេទរហូត ៧ ថ្ងៃក្រោយទាំងពីរព្យាបាល; ស្រោមអនាម័យ; ផ្តល់វ៉ាក់សាំង HPV និង HepB។"]); box.appendChild(all);
+    return;
+  }
   var t=vxTable([["Infection","Infection","ជំងឺ"],["Adult","Adulte","មនុស្សធំ"],["Pregnant","Grossesse","មានផ្ទៃពោះ"],["Child / newborn","Enfant / nouveau-né","កុមារ / ទារក"]],STI_T.map(function(r){
     var child=cL(r[3]);
     if(w&&r[4]){ var c={bpg1:"→ "+Math.round(Math.min(50000*w,2400000)).toLocaleString("en")+" U",bpg3:"→ "+Math.round(Math.min(50000*w,2400000)).toLocaleString("en")+" U / "+cL(["week","semaine","សប្តាហ៍"]),pen:"→ "+Math.round(50000*w).toLocaleString("en")+" U / "+cL(["dose","dose","ដង"]),cro:"→ "+(w>45?"1 g":cFmt(Math.min(50*w,250))+" mg"),azi:"→ "+cFmt(Math.min(20*w,1000))+" mg",mtz:"→ "+cFmt(Math.min(5*w,666))+" mg × 3"}[r[4]]; if(c) child+=" ["+w+" kg "+c+"]"; }
@@ -7144,6 +7224,173 @@ function aiPrint(){ aiBadge(); var hi=AI_LAST.some(function(x){return x.lvl==="h
   setTimeout(aiBadge,800);
 })();
 
+
+/* ---------- v61: 🔎 symptoms → likely diagnoses, treatment, investigations (offline decision support) ---------- */
+var SX_LIST=[ /* id, [en,fr,kh], regex matched against templates */
+ ["fever",["Fever","Fièvre","គ្រុន"],/fever|febrile|temperature/],
+ ["headache",["Headache","Céphalée","ឈឺក្បាល"],/headache/],
+ ["cough",["Cough","Toux","ក្អក"],/cough/],
+ ["sputum",["Sputum","Crachats","ក្អកមានស្លេស្ម"],/sputum|productive|phlegm/],
+ ["sob",["Breathless","Essoufflement","ហត់ / ពិបាកដកដង្ហើម"],/breath|dyspn|fast breathing|wheez/],
+ ["wheeze",["Wheeze","Sifflement","ដកដង្ហើមឮសូរហួច"],/wheez|asthma/],
+ ["chest",["Chest pain","Douleur thoracique","ឈឺទ្រូង"],/chest pain|chest tight|angina|chest wall/],
+ ["throat",["Sore throat","Mal de gorge","ឈឺបំពង់ក"],/sore throat|throat|tonsil|pharyng|swallow/],
+ ["nose",["Runny nose / sneezing","Rhinorrhée","ហៀរសំបោរ / កណ្តាស់"],/runny|rhin|sneez|nasal|blocked nose/],
+ ["ear",["Ear pain","Otalgie","ឈឺត្រចៀក"],/\bear\b|otitis|hearing/],
+ ["eye",["Red / painful eye","Œil rouge","ភ្នែកក្រហម / ឈឺភ្នែក"],/eye|conjunct|eyelid|vision/],
+ ["abd",["Abdominal pain","Douleur abdominale","ឈឺពោះ"],/abdominal|belly|stomach|colic|cramp/],
+ ["epig",["Epigastric pain / heartburn","Épigastralgie / pyrosis","ឈឺក្រពះ / ឆេះទ្រូង"],/epigastr|heartburn|reflux|dyspeps|gastrit|ulcer/],
+ ["rlq",["Right lower abdominal pain","Douleur fosse iliaque droite","ឈឺពោះក្រោមខាងស្តាំ"],/right lower|appendic/],
+ ["ruq",["Right upper abdominal pain","Douleur hypochondre droit","ឈឺពោះលើខាងស្តាំ"],/right upper|liver|hepat|gallbl|fluke/],
+ ["diar",["Diarrhoea","Diarrhée","រាក"],/diarr|loose stool|watery stool|gastroenter|cholera/],
+ ["blood_st",["Blood / mucus in stool","Sang / glaires dans les selles","លាមកមានឈាម / ស្លេស្ម"],/blood.{0,12}stool|bloody|dysent|mucus|melaena|black stool/],
+ ["vomit",["Vomiting","Vomissements","ក្អួត"],/vomit/],
+ ["nausea",["Nausea","Nausées","ចង់ក្អួត"],/nausea/],
+ ["constip",["Constipation","Constipation","ទល់លាមក"],/constip|hard stool/],
+ ["jaundice",["Jaundice (yellow eyes)","Ictère","លឿងភ្នែក / ស្បែក"],/jaundice|yellow/],
+ ["dysuria",["Burning urination","Brûlures mictionnelles","ឆេះពេលនោម"],/burning urin|dysuria|painful urin|burning/],
+ ["freq",["Frequent / urgent urination","Pollakiurie","នោមញឹក"],/frequen|urgency|urine at night|stream/],
+ ["flank",["Flank / loin pain","Douleur lombaire","ឈឺចង្កេះ / តម្រងនោម"],/flank|loin|kidney|renal|stone/],
+ ["hematuria",["Blood in urine","Hématurie","នោមឈាម"],/blood in urine|haematuria|hematuria/],
+ ["discharge",["Genital discharge","Écoulement génital","ធ្លាក់ស / ខ្ទុះប្រដាប់ភេទ"],/discharge/],
+ ["vbleed",["Vaginal bleeding","Saignement vaginal","ធ្លាក់ឈាមទ្វារមាស"],/vaginal bleeding|bleeding|menstrual|period/],
+ ["gulcer",["Genital ulcer / sore","Ulcération génitale","ដំបៅប្រដាប់ភេទ"],/genital|ulcer|chancre|syphilis|herpes/],
+ ["rash",["Rash","Éruption","កន្ទួល"],/rash|spots|blister|vesicle|patch/],
+ ["itch",["Itching","Prurit","រមាស់"],/itch/],
+ ["joint",["Joint pain / swelling","Arthralgies","ឈឺ / ហើមសន្លាក់"],/joint|arthr|gout|knee/],
+ ["back",["Back pain","Lombalgie","ឈឺខ្នង"],/back pain|back|sciatica/],
+ ["myalg",["Body / muscle aches","Myalgies","ឈឺខ្លួន / សាច់ដុំ"],/body ache|aches|myalg|muscle/],
+ ["dizzy",["Dizziness / vertigo","Vertiges","វិលមុខ"],/dizz|vertigo|motion/],
+ ["faint",["Fainting","Malaise / syncope","សន្លប់មួយភ្លែត"],/faint|syncope|collapse/],
+ ["palp",["Palpitations","Palpitations","ញ័របេះដូង"],/palpit|heart racing|irregular/],
+ ["oedema",["Leg swelling","Œdèmes","ហើមជើង"],/leg swelling|swelling|oedema|edema/],
+ ["wtloss",["Weight loss","Amaigrissement","ស្រកទម្ងន់"],/weight loss|thin/],
+ ["nsweat",["Night sweats","Sueurs nocturnes","បែកញើសពេលយប់"],/night sweat|sweat/],
+ ["tired",["Tiredness / weakness","Fatigue","អស់កម្លាំង / ខ្សោយ"],/tired|fatigue|weak/],
+ ["pale",["Pale","Pâleur","ស្លេក"],/pale|anaem|anem/],
+ ["seizure",["Convulsion","Convulsion","ប្រកាច់"],/seizure|convuls|\bfit/],
+ ["confus",["Confusion / drowsy","Confusion","វង្វេង / ងងុយ"],/confus|drowsy|conscious|coma/],
+ ["neck",["Stiff neck","Raideur de nuque","រឹងក"],/stiff neck|neck stiff|meningit|neck pain/],
+ ["numb",["Numbness / tingling","Paresthésies","ស្ពឹក"],/numb|tingl|burning feet|neuropath/],
+ ["thirst",["Thirst / passing a lot of urine","Soif / polyurie","ស្រេកទឹក / នោមច្រើន"],/thirst|polyuri|high blood sugar|diabet/],
+ ["highbp",["High blood pressure","HTA","សម្ពាធឡើង"],/blood pressure|hypertens|\bbp\b/],
+ ["preg",["Pregnant / missed period","Enceinte / retard de règles","មានផ្ទៃពោះ / ខកខានរដូវ"],/pregnan|missed period|antenatal/],
+ ["tooth",["Toothache / gum","Douleur dentaire","ឈឺធ្មេញ / អញ្ចាញ"],/tooth|gum|dental|socket/],
+ ["wound",["Wound / cut","Plaie","របួស"],/wound|cut|lacerat|abscess|bite/],
+ ["lump",["Lump / swelling","Masse / tuméfaction","ដុំ / ហើម"],/lump|mass|cyst|swelling|abscess/],
+ ["sleep",["Poor sleep / worry / low mood","Insomnie / anxiété / tristesse","គេងមិនលក់ / ព្រួយ / ធ្លាក់ទឹកចិត្ត"],/sleep|worry|anxi|mood|depress/],
+ ["crying",["Baby crying / poor feeding","Pleurs / tète mal","ទារកយំ / បៅតិច"],/crying|feeding|feed|infant|baby/]];
+/* clinical patterns: [symptom ids (all required), template ids, weight] */
+var SX_RULES=[
+ [["fever","rash","joint"],["d-dengue","x-chik"],6],[["fever","abd","vomit"],["i-dengue","d-dengue","n-typhoid"],4],[["fever","crying"],["d-pedfever"],3],[["fever","myalg","headache"],["d-dengue","x-chik","x-scrub","c-murine","n-malaria","n-flu"],3],
+ [["fever","cough","sob"],["d-pneumonia","n-pedpneu","i-pneumonia"],6],[["fever","cough"],["d-pneumonia","n-flu","n-pedurti"],3],
+ [["fever","headache","neck"],["i-meningitis"],8],[["fever","confus"],["i-meningitis","i-sepsis","i-malaria","c-je"],5],
+ [["dysuria","freq"],["d-uti"],6],[["fever","flank","dysuria"],["i-pyelo","n-pyelo"],7],[["flank","hematuria"],["n-renalcolic"],6],
+ [["epig","nausea"],["d-gastritis","n-gerd","x-hpylori"],5],[["diar","vomit"],["d-diarrhea","d-peddiarrhea","x-foodpois","i-dehyd"],5],
+ [["diar","blood_st"],["n-dysentery","x-amoeba","p-dysentery"],7],[["rlq","fever","vomit"],["y-appy"],8],[["rlq","vomit"],["y-appy"],5],
+ [["jaundice","fever"],["x-hepa","n-lepto","i-malaria","c-ala"],5],[["ruq","fever"],["c-ala","c-melioid"],5],
+ [["chest","sob"],["n-angina","x-hf"],5],[["chest","palp"],["n-angina","y-af","y-palp"],4],
+ [["cough","wtloss","nsweat"],["n-tbsus"],9],[["cough","wtloss"],["n-tbsus"],5],
+ [["rash","itch"],["d-scabies","d-urticaria","n-eczema","x-contactderm"],4],[["discharge","itch"],["d-candida","x-tricho","n-bv"],6],
+ [["discharge","dysuria"],["d-urethritis","x-cervicitis"],6],[["gulcer"],["n-syphilis","n-herpes"],5],
+ [["headache","highbp"],["d-htn","x-htnurg"],6],[["thirst","tired"],["d-dm2","y-prediab"],6],[["pale","tired"],["d-ida","y-b12"],6],
+ [["oedema","sob"],["x-hf"],7],[["dizzy","nausea"],["n-vertigo","x-motion"],4],[["seizure","fever"],["p-febconv","i-meningitis","c-je"],6],
+ [["preg","vomit"],["i-hyperemesis","d-hyperem"],6],[["preg","vbleed"],["o-threatened"],8],[["preg","headache","highbp"],["i-preeclampsia","o-htn"],9],
+ [["preg","fever"],["o-malaria","n-utipreg"],3],[["joint","fever"],["x-chik","y-ra"],3],[["back","numb"],["x-sciatica"],5],
+ [["sleep"],["x-insomnia","x-anxiety","x-depression"],3],[["crying"],["x-colic","x-teething"],3],[["throat","fever"],["d-throat","p-throat"],5],
+ [["nose","throat"],["d-cold","n-pedurti"],4],[["ear","fever"],["d-otitis","p-otitis"],6],[["eye","itch"],["n-allconj"],5],[["eye","discharge"],["d-conj"],5]];
+var SX={sel:[],txt:""};
+function sxName(t){ var l=langPrim(); return l==="kh"?(t.dxKh||t.name):l==="fr"?(t.dxFr||t.name):t.name; }
+function sxInvCat(inv){ var c={blood:[],urine:[],us:[],xray:[],ecg:[],other:[]};
+  String(inv||"").split(/[,;·]|\s\+\s|\band\b/).map(function(x){return x.trim();}).filter(Boolean).forEach(function(x){ var f=fold(x);
+    if(/x-ray|xray|radiograph|radio\b/.test(f)) c.xray.push(x);
+    else if(/ultrasound|echograph|doppler|\becho\b|scan\b|nuchal/.test(f)) c.us.push(x);
+    else if(/\becg\b|\bekg\b|ctg/.test(f)) c.ecg.push(x);
+    else if(/urin|stool|sputum|swab|wet mount|csf|lumbar|pus|smear.*(vagin|urethr)|kato/.test(f)) c.urine.push(x);
+    else if(/cbc|\bhb\b|haemoglobin|hematocrit|haematocrit|glucose|fbs|hba1c|ogtt|creatinine|electrolyt|potassium|sodium|liver|\balt\b|crp|esr|culture|ns1|igm|rdt|malaria|hiv|rpr|tpha|hbsag|lipid|tsh|t4|ferritin|inr|blood|serolog|amylase|psa|troponin|b12|folate|bilirubin|albumin|uric|g6pd|platelet|cholinesterase|ammonia|lactate|gas\b/.test(f)) c.blood.push(x);
+    else c.other.push(x); });
+  return c; }
+function sxScore(){
+  var mode=ptMode(), sex=fold(($("pSex")&&$("pSex").textContent)||""), male=/^\s*(m\b|male|ប្រុស|homme)/.test(sex), age=ptAgeYears();
+  var sel=SX.sel.map(function(id){return SX_LIST.find(function(s){return s[0]===id;});}).filter(Boolean);
+  var words=fold(SX.txt).split(/[\s,;]+/).filter(function(w){return w.length>2;});
+  if(!sel.length&&!words.length) return [];
+  var res=[];
+  lib.forEach(function(t){
+    var h=hay(t)+" "+fold(t.inv||""), co=fold((t.co||"")+" "+t.name), sc=0, hit=[];
+    sel.forEach(function(s){ if(s[2].test(co)){ sc+=3; hit.push(s[0]); } else if(s[2].test(h)){ sc+=1.5; hit.push(s[0]); } });
+    words.forEach(function(w){ if(h.indexOf(w)>-1){ sc+=1.2; } });
+    SX_RULES.forEach(function(r){ if(r[1].indexOf(t.id)>-1&&r[0].every(function(id){return SX.sel.indexOf(id)>-1;})) sc+=r[2]; });
+    if(!sc) return;
+    if(sel.length>1) sc*=0.6+0.4*(hit.length/sel.length);
+    if(male&&(t.group==="obs"||t.group==="gyn")) return;
+    if(mode==="child"){ if(t.group==="peds"||/child|infant|newborn/i.test(t.name)) sc*=1.6; else sc*=0.6;
+      if(t.group==="obs"||t.group==="gyn"||/adult|copd|hypertens|gout|osteopor|prostat|menopaus|erectile|heart failure|atrial|stroke|type 2|prediab|cholesterol|varicose|angina|alcohol|smoking|contracept/i.test(t.name)) sc*=0.25; }
+    else if(mode==="preg"){ if(t.group==="obs") sc*=1.4; }
+    else { if(t.group==="peds") sc*=age===null?0.8:0.4; if(t.group==="obs"&&SX.sel.indexOf("preg")<0) sc*=0.3; }
+    if(t.care==="ipd") sc*=0.92;
+    res.push({t:t,sc:sc,hit:hit});
+  });
+  res.sort(function(a,b){return b.sc-a.sc;});
+  /* keep one of OPD/IPD twins next to each other but avoid duplicates by name */
+  var seen={}, out=[]; res.forEach(function(r){ var k=fold(r.t.dx||r.t.name).replace(/\(.*\)/,"").trim(); if(seen[k]) return; seen[k]=1; out.push(r); });
+  return out.slice(0,8);
+}
+function calcSym(){
+  var box=$("cBody"); box.textContent="";
+  var intro=mk("div","cnote"); intro.textContent=cL(["Tap 2–3 symptoms (or type them). Patient age, sex and pregnancy are taken from the sheet.","Choisir 2–3 symptômes (ou les saisir). Âge, sexe et grossesse sont pris dans la fiche.","ចុចរើសរោគសញ្ញា ២–៣ (ឬវាយបញ្ចូល)។ អាយុ ភេទ និងផ្ទៃពោះ យកពីវេជ្ជបញ្ជា។"]); box.appendChild(intro);
+  var pt=mk("div","sxpt"), a=ptAgeYears(), md=ptMode();
+  pt.textContent="🧑 "+(a!==null?cL(["Age ","Âge ","អាយុ "])+(a<1?Math.round(a*12)+cL([" mo"," mois"," ខែ"]):Math.round(a)+cL([" y"," ans"," ឆ្នាំ"])):cL(["age ?","âge ?","អាយុ ?"]))+" · "+cL(md==="child"?["child","enfant","កុមារ"]:md==="preg"?["pregnant","enceinte","មានផ្ទៃពោះ"]:["adult","adulte","មនុស្សធំ"])+(($("pSex").textContent||"").trim()?" · "+$("pSex").textContent.trim():"");
+  box.appendChild(pt);
+  var chips=mk("div","sxchips");
+  SX_LIST.forEach(function(s){ var b=mk("button"); b.type="button"; b.textContent=cL(s[1]); b.setAttribute("aria-pressed",String(SX.sel.indexOf(s[0])>-1));
+    b.onclick=function(){ var i=SX.sel.indexOf(s[0]); if(i>-1) SX.sel.splice(i,1); else SX.sel.push(s[0]); calcSym(); }; chips.appendChild(b); });
+  box.appendChild(chips);
+  var row=mk("div","sxrow"), inp=mk("input"); inp.type="search"; inp.className="cq"; inp.placeholder=cL(["Other symptoms (any language)…","Autres symptômes…","រោគសញ្ញាផ្សេង (ភាសាណាក៏បាន)…"]); inp.value=SX.txt;
+  inp.oninput=function(){ SX.txt=inp.value; clearTimeout(window.__sxT); window.__sxT=setTimeout(function(){ calcSym(); var i2=document.querySelector("#cBody .sxrow input"); if(i2){ i2.focus(); i2.setSelectionRange(i2.value.length,i2.value.length);} },350); };
+  row.appendChild(inp);
+  var clr=mk("button","cadd"); clr.type="button"; clr.textContent="✕ "+cL(["Clear","Effacer","សម្អាត"]); clr.onclick=function(){ SX.sel=[]; SX.txt=""; calcSym(); }; row.appendChild(clr);
+  var fromCo=mk("button","cadd"); fromCo.type="button"; fromCo.textContent="↓ C/O"; fromCo.title=cL(["Read symptoms from C/O","Lire le motif","អានពី C/O"]);
+  fromCo.onclick=function(){ var co=fold($("fCo").textContent+" "+$("fHo").textContent); SX_LIST.forEach(function(s){ if(s[2].test(co)&&SX.sel.indexOf(s[0])<0) SX.sel.push(s[0]); }); calcSym(); }; row.appendChild(fromCo);
+  box.appendChild(row);
+  var res=sxScore();
+  if(!res.length){ var e=mk("div","cempty"); e.textContent=cL(["Choose symptoms to see likely diagnoses.","Choisissez des symptômes pour voir les diagnostics probables.","រើសរោគសញ្ញា ដើម្បីមើលរោគវិនិច្ឆ័យដែលអាចមាន។"]); box.appendChild(e); return; }
+  var top=res[0].sc, h=mk("h4"); h.className="pgh"; h.textContent="🔎 "+cL(["Likely diagnoses","Diagnostics probables","រោគវិនិច្ឆ័យដែលអាចមាន"])+" ("+res.length+")"; box.appendChild(h);
+  res.forEach(function(r,idx){
+    var t=r.t, card=mk("div","sxcard"+(idx===0?" sxtop":"")), hd=mk("div","sxh");
+    var nm=mk("b"); nm.textContent=(idx+1)+". "+sxName(t); hd.appendChild(nm);
+    var pc=Math.round(r.sc/top*100), bar=mk("span","sxbar"); bar.innerHTML='<i style="width:'+Math.max(8,pc)+'%"></i>'; hd.appendChild(bar);
+    var tag=mk("span","schip "+(t.care==="ipd"?"hi":"lo")); tag.textContent=t.care==="ipd"?"IPD":"OPD"; hd.appendChild(tag); card.appendChild(hd);
+    var sub=mk("div","cnote"); sub.textContent=(t.dx||"")+(r.hit.length?" · ✓ "+r.hit.map(function(id){ var s=SX_LIST.find(function(x){return x[0]===id;}); return s?cL(s[1]):id; }).join(", "):""); card.appendChild(sub);
+    var det=mk("div","sxdet"); det.hidden=idx>2;
+    var rx=(t.rx||[]).filter(function(x){return x.drug;}).map(function(x){ return x.drug+(x.slots&&x.slots.some(function(v){return v&&v!=="0";})?" "+x.slots.map(function(v){return v||"0";}).join("-"):"")+(x.days?" × "+x.days+" d":""); });
+    if(rx.length){ var p1=mk("div","sxline"), b1=mk("b"); b1.textContent="💊 "+cL(["Treatment: ","Traitement : ","ការព្យាបាល៖ "]); p1.appendChild(b1); p1.appendChild(document.createTextNode(rx.join(" · "))); det.appendChild(p1); }
+    if(t.proc&&t.proc.name){ var pp=mk("div","sxline"), bp=mk("b"); bp.textContent="✂ "+cL(["Procedure: ","Geste : ","វះកាត់តូច៖ "]); pp.appendChild(bp); pp.appendChild(document.createTextNode(langPrim()==="kh"?t.proc.name[1]:t.proc.name[0])); det.appendChild(pp); }
+    var ic=sxInvCat(t.inv), lab={blood:["🩸 Blood","🩸 Sang","🩸 ឈាម"],urine:["🧪 Urine / stool / swab","🧪 Urines / selles / prélèvement","🧪 ទឹកនោម / លាមក / សំណាក"],us:["🔊 Ultrasound","🔊 Échographie","🔊 អេកូ"],xray:["🩻 X-ray","🩻 Radiographie","🩻 ថតកាំរស្មី X"],ecg:["💓 ECG / CTG","💓 ECG / RCF","💓 ECG / CTG"],other:["🔍 Other","🔍 Autres","🔍 ផ្សេងៗ"]};
+    var anyIx=false; Object.keys(lab).forEach(function(k){ if(!ic[k].length) return; anyIx=true; var p=mk("div","sxline"), b=mk("b"); b.textContent=cL(lab[k])+": "; p.appendChild(b); p.appendChild(document.createTextNode(ic[k].join(", "))); det.appendChild(p); });
+    if(!anyIx){ var p0=mk("div","sxline cnote"); p0.textContent="🔍 "+cL(["No routine test needed (clinical diagnosis).","Pas d'examen systématique (diagnostic clinique).","មិនចាំបាច់ធ្វើតេស្ត (រោគវិនិច្ឆ័យតាមគ្លីនិក)។"]); det.appendChild(p0); }
+    var red=Array.isArray(t.red)?(langPrim()==="kh"?t.red[1]:t.red[0]):""; if(red){ var pr=mk("div","sxline sxred"), br=mk("b"); br.textContent="⚠ "; pr.appendChild(br); pr.appendChild(document.createTextNode(red)); det.appendChild(pr); }
+    var acts=mk("div","pgact");
+    var use=mk("button","btn"); use.type="button"; use.textContent="📋 "+cL(["Use this diagnosis","Utiliser ce diagnostic","ប្រើរោគវិនិច្ឆ័យនេះ"]);
+    use.onclick=function(){ var syms=SX.sel.map(function(id){ var s=SX_LIST.find(function(x){return x[0]===id;}); return s?s[1][0]:""; }).filter(Boolean).concat(SX.txt.trim()?[SX.txt.trim()]:[]);
+      var others=res.filter(function(o){return o.t.id!==t.id;}).slice(0,3).map(function(o){return o.t.dx||o.t.name;});
+      $("calcOv").hidden=true; openTemplate(t.id);
+      setTimeout(function(){ if(syms.length){ var co=$("fCo"), cur=co.textContent.trim(), add=syms.filter(function(x){return fold(cur).indexOf(fold(x))<0;}); if(add.length){ co.textContent=(cur?cur+", ":"")+add.join(", ").toLowerCase().replace(/^./,function(c){return c.toUpperCase();}); co.dispatchEvent(new Event("input",{bubbles:true})); } }
+        if(others.length&&$("fDdx")&&!$("fDdx").textContent.trim()){ $("fDdx").textContent=others.join("; "); $("fDdx").dispatchEvent(new Event("input",{bubbles:true})); if(typeof dxBlank==="function") dxBlank(); }
+        say("✓ "+sxName(t)); },150); };
+    acts.appendChild(use);
+    var ddx=mk("button","cadd"); ddx.type="button"; ddx.textContent="+ DDx"; ddx.title=cL(["Add as differential diagnosis","Ajouter en diagnostic différentiel","បន្ថែមជារោគវិនិច្ឆ័យប្រៀបធៀប"]);
+    ddx.onclick=function(){ var f=$("fDdx"), v=t.dx||t.name; if(fold(f.textContent).indexOf(fold(v))<0){ f.textContent=(f.textContent.trim()?f.textContent.trim()+"; ":"")+v; f.dispatchEvent(new Event("input",{bubbles:true})); if(typeof dxBlank==="function") dxBlank(); } say("✓ DDx"); };
+    acts.appendChild(ddx);
+    if(t.inv){ var ix=mk("button","cadd"); ix.type="button"; ix.textContent="+ Ix"; ix.title=cL(["Add these tests to the sheet","Ajouter ces examens","បន្ថែមតេស្តទាំងនេះ"]);
+      ix.onclick=function(){ var f=$("fInv"); if(fold(f.textContent).indexOf(fold(t.inv).slice(0,20))<0){ f.textContent=(f.textContent.trim()?f.textContent.trim()+"; ":"")+t.inv; f.dispatchEvent(new Event("input",{bubbles:true})); } say("✓ Ix"); }; acts.appendChild(ix); }
+    det.appendChild(acts); card.appendChild(det);
+    if(idx>2){ var more=mk("button","cadd sxmore"); more.type="button"; more.textContent="▾ "+cL(["details","détails","លម្អិត"]); more.onclick=function(){ det.hidden=!det.hidden; more.textContent=(det.hidden?"▾ ":"▴ ")+cL(["details","détails","លម្អិត"]); }; hd.appendChild(more); }
+    box.appendChild(card);
+  });
+  var ft=mk("div","cnote"); ft.textContent=cL(["Suggestions come from the clinic's templates and common clinical patterns. Always examine the patient and confirm — this is decision support, not a diagnosis.","Suggestions issues des modèles de la clinique et de tableaux cliniques fréquents. Toujours examiner et confirmer — aide à la décision, pas un diagnostic.","ការណែនាំនេះមកពីគំរូរបស់គ្លីនិក និងលំនាំគ្លីនិកទូទៅ។ ត្រូវពិនិត្យអ្នកជំងឺ និងបញ្ជាក់ជានិច្ច — នេះជាជំនួយសម្រេចចិត្ត មិនមែនរោគវិនិច្ឆ័យទេ។"]); box.appendChild(ft);
+}
+
 /* ---------- PE / medical history / evaluation / SOAP follow the language buttons (ខ្មែរ · EN · FR · EN+ខ្មែរ · FR+ខ្មែរ) ---------- */
 var TRX={"General Appearance":["Aspect général","រូបរាងទូទៅ"],"ENT (ORL)":["ORL","ត្រចៀក ច្រមុះ បំពង់ក"],"Cardiovascular System":["Appareil cardiovasculaire","បេះដូង និងសរសៃឈាម"],"Respiratory System":["Appareil respiratoire","ប្រព័ន្ធដង្ហើម"],"Gastro-Intestinal System":["Appareil digestif","ប្រព័ន្ធរំលាយអាហារ"],"Central Nervous System":["Système nerveux central","ប្រព័ន្ធប្រសាទកណ្តាល"],"Skin & Extremities":["Peau et extrémités","ស្បែក និងចុងដៃជើង"],"Urogenital System":["Appareil uro-génital","ប្រព័ន្ធទឹកនោម និងប្រដាប់បន្តពូជ"],"Mental Status":["État mental","ស្ថានភាពផ្លូវចិត្ត"],"Other body parts":["Autres","ផ្នែកផ្សេងៗ"],"Vaccine":["Vaccins","វ៉ាក់សាំង"],"Past Medical":["Antécédents médicaux","ជំងឺធ្លាប់មាន"],"Past Operation":["Antécédents chirurgicaux","ធ្លាប់វះកាត់"],"Family History":["Antécédents familiaux","ប្រវត្តិគ្រួសារ"],"Social History":["Mode de vie","ប្រវត្តិសង្គម"],"Other":["Autres","ផ្សេងៗ"],"Allergy":["Allergies","អាឡែកហ្ស៊ី"],"EPI complete":["PEV complet","វ៉ាក់សាំង PEV គ្រប់"],"Not up to date":["Pas à jour","មិនទាន់គ្រប់"],"COVID-19 vaccinated":["Vacciné COVID-19","បានចាក់វ៉ាក់សាំង COVID-19"],"Tetanus up to date":["Tétanos à jour","វ៉ាក់សាំងតេតាណូសគ្រប់"],"Hepatitis B vaccinated":["Vacciné hépatite B","បានចាក់វ៉ាក់សាំងរលាកថ្លើម B"],"Unknown":["Inconnu","មិនដឹង"],"Hypertension":["HTA","លើសសម្ពាធឈាម"],"Diabetes":["Diabète","ទឹកនោមផ្អែម"],"Asthma":["Asthme","ហឺត"],"COPD":["BPCO","COPD"],"Heart disease":["Cardiopathie","ជំងឺបេះដូង"],"Stroke":["AVC","ស្ទះសរសៃឈាមខួរក្បាល"],"Tuberculosis":["Tuberculose","របេង"],"Hepatitis B":["Hépatite B","រលាកថ្លើម B"],"Gastritis / ulcer":["Gastrite / ulcère","រលាកក្រពះ / ដំបៅក្រពះ"],"Kidney disease":["Maladie rénale","ជំងឺតម្រងនោម"],"Epilepsy":["Épilepsie","ឆ្កួតជ្រូក"],"None":["Aucun","គ្មាន"],"Appendectomy":["Appendicectomie","វះខ្នែងពោះវៀន"],"Caesarean section":["Césarienne","វះកាត់យកកូន"],"Cholecystectomy":["Cholécystectomie","វះកាត់ថង់ទឹកប្រមាត់"],"Hernia repair":["Cure de hernie","វះជួសជុលក្លូន"],"Fracture fixation":["Ostéosynthèse","វះកាត់ភ្ជាប់ឆ្អឹងបាក់"],"Cancer":["Cancer","មហារីក"],"Thalassaemia":["Thalassémie","ថាឡាសេមី"],"Non-smoker":["Non-fumeur","មិនជក់បារី"],"Smoker":["Fumeur","ជក់បារី"],"Ex-smoker":["Ex-fumeur","ធ្លាប់ជក់បារី"],"Alcohol occasionally":["Alcool occasionnel","ផឹកស្រាម្តងម្កាល"],"Alcohol daily":["Alcool quotidien","ផឹកស្រារាល់ថ្ងៃ"],"Farmer":["Agriculteur","កសិករ"],"Office worker":["Employé de bureau","បុគ្គលិកការិយាល័យ"],"Student":["Étudiant","សិស្ស / និស្សិត"],"Pregnant / breastfeeding":["Enceinte / allaitante","មានផ្ទៃពោះ / បំបៅដោះ"],"Current medicines: …":["Traitement en cours : …","ថ្នាំកំពុងប្រើ៖ …"],"Traditional medicine use":["Médecine traditionnelle","ប្រើថ្នាំបុរាណ"],"NKDA (no known drug allergy)":["Pas d'allergie médicamenteuse connue","គ្មានអាឡែកហ្ស៊ីថ្នាំ"],"Penicillin":["Pénicilline","Penicillin"],"Sulfa":["Sulfamides","Sulfa"],"NSAIDs / Aspirin":["AINS / Aspirine","NSAID / Aspirin"],"Cephalosporin":["Céphalosporines","Cephalosporin"],"Seafood":["Fruits de mer","គ្រឿងសមុទ្រ"],"Alert":["Éveillé","ភ្ញាក់ដឹងខ្លួន"],"oriented":["orienté","ស្គាល់ពេល ទីកន្លែង មនុស្ស"],"not in distress":["pas de détresse","មិនមានទុក្ខលំបាក"],"well hydrated":["bien hydraté","មានជាតិទឹកគ្រប់គ្រាន់"],"no pallor":["pas de pâleur","មិនស្លេក"],"no jaundice":["pas d'ictère","មិនលឿង"],"Ill-looking":["Aspect malade","មើលទៅឈឺ"],"In pain":["Douloureux","ឈឺចាប់"],"Lethargic":["Léthargique","ល្ហិតល្ហៃ"],"Pale":["Pâle","ស្លេក"],"Jaundiced":["Ictérique","លឿង"],"Dehydrated (sunken eyes":["Déshydraté (yeux enfoncés","ខ្វះជាតិទឹក (ភ្នែកស្រុត"],"dry mucosa)":["muqueuses sèches)","ភ្នាសស្ងួត)"],"Cyanosis":["Cyanose","ស្វាយ"],"Flushed / febrile":["Rouge / fébrile","ក្រហម / ក្តៅខ្លួន"],"Malnourished":["Dénutri","កង្វះអាហារូបត្ថម្ភ"],"Obese":["Obèse","ធាត់លើស"],"Ears":["Oreilles","ត្រចៀក"],"nose and throat normal":["nez et gorge normaux","ច្រមុះ និងបំពង់កធម្មតា"],"tonsils not enlarged":["amygdales non hypertrophiées","ទន្សិលមិនធំ"],"no cervical lymph nodes":["pas d'adénopathie cervicale","គ្មានកូនកណ្តុរក"],"Pharynx red":["Pharynx rouge","បំពង់កក្រហម"],"Tonsils enlarged with exudate":["Amygdales hypertrophiées avec exsudat","ទន្សិលធំមានខ្ទុះស"],"Tympanic membrane red / bulging":["Tympan rouge / bombé","ក្រដាសត្រចៀកក្រហម / ប៉ោង"],"Ear discharge":["Otorrhée","ហូរខ្ទុះត្រចៀក"],"Nasal discharge":["Rhinorrhée","ហៀរសំបោរ"],"Nasal congestion":["Obstruction nasale","តឹងច្រមុះ"],"Cervical lymph nodes enlarged":["Adénopathies cervicales","កូនកណ្តុរកធំ"],"Oral ulcers":["Ulcérations buccales","ដំបៅមាត់"],"Dental caries / abscess":["Carie / abcès dentaire","ធ្មេញពុក / អាប់សេធ្មេញ"],"S1 S2 regular":["B1 B2 réguliers","S1 S2 ទៀងទាត់"],"no murmur":["pas de souffle","គ្មានសូរ murmur"],"CRT < 2 s":["TRC < 2 s","CRT < 2 វិនាទី"],"peripheral pulses normal":["pouls périphériques normaux","ជីពចរដៃជើងធម្មតា"],"Tachycardia":["Tachycardie","បេះដូងដើរលឿន"],"Bradycardia":["Bradycardie","បេះដូងដើរយឺត"],"Irregular rhythm":["Rythme irrégulier","ចង្វាក់មិនទៀង"],"Murmur":["Souffle","សូរ murmur"],"CRT > 2 s":["TRC > 2 s","CRT > 2 វិនាទី"],"Weak peripheral pulses":["Pouls périphériques faibles","ជីពចរដៃជើងខ្សោយ"],"Raised JVP":["Turgescence jugulaire","សរសៃករីកធំ (JVP ខ្ពស់)"],"Leg oedema":["Œdème des membres inférieurs","ហើមជើង"],"Normal breath sounds both sides":["Murmure vésiculaire normal des deux côtés","សូរដង្ហើមធម្មតាទាំងសងខាង"],"no crackles":["pas de crépitants","គ្មានសូរក្រេបៗ"],"no wheeze":["pas de sibilants","គ្មានសូរហួច"],"no chest indrawing":["pas de tirage","គ្មានទ្រូងស្រុត"],"Tachypnoea":["Polypnée","ដកដង្ហើមញាប់"],"Chest indrawing":["Tirage","ទ្រូងស្រុត"],"Wheeze":["Sibilants","សូរហួច"],"Crackles right base":["Crépitants base droite","សូរក្រេបៗបាតសួតស្តាំ"],"Crackles left base":["Crépitants base gauche","សូរក្រេបៗបាតសួតឆ្វេង"],"Reduced air entry":["Diminution du murmure vésiculaire","ខ្យល់ចូលថយ"],"Bronchial breathing":["Souffle tubaire","សូរដង្ហើមបំពង់"],"Dull to percussion":["Matité à la percussion","គោះសូរស្ងួត"],"Accessory muscle use":["Mise en jeu des muscles accessoires","ប្រើសាច់ដុំជំនួយដកដង្ហើម"],"Abdomen soft":["Abdomen souple","ពោះទន់"],"non-tender":["indolore","មិនឈឺពេលស្ទាប"],"no organomegaly":["pas d'organomégalie","សរីរាង្គមិនធំ"],"bowel sounds normal":["bruits intestinaux normaux","សូរពោះវៀនធម្មតា"],"Epigastric tenderness":["Sensibilité épigastrique","ឈឺត្រង់ក្រពះពេលស្ទាប"],"Right iliac fossa tenderness":["Sensibilité de la fosse iliaque droite","ឈឺពោះក្រោមខាងស្តាំពេលស្ទាប"],"Right upper quadrant tenderness":["Sensibilité de l'hypochondre droit","ឈឺពោះលើខាងស្តាំពេលស្ទាប"],"Guarding / rebound":["Défense / rebond","ពោះរឹងការពារ / ឈឺពេលលែងដៃ"],"Distended":["Distendu","ពោះប៉ោង"],"Hepatomegaly":["Hépatomégalie","ថ្លើមធំ"],"Splenomegaly":["Splénomégalie","លំពែងធំ"],"Ascites":["Ascite","ទឹកក្នុងពោះ"],"Hyperactive bowel sounds":["Bruits intestinaux augmentés","សូរពោះវៀនខ្លាំង"],"Absent bowel sounds":["Silence abdominal","គ្មានសូរពោះវៀន"],"Conscious":["Conscient","ដឹងខ្លួន"],"GCS 15/15":["GCS 15/15","GCS 15/15"],"no focal deficit":["pas de déficit focal","គ្មានការខ្សោយផ្នែកណាមួយ"],"no neck stiffness":["pas de raideur de nuque","កមិនរឹង"],"GCS < 15":["GCS < 15","GCS < 15"],"Neck stiffness":["Raideur de nuque","រឹងក"],"Kernig / Brudzinski positive":["Kernig / Brudzinski positif","Kernig / Brudzinski វិជ្ជមាន"],"Focal weakness":["Déficit moteur focal","ខ្សោយផ្នែកណាមួយ"],"Facial palsy":["Paralysie faciale","ខ្វិនមុខ"],"Confusion":["Confusion","វង្វេង"],"Convulsion":["Convulsion","ប្រកាច់"],"Abnormal reflexes":["Réflexes anormaux","រ៉េផ្លិចមិនធម្មតា"],"Skin normal":["Peau normale","ស្បែកធម្មតា"],"no rash":["pas d'éruption","គ្មានកន្ទួល"],"no oedema":["pas d'œdème","មិនហើម"],"joints normal":["articulations normales","សន្លាក់ធម្មតា"],"Maculopapular rash":["Éruption maculo-papuleuse","កន្ទួលក្រហម"],"Petechiae":["Pétéchies","ចំណុចឈាមក្រោមស្បែក"],"Tourniquet test positive":["Test du garrot positif","តេស្ត Tourniquet វិជ្ជមាន"],"Urticaria":["Urticaire","កន្ទួលរមាស់ (Urticaria)"],"Wound / laceration":["Plaie / lacération","របួស / របួសដាច់"],"Cellulitis":["Cellulite","រលាកស្បែក និងជាលិកា"],"Abscess":["Abcès","អាប់សេ"],"Vesicles":["Vésicules","ពងទឹក"],"Joint swelling":["Gonflement articulaire","ហើមសន្លាក់"],"No costovertebral angle tenderness":["Pas de douleur à l'ébranlement lombaire","មិនឈឺត្រង់តម្រងនោមពេលគោះ"],"no suprapubic tenderness":["pas de sensibilité sus-pubienne","មិនឈឺពោះក្រោមពេលស្ទាប"],"Costovertebral angle tenderness":["Douleur à l'ébranlement lombaire","ឈឺត្រង់តម្រងនោមពេលគោះ"],"Suprapubic tenderness":["Sensibilité sus-pubienne","ឈឺពោះក្រោមពេលស្ទាប"],"Urethral discharge":["Écoulement urétral","ហូរខ្ទុះបង្ហួរនោម"],"Vaginal discharge":["Leucorrhées","ធ្លាក់ស"],"Genital ulcer":["Ulcération génitale","ដំបៅប្រដាប់ភេទ"],"Scrotal swelling":["Tuméfaction scrotale","ហើមពងស្វាស"],"Calm":["Calme","ស្ងប់"],"oriented to time":["orienté dans le temps","ស្គាល់ពេលវេលា"],"place and person":["l'espace et les personnes","ទីកន្លែង និងមនុស្ស"],"normal mood and speech":["humeur et discours normaux","អារម្មណ៍ និងការនិយាយធម្មតា"],"Anxious":["Anxieux","ថប់បារម្ភ"],"Low mood":["Humeur triste","អារម្មណ៍ធ្លាក់ចុះ"],"Agitated":["Agité","រំជើបរំជួល"],"Disoriented":["Désorienté","វង្វេងស្មារតី"],"Hallucinations":["Hallucinations","ការយល់ឃើញខុស"],"Suicidal ideation — assess risk":["Idées suicidaires — évaluer le risque","គំនិតចង់ធ្វើអត្តឃាត — វាយតម្លៃហានិភ័យ"],"Nothing abnormal detected":["Rien d'anormal","គ្មានអ្វីមិនធម្មតា"],"Conjunctiva red":["Conjonctive rouge","ស្រោមភ្នែកក្រហម"],"Eyes jaundiced":["Ictère conjonctival","ភ្នែកលឿង"],"Thyroid enlarged":["Goitre","ក្រពេញទីរ៉ូអ៊ីតធំ"],"Breast lump":["Nodule mammaire","ដុំក្នុងដោះ"],"Pregnant uterus":["Utérus gravide","ស្បូនមានផ្ទៃពោះ"],"fundal height ... cm":["hauteur utérine ... cm","កម្ពស់ស្បូន ... cm"],"Lymph nodes enlarged":["Adénopathies","កូនកណ្តុរធំ"],"Febrile":["Fébrile","ក្តៅខ្លួន"],"ill-looking":["aspect malade","មើលទៅឈឺ"],"crackles at lung base":["crépitants aux bases","សូរក្រេបៗបាតសួត"],"reduced air entry":["diminution du murmure vésiculaire","ខ្យល់ចូលថយ"],"bilateral wheeze and fine crackles":["sibilants et crépitants fins bilatéraux","សូរហួច និងសូរក្រេបៗទាំងសងខាង"],"Bilateral expiratory wheeze":["Sibilants expiratoires bilatéraux","សូរហួចពេលដកដង្ហើមចេញទាំងសងខាង"],"prolonged expiration":["expiration prolongée","ដកដង្ហើមចេញយូរ"],"Scattered rhonchi":["Ronchi diffus","សូររ៉ូនស៊ីរាយប៉ាយ"],"Weight loss":["Amaigrissement","ស្រកទម្ងន់"],"crackles at apex":["crépitants au sommet","សូរក្រេបៗកំពូលសួត"],"Nasal congestion with clear discharge":["Obstruction nasale avec rhinorrhée claire","តឹងច្រមុះ ហៀរសំបោរថ្លា"],"pharynx mildly red":["pharynx légèrement rouge","បំពង់កក្រហមបន្តិច"],"Purulent nasal discharge":["Rhinorrhée purulente","សំបោរមានខ្ទុះ"],"tenderness over maxillary sinuses":["sensibilité des sinus maxillaires","ឈឺពេលចុចលើប្រហោងឆ្អឹងថ្ពាល់"],"tonsils enlarged with exudate":["amygdales hypertrophiées avec exsudat","ទន្សិលធំមានខ្ទុះស"],"tender cervical lymph nodes":["adénopathies cervicales sensibles","កូនកណ្តុរកឈឺ"],"Tympanic membrane red and bulging":["Tympan rouge et bombé","ក្រដាសត្រចៀកក្រហម និងប៉ោង"],"Ear canal swollen and tender":["Conduit auditif œdématié et douloureux","ប្រឡាយត្រចៀកហើម និងឈឺ"],"pain on pulling the pinna":["douleur à la traction du pavillon","ឈឺពេលទាញស្លឹកត្រចៀក"],"Ear canal blocked by wax":["Bouchon de cérumen","ប្រឡាយត្រចៀកស្ទះដោយអាចម៍ត្រចៀក"],"Bleeding from anterior nasal septum":["Saignement de la cloison nasale antérieure","ហូរឈាមពីជញ្ជាំងច្រមុះខាងមុខ"],"Dental caries with gum swelling and tenderness":["Carie avec gencive gonflée et douloureuse","ធ្មេញពុក អញ្ចាញហើម និងឈឺ"],"Shallow painful oral ulcers":["Ulcérations buccales superficielles douloureuses","ដំបៅមាត់រាក់ៗ ឈឺ"],"White plaques on oral mucosa":["Plaques blanches sur la muqueuse buccale","ស្នាមសៗលើភ្នាសមាត់"],"Vesicles on palms and soles":["Vésicules palmo-plantaires","ពងទឹកលើបាតដៃ បាតជើង"],"flushed":["rouge","ក្រហម"],"Flushed skin":["Peau rouge","ស្បែកក្រហម"],"petechiae":["pétéchies","ចំណុចឈាមក្រោមស្បែក"],"tourniquet test positive":["test du garrot positif","តេស្ត Tourniquet វិជ្ជមាន"],"Mild abdominal tenderness":["Sensibilité abdominale légère","ឈឺពោះបន្តិចពេលស្ទាប"],"no ascites":["pas d'ascite","គ្មានទឹកក្នុងពោះ"],"pale":["pâle","ស្លេក"],"Diffuse abdominal tenderness":["Sensibilité abdominale diffuse","ឈឺពោះទូទាំងពេលស្ទាប"],"hepatosplenomegaly":["hépatosplénomégalie","ថ្លើម និងលំពែងធំ"],"lethargic":["léthargique","ល្ហិតល្ហៃ"],"Conjunctival suffusion":["Hyperhémie conjonctivale","ស្រោមភ្នែកក្រហម"],"calf muscle tenderness":["douleur des mollets","ឈឺសាច់ដុំកំភួនជើង"],"Vesicles at different stages":["Vésicules d'âges différents","ពងទឹកច្រើនដំណាក់កាល"],"mostly on trunk":["surtout sur le tronc","ភាគច្រើននៅដងខ្លួន"],"Painful grouped vesicles along one dermatome":["Vésicules groupées douloureuses sur un dermatome","ពងទឹកជាចង្កោមឈឺ តាមសរសៃប្រសាទមួយ"],"Mild dehydration":["Déshydratation légère","ខ្វះជាតិទឹកស្រាល"],"dry mucosa":["muqueuses sèches","ភ្នាសស្ងួត"],"mild diffuse tenderness":["sensibilité diffuse légère","ឈឺពោះទូទាំងបន្តិច"],"sunken eyes":["yeux enfoncés","ភ្នែកស្រុត"],"skin pinch goes back very slowly":["pli cutané persistant","ស្បែកចាប់ឡើងត្រឡប់យឺតខ្លាំង"],"weak pulse":["pouls faible","ជីពចរខ្សោយ"],"Lower abdominal tenderness":["Sensibilité du bas-ventre","ឈឺពោះក្រោមពេលស្ទាប"],"hyperactive bowel sounds":["bruits intestinaux augmentés","សូរពោះវៀនខ្លាំង"],"no guarding":["pas de défense","មិនរឹងការពារ"],"Diffuse cramping tenderness":["Sensibilité diffuse à type de crampes","ឈឺចុកពោះទូទាំង"],"no guarding or rebound":["pas de défense ni de rebond","មិនរឹងការពារ មិនឈឺពេលលែងដៃ"],"Soft abdomen":["Abdomen souple","ពោះទន់"],"stool palpable in left iliac fossa":["selles palpables en fosse iliaque gauche","ស្ទាបឃើញលាមកពោះក្រោមខាងឆ្វេង"],"Perianal: external haemorrhoids":["Région périanale : hémorroïdes externes","ជុំវិញរន្ធគូទ៖ ឫសដូងបាតខាងក្រៅ"],"Soft":["Souple","ទន់"],"mild periumbilical tenderness":["légère sensibilité périombilicale","ឈឺបន្តិចជុំវិញផ្ចិត"],"Tender hepatomegaly":["Hépatomégalie douloureuse","ថ្លើមធំ ឈឺពេលស្ទាប"],"no costovertebral angle tenderness":["pas de douleur à l'ébranlement lombaire","មិនឈឺត្រង់តម្រងនោមពេលគោះ"],"Cervical motion tenderness":["Douleur à la mobilisation du col","ឈឺពេលកម្រើកមាត់ស្បូន"],"lower abdominal tenderness":["sensibilité du bas-ventre","ឈឺពោះក្រោមពេលស្ទាប"],"BP raised":["TA élevée","សម្ពាធឈាមខ្ពស់"],"heart sounds normal":["bruits du cœur normaux","សូរបេះដូងធម្មតា"],"Brisk reflexes":["Réflexes vifs","រ៉េផ្លិចខ្លាំង"],"Oedema of face and hands":["Œdème du visage et des mains","ហើមមុខ និងដៃ"],"Sweating":["Sueurs","បែកញើស"],"confused":["confus","វង្វេង"],"Pale conjunctiva and palms":["Conjonctives et paumes pâles","ស្រោមភ្នែក និងបាតដៃស្លេក"],"Soft systolic flow murmur":["Souffle systolique fonctionnel","សូរ murmur systolic ស្រាល"],"Urticarial wheals":["Papules urticariennes","កន្ទួលរមាស់ប៉ោងៗ"],"Distressed":["En détresse","មានទុក្ខលំបាក"],"Generalised urticaria":["Urticaire généralisée","កន្ទួលរមាស់ពេញខ្លួន"],"Hypotension":["Hypotension","សម្ពាធឈាមទាប"],"tachycardia":["tachycardie","បេះដូងដើរលឿន"],"Papules and burrows on hands":["Papules et sillons sur les mains","គ្រាប់ និងផ្លូវកមលើដៃ"],"wrists":["poignets","កដៃ"],"waist":["taille","ចង្កេះ"],"Annular scaly plaque with raised edge":["Plaque annulaire squameuse à bordure surélevée","ស្នាមរង្វង់មានស្រកា គែមលើក"],"Honey-coloured crusted lesions":["Lésions croûteuses mélicériques","ដំបៅមានក្រមរពណ៌ទឹកឃ្មុំ"],"Warm":["Chaud","ក្តៅ"],"red":["rouge","ក្រហម"],"tender swelling with ill-defined edge":["tuméfaction douloureuse à bords mal limités","ហើមឈឺ គែមមិនច្បាស់"],"Fluctuant tender swelling":["Tuméfaction fluctuante douloureuse","ហើមទន់មានខ្ទុះ និងឈឺ"],"Comedones and inflamed papules on face":["Comédons et papules inflammatoires du visage","មុន និងគ្រាប់រលាកលើមុខ"],"Erythematous scaly itchy patches":["Plaques érythémato-squameuses prurigineuses","ស្នាមក្រហមមានស្រកា រមាស់"],"Burn wound":["Brûlure","របួសរលាក"],"blistering":["phlyctènes","ពងទឹក"],"Fang marks with local swelling":["Traces de crochets avec œdème local","ស្នាមចង្កូមពស់ ហើមកន្លែងខាំ"],"Bite wound":["Plaie de morsure","របួសសត្វខាំ"],"Laceration":["Lacération","របួសដាច់"],"clean edges":["bords nets","គែមស្អាត"],"Ingrown toenail with inflamed nail fold":["Ongle incarné avec bourrelet inflammatoire","ក្រចកដុះចូលសាច់ រលាកជុំវិញ"],"Mobile subcutaneous cyst with punctum":["Kyste sous-cutané mobile avec orifice","ដុំគីសក្រោមស្បែកកម្រើកបាន មានរន្ធ"],"Puncture wound":["Plaie punctiforme","របួសមុត"],"foreign body felt":["corps étranger palpable","ស្ទាបឃើញវត្ថុចម្លែក"],"Swelling and tenderness over lateral ankle":["Gonflement et douleur de la malléole externe","ហើម និងឈឺកជើងខាងក្រៅ"],"able to bear weight":["appui possible","អាចឈរដាក់ទម្ងន់បាន"],"Swelling and tenderness at injury site":["Gonflement et douleur au site du traumatisme","ហើម និងឈឺកន្លែងរបួស"],"Paraspinal muscle tenderness":["Contracture paravertébrale","ឈឺសាច់ដុំក្បែរឆ្អឹងខ្នង"],"straight leg raise negative":["Lasègue négatif","តេស្តលើកជើងត្រង់អវិជ្ជមាន"],"Paraspinal neck muscle tenderness":["Contracture paravertébrale cervicale","ឈឺសាច់ដុំក"],"normal power":["force normale","កម្លាំងធម្មតា"],"Knee crepitus":["Craquements du genou","ជង្គង់មានសូរក្រេប"],"no effusion":["pas d'épanchement","គ្មានទឹកក្នុងសន្លាក់"],"Red":["Rouge","ក្រហម"],"hot":["chaud","ក្តៅ"],"swollen joint":["articulation gonflée","សន្លាក់ហើម"],"Positive Dix-Hallpike":["Dix-Hallpike positif","តេស្ត Dix-Hallpike វិជ្ជមាន"],"Lower motor neurone facial palsy":["Paralysie faciale périphérique","ខ្វិនមុខប្រភេទ LMN"],"forehead involved":["front atteint","ថ្ងាសក៏ខ្វិនដែរ"],"Post-ictal drowsiness":["Somnolence post-critique","ងងុយក្រោយប្រកាច់"],"Kernig positive":["Kernig positif","Kernig វិជ្ជមាន"],"Conjunctiva red with discharge":["Conjonctive rouge avec sécrétions","ស្រោមភ្នែកក្រហម មានអាចម៍ភ្នែក"],"vision normal":["acuité visuelle normale","មើលឃើញធម្មតា"],"Tender swelling of eyelid margin":["Tuméfaction douloureuse du bord palpébral","ហើមឈឺគែមត្របកភ្នែក"],"low mood":["humeur triste","អារម្មណ៍ធ្លាក់ចុះ"],"fetal heart present":["BCF présents","មានចង្វាក់បេះដូងទារក"],"Uterus soft and boggy":["Utérus mou et mal rétracté","ស្បូនទន់ មិនរួញ"],"heavy vaginal bleeding":["saignement vaginal abondant","ហូរឈាមច្រើនតាមទ្វារមាស"],"Breast red":["Sein rouge","ដោះក្រហម"],"warm and tender":["chaud et douloureux","ក្តៅ និងឈឺ"]};
 var TRX_REV={}; Object.keys(TRX).forEach(function(en){ TRX_REV[fold(en)]=en; TRX_REV[fold(TRX[en][0])]=TRX_REV[fold(TRX[en][0])]||en; TRX_REV[fold(TRX[en][1])]=TRX_REV[fold(TRX[en][1])]||en; });
@@ -7165,6 +7412,7 @@ var SOAP_LB={pe:["Physical examination: normal","Examen physique : normal","ក�
   mhSh:["SH","Mode de vie","ប្រវត្តិសង្គម"],mhOth:["Other","Autres","ផ្សេងៗ"],mhAll:["Allergy","Allergies","អាឡែកហ្ស៊ី"]};
 function SL(k){ var a=SOAP_LB[k], l=langPrim(); return l==="fr"?a[1]:l==="kh"?a[2]:a[0]; }
 function notesRetranslate(){
+  if(typeof toolRowPaint==="function") toolRowPaint();
   if(typeof procAiRender==="function"){ procAiRender(); if($("procNote")&&!$("procNote").dataset.edited&&!$("procSec").hidden) procNoteWrite(procIdFromName()); }
   if(typeof renderEvol==="function"){ renderEvol(); procPickFill(); procAneUpdate(); }
   if($("peRows")) [].forEach.call(document.querySelectorAll(".perow"),function(r){ var sy=PE_SYS.find(function(x){return x[0]===r.dataset.sys;}); if(!sy) return;
