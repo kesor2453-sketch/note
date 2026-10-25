@@ -860,6 +860,36 @@ tr.pgpast2 td{color:var(--muted)}
 .sxline{font:12.5px var(--kh);margin:3px 0;line-height:1.45}
 .sxline b{font-weight:700}
 .sxred{color:#b42318}
+.usgform{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:flex-end;margin:4px 0 10px;padding:8px;border:1px dashed #f3c4dc;border-radius:8px;background:#fdf2f8}
+.usgform label{display:flex;flex-direction:column;gap:2px;font:11.5px var(--kh);color:var(--muted)}
+.usgform input,.usgform select{font:13.5px var(--body);padding:4px 6px;border:1px solid var(--rule);border-radius:5px;background:var(--paper);color:var(--ink)}
+.usgtbl td{font-size:12.5px}
+.usgtbl tr.ul1 td{background:#fffbeb}.usgtbl tr.ul2 td,.usgtbl tr.ul3 td{background:#fef2f2}
+.usgtbl tr.ul2 .usgass,.usgtbl tr.ul3 .usgass{color:#b42318;font-weight:700}
+.usgchart{margin:8px 0 2px;border:1px solid var(--rule);border-radius:8px;padding:4px;background:var(--paper)}
+.usgsvg{width:100%;height:auto;display:block}
+.usgsvg .ug{stroke:var(--rule);stroke-width:1}.usgsvg .ut{font:10px var(--body);fill:var(--muted)}
+.usgsvg .uband{fill:rgba(157,23,77,.10);stroke:none}.usgsvg .umid{fill:none;stroke:#9d174d;stroke-width:1.5;stroke-dasharray:4 3}
+.usgsvg .uline{fill:none;stroke:#0b6e99;stroke-width:2}
+.usgsvg .upt{stroke:#fff;stroke-width:1.5}.usgsvg .upt.l0{fill:#16a34a}.usgsvg .upt.l1{fill:#f59e0b}.usgsvg .upt.l2,.usgsvg .upt.l3{fill:#dc2626}
+.usgnext{margin:8px 0;padding:8px 10px;border-radius:8px;border:1px solid var(--rule);font:13px var(--kh)}
+.usgnext.ul0{background:#f0fdf4}.usgnext.ul1{background:#fffbeb}.usgnext.ul2,.usgnext.ul3{background:#fef2f2}
+.usgrep h4{font:700 13px var(--kh);margin:12px 0 4px;border-bottom:1px solid var(--rule);padding-bottom:2px}
+.usgrep .usgedit{margin:2px 0 4px 18px;padding:0;font:13px var(--kh);outline:none}
+.usgrep .usgedit li{margin:2px 0}
+.usgpt{width:100%;border-collapse:collapse;font:13px var(--kh)}.usgpt th{text-align:left;width:30%;color:var(--muted);font-weight:600;padding:2px 4px}.usgpt td{padding:2px 4px}
+.airtag{font:12px var(--kh);color:#6d28d9;background:#f5f3ff;border:1px dashed #a78bfa;border-radius:6px;padding:4px 8px;margin-bottom:6px}
+.usgsig{margin-top:16px;font:13px var(--kh)}.usgdisc{font:11px var(--kh);color:var(--muted)}.usgnx{font:600 13px var(--kh);outline:none}
+.ncdform{background:#f0f9ff;border-color:#bae6fd}
+.ncdck{flex-direction:row!important;align-items:center;gap:4px!important;font:13px var(--kh)!important;color:var(--ink)!important;padding-bottom:4px}
+.ncdres{border-radius:10px;padding:8px 12px;margin:8px 0;border:1px solid var(--rule);font:13px var(--kh)}
+.ncdres b{font:700 14.5px var(--kh);display:block;margin-bottom:4px}
+.ncdres ul{margin:0 0 0 18px;padding:0}.ncdres li{margin:3px 0;line-height:1.45}
+.ncdres.hi{background:#fef2f2;border-color:#fecaca}.ncdres.hi b{color:#b42318}
+.ncdres.mid{background:#fffbeb;border-color:#fde68a}.ncdres.mid b{color:#8a5a00}
+.ncdres.ok{background:#f0fdf4;border-color:#bbf7d0}.ncdres.ok b{color:#17663a}
+.ncdres.lo{background:var(--paper);color:var(--muted)}
+.ncdres.ref{background:var(--paper)}.ncdres.ref b{color:#0b6e99;font-size:13px}
 </style>
 </head>
 <body class="lang-both gated">
@@ -996,6 +1026,7 @@ tr.pgpast2 td{color:var(--muted)}
     </div>
     <div class="toolrow noprint" id="toolRow" role="toolbar" aria-label="Calculators">
       <button type="button" data-t="sym">🔎 រោគសញ្ញា → Dx</button>
+      <button type="button" data-t="ncd">🩺 លើសឈាម · ទឹកនោមផ្អែម</button>
       <button type="button" data-t="ped">👶 កុមារ</button>
       <button type="button" data-t="icu">🏥 ICU · ម៉ាស៊ីន</button>
       <button type="button" data-t="fluid">💧 សេរ៉ូ</button>
@@ -1189,7 +1220,7 @@ tr.pgpast2 td{color:var(--muted)}
       <button type="button" id="gUp">បង្កើតគណនីថ្មី</button>
       <button type="button" id="gReset">ភ្លេចពាក្យសម្ងាត់?</button>
     </div>
-    <p class="gate-note" id="gateNote">ព័ត៌មានអ្នកជំងឺមិនត្រូវបានផ្ញើទៅ cloud ទេ។ · v61</p>
+    <p class="gate-note" id="gateNote">ព័ត៌មានអ្នកជំងឺមិនត្រូវបានផ្ញើទៅ cloud ទេ។ · v64</p>
   </form>
 </div>
 
@@ -1291,7 +1322,7 @@ tr.pgpast2 td{color:var(--muted)}
       <p class="hint">ឯកសារត្រូវមានជួរឈរ៖ ICD 10 · EN · KH · FR។ បញ្ជីនេះរក្សាទុកក្នុង browser ហើយប្រើសម្រាប់ស្វែងរករោគវិនិច្ឆ័យទាំងអស់។</p>
     </fieldset>
     <div class="actions">
-      <span style="margin-right:auto;font:12px var(--body);color:var(--muted)">Rx Clinic v61</span>
+      <span style="margin-right:auto;font:12px var(--body);color:var(--muted)">Rx Clinic v64</span>
       <button class="btn alt" id="settingsClose" type="button">បិទ</button>
       <button class="btn" type="submit">រក្សាទុកការកំណត់</button>
     </div>
@@ -3863,6 +3894,164 @@ DEFAULTS=DEFAULTS.concat([
 ]);
 Object.assign(DXI,{"q-fgr":["សង្ស័យកូនលូតលាស់យឺត (IUGR / FGR)","Suspicion de retard de croissance intra-utérin","fetal growth restriction iugr fgr small baby កូនតូច លូតលាស់យឺត RCIU hypotrophie"]});
 
+/* ---------- v63: breech and placenta praevia ---------- */
+DEFAULTS=DEFAULTS.concat([
+ T("q-breech","obs","Breech / not head-down (≥ 36 weeks)","Ultrasound: baby not head-down","Maternal care for breech presentation (O32.1)","Ultrasound: presentation, placenta position, amniotic fluid, EFW, anomalies; CTG before ECV",
+  [IFA],
+  [A("Most babies turn by 36 weeks. If still breech at 36 weeks (first baby) or 37 weeks, turning from outside (ECV) can be done in hospital — about half succeed.","La plupart se retournent avant 36 SA. Si siège à 36 SA (1er bébé) ou 37 SA, une version par manœuvre externe (VME) peut être faite à l'hôpital — environ 1 sur 2 réussit.","កូនភាគច្រើនបង្វិលមុន ៣៦ សប្តាហ៍។ បើនៅគូទនៅ ៣៦ សប្តាហ៍ (កូនដំបូង) ឬ ៣៧ សប្តាហ៍ អាចបង្វិលពីខាងក្រៅ (ECV) នៅមន្ទីរពេទ្យ — ជោគជ័យប្រហែលពាក់កណ្តាល។"),
+   A("ECV is not done if: placenta praevia, bleeding, waters broken, twins, abnormal baby heart tracing, or previous major uterine surgery (decide with the obstetrician).","Pas de VME si : prævia, saignement, rupture des membranes, jumeaux, RCF anormal ou chirurgie utérine importante (avis obstétrical).","មិនធ្វើ ECV បើ៖ សុកបាំងមាត់ស្បូន ធ្លាក់ឈាម ធ្លាយទឹកភ្លោះ កូនភ្លោះ CTG មិនធម្មតា ឬធ្លាប់វះស្បូនធំ (សម្រេចជាមួយគ្រូពេទ្យសម្ភព)។"),
+   A("If the baby stays breech: planned caesarean at 39 weeks, or vaginal breech birth only in an experienced hospital.","Si le siège persiste : césarienne programmée à 39 SA, ou voie basse seulement dans une maternité expérimentée.","បើកូននៅគូទ៖ វះកាត់តាមគម្រោងនៅ ៣៩ សប្តាហ៍ ឬសម្រាលគូទតាមទ្វារមាសតែនៅមន្ទីរពេទ្យមានបទពិសោធន៍។"),
+   A("Deliver in a hospital — not at home.","Accoucher à l'hôpital — pas à domicile.","សម្រាលនៅមន្ទីរពេទ្យ — មិនមែននៅផ្ទះ។")],
+  A("Waters break (risk of cord coming out — lie down and come at once), labour pains, bleeding, baby moving less.","Rupture des eaux (risque de procidence du cordon — s'allonger et venir immédiatement), contractions, saignement, bébé qui bouge moins.","ធ្លាយទឹកភ្លោះ (ទងផ្ចិតអាចធ្លាក់ចេញ — ដេកចុះហើយមកភ្លាម) ឈឺពោះសម្រាល ធ្លាក់ឈាម កូនកម្រើកតិច។"),
+  A("Follow-up: in 1 week — ECV appointment / delivery plan","Suivi : dans 1 semaine — VME / projet d'accouchement","មកពិនិត្យវិញក្រោយ ១ សប្តាហ៍ — ណាត់ ECV / ផែនការសម្រាល")),
+ T("q-praevia","obs","Low-lying placenta / placenta praevia","Ultrasound: placenta low or over the cervix, ± painless bleeding","Placenta praevia without haemorrhage (O44.0) / with haemorrhage (O44.1)","Vaginal ultrasound at 32 weeks (repeat at 36 weeks if still low); Hb, blood group & Rh, crossmatch if bleeding; previous caesarean → look for accreta",
+  [IFA],
+  [A("A low placenta at 20 weeks usually moves up. A vaginal scan at 32 weeks confirms it (it is safe).","Un placenta bas à 20 SA remonte souvent. L'échographie endovaginale à 32 SA confirme (elle est sans danger).","សុកទាបនៅ ២០ សប្តាហ៍ ច្រើនឡើងខ្ពស់វិញ។ អេកូទ្វារមាសនៅ ៣២ សប្តាហ៍ បញ្ជាក់ (មានសុវត្ថិភាព)។"),
+   A("No sex, no heavy lifting, no vaginal examination by the midwife.","Pas de rapports, pas d'efforts, pas de toucher vaginal.","កុំរួមភេទ កុំលើករបស់ធ្ងន់ កុំឱ្យពិនិត្យតាមទ្វារមាស។"),
+   A("If praevia is confirmed: plan caesarean at 36–37 weeks in a hospital with a blood bank; live close to the hospital or have transport ready; know your blood group.","Si prævia confirmé : césarienne programmée à 36–37 SA dans un hôpital avec banque de sang ; transport prêt ; connaître son groupe sanguin.","បើបញ្ជាក់ថាសុកបាំង៖ វះកាត់តាមគម្រោងនៅ ៣៦–៣៧ សប្តាហ៍ នៅមន្ទីរពេទ្យមានធនាគារឈាម; រៀបចំការធ្វើដំណើរ; ដឹងក្រុមឈាមរបស់ខ្លួន។"),
+   A("Take iron every day to keep a good blood level.","Prendre le fer chaque jour.","លេបជាតិដែករាល់ថ្ងៃ ដើម្បីរក្សាឈាមឱ្យល្អ។")],
+  A("ANY vaginal bleeding — come to hospital immediately (do not wait to see if it stops).","TOUT saignement vaginal — venir immédiatement à l'hôpital.","ធ្លាក់ឈាមទ្វារមាសបន្តិចក៏ដោយ — មកមន្ទីរពេទ្យភ្លាម (កុំរង់ចាំមើលថាវាឈប់)។"),
+  A("Follow-up: vaginal ultrasound at 32 weeks","Suivi : échographie endovaginale à 32 SA","មកធ្វើអេកូទ្វារមាសនៅ ៣២ សប្តាហ៍"))
+]);
+Object.assign(DXI,{"q-breech":["ទារកនៅគូទ / មិនទាន់ក្បាលចុះ","Présentation du siège","breech presentation ecv not head down កូននៅគូទ មិនបង្វិល siège"],
+ "q-praevia":["សុកទាប / សុកបាំងមាត់ស្បូន","Placenta bas inséré / prævia","placenta praevia previa low lying សុកបាំង សុកទាប prævia"]});
+
+/* ---------- v64: common skin / infections + NCD (HTN, diabetes, lipids, uric acid) + chronic symptoms ---------- */
+var LIFE_SALT=A("Less than 1 teaspoon of salt a day; no added fish sauce, soy sauce, MSG or salty snacks.","Moins d'une cuillère à café de sel par jour ; pas de sauce de poisson, soja, glutamate ni grignotage salé.","អំបិលតិចជាង ១ ស្លាបព្រាកាហ្វេ/ថ្ងៃ; កុំបន្ថែមទឹកត្រី ទឹកស៊ីអ៊ីវ ម្សៅស៊ុប ឬនំប្រៃ។");
+var LIFE_EX=A("Walk briskly 30 minutes a day, 5 days a week. Stop smoking. Limit alcohol.","Marche rapide 30 minutes, 5 jours / semaine. Arrêt du tabac. Limiter l'alcool.","ដើរលឿន ៣០ នាទី/ថ្ងៃ ៥ ថ្ងៃ/សប្តាហ៍។ ឈប់ជក់បារី។ កាត់បន្ថយស្រា។");
+var LIFE_DIET=A("Half the plate vegetables; less white rice, sugar, sweet drinks, fried and fatty food.","La moitié de l'assiette en légumes ; moins de riz blanc, sucre, boissons sucrées, fritures et graisses.","ពាក់កណ្តាលចានជាបន្លែ; បាយស ស្ករ ភេសជ្ជៈផ្អែម អាហារចៀន និងខ្លាញ់ តិចជាងមុន។");
+var LIFELONG=A("These medicines are usually for life — do not stop when you feel well.","Ces médicaments sont en général à vie — ne pas arrêter quand on va bien.","ថ្នាំទាំងនេះជាធម្មតាលេបពេញមួយជីវិត — កុំឈប់ពេលមានអារម្មណ៍ស្រួល។");
+DEFAULTS=DEFAULTS.concat([
+/* ---- skin ---- */
+T("k-coldsore","skin","Cold sore (herpes labialis)","Painful blisters on the lip","Herpesviral vesicular dermatitis (B00.1)","",
+ [R("Aciclovir 5% cream","apply","1-1-1-1","","5","5 times a day from the first tingling."),R("Aciclovir 400 mg","tab","1-1-1","","5","Only if severe, frequent or immunocompromised.")],
+ [A("Do not kiss or share cups and towels until the blisters are dry.","Pas de bisous ni de partage de verres / serviettes jusqu'au dessèchement.","កុំថើប ឬប្រើពែង កន្សែងរួមគ្នា រហូតពងទឹកស្ងួត។"),A("Use sunscreen lip balm — sun can trigger it.","Baume à lèvres avec écran solaire — le soleil déclenche les poussées.","លាបក្រែមការពារថ្ងៃលើបបូរមាត់ — ពន្លឺថ្ងៃអាចធ្វើឱ្យកើតឡើងវិញ។")],
+ A("Blisters near the eye, spreading widely, newborn contact, not healed in 2 weeks.","Lésions près de l'œil, extension, contact avec un nouveau-né, non guéri en 2 semaines.","ពងទឹកជិតភ្នែក រាលដាលខ្លាំង ប៉ះទារកទើបកើត មិនជាក្នុង ២ សប្តាហ៍។"),fu("1 week")),
+T("k-clm","skin","Cutaneous larva migrans (creeping eruption)","Itchy red wavy line on the foot or buttock","Cutaneous larva migrans (B76.9)","",
+ [R("Albendazole 400 mg","tab","1-0-0","with-food","3","Once daily × 3 days (child > 2 y same). Or ivermectin 200 mcg/kg once."),R("Cetirizine 10 mg","tab","0-0-1","bedtime","5","For itch.")],
+ [A("Wear shoes on sand and soil; do not sit on bare ground where dogs and cats go.","Porter des chaussures sur le sable et la terre ; ne pas s'asseoir par terre où vont chiens et chats.","ពាក់ស្បែកជើងលើខ្សាច់ និងដី; កុំអង្គុយលើដីដែលឆ្កែឆ្មាដើរ។"),A("Deworm dogs and cats.","Vermifuger chiens et chats.","ទម្លាក់ព្រូនឆ្កែ និងឆ្មា។")],
+ A("Pus, spreading redness, fever.","Pus, rougeur extensive, fièvre.","ខ្ទុះ ក្រហមរាលដាល គ្រុន។"),fu("1 week")),
+T("k-miliaria","skin","Heat rash (miliaria)","Tiny itchy red bumps in hot weather","Miliaria rubra (L74.0)","",
+ [R("Calamine lotion","apply","1-1-1","","5","")],
+ [A("Keep cool: fan, light cotton clothes, cool showers. Avoid thick creams and powders.","Rester au frais : ventilateur, coton léger, douches fraîches. Éviter crèmes épaisses et talc.","រក្សាឱ្យត្រជាក់៖ កង្ហារ ខោអាវកប្បាសស្រាល ងូតទឹកត្រជាក់។ ជៀសវាងក្រែមក្រាស់ និងម្សៅ។"),A("Babies: do not wrap too warmly.","Bébés : ne pas trop couvrir.","ទារក៖ កុំរុំក្តៅពេក។")],
+ A("Pus, fever, rash not better in 1 week.","Pus, fièvre, pas d'amélioration en 1 semaine.","ខ្ទុះ គ្រុន កន្ទួលមិនធូរក្នុង ១ សប្តាហ៍។"),fu("1 week")),
+T("k-tineacap","skin","Scalp ringworm (tinea capitis)","Scaly patches with hair loss in a child","Tinea capitis (B35.0)","Wood's lamp / KOH if available",
+ [W(R("Griseofulvin 125 mg","tab","1-0-0","after-meals","42","20–25 mg/kg once daily with fatty food × 6–8 weeks (adult 500 mg–1 g)."),"20/125/1000"),
+  R("Ketoconazole 2% shampoo","apply","1-0-0","","14","Twice a week for 2–4 weeks (reduces spread).")],
+ [A("Take with milk or fatty food. Treatment is long — finish all weeks.","Prendre avec du lait ou un repas gras. Traitement long — aller au bout.","លេបជាមួយទឹកដោះគោ ឬអាហារមានខ្លាញ់។ ព្យាបាលយូរ — លេបឱ្យគ្រប់សប្តាហ៍។"),A("Do not share combs, hats or pillows; check brothers and sisters.","Ne pas partager peignes, chapeaux, oreillers ; examiner la fratrie.","កុំប្រើសិត មួក ខ្នើយរួមគ្នា; ពិនិត្យបងប្អូន។")],
+ A("Painful swollen boggy patch with pus (kerion), fever.","Plaque gonflée douloureuse purulente (kérion), fièvre.","ដុំហើមឈឺមានខ្ទុះ (kerion) គ្រុន។"),fu("4 weeks")),
+T("k-tineaped","skin","Athlete's foot / jock itch (tinea pedis / cruris)","Itchy peeling between toes or red rash in the groin","Tinea pedis (B35.3) / Tinea cruris (B35.6)","",
+ [R("Clotrimazole 1% cream","apply","1-0-1","","28","Continue 2 weeks after it looks clear."),R("Terbinafine 250 mg","tab","1-0-0","after-meals","14","Only if extensive or not better with cream.")],
+ [A("Dry well between toes and in the groin; change socks and underwear daily.","Bien sécher entre les orteils et l'aine ; changer chaussettes et sous-vêtements chaque jour.","ជូតឱ្យស្ងួតចន្លោះម្រាមជើង និងក្រលៀន; ប្តូរស្រោមជើង និងខោទ្រនាប់រាល់ថ្ងៃ។"),A("Do not use steroid creams on fungus.","Pas de crème corticoïde sur une mycose.","កុំលាបក្រែមស្តេរ៉ូអ៊ីតលើផ្សិត។")],
+ A("Cracks with redness spreading up the leg, fever, diabetes.","Fissures avec rougeur qui remonte, fièvre, diabète.","ប្រេះជាមួយក្រហមរាលឡើងជើង គ្រុន ទឹកនោមផ្អែម។"),fu("4 weeks")),
+T("k-molluscum","skin","Molluscum contagiosum","Small pearly bumps with a dimple","Molluscum contagiosum (B08.1)","Adults with genital lesions: HIV test",
+ [],
+ [A("Harmless; goes away by itself in 6–18 months.","Bénin ; disparaît seul en 6–18 mois.","មិនគ្រោះថ្នាក់; បាត់ដោយខ្លួនឯងក្នុង ៦–១៨ ខែ។"),A("Do not scratch or squeeze; do not share towels.","Ne pas gratter ni presser ; ne pas partager les serviettes.","កុំកោស ឬច្របាច់; កុំប្រើកន្សែងរួមគ្នា។"),A("Curettage or cryotherapy can be done if many or bothersome.","Curetage ou cryothérapie possibles si nombreux ou gênants.","អាចកោស ឬ cryotherapy បើច្រើន ឬរំខាន។")],
+ A("Red painful swollen lesions, near the eye.","Lésions rouges douloureuses, près de l'œil.","ក្រហម ឈឺ ហើម ជិតភ្នែក។"),fu("3 months")),
+T("k-prosea","skin","Pityriasis rosea","One large oval patch then many smaller ones on the trunk","Pityriasis rosea (L42)","RPR (exclude secondary syphilis)",
+ [R("Cetirizine 10 mg","tab","0-0-1","bedtime","7","If itchy."),R("Emollient (moisturising cream)","apply","1-1-1","","14","")],
+ [A("Not contagious; goes away in 6–8 weeks.","Non contagieux ; disparaît en 6–8 semaines.","មិនឆ្លង; បាត់ក្នុង ៦–៨ សប្តាហ៍។"),A("Avoid hot baths and harsh soap.","Éviter bains chauds et savons agressifs.","ជៀសវាងងូតទឹកក្តៅ និងសាប៊ូខ្លាំង។")],
+ A("Rash on palms and soles, genital sores (think syphilis), pregnancy.","Éruption palmo-plantaire, lésions génitales (penser syphilis), grossesse.","កន្ទួលលើបាតដៃ បាតជើង ដំបៅប្រដាប់ភេទ (គិតពីស្វាយ) មានផ្ទៃពោះ។"),fu("4 weeks")),
+T("k-rosacea","skin","Rosacea","Red face with flushing and pimples, no blackheads","Rosacea, unspecified (L71.9)","",
+ [R("Metronidazole 0.75% gel","apply","1-0-1","","60",""),R("Doxycycline 100 mg","cap","1-0-0","after-meals","42","Only if moderate (many pimples), 6 weeks.")],
+ [A("Avoid triggers: sun, spicy food, alcohol, hot drinks, steroid creams.","Éviter : soleil, épices, alcool, boissons chaudes, crèmes corticoïdes.","ជៀសវាង៖ ថ្ងៃ ម្ហូបហឹរ ស្រា ភេសជ្ជៈក្តៅ ក្រែមស្តេរ៉ូអ៊ីត។"),A("Daily sunscreen and a gentle cleanser.","Écran solaire quotidien et nettoyant doux.","ក្រែមការពារថ្ងៃរាល់ថ្ងៃ និងសាប៊ូលាងមុខស្រាល។")],
+ A("Eye pain or redness, vision change.","Douleur ou rougeur oculaire, baisse de vision.","ឈឺ ឬក្រហមភ្នែក មើលមិនច្បាស់។"),fu("6 weeks")),
+T("k-angular","skin","Angular cheilitis","Cracks at the corners of the mouth","Cheilosis (K13.0)","Hb / ferritin if recurrent",
+ [R("Clotrimazole 1% cream","apply","1-0-1","","10",""),R("Hydrocortisone 1% cream","apply","1-0-1","","5","Short course, mixed with clotrimazole.")],
+ [A("Lip balm; stop licking the lips; check denture fit.","Baume ; ne pas se lécher les lèvres ; vérifier la prothèse.","លាបក្រែមបបូរមាត់; កុំលិទ្ធបបូរមាត់; ពិនិត្យធ្មេញដាក់។"),A("Eat meat, eggs, green vegetables (iron and B vitamins).","Viande, œufs, légumes verts (fer et vitamines B).","ញ៉ាំសាច់ ពង បន្លែបៃតង (ជាតិដែក និងវីតាមីន B)។")],
+ A("Not better in 2 weeks, white patches in the mouth, weight loss.","Pas mieux en 2 semaines, plaques blanches buccales, amaigrissement.","មិនធូរក្នុង ២ សប្តាហ៍ ស្នាមសក្នុងមាត់ ស្រកទម្ងន់។"),fu("2 weeks")),
+T("k-erysipelas","skin","Erysipelas","Bright red, raised, hot, well-demarcated skin with fever","Erysipelas (A46)","CBC, glucose; look for entry point (tinea between toes)",
+ [R("Amoxicillin 500 mg","cap","2-2-2","after-meals","10","1 g 3 times a day. Penicillin allergy: clindamycin 300 mg 3–4 times a day."),R("Paracetamol 500 mg","tab","1-1-1-1","prn","5","")],
+ [A("Raise the leg; mark the edge of the redness with a pen.","Surélever la jambe ; marquer les bords de la rougeur au stylo.","លើកជើងឡើង; គូសគែមក្រហមដោយប៊ិច។"),A("Treat fungus between the toes to prevent it coming back.","Traiter l'intertrigo des orteils pour éviter les récidives.","ព្យាបាលផ្សិតចន្លោះម្រាមជើង ដើម្បីការពារកុំឱ្យកើតឡើងវិញ។")],
+ A("Redness spreading past the line after 48 h, blisters, black skin, high fever, confusion.","Rougeur dépassant le trait à 48 h, bulles, nécrose, forte fièvre, confusion.","ក្រហមលើសបន្ទាត់ក្រោយ ៤៨ ម៉ោង ពងទឹក ស្បែកខ្មៅ គ្រុនខ្លាំង វង្វេង។"),fu("2 days")),
+T("k-boils","skin","Recurrent boils (furunculosis)","Repeated painful boils","Furunculosis (L02.9)","Glucose / HbA1c; HIV if many; swab for culture",
+ [R("Chlorhexidine 4% wash","apply","1-0-0","","7","Body wash daily for 1 week, then twice weekly."),R("Mupirocin 2% ointment","apply","1-0-1","","5","Inside both nostrils (decolonisation)."),
+  R("Cloxacillin 500 mg","cap","1-1-1-1","empty","7","Only if spreading redness or fever. Drain fluctuant boils.")],
+ [A("Wash towels, sheets and clothes in hot water; do not share razors and towels.","Laver linge et draps à l'eau chaude ; ne pas partager rasoirs et serviettes.","បោកកន្សែង ភួយ ខោអាវក្នុងទឹកក្តៅ; កុំប្រើកាំបិតកោរ និងកន្សែងរួមគ្នា។"),A("Family members with boils should be treated too.","Traiter aussi les membres de la famille atteints.","សមាជិកគ្រួសារដែលមានបូសក៏ត្រូវព្យាបាលដែរ។")],
+ A("Boil on the face, fever, many large boils, diabetes.","Furoncle du visage, fièvre, nombreux gros furoncles, diabète.","បូសលើមុខ គ្រុន បូសធំច្រើន ទឹកនោមផ្អែម។"),fu("2 weeks")),
+/* ---- infection ---- */
+T("k-covid","id","COVID-19 (mild)","Fever, cough, sore throat, loss of smell, positive test","COVID-19, virus identified (U07.1)","Rapid antigen test; SpO₂",
+ [R("Paracetamol 500 mg","tab","1-1-1-1","prn","5",""),R("Throat lozenges","lozenge","1-1-1-1","","5","")],
+ [A("Stay home and wear a mask around others for 5 days and until fever has gone 24 hours.","Rester à la maison et porter un masque 5 jours et jusqu'à 24 h sans fièvre.","នៅផ្ទះ និងពាក់ម៉ាស ៥ ថ្ងៃ និងរហូតគ្មានគ្រុន ២៤ ម៉ោង។"),A("Drink fluids, rest. Antibiotics do not help.","Boire, se reposer. Les antibiotiques ne servent à rien.","ផឹកទឹក សម្រាក។ ថ្នាំអង់ទីប៊ីយ៉ូទិកមិនជួយទេ។"),
+  A("Over 60, diabetes, heart / lung / kidney disease, pregnancy or immunosuppressed: ask about antiviral treatment within 5 days.","> 60 ans, diabète, maladie cœur / poumon / rein, grossesse ou immunodépression : demander un antiviral dans les 5 jours.","លើស ៦០ ឆ្នាំ ទឹកនោមផ្អែម ជំងឺបេះដូង/សួត/តម្រងនោម ផ្ទៃពោះ ឬភាពស៊ាំខ្សោយ៖ សួរពីថ្នាំកម្ចាត់វីរុសក្នុង ៥ ថ្ងៃ។")],
+ A("Breathless, SpO₂ below 94%, chest pain, confusion, cannot drink.","Essoufflement, SpO₂ < 94 %, douleur thoracique, confusion, ne peut pas boire.","ហត់ SpO₂ ក្រោម ៩៤% ឈឺទ្រូង វង្វេង មិនអាចផឹក។"),fu("3 days")),
+/* ---- NCD ---- */
+T("k-htndm","cv","Hypertension with diabetes / kidney disease","BP ≥ 130/80 in a diabetic or proteinuria","Essential hypertension (I10) with type 2 diabetes (E11.9)","Creatinine + eGFR, potassium, urine albumin, HbA1c, lipids, ECG",
+ [R("Losartan 50 mg","tab","1-0-0","","30","Or enalapril 5–10 mg twice daily. Check creatinine and potassium after 1–2 weeks. Not in pregnancy."),R("Amlodipine 5 mg","tab","1-0-0","","30","Add if BP still ≥ 130/80."),R("Atorvastatin 20 mg","tab","0-0-1","","30","Diabetes and age ≥ 40 (WHO HEARTS).")],
+ [A("Target BP below 130/80.","Objectif TA < 130/80.","គោលដៅសម្ពាធ < ១៣០/៨០។"),LIFE_SALT,LIFE_EX,LIFELONG,A("Women who may get pregnant: tell the doctor — losartan / enalapril must be changed in pregnancy.","Femme en âge de procréer : prévenir — losartan / énalapril à changer en cas de grossesse.","ស្ត្រីអាចមានផ្ទៃពោះ៖ ប្រាប់គ្រូពេទ្យ — ត្រូវប្តូរ losartan / enalapril ពេលមានផ្ទៃពោះ។")],
+ A("BP ≥ 180/110, chest pain, weakness of one side, swelling, very little urine.","TA ≥ 180/110, douleur thoracique, déficit d'un côté, œdèmes, oligurie.","សម្ពាធ ≥ ១៨០/១១០ ឈឺទ្រូង ខ្សោយម្ខាង ហើម នោមតិចខ្លាំង។"),A("Follow-up: after 2 weeks (creatinine, potassium), then monthly until controlled","Suivi : 2 semaines (créatinine, kaliémie), puis mensuel jusqu'au contrôle","មកពិនិត្យក្រោយ ២ សប្តាហ៍ (creatinine K⁺) បន្ទាប់មករៀងរាល់ខែ រហូតគ្រប់គ្រងបាន")),
+T("k-htn3","cv","Hypertension (three drugs, resistant)","BP not controlled on two drugs","Essential (primary) hypertension (I10)","Check adherence, home BP; creatinine, potassium, glucose, urine; ECG; consider secondary causes",
+ [R("Amlodipine 10 mg","tab","1-0-0","","30",""),R("Losartan 100 mg","tab","1-0-0","","30","Or enalapril 20 mg twice daily."),R("Hydrochlorothiazide 25 mg","tab","1-0-0","after-breakfast","30","Or indapamide 1.5 mg. Check sodium and potassium.")],
+ [A("Take all three every morning; bring all medicines to each visit.","Prendre les trois chaque matin ; apporter tous les médicaments à chaque visite.","លេបទាំង ៣ មុខរាល់ព្រឹក; យកថ្នាំទាំងអស់មកពេលពិនិត្យ។"),LIFE_SALT,LIFE_EX,A("Check BP at home or at a pharmacy and write it down.","Mesurer la TA à domicile ou en pharmacie et noter.","វាស់សម្ពាធនៅផ្ទះ ឬឱសថស្ថាន ហើយកត់ទុក។"),LIFELONG],
+ A("BP ≥ 180/110 with headache, chest pain, breathlessness, weakness, confusion — emergency.","TA ≥ 180/110 avec céphalée, douleur thoracique, dyspnée, déficit, confusion — urgence.","សម្ពាធ ≥ ១៨០/១១០ ជាមួយឈឺក្បាល ឈឺទ្រូង ហត់ ខ្សោយ វង្វេង — បន្ទាន់។"),A("Follow-up: in 2–4 weeks; still uncontrolled → refer (secondary causes, spironolactone)","Suivi : 2–4 semaines ; non contrôlée → avis spécialisé","មកពិនិត្យក្រោយ ២–៤ សប្តាហ៍; នៅមិនគ្រប់គ្រង → បញ្ជូន")),
+T("k-dmnew","endo","Type 2 diabetes — new diagnosis","Confirmed diabetes (FBS ≥ 126 mg/dl ×2 or HbA1c ≥ 6.5%)","Type 2 diabetes mellitus without complications (E11.9)","HbA1c, creatinine + eGFR, urine albumin, lipids, liver tests, BP, weight, foot and eye check",
+ [R("Metformin 500 mg","tab","1-0-1","after-meals","30","Start 500 mg once daily for 1 week, then twice daily; increase to 1 g twice daily. Not if eGFR < 30."),R("Atorvastatin 20 mg","tab","0-0-1","","30","If age ≥ 40 or other risk (WHO HEARTS).")],
+ [A("Target: fasting sugar 80–130 mg/dl, HbA1c below 7%.","Objectif : glycémie à jeun 0,80–1,30 g/l, HbA1c < 7 %.","គោលដៅ៖ ស្ករពេលពោះទទេ ៨០–១៣០ mg/dl, HbA1c < ៧%។"),LIFE_DIET,LIFE_EX,
+  A("Stomach upset with metformin usually settles in 1–2 weeks — take after food.","Les troubles digestifs sous metformine passent en 1–2 semaines — prendre après le repas.","ឈឺក្រពះដោយ metformin ជាធម្មតាបាត់ក្នុង ១–២ សប្តាហ៍ — លេបក្រោយអាហារ។"),A("Check your feet daily; eye check once a year.","Examiner les pieds chaque jour ; fond d'œil chaque année.","ពិនិត្យជើងរាល់ថ្ងៃ; ពិនិត្យភ្នែករៀងរាល់ឆ្នាំ។")],
+ A("Very thirsty with lots of urine, vomiting, drowsy, foot wound, sugar ≥ 300 mg/dl.","Soif intense, polyurie, vomissements, somnolence, plaie du pied, glycémie ≥ 3 g/l.","ស្រេកទឹកខ្លាំង នោមច្រើន ក្អួត ងងុយ របួសជើង ស្ករ ≥ ៣០០ mg/dl។"),A("Follow-up: in 1 month, HbA1c every 3 months","Suivi : 1 mois, HbA1c tous les 3 mois","មកពិនិត្យក្រោយ ១ ខែ; HbA1c រៀងរាល់ ៣ ខែ")),
+T("k-dmins","endo","Type 2 diabetes — adding basal insulin","HbA1c ≥ 9% or FBS > 200 mg/dl on two tablets","Type 2 diabetes mellitus without complications (E11.9)","HbA1c, creatinine, home glucose diary",
+ [R("Metformin 500 mg","tab","2-0-2","after-meals","30","Continue 1 g twice daily."),R("Gliclazide 80 mg","tab","1-0-1","before-meals","30","Reduce if low sugar."),
+  {drug:"Insulin NPH (isophane) 100 IU/ml",slots:["","","","10"],unit:"dose",time:"bedtime",days:"30",note:"Start 10 IU (or 0.1–0.2 IU/kg) at bedtime. Increase by 2 IU every 3 days until fasting sugar 80–130 mg/dl."}],
+ [A("Check fasting sugar every morning and write it down.","Mesurer la glycémie à jeun chaque matin et la noter.","វាស់ស្ករពេលព្រឹកមុនញ៉ាំរាល់ថ្ងៃ ហើយកត់ទុក។"),A("Low sugar (sweating, shaking, confusion): take 3 spoons of sugar or sweet drink, then eat.","Hypoglycémie (sueurs, tremblements, confusion) : 3 cuillères de sucre ou boisson sucrée, puis manger.","ស្ករចុះ (បែកញើស ញ័រ វង្វេង)៖ ញ៉ាំស្ករ ៣ ស្លាបព្រា ឬភេសជ្ជៈផ្អែម រួចញ៉ាំអាហារ។"),
+  A("Inject into the belly or thigh, change the site each time. Keep insulin in a cool place, not frozen.","Injecter dans le ventre ou la cuisse, changer de site. Conserver au frais, pas au congélateur.","ចាក់ក្នុងពោះ ឬភ្លៅ ប្តូរកន្លែងរាល់ដង។ ទុក insulin កន្លែងត្រជាក់ កុំឱ្យកក។"),LIFE_DIET],
+ A("Repeated low sugar, sugar > 300 mg/dl, vomiting, drowsy.","Hypoglycémies répétées, glycémie > 3 g/l, vomissements, somnolence.","ស្ករចុះញឹកញាប់ ស្ករ > ៣០០ mg/dl ក្អួត ងងុយ។"),A("Follow-up: in 1–2 weeks with glucose diary","Suivi : 1–2 semaines avec carnet glycémique","មកពិនិត្យក្រោយ ១–២ សប្តាហ៍ ជាមួយសៀវភៅកត់ស្ករ")),
+T("k-tg","cv","High triglycerides","Triglycerides ≥ 500 mg/dl (or ≥ 200 with other risks)","Pure hyperglyceridaemia (E78.1)","Fasting lipids, glucose / HbA1c, TSH, liver tests, alcohol history",
+ [R("Fenofibrate 145 mg","tab","1-0-0","with-food","30","If TG ≥ 500 mg/dl (pancreatitis risk). Check creatinine and liver tests."),R("Atorvastatin 20 mg","tab","0-0-1","","30","If LDL high, diabetes or cardiovascular risk.")],
+ [A("Stop alcohol and sweet drinks; less white rice, sugar and fried food.","Arrêt de l'alcool et des boissons sucrées ; moins de riz blanc, sucre et fritures.","ឈប់ស្រា និងភេសជ្ជៈផ្អែម; បាយស ស្ករ និងអាហារចៀន តិចជាងមុន។"),A("Eat fish 2–3 times a week. Lose weight.","Poisson 2–3 fois par semaine. Perdre du poids.","ញ៉ាំត្រី ២–៣ ដង/សប្តាហ៍។ ស្រកទម្ងន់។"),LIFE_EX],
+ A("Severe upper belly pain going to the back, vomiting (pancreatitis).","Douleur épigastrique intense irradiant dans le dos, vomissements (pancréatite).","ឈឺពោះលើខ្លាំងរាលទៅខ្នង ក្អួត (រលាកលំពែង)។"),A("Follow-up: lipids after 3 months","Suivi : bilan lipidique à 3 mois","ពិនិត្យខ្លាញ់ក្នុងឈាមក្រោយ ៣ ខែ")),
+T("k-uric","msk","High uric acid / chronic gout (urate-lowering)","≥ 2 gout attacks a year, tophi or uric acid kidney stones","Gout, unspecified (M10.9) / Hyperuricaemia (E79.0)","Uric acid, creatinine + eGFR, glucose, lipids, BP",
+ [R("Allopurinol 100 mg","tab","1-0-0","after-meals","30","Start 100 mg (50 mg if eGFR < 30); increase by 100 mg every 2–4 weeks to uric acid < 6 mg/dl. Stop and come if rash."),
+  R("Colchicine 0.5 mg","tab","1-0-0","","90","Prevents attacks during the first 3–6 months of allopurinol.")],
+ [A("Uric acid without gout attacks usually needs no medicine — only diet.","Hyperuricémie sans crise : en général pas de médicament — régime seul.","អាស៊ីតអ៊ុយរិកខ្ពស់ តែគ្មានឈឺ gout ជាធម្មតាមិនចាំបាច់ថ្នាំ — តមអាហារប៉ុណ្ណោះ។"),
+  A("Less beer and alcohol, offal (liver, intestines), seafood, red meat, sweet drinks. Drink 2 litres of water.","Moins de bière et d'alcool, abats, fruits de mer, viande rouge, boissons sucrées. Boire 2 litres d'eau.","កាត់បន្ថយស្រាបៀរ ស្រា គ្រឿងក្នុង (ថ្លើម ពោះវៀន) គ្រឿងសមុទ្រ សាច់ក្រហម ភេសជ្ជៈផ្អែម។ ផឹកទឹក ២ លីត្រ។"),
+  A("Do not stop allopurinol during an attack — treat the attack separately.","Ne pas arrêter l'allopurinol pendant une crise — traiter la crise à part.","កុំឈប់ allopurinol ពេលឈឺ gout — ព្យាបាលការឈឺដាច់ដោយឡែក។"),LIFELONG],
+ A("Skin rash, fever, mouth sores, yellow eyes on allopurinol — stop at once.","Éruption, fièvre, aphtes, ictère sous allopurinol — arrêter immédiatement.","កន្ទួល គ្រុន ដំបៅមាត់ ភ្នែកលឿង ពេលលេប allopurinol — ឈប់ភ្លាម។"),A("Follow-up: uric acid every 4 weeks until < 6 mg/dl","Suivi : uricémie toutes les 4 semaines jusqu'à < 60 mg/l","ពិនិត្យអាស៊ីតអ៊ុយរិករៀងរាល់ ៤ សប្តាហ៍ រហូត < ៦ mg/dl")),
+/* ---- chronic symptoms ---- */
+T("k-myalgia","msk","Muscle pain (myalgia)","Aching muscles, no joint swelling","Myalgia (M79.1)","If > 4 weeks or weak: CK, TSH, ESR / CRP, vitamin D, calcium; review statins",
+ [R("Paracetamol 500 mg","tab","1-1-1-1","prn","5",""),R("Diclofenac gel 1%","apply","1-1-1","","7","On the painful muscles.")],
+ [A("Gentle stretching, warm compress, regular walking; enough sleep and water.","Étirements doux, chaleur, marche régulière ; sommeil et hydratation suffisants.","ទាញសាច់ដុំថ្នមៗ ស្អំក្តៅ ដើរជាប្រចាំ; គេង និងផឹកទឹកគ្រប់គ្រាន់។"),A("On a statin: tell the doctor — a test (CK) may be needed.","Sous statine : prévenir — dosage des CPK possible.","ពេលលេប statin៖ ប្រាប់គ្រូពេទ្យ — អាចត្រូវធ្វើ CK។")],
+ A("Weakness (cannot climb stairs), dark urine, fever, severe pain.","Faiblesse (ne peut monter les escaliers), urines foncées, fièvre, douleur intense.","ខ្សោយ (ឡើងជណ្តើរមិនរួច) ទឹកនោមខ្មៅ គ្រុន ឈឺខ្លាំង។"),fu("2 weeks")),
+T("k-dizzy","neuro","Chronic / recurrent dizziness (evaluation)","Dizziness for weeks","Dizziness and giddiness (R42)","Lying and standing BP, glucose, Hb, ECG; Dix-Hallpike test; ear exam; review medicines (BP drugs, sedatives)",
+ [R("Betahistine 16 mg","tab","1-1-1","after-meals","30","Only for Ménière-type vertigo (with tinnitus / hearing loss)."),R("Dimenhydrinate 50 mg","tab","1-0-1","prn","3","Short use in severe attacks only — long use slows recovery.")],
+ [A("Vestibular exercises every day (head and eye movements, walking) help the brain adapt.","Exercices vestibulaires quotidiens (mouvements tête / yeux, marche) pour l'adaptation.","ហាត់លំហាត់ vestibular រាល់ថ្ងៃ (បង្វិលក្បាល ភ្នែក ដើរ) ជួយខួរក្បាលសម្រប។"),A("Stand up slowly; drink 2 litres of water; avoid alcohol.","Se lever lentement ; boire 2 litres ; éviter l'alcool.","ក្រោកឈរយឺតៗ; ផឹកទឹក ២ លីត្រ; ជៀសវាងស្រា។"),
+  A("Spinning only when turning in bed (BPPV): Epley manoeuvre works better than tablets.","Vertige seulement en se tournant dans le lit (VPPB) : la manœuvre d'Epley est plus efficace que les comprimés.","វិលតែពេលបែរខ្លួនលើគ្រែ (BPPV)៖ ការធ្វើ Epley ល្អជាងថ្នាំ។")],
+ A("Sudden severe dizziness with headache, double vision, slurred speech, weakness, cannot walk (stroke) — emergency.","Vertige brutal avec céphalée, diplopie, dysarthrie, déficit, impossibilité de marcher (AVC) — urgence.","វិលខ្លាំងភ្លាមៗជាមួយឈឺក្បាល មើលឃើញពីរ និយាយមិនច្បាស់ ខ្សោយ ដើរមិនរួច (ស្ទះសរសៃឈាមខួរ) — បន្ទាន់។"),fu("2 weeks")),
+T("k-meniere","ent","Ménière's disease","Attacks of spinning vertigo with ringing and muffled hearing","Ménière's disease (H81.0)","Hearing test (audiometry); ENT referral",
+ [R("Betahistine 16 mg","tab","1-1-1","after-meals","90",""),R("Dimenhydrinate 50 mg","tab","1-0-1","prn","3","During attacks only.")],
+ [A("Less salt (under 2 g a day), less coffee and alcohol; stop smoking.","Moins de sel (< 2 g/j), de café et d'alcool ; arrêt du tabac.","អំបិលតិច (< ២ ក្រាម/ថ្ងៃ) កាហ្វេ និងស្រាតិច; ឈប់ជក់បារី។"),A("During an attack lie still in a dark quiet room.","Pendant la crise, rester allongé au calme dans le noir.","ពេលវិល ដេកស្ងៀមក្នុងបន្ទប់ងងឹតស្ងាត់។")],
+ A("Sudden hearing loss, weakness, double vision, severe headache.","Surdité brutale, déficit, diplopie, céphalée intense.","បាត់ការស្តាប់ភ្លាមៗ ខ្សោយ មើលឃើញពីរ ឈឺក្បាលខ្លាំង។"),fu("1 month")),
+T("k-fatigue","general","Tiredness / fatigue (evaluation)","Tired for more than 2–4 weeks","Fatigue (R53.8)","CBC, ferritin, glucose / HbA1c, TSH, creatinine, liver tests, HIV, HBsAg, pregnancy test (women), B12; urine; screen for depression and sleep apnoea",
+ [],
+ [A("Most tiredness has a treatable cause: anaemia, thyroid, diabetes, poor sleep, stress, medicines.","La fatigue a souvent une cause traitable : anémie, thyroïde, diabète, sommeil, stress, médicaments.","អស់កម្លាំងភាគច្រើនមានមូលហេតុដែលព្យាបាលបាន៖ ស្លេកស្លាំង ទីរ៉ូអ៊ីត ទឹកនោមផ្អែម គេងមិនគ្រប់ ស្ត្រេស ថ្នាំ។"),
+  A("Regular sleep 7–8 hours, daily walking, balanced meals; limit coffee, alcohol and energy drinks.","Sommeil régulier 7–8 h, marche quotidienne, repas équilibrés ; limiter café, alcool, boissons énergisantes.","គេង ៧–៨ ម៉ោងទៀងទាត់ ដើររាល់ថ្ងៃ អាហារគ្រប់មុខ; កាត់បន្ថយកាហ្វេ ស្រា ភេសជ្ជៈប៉ូវកម្លាំង។"),
+  A("Vitamins or 'tonics' do not help unless a deficiency is found.","Vitamines et « fortifiants » inutiles sans carence prouvée.","វីតាមីន ឬថ្នាំប៉ូវមិនជួយទេ លុះត្រាតែរកឃើញថាខ្វះ។")],
+ A("Weight loss, fever or night sweats, breathlessness, bleeding, very low mood or thoughts of self-harm.","Amaigrissement, fièvre ou sueurs nocturnes, dyspnée, saignement, tristesse sévère ou idées suicidaires.","ស្រកទម្ងន់ គ្រុន ឬបែកញើសពេលយប់ ហត់ ហូរឈាម ធ្លាក់ទឹកចិត្តខ្លាំង ឬគំនិតធ្វើបាបខ្លួនឯង។"),A("Follow-up: with test results in 1 week","Suivi : avec les résultats dans 1 semaine","មកវិញជាមួយលទ្ធផលតេស្តក្រោយ ១ សប្តាហ៍"))
+]);
+Object.assign(DXI,{
+ "k-coldsore":["ពងទឹកបបូរមាត់ (Herpes)","Herpès labial","cold sore herpes labialis ពងបបូរមាត់ herpès labial bouton de fièvre"],
+ "k-clm":["ព្រូនដើរក្រោមស្បែក","Larva migrans cutanée","larva migrans creeping eruption ព្រូនក្រោមស្បែក larbish"],
+ "k-miliaria":["កន្ទួលក្តៅ (ញើស)","Miliaire (bourbouille)","heat rash miliaria prickly កន្ទួលក្តៅ ញើស bourbouille"],
+ "k-tineacap":["ផ្សិតស្បែកក្បាល","Teigne du cuir chevelu","tinea capitis scalp ringworm ផ្សិតក្បាល teigne"],
+ "k-tineaped":["ផ្សិតជើង / ក្រលៀន","Pied d'athlète / intertrigo inguinal","athlete foot jock itch tinea pedis cruris ផ្សិតជើង ក្រលៀន pied d'athlète"],
+ "k-molluscum":["ដុំស្បែកមានរណ្តៅ (Molluscum)","Molluscum contagiosum","molluscum contagiosum ដុំស្បែក molluscum"],
+ "k-prosea":["Pityriasis rosea","Pityriasis rosé de Gibert","pityriasis rosea herald patch កន្ទួលខ្លួន pityriasis rosé"],
+ "k-rosacea":["មុខក្រហម (Rosacea)","Rosacée","rosacea red face មុខក្រហម rosacée"],
+ "k-angular":["រលាកជ្រុងមាត់","Perlèche","angular cheilitis corners mouth ប្រេះជ្រុងមាត់ perlèche"],
+ "k-erysipelas":["រលាកស្បែកក្រហមក្តៅ (Erysipelas)","Érysipèle","erysipelas red leg fever រលាកស្បែក ជើងក្រហម érysipèle"],
+ "k-boils":["បូសញឹកញាប់","Furonculose","recurrent boils furunculosis បូស furonculose"],
+ "k-covid":["COVID-19 ស្រាល","COVID-19 (forme légère)","covid coronavirus sars-cov-2 កូវីដ covid"],
+ "k-htndm":["លើសឈាមជាមួយទឹកនោមផ្អែម","HTA avec diabète / néphropathie","hypertension diabetes kidney losartan លើសឈាម ទឹកនោមផ្អែម HTA diabète"],
+ "k-htn3":["លើសឈាម (ថ្នាំ ៣ មុខ)","HTA résistante (trithérapie)","resistant hypertension three drugs លើសឈាម ថ្នាំ៣ HTA résistante"],
+ "k-dmnew":["ទឹកនោមផ្អែមប្រភេទ ២ — ទើបរកឃើញ","Diabète de type 2 — découverte","new diabetes type 2 metformin ទឹកនោមផ្អែម ថ្មី diabète découverte"],
+ "k-dmins":["ទឹកនោមផ្អែម — ចាប់ផ្តើម Insulin","Diabète de type 2 — insuline basale","diabetes insulin basal nph ទឹកនោមផ្អែម អាំងស៊ុយលីន insuline"],
+ "k-tg":["ខ្លាញ់ Triglyceride ខ្ពស់","Hypertriglycéridémie","high triglycerides fenofibrate ខ្លាញ់ខ្ពស់ triglycérides"],
+ "k-uric":["អាស៊ីតអ៊ុយរិកខ្ពស់ / Gout រ៉ាំរ៉ៃ","Hyperuricémie / goutte chronique","uric acid allopurinol gout chronic អាស៊ីតអ៊ុយរិក លើសអាស៊ីត goutte hyperuricémie"],
+ "k-myalgia":["ឈឺសាច់ដុំ","Myalgies","muscle pain myalgia ឈឺសាច់ដុំ myalgie"],
+ "k-dizzy":["វិលមុខជាប់ / កើតញឹក","Vertiges chroniques","chronic dizziness vertigo វិលមុខជាប់ vertiges chroniques"],
+ "k-meniere":["ជំងឺ Ménière","Maladie de Ménière","meniere vertigo tinnitus hearing វិលមុខ ឮសូរក្នុងត្រចៀក ménière"],
+ "k-fatigue":["អស់កម្លាំង (ស្វែងរកមូលហេតុ)","Fatigue (bilan)","fatigue tiredness weakness អស់កម្លាំង fatigue"]
+});
+
 var PROC_DROP=/incision and drainage|^wound cleaning|^wash wound|^crepe bandage/i;
 function applyProc(t){
   var pr=PROCS[t.id]; if(!pr) return false;
@@ -5341,7 +5530,7 @@ function newPatient(){
   if(!newPtArmed){newPtArmed=true;b.textContent="ចុចម្តងទៀតដើម្បីលុប";b.classList.add("danger");setTimeout(function(){newPtArmed=false;b.textContent="អ្នកជំងឺថ្មី";b.classList.remove("danger");},3500);return;}
   newPtArmed=false; b.textContent="អ្នកជំងឺថ្មី"; b.classList.remove("danger");
   PT_TEXT.forEach(function(id){$(id).textContent="";}); PT_VITAL.forEach(function(id){$(id).value="";});
-  ptModeManual=""; mhClear(); dxBlank(); soapLog=[]; soapLogSave(); $("pPay").value=""; if(typeof VX==="object"){ VX.dob=""; VX.bite=""; VX.td="0"; } if(typeof PG==="object"){ PG.lmp=PG.edd=PG.gaw=PG.gad=PG.gaOn=""; PG.cyc=28; PG.mode="lmp"; } soapResetEdits(); if(typeof evolClear==="function") evolClear(); peApplyDx(); if(typeof evNewPatient==="function") evNewPatient(); showPe(true); SOAP_IDS.forEach(function(id){$(id).innerText="";}); showSoap(true); $("fHo").textContent=""; $("pDate").textContent=todayStr(); checkVitals(); savePatient(); renderSymChips(); $("pName").focus();
+  ptModeManual=""; mhClear(); dxBlank(); soapLog=[]; soapLogSave(); $("pPay").value=""; if(typeof VX==="object"){ VX.dob=""; VX.bite=""; VX.td="0"; } if(typeof USG!=="undefined"){ USG=[]; try{localStorage.removeItem(USG_KEY);}catch(e){} } if(typeof NCD==="object"){ ["s1","d1","s2","d2","fpg","a1c","ogtt","rbs","ldl","tg","age","uric"].forEach(function(k){NCD[k]="";}); NCD.att="0"; NCD.dm=NCD.cvd=NCD.ckd=NCD.sym=NCD.tophi=NCD.stone=false; } if(typeof PG==="object"){ PG.lmp=PG.edd=PG.gaw=PG.gad=PG.gaOn=""; PG.cyc=28; PG.mode="lmp"; } soapResetEdits(); if(typeof evolClear==="function") evolClear(); peApplyDx(); if(typeof evNewPatient==="function") evNewPatient(); showPe(true); SOAP_IDS.forEach(function(id){$(id).innerText="";}); showSoap(true); $("fHo").textContent=""; $("pDate").textContent=todayStr(); checkVitals(); savePatient(); renderSymChips(); $("pName").focus();
   say("បានសម្អាតព័ត៌មានអ្នកជំងឺ");
 }
 
@@ -6113,7 +6302,7 @@ var CICU=[
 var CSTATE={tab:"ped",q:"",str:{},icu:{}};
 function cWt(){ var v=parseFloat(String(($("cWt")&&$("cWt").value)||"").replace(",",".")); return isNaN(v)||v<=0?null:v; }
 function cMgkg(d,w){ return Array.isArray(d[2])?(w<d[2][1]?d[2][0]:d[2][2]):d[2]; }
-function toolRowPaint(){ var lab={sym:["🔎 Symptoms → Dx","🔎 Symptômes → Dx","🔎 រោគសញ្ញា → Dx"],ped:["👶 Child","👶 Enfant","👶 កុមារ"],icu:["🏥 ICU infusion","🏥 Réa · IVSE","🏥 ICU · ម៉ាស៊ីន"],fluid:["💧 IV fluids","💧 Solutés","💧 សេរ៉ូ"],preg:["🤰 Pregnancy dates","🤰 Grossesse (terme)","🤰 ថ្ងៃគ្រប់ខែ"],vac:["💉 Vaccines","💉 Vaccins","💉 វ៉ាក់សាំង"],sti:["🦠 STI · WHO","🦠 IST · OMS","🦠 កាមរោគ · WHO"]};
+function toolRowPaint(){ var lab={ncd:["🩺 BP · diabetes · lipids","🩺 HTA · diabète · lipides","🩺 លើសឈាម · ទឹកនោមផ្អែម"],sym:["🔎 Symptoms → Dx","🔎 Symptômes → Dx","🔎 រោគសញ្ញា → Dx"],ped:["👶 Child","👶 Enfant","👶 កុមារ"],icu:["🏥 ICU infusion","🏥 Réa · IVSE","🏥 ICU · ម៉ាស៊ីន"],fluid:["💧 IV fluids","💧 Solutés","💧 សេរ៉ូ"],preg:["🤰 Pregnancy dates","🤰 Grossesse (terme)","🤰 ថ្ងៃគ្រប់ខែ"],vac:["💉 Vaccines","💉 Vaccins","💉 វ៉ាក់សាំង"],sti:["🦠 STI · WHO","🦠 IST · OMS","🦠 កាមរោគ · WHO"]};
   var ov=$("calcOv"), open=ov&&!ov.hidden; [].forEach.call(document.querySelectorAll("#toolRow button"),function(b){ b.textContent=cL(lab[b.dataset.t]); b.setAttribute("aria-pressed",String(open&&b.dataset.t===CSTATE.tab)); }); }
 function calcOpen(tab){
   var ov=$("calcOv"); if(!ov){ ov=calcBuild(); }
@@ -6125,7 +6314,7 @@ function calcBuild(){
   var ov=mk("div","calcov noprint"); ov.id="calcOv"; ov.hidden=true;
   ov.innerHTML='<div class="calcbox" role="dialog" aria-label="Dose calculator"><div class="calch"><b id="cTitle"></b><button type="button" class="calcx" id="cClose" aria-label="Close">✕</button></div>'+
    '<div class="calcbar"><label class="cwt"><span id="cWtL"></span> <input id="cWt" type="text" inputmode="decimal" autocomplete="off" placeholder="kg"> kg</label><span id="cAge" class="cage"></span>'+
-   '<span class="ctabs" id="cTabs"><button type="button" data-t="sym"></button><button type="button" data-t="ped"></button><button type="button" data-t="icu"></button><button type="button" data-t="fluid"></button><button type="button" data-t="preg"></button><button type="button" data-t="vac"></button><button type="button" data-t="sti"></button></span></div>'+
+   '<span class="ctabs" id="cTabs"><button type="button" data-t="sym"></button><button type="button" data-t="ncd"></button><button type="button" data-t="ped"></button><button type="button" data-t="icu"></button><button type="button" data-t="fluid"></button><button type="button" data-t="preg"></button><button type="button" data-t="vac"></button><button type="button" data-t="sti"></button></span></div>'+
    '<div class="calcbody" id="cBody"></div><div class="calcfoot" id="cFoot"></div></div>';
   document.body.appendChild(ov);
   ov.addEventListener("mousedown",function(e){ if(e.target===ov) ov.hidden=true; });
@@ -6139,12 +6328,12 @@ function calcRender(keepFocus){
   $("cTitle").textContent=cL(["🧮 Dose calculator","🧮 Calcul des doses","🧮 គណនាដូស"]);
   $("cWtL").textContent=cL(["Weight","Poids","ទម្ងន់"]);
   var a=ptAgeYears(); $("cAge").textContent=a!==null?cL(["Age","Âge","អាយុ"])+": "+(a<1?cR(a*12,0)+cL([" mo"," mois"," ខែ"]):cR(a,1)+cL([" y"," ans"," ឆ្នាំ"])):"";
-  var lab={sym:["🔎 Symptoms → Dx","🔎 Symptômes → Dx","🔎 រោគសញ្ញា → Dx"],ped:["👶 Child","👶 Enfant","👶 កុមារ"],icu:["🏥 ICU infusion","🏥 Réa · IVSE","🏥 ICU · ម៉ាស៊ីន"],fluid:["💧 IV fluids","💧 Solutés","💧 សេរ៉ូ"],preg:["🤰 Pregnancy dates","🤰 Grossesse (terme)","🤰 ថ្ងៃគ្រប់ខែ"],vac:["💉 Vaccines","💉 Vaccins","💉 វ៉ាក់សាំង"],sti:["🦠 STI · WHO","🦠 IST · OMS","🦠 កាមរោគ · WHO"]};
+  var lab={ncd:["🩺 BP · diabetes · lipids","🩺 HTA · diabète · lipides","🩺 លើសឈាម · ទឹកនោមផ្អែម"],sym:["🔎 Symptoms → Dx","🔎 Symptômes → Dx","🔎 រោគសញ្ញា → Dx"],ped:["👶 Child","👶 Enfant","👶 កុមារ"],icu:["🏥 ICU infusion","🏥 Réa · IVSE","🏥 ICU · ម៉ាស៊ីន"],fluid:["💧 IV fluids","💧 Solutés","💧 សេរ៉ូ"],preg:["🤰 Pregnancy dates","🤰 Grossesse (terme)","🤰 ថ្ងៃគ្រប់ខែ"],vac:["💉 Vaccines","💉 Vaccins","💉 វ៉ាក់សាំង"],sti:["🦠 STI · WHO","🦠 IST · OMS","🦠 កាមរោគ · WHO"]};
   [].forEach.call(document.querySelectorAll("#cTabs button"),function(b){ b.textContent=cL(lab[b.dataset.t]); b.setAttribute("aria-pressed",String(b.dataset.t===CSTATE.tab)); });
   toolRowPaint();
   $("cFoot").textContent=cL(["⚠ Check every dose against the patient, the product label and national guidelines before giving.","⚠ Vérifiez chaque dose (patient, notice, recommandations nationales) avant administration.","⚠ សូមពិនិត្យដូសនីមួយៗជាមួយអ្នកជំងឺ ស្លាកថ្នាំ និងគោលការណ៍ជាតិ មុនពេលឱ្យ។"]);
-  if(CSTATE.tab==="sym") calcSym(); else if(CSTATE.tab==="ped") calcPed(); else if(CSTATE.tab==="icu") calcIcu(); else if(CSTATE.tab==="preg") calcPreg(); else if(CSTATE.tab==="vac") calcVac(); else if(CSTATE.tab==="sti") calcSti(); else calcFluid();
-  var wl=document.querySelector("#calcOv .cwt"); if(wl) wl.style.visibility=CSTATE.tab==="preg"||CSTATE.tab==="sym"||(CSTATE.tab==="vac"&&VX.pop!=="bite")?"hidden":"";
+  if(CSTATE.tab==="sym") calcSym(); else if(CSTATE.tab==="ncd") calcNcd(); else if(CSTATE.tab==="ped") calcPed(); else if(CSTATE.tab==="icu") calcIcu(); else if(CSTATE.tab==="preg") calcPreg(); else if(CSTATE.tab==="vac") calcVac(); else if(CSTATE.tab==="sti") calcSti(); else calcFluid();
+  var wl=document.querySelector("#calcOv .cwt"); if(wl) wl.style.visibility=CSTATE.tab==="preg"||CSTATE.tab==="sym"||CSTATE.tab==="ncd"||(CSTATE.tab==="vac"&&VX.pop!=="bite")?"hidden":"";
 }
 function cNeedWt(box){ var e=mk("div","cempty"); e.textContent=cL(["Enter the weight (kg) to calculate.","Saisir le poids (kg) pour calculer.","សូមដាក់ទម្ងន់ (kg) ដើម្បីគណនា។"]); box.appendChild(e); }
 function calcPed(){
@@ -6658,7 +6847,7 @@ function pgOut(){
   /* v55: sub-menu */
   var root=out, nav=mk("div","pgnav noprint"), secW=mk("div"), SECS={};
   var PGS=function(k){ if(!SECS[k]){ SECS[k]=mk("div","pgsec"); SECS[k].dataset.sec=k; secW.appendChild(SECS[k]); } return SECS[k]; };
-  var NAV=[["anc",["🗓 ANC visits","🗓 CPN","🗓 ពិនិត្យផ្ទៃពោះ"]],["us",["🩻 Ultrasound","🩻 Échographies","🩻 អេកូ"]],["baby",["💓 Heartbeat · sex","💓 Cœur · sexe","💓 ចង្វាក់បេះដូង · ភេទ"]],["weight",["⚖ Baby weight","⚖ Poids fœtal","⚖ ទម្ងន់កូន"]],["fgr",["📉 Small baby (FGR)","📉 RCIU","📉 កូនលូតលាស់យឺត"]],["all",["☰ All","☰ Tout","☰ ទាំងអស់"]]];
+  var NAV=[["anc",["🗓 ANC visits","🗓 CPN","🗓 ពិនិត្យផ្ទៃពោះ"]],["us",["🩻 Ultrasound","🩻 Échographies","🩻 អេកូ"]],["baby",["💓 Heartbeat · sex","💓 Cœur · sexe","💓 ចង្វាក់បេះដូង · ភេទ"]],["weight",["⚖ Baby weight","⚖ Poids fœtal","⚖ ទម្ងន់កូន"]],["track",["📈 Ultrasound log","📈 Suivi écho","📈 តាមដានអេកូ"]],["fgr",["📉 Small baby (FGR)","📉 RCIU","📉 កូនលូតលាស់យឺត"]],["all",["☰ All","☰ Tout","☰ ទាំងអស់"]]];
   var navPaint=function(){ [].forEach.call(nav.children,function(b){ b.setAttribute("aria-pressed",String(b.dataset.k===PG.sec)); }); Object.keys(SECS).forEach(function(k){ SECS[k].hidden=PG.sec!=="all"&&k!==PG.sec; }); };
   NAV.forEach(function(n){ var b=mk("button"); b.type="button"; b.dataset.k=n[0]; b.textContent=cL(n[1]); b.onclick=function(){ PG.sec=n[0]; navPaint(); var bx=$("cBody"); if(bx) bx.scrollTop=Math.min(bx.scrollTop,nav.offsetTop-8); }; nav.appendChild(b); });
   root.appendChild(nav); root.appendChild(secW); out=PGS("anc");
@@ -6710,6 +6899,10 @@ function pgOut(){
   var rh=mk("h4"); rh.className="pgh"; rh.textContent="👶 "+cL(["Baby: heartbeat, weight, sex","Bébé : cœur, poids, sexe","កូន៖ ចង្វាក់បេះដូង ទម្ងន់ ភេទ"]); out.appendChild(rh);
   var hb=mk("table","ctable"); [
    [["Heartbeat","Activité cardiaque","ចង្វាក់បេះដូង"],["Vaginal scan ~5½–6 w · abdominal scan ~7 w · hand Doppler 10–12 w · Pinard ~20 w. Normal rate: ~170/min at 9–10 w, then 110–160/min. CRL ≥ 7 mm with no heartbeat → suspect miscarriage, repeat the scan in 7–10 days before deciding.","Écho endovaginale ~5½–6 SA · abdominale ~7 SA · Doppler 10–12 SA · Pinard ~20 SA. Fréquence : ~170/min à 9–10 SA puis 110–160/min. LCC ≥ 7 mm sans activité cardiaque → fausse couche probable, contrôler à 7–10 jours.","អេកូទ្វារមាស ~៥½–៦ សប្តាហ៍ · អេកូលើពោះ ~៧ សប្តាហ៍ · Doppler ដៃ ១០–១២ សប្តាហ៍ · Pinard ~២០ សប្តាហ៍។ ធម្មតា ~១៧០ ដង/នាទី នៅ ៩–១០ សប្តាហ៍ រួច ១១០–១៦០។ CRL ≥ ៧ mm គ្មានចង្វាក់ → សង្ស័យរលូត ធ្វើអេកូម្តងទៀតក្រោយ ៧–១០ ថ្ងៃ។"]],
+   [["Pregnancy in the uterus","Grossesse intra-utérine","គភ៌ចូលក្នុងស្បូន"],["Implants in the uterus about 3½–4 w (6–10 days after conception). Vaginal scan: gestational sac ~4½–5 w, yolk sac ~5½ w, embryo with heartbeat ~6 w. Positive test with no sac in the uterus at hCG > 1500–2000 → suspect ectopic.","Implantation vers 3½–4 SA (6–10 j après la fécondation). Échographie endovaginale : sac ~4½–5 SA, vésicule vitelline ~5½ SA, embryon avec activité cardiaque ~6 SA. Test positif sans sac intra-utérin avec hCG > 1500–2000 → suspecter une GEU.","ចូលដាំក្នុងស្បូនប្រហែល ៣½–៤ សប្តាហ៍ (៦–១០ ថ្ងៃក្រោយមានគភ៌)។ អេកូទ្វារមាស៖ ថង់គភ៌ ~៤½–៥ សប្តាហ៍ yolk sac ~៥½ សប្តាហ៍ អំប្រ៊ីយ៉ុងមានចង្វាក់បេះដូង ~៦ សប្តាហ៍។ តេស្តវិជ្ជមាន តែគ្មានថង់ក្នុងស្បូន ពេល hCG > 1500–2000 → សង្ស័យគភ៌ក្រៅស្បូន។"]],
+   [["Head engages in the pelvis","Engagement de la tête","ក្បាលកូនចុះចូលអាងត្រគាក"],["First baby: usually 36–38 w (2–4 weeks before labour; mother breathes easier, passes urine more). Later babies: often only when labour starts. Head not engaged at term in a first pregnancy → check for disproportion, placenta praevia, wrong dates.","1er bébé : en général 36–38 SA (2–4 semaines avant le travail). Grossesses suivantes : souvent au début du travail. Tête non engagée à terme chez la primipare → disproportion, prævia, erreur de terme.","កូនដំបូង៖ ជាធម្មតា ៣៦–៣៨ សប្តាហ៍ (២–៤ សប្តាហ៍មុនឈឺពោះសម្រាល; ម្តាយដកដង្ហើមស្រួល នោមញឹក)។ កូនបន្ទាប់៖ ច្រើនចុះពេលចាប់ផ្តើមឈឺពោះ។ កូនដំបូងដល់ខែ តែក្បាលមិនទាន់ចុះ → ពិនិត្យអាងតូច សុកបាំង ឬគណនាខែខុស។"]],
+   [["Placenta praevia","Placenta prævia","សុកបាំងមាត់ស្បូន"],["Low placenta at the 20-week scan is common and usually moves up. Confirm only by vaginal scan at 32 weeks; if still low, repeat at 36 weeks. Covers the cervix = praevia (caesarean at 36–37 w); edge < 20 mm from the cervix = low-lying.","Placenta bas à 20 SA fréquent, migre souvent. Confirmer par échographie endovaginale à 32 SA ; si toujours bas, contrôler à 36 SA. Recouvre le col = prævia (césarienne à 36–37 SA) ; bord < 20 mm = bas inséré.","សុកទាបនៅអេកូ ២០ សប្តាហ៍ គឺញឹកញាប់ ហើយច្រើនឡើងខ្ពស់វិញ។ បញ្ជាក់បានតែតាមអេកូទ្វារមាសនៅ ៣២ សប្តាហ៍; បើនៅទាប ធ្វើម្តងទៀតនៅ ៣៦ សប្តាហ៍។ បាំងមាត់ស្បូន = previa (វះកាត់នៅ ៣៦–៣៧ សប្តាហ៍); គែមសុក < ២០ mm ពីមាត់ស្បូន = សុកទាប។"]],
+   [["Baby turns head-down","Retournement (céphalique)","កូនបង្វិលក្បាលចុះ"],["About 25% are breech at 28 weeks; most turn by 32–36 weeks; 3–4% stay breech at term. Not head-down at 36 w (first baby) / 37 w (others): offer ECV (turning from outside, ~50% success) in hospital; moxibustion (BL67) from 33–35 w has limited evidence; knee-chest positions do not work. If ECV fails / declined: planned caesarean at 39 w or vaginal breech in an experienced centre.","~25 % en siège à 28 SA ; la plupart se retournent vers 32–36 SA ; 3–4 % restent en siège à terme. Non céphalique à 36 SA (primipare) / 37 SA (multipare) : proposer une VME (~50 % de succès) ; moxibustion (V67) dès 33–35 SA : preuves limitées ; positions genu-pectorales inefficaces. Échec / refus : césarienne programmée à 39 SA ou voie basse en centre expérimenté.","ប្រហែល ២៥% នៅគូទនៅ ២៨ សប្តាហ៍; ភាគច្រើនបង្វិលនៅ ៣២–៣៦ សប្តាហ៍; ៣–៤% នៅគូទពេលគ្រប់ខែ។ មិនទាន់ក្បាលចុះនៅ ៣៦ សប្តាហ៍ (កូនដំបូង) / ៣៧ សប្តាហ៍ (កូនបន្ទាប់)៖ បង្វិលពីខាងក្រៅ ECV (ជោគជ័យ ~៥០%) នៅមន្ទីរពេទ្យ; ការដុតក្រអូប (BL67) ពី ៣៣–៣៥ សប្តាហ៍ ភស្តុតាងតិច; ការលុតជង្គង់ មិនមានប្រសិទ្ធភាព។ ECV បរាជ័យ / មិនព្រម៖ វះកាត់តាមគម្រោងនៅ ៣៩ សប្តាហ៍ ឬសម្រាលគូទនៅមន្ទីរពេទ្យមានបទពិសោធន៍។"]],
    [["Sex","Sexe","ភេទ"],["Ultrasound 18–22 w is most reliable (95–99%); 14–16 w often wrong; NIPT blood test from 10 w. May not be visible if legs are closed.","Échographie 18–22 SA la plus fiable (95–99 %) ; 14–16 SA souvent erronée ; test sanguin NIPT dès 10 SA. Parfois non visible (jambes fermées).","អេកូ ១៨–២២ សប្តាហ៍ ត្រឹមត្រូវជាងគេ (៩៥–៩៩%); ១៤–១៦ សប្តាហ៍ ច្រើនខុស; តេស្តឈាម NIPT ចាប់ពី ១០ សប្តាហ៍។ ជួនមើលមិនឃើញ បើជើងបិទ។"]],
    [["Birth weight","Poids de naissance","ទម្ងន់កើត"],["Normal 2.5–4.0 kg · < 2.5 kg low birth weight · > 4.0 kg large (check diabetes). Ultrasound weight can be off by ± 10–15%.","Normal 2,5–4,0 kg · < 2,5 kg faible poids · > 4,0 kg macrosomie (diabète ?). Le poids échographique varie de ± 10–15 %.","ធម្មតា ២.៥–៤.០ kg · < ២.៥ kg ទម្ងន់ទាប · > ៤.០ kg ធំ (ពិនិត្យទឹកនោមផ្អែម)។ ទម្ងន់ពីអេកូអាចខុស ± ១០–១៥%។"]]
   ].forEach(function(r){ var tr=mk("tr"), a=mk("td"), b=mk("td"); var bb=mk("b"); bb.textContent=cL(r[0]); a.appendChild(bb); a.style.width="130px"; b.textContent=cL(r[1]); b.className="pgwhat"; tr.appendChild(a); tr.appendChild(b); hb.appendChild(tr); });
@@ -6747,6 +6940,7 @@ function pgOut(){
   out.appendChild(ft);
   if(lib.some(function(x){return x.id==="q-fgr";})){ var ub=mk("button","cadd"); ub.type="button"; ub.style.marginTop="8px"; ub.textContent="📋 "+cL(["Open the template “Suspected fetal growth restriction”","Ouvrir le modèle « Suspicion de RCIU »","បើកគំរូ «សង្ស័យកូនលូតលាស់យឺត»"]);
     ub.onclick=function(){ $("calcOv").hidden=true; openTemplate("q-fgr"); }; out.appendChild(ub); }
+  pgTrack(PGS("track"),b0,today);
   out=root; navPaint();
   var row=mk("div","pgact"), put=mk("button","cadd"); put.type="button"; put.textContent=cL(["+ Write in H/O","+ Écrire dans l'histoire","+ ដាក់ក្នុង H/O"]);
   put.onclick=function(){ var lmpD=PG.mode==="lmp"&&pgD(PG.lmp)?pgD(PG.lmp):b0;
@@ -7389,6 +7583,281 @@ function calcSym(){
     box.appendChild(card);
   });
   var ft=mk("div","cnote"); ft.textContent=cL(["Suggestions come from the clinic's templates and common clinical patterns. Always examine the patient and confirm — this is decision support, not a diagnosis.","Suggestions issues des modèles de la clinique et de tableaux cliniques fréquents. Toujours examiner et confirmer — aide à la décision, pas un diagnostic.","ការណែនាំនេះមកពីគំរូរបស់គ្លីនិក និងលំនាំគ្លីនិកទូទៅ។ ត្រូវពិនិត្យអ្នកជំងឺ និងបញ្ជាក់ជានិច្ច — នេះជាជំនួយសម្រេចចិត្ត មិនមែនរោគវិនិច្ឆ័យទេ។"]); box.appendChild(ft);
+}
+
+
+/* ---------- v62: 📈 serial ultrasound log (this patient, this device) with growth chart and next-scan advice ---------- */
+var USG_KEY="rxTemplates.usgLog", USG=[];
+var PG_HW={10:35,11:45,12:58,13:73,14:93,15:117,16:146,17:181,18:223,19:273,20:331,21:399,22:478,23:568,24:670,25:785,26:913,27:1055,28:1210,29:1379,30:1559,31:1751,32:1953,33:2162,34:2377,35:2595,36:2813,37:3028,38:3236,39:3435,40:3619,41:3770,42:3900};
+function usgLoad(){ try{ USG=JSON.parse(localStorage.getItem(USG_KEY)||"[]")||[]; }catch(e){ USG=[]; } }
+function usgSave(){ try{ localStorage.setItem(USG_KEY,JSON.stringify(USG)); }catch(e){} }
+function usgExp(days){ var w=days/7; if(w<10||w>42) return null; var a=Math.floor(w), f=w-a, x=PG_HW[a], y=PG_HW[Math.min(42,a+1)]; return x+(y-x)*f; }
+var USG_DOP=[["normal",["normal","normal","ធម្មតា"]],["pi",["PI > 95th","IP > 95e","PI ខ្ពស់"]],["aedf",["AEDF (absent flow)","diastole nulle","AEDF (គ្មានលំហូរ)"]],["redf",["REDF (reversed)","reverse flow","REDF (បញ្ច្រាស)"]],["",["not done","non fait","មិនបានធ្វើ"]]];
+var USG_PRES=[["",["—","—","—"]],["ceph",["cephalic","céphalique","ក្បាល"]],["breech",["breech","siège","គូទ"]],["trans",["transverse","transverse","ទទឹង"]]];
+var USG_PLAC=[["",["—","—","—"]],["normal",["normal (not low)","normal","ធម្មតា"]],["low",["low-lying","bas inséré","ទាប"]],["previa",["praevia","prævia","បាំងមាត់ស្បូន"]]];
+function usgEval(e,b0){
+  var d=pgD(e.date), ga=d&&b0?pgDiff(d,b0):null, exp=ga!==null?usgExp(ga):null, r=e.efw&&exp?e.efw/exp:null, flags=[], lvl=0;
+  if(r!==null){ if(r<0.85){ flags.push(cL(["small for dates","petit pour l'âge","តូចធៀបអាយុ"])); lvl=Math.max(lvl,r<0.75?2:1); } else if(r>1.15){ flags.push(cL(["large for dates","gros pour l'âge","ធំធៀបអាយុ"])); lvl=Math.max(lvl,1); } }
+  var afi=parseFloat(e.afi); if(!isNaN(afi)){ if(afi<5){ flags.push(cL(["low fluid (AFI < 5)","oligoamnios (ILA < 5)","ទឹកភ្លោះតិច (AFI < 5)"])); lvl=Math.max(lvl,2); } else if(afi>24){ flags.push(cL(["high fluid (AFI > 24)","hydramnios (ILA > 24)","ទឹកភ្លោះច្រើន (AFI > 24)"])); lvl=Math.max(lvl,1); } }
+  if(e.dop==="pi"){ flags.push("Doppler PI > 95th"); lvl=Math.max(lvl,2); } if(e.dop==="aedf"){ flags.push("AEDF"); lvl=3; } if(e.dop==="redf"){ flags.push("REDF"); lvl=3; }
+  var fhr=parseFloat(e.fhr); if(!isNaN(fhr)&&(fhr<110||fhr>160)){ flags.push(cL(["FHR ","RCF ","ចង្វាក់បេះដូង "])+fhr); lvl=Math.max(lvl,2); }
+  if(ga!==null&&ga>=252&&(e.pres==="breech"||e.pres==="trans")){ flags.push(cL(["not head-down at ≥ 36 w","présentation non céphalique ≥ 36 SA","ទារកមិននៅក្បាលចុះ ≥ ៣៦ សប្តាហ៍"])); lvl=Math.max(lvl,1); }
+  if(e.plac==="previa"||(e.plac==="low"&&ga!==null&&ga>=224)){ flags.push(cL(["placenta low / praevia","placenta bas / prævia","សុកទាប / បាំងមាត់ស្បូន"])); lvl=Math.max(lvl,2); }
+  return {ga:ga,exp:exp,r:r,flags:flags,lvl:lvl}; }
+function usgNext(last,ev,b0){
+  var d=pgD(last.date), ga=ev.ga, add=14, why;
+  if(last.dop==="aedf"||last.dop==="redf"){ add=1; why=cL(["AEDF / REDF: admit — daily monitoring, plan delivery (refer).","Diastole nulle / reverse : hospitaliser, surveillance quotidienne, extraction (transfert).","AEDF / REDF៖ សម្រាកពេទ្យ តាមដានរាល់ថ្ងៃ រៀបចំសម្រាល (បញ្ជូន)។"]); }
+  else if(last.dop==="pi"||ev.lvl>=2){ add=3; why=cL(["Abnormal: Doppler + fluid twice a week; growth every 2 weeks.","Anormal : Doppler + liquide 2 ×/semaine ; croissance /2 semaines.","មិនធម្មតា៖ Doppler + ទឹកភ្លោះ ២ ដង/សប្តាហ៍; ការលូតលាស់រៀងរាល់ ២ សប្តាហ៍។"]); }
+  else if(ev.r!==null&&ev.r<0.85){ add=14; why=cL(["Small for dates: growth scan in 2 weeks, Doppler + fluid every 1–2 weeks.","Petit pour l'âge : croissance à 2 semaines, Doppler + liquide /1–2 semaines.","តូចធៀបអាយុ៖ អេកូការលូតលាស់ក្រោយ ២ សប្តាហ៍ Doppler + ទឹកភ្លោះ រៀងរាល់ ១–២ សប្តាហ៍។"]); }
+  else if(ev.lvl===1){ add=14; why=cL(["Re-check in 2 weeks.","Contrôle à 2 semaines.","ពិនិត្យម្តងទៀតក្រោយ ២ សប្តាហ៍។"]); }
+  else { var nxt=[13,20,30,37].map(function(w){return w*7;}).find(function(x){return ga!==null&&x>ga+6;}); if(nxt&&b0){ add=Math.max(7,nxt-ga); why=cL(["Normal: next routine scan at "+Math.round(nxt/7)+" weeks.","Normal : prochaine écho de routine à "+Math.round(nxt/7)+" SA.","ធម្មតា៖ អេកូតាមកាលវិភាគបន្ទាប់នៅ "+Math.round(nxt/7)+" សប្តាហ៍។"]); } else why=cL(["Normal: routine antenatal follow-up.","Normal : suivi prénatal habituel.","ធម្មតា៖ តាមដានផ្ទៃពោះធម្មតា។"]); }
+  return {date:pgAdd(d,add),why:why}; }
+function usgChart(b0){
+  var W=640,H=230,L=42,R=10,T=10,B=26, x=function(w){return L+(w-12)/(42-12)*(W-L-R);}, y=function(g){return T+(1-g/4500)*(H-T-B);};
+  var s='<svg viewBox="0 0 '+W+' '+H+'" class="usgsvg" role="img" aria-label="Fetal growth chart">';
+  [0,1000,2000,3000,4000].forEach(function(g){ s+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+y(g)+'" y2="'+y(g)+'" class="ug"/><text x="'+(L-4)+'" y="'+(y(g)+4)+'" text-anchor="end" class="ut">'+(g/1000)+'kg</text>'; });
+  [12,16,20,24,28,32,36,40].forEach(function(w){ s+='<line y1="'+T+'" y2="'+(H-B)+'" x1="'+x(w)+'" x2="'+x(w)+'" class="ug"/><text x="'+x(w)+'" y="'+(H-8)+'" text-anchor="middle" class="ut">'+w+'</text>'; });
+  var band="",mid="",lo=""; for(var w=12;w<=42;w++){ band+=(w===12?"M":"L")+x(w)+","+y(PG_HW[w]*1.15)+" "; } for(var w2=42;w2>=12;w2--) band+="L"+x(w2)+","+y(PG_HW[w2]*0.85)+" ";
+  for(var w3=12;w3<=42;w3++) mid+=(w3===12?"M":"L")+x(w3)+","+y(PG_HW[w3])+" ";
+  s+='<path d="'+band+'Z" class="uband"/><path d="'+mid+'" class="umid"/>';
+  var pts=USG.filter(function(e){return e.efw;}).map(function(e){ var ga=pgDiff(pgD(e.date),b0)/7; return [ga,+e.efw,usgEval(e,b0).lvl]; }).filter(function(p){return p[0]>=12&&p[0]<=42;}).sort(function(a,b){return a[0]-b[0];});
+  if(pts.length>1) s+='<path d="'+pts.map(function(p,i){return (i?"L":"M")+x(p[0])+","+y(p[1]);}).join(" ")+'" class="uline"/>';
+  pts.forEach(function(p){ s+='<circle cx="'+x(p[0])+'" cy="'+y(p[1])+'" r="5" class="upt l'+p[2]+'"><title>'+p[0].toFixed(1)+' w · '+p[1]+' g</title></circle>'; });
+  s+='<text x="'+(W-R)+'" y="'+(T+10)+'" text-anchor="end" class="ut">'+cL(["weeks →","SA →","សប្តាហ៍ →"])+'</text></svg>';
+  return s; }
+function pgTrack(out,b0,today){
+  usgLoad();
+  var h=mk("h4"); h.className="pgh"; h.textContent="📈 "+cL(["Ultrasound log — follow-up of this pregnancy","Suivi échographique de cette grossesse","តាមដានអេកូជាប្រចាំ — ផ្ទៃពោះនេះ"]); out.appendChild(h);
+  /* form */
+  var f=mk("div","usgform"), F={};
+  var fld=function(k,lab,el){ var l=mk("label"), s=mk("span"); s.textContent=cL(lab); l.appendChild(s); l.appendChild(el); f.appendChild(l); F[k]=el; return el; };
+  var inp=function(type,ph,w){ var i=mk("input"); i.type=type; if(ph) i.placeholder=ph; if(w) i.style.width=w; if(type==="number") i.inputMode="decimal"; return i; };
+  var sel=function(opts){ var s=mk("select"); opts.forEach(function(o){ var op=mk("option"); op.value=o[0]; op.textContent=cL(o[1]); s.appendChild(op); }); return s; };
+  fld("date",["Scan date","Date","ថ្ងៃធ្វើអេកូ"],inp("date")).value=pgIso(today);
+  fld("efw",["EFW (g)","EPF (g)","ទម្ងន់ (g)"],inp("number","g","90px"));
+  fld("afi",["AFI / DVP (cm)","ILA / GC (cm)","ទឹកភ្លោះ AFI (cm)"],inp("number","cm","80px"));
+  fld("fhr",["FHR (/min)","RCF (/min)","ចង្វាក់បេះដូង"],inp("number","140","80px"));
+  fld("dop",["UA Doppler","Doppler ombilical","Doppler ទងផ្ចិត"],sel(USG_DOP)).value="";
+  fld("pres",["Presentation","Présentation","ទីតាំងទារក"],sel(USG_PRES));
+  fld("plac",["Placenta","Placenta","សុក"],sel(USG_PLAC));
+  fld("n",["Fetuses","Fœtus","ចំនួនទារក"],sel([["1",["1","1","១"]],["2",["2 (twins)","2 (jumeaux)","២ (ភ្លោះ)"]],["3",["3","3","៣"]]]));
+  fld("bpd",["BPD (mm)","BIP (mm)","BPD (mm)"],inp("number","mm","70px")); fld("hc",["HC (mm)","PC (mm)","HC (mm)"],inp("number","mm","70px"));
+  fld("ac",["AC (mm)","PA (mm)","AC (mm)"],inp("number","mm","70px")); fld("fl",["FL (mm)","LF (mm)","FL (mm)"],inp("number","mm","70px"));
+  fld("cx",["Cervix (mm)","Col (mm)","មាត់ស្បូន (mm)"],inp("number","mm","70px"));
+  fld("sex",["Sex (if asked)","Sexe (si demandé)","ភេទ (បើសួរ)"],sel([["",["—","—","—"]],["M",["boy","garçon","ប្រុស"]],["F",["girl","fille","ស្រី"]],["?",["not seen","non vu","មើលមិនឃើញ"]]]));
+  fld("note",["Note","Note","ចំណាំ"],inp("text",cL(["anomaly, other…","anomalie, autre…","ពិការភាព ផ្សេងៗ…"]),"200px"));
+  var add=mk("button","btn"); add.type="button"; add.textContent="+ "+cL(["Add scan","Ajouter l'écho","បញ្ចូលអេកូ"]);
+  add.onclick=function(){ var e={t:Date.now()}; Object.keys(F).forEach(function(k){ e[k]=F[k].value.trim(); }); if(!e.date){ say(cL(["Enter the date","Saisir la date","ដាក់កាលបរិច្ឆេទ"]),true); return; }
+    if(!e.efw&&!e.afi&&!e.dop&&!e.pres&&!e.plac&&!e.fhr&&!e.note){ say(cL(["Enter at least one result","Saisir au moins un résultat","ដាក់លទ្ធផលយ៉ាងហោចណាស់មួយ"]),true); return; }
+    USG.push(e); USG.sort(function(a,b){return a.date<b.date?-1:1;}); usgSave(); pgOut(); PG.sec="track"; setTimeout(function(){ var n=document.querySelector('.pgnav button[data-k=track]'); if(n) n.click(); },0); say("✓ "+cL(["Scan saved","Écho enregistrée","បានរក្សាទុកអេកូ"])); };
+  f.appendChild(add); out.appendChild(f);
+  if(!USG.length){ var e0=mk("div","cempty"); e0.textContent=cL(["No scan recorded yet. Each scan you add is compared with the expected weight for its gestational age.","Aucune écho enregistrée. Chaque écho est comparée au poids attendu pour son terme.","មិនទាន់មានអេកូ។ អេកូនីមួយៗនឹងប្រៀបធៀបជាមួយទម្ងន់រំពឹងតាមអាយុគភ៌។"]); out.appendChild(e0); return; }
+  /* table */
+  var t=mk("table","ctable usgtbl"), hr=mk("tr");
+  [["Date · GA","Date · terme","ថ្ងៃ · អាយុគភ៌"],["EFW (expected)","EPF (attendu)","ទម្ងន់ (រំពឹង)"],["Gain / week","Gain / semaine","ឡើង / សប្តាហ៍"],["Fluid · FHR · Doppler","Liquide · RCF · Doppler","ទឹកភ្លោះ · បេះដូង · Doppler"],["Presentation · placenta","Présentation · placenta","ទីតាំង · សុក"],["Assessment","Évaluation","ការវាយតម្លៃ"],[""," ",""]].forEach(function(x){ var th=mk("th"); th.textContent=cL(x); hr.appendChild(th); });
+  var th0=mk("thead"); th0.appendChild(hr); t.appendChild(th0); var tb=mk("tbody"); t.appendChild(tb);
+  var prev=null;
+  USG.forEach(function(e,i){ var ev=usgEval(e,b0), tr=mk("tr"); tr.className="ul"+ev.lvl;
+    var c=function(txt){ var td=mk("td"); td.textContent=txt; tr.appendChild(td); return td; };
+    c(pgDmy(pgD(e.date))+(ev.ga!==null?" · "+pgWdShort(Math.max(0,ev.ga)):""));
+    c(e.efw?e.efw+" g"+(ev.exp?" ("+Math.round(ev.exp)+" g · "+Math.round(ev.r*100)+"%)":""):"—");
+    var gain="—"; if(prev&&prev.efw&&e.efw){ var dd=pgDiff(pgD(e.date),pgD(prev.date)); if(dd>=7){ var gw=(e.efw-prev.efw)/dd*7; gain=Math.round(gw)+" g"+(dd<14?" ⚠ < 2 "+cL(["w","sem.","សប្តាហ៍"]):""); } }
+    c(gain);
+    c([e.afi?"AFI "+e.afi:"",e.fhr?"FHR "+e.fhr:"",e.dop?(USG_DOP.find(function(o){return o[0]===e.dop;})||["",[e.dop,e.dop,e.dop]])[1][{en:0,fr:1,kh:2}[langPrim()]||0]:""].filter(Boolean).join(" · ")||"—");
+    c([e.pres?cL(USG_PRES.find(function(o){return o[0]===e.pres;})[1]):"",e.plac?cL(USG_PLAC.find(function(o){return o[0]===e.plac;})[1]):""].filter(Boolean).join(" · ")+(e.note?" · "+e.note:"")||"—");
+    var a=c(ev.flags.length?"⚠ "+ev.flags.join(" · "):"✓ "+cL(["normal","normal","ធម្មតា"])); a.className="usgass";
+    var td=mk("td","noprint"), del=mk("button","evbtn"); del.type="button"; del.textContent="🗑"; del.onclick=function(){ if(del.dataset.armed){ USG.splice(i,1); usgSave(); pgOut(); setTimeout(function(){ var n=document.querySelector('.pgnav button[data-k=track]'); if(n) n.click(); },0); } else { del.dataset.armed="1"; del.textContent="?"; setTimeout(function(){ delete del.dataset.armed; del.textContent="🗑"; },2500); } };
+    var rp=mk("button","cadd"); rp.type="button"; rp.textContent="🧾"; rp.title=cL(["Ultrasound report for the patient","Compte rendu pour la patiente","លទ្ធផលអេកូសម្រាប់អ្នកជំងឺ"]); rp.onclick=function(){ usgReportOpen(e,b0); };
+    td.appendChild(rp); td.appendChild(del); tr.appendChild(td); tb.appendChild(tr); if(e.efw) prev=e; });
+  out.appendChild(t);
+  /* chart */
+  if(USG.some(function(e){return e.efw;})){ var ch=mk("div","usgchart"); ch.innerHTML=usgChart(b0); out.appendChild(ch);
+    var lg=mk("div","cnote"); lg.textContent=cL(["Line = expected weight (Hadlock 50th); band = ± 15% (≈ 10th–90th). Points: green normal · orange check · red abnormal.","Ligne = poids attendu (Hadlock 50e) ; bande = ± 15 % (≈ 10e–90e). Points : vert normal · orange à surveiller · rouge anormal.","ខ្សែ = ទម្ងន់មធ្យម (Hadlock 50); ផ្ទៃ = ± ១៥% (≈ percentile ១០–៩០)។ ចំណុច៖ បៃតង ធម្មតា · ទឹកក្រូច ត្រូវតាមដាន · ក្រហម មិនធម្មតា។"]); out.appendChild(lg); }
+  /* next scan */
+  var last=USG[USG.length-1], lev=usgEval(last,b0), nx=usgNext(last,lev,b0);
+  var nb=mk("div","usgnext ul"+lev.lvl), b=mk("b"); if(pgDiff(nx.date,today)<0) nx.date=today; b.textContent="📅 "+cL(["Next scan: ","Prochaine écho : ","អេកូបន្ទាប់៖ "])+pgDmy(nx.date)+(pgDiff(nx.date,today)===0&&pgDiff(pgD(last.date),today)<0?cL([" (due now)"," (à faire maintenant)"," (ដល់ពេលហើយ)"]):""); nb.appendChild(b); var sp=mk("div"); sp.textContent=nx.why; nb.appendChild(sp);
+  var trend=USG.filter(function(e){return e.efw;}); if(trend.length>=2){ var r1=usgEval(trend[trend.length-2],b0).r, r2=usgEval(trend[trend.length-1],b0).r; if(r1&&r2&&r2<r1-0.1){ var w=mk("div"); w.style.color="#b42318"; w.textContent="⚠ "+cL(["Growth falling across percentiles (","Croissance qui décroche (","ការលូតលាស់ធ្លាក់ចុះ ("])+Math.round(r1*100)+"% → "+Math.round(r2*100)+"%)"+cL([" — check Doppler and fluid."," — Doppler et liquide."," — ពិនិត្យ Doppler និងទឹកភ្លោះ។"]); nb.appendChild(w); } }
+  var acts=mk("div","pgact");
+  var ap=mk("button","cadd"); ap.type="button"; ap.textContent="📅 "+cL(["Set as appointment","Fixer le rendez-vous","ដាក់ជាថ្ងៃណាត់"]); ap.onclick=function(){ var ai=$("apptDate"); if(ai){ ai.value=pgIso(nx.date); ai.dispatchEvent(new Event("input",{bubbles:true})); ai.dispatchEvent(new Event("change",{bubbles:true})); } say("📅 "+pgDmy(nx.date)); };
+  var wr=mk("button","cadd"); wr.type="button"; wr.textContent="✍ "+cL(["Write last scan in H/O","Écrire la dernière écho","សរសេរអេកូចុងក្រោយក្នុង H/O"]);
+  wr.onclick=function(){ var txt="US "+pgDmy(pgD(last.date))+(lev.ga!==null?" ("+pgWdShort(Math.max(0,lev.ga))+")":"")+": "+[last.efw?"EFW "+last.efw+" g"+(lev.r?" ("+Math.round(lev.r*100)+"%)":""):"",last.afi?"AFI "+last.afi:"",last.fhr?"FHR "+last.fhr:"",last.dop?"UA "+last.dop.toUpperCase():"",last.pres||"",last.plac?"placenta "+last.plac:""].filter(Boolean).join(", ")+(lev.flags.length?" — "+lev.flags.join(", "):"");
+    var ho=$("fHo"), cur=ho.textContent.replace(/\s*·?\s*US \d{2}\/\d{2}\/\d{4}[^·]*/,"").trim(); ho.textContent=(cur?cur+" · ":"")+txt; ho.dispatchEvent(new Event("input",{bubbles:true})); say("✓ "+txt); };
+  var rb=mk("button","btn"); rb.type="button"; rb.textContent="🧾 "+cL(["Ultrasound report (AI draft)","Compte rendu (brouillon IA)","លទ្ធផលអេកូ (AI ជួយសរសេរ)"]); rb.onclick=function(){ usgReportOpen(last,b0); };
+  acts.appendChild(rb); acts.appendChild(ap); acts.appendChild(wr); nb.appendChild(acts); out.appendChild(nb);
+}
+
+
+/* ---------- v63: ✨ ultrasound report for the patient — findings, conclusion, likely causes, advice (assistant draft for the doctor to check) ---------- */
+var USG_CAUSE={
+ small:{c:["Possible causes: wrong dates (check the early scan), placenta not working well (high blood pressure / pre-eclampsia), mother's anaemia or poor nutrition, smoking, infection (syphilis, malaria, CMV), baby anomaly, or a constitutionally small healthy baby.","Causes possibles : erreur de terme, insuffisance placentaire (HTA / pré-éclampsie), anémie ou dénutrition maternelle, tabac, infection (syphilis, paludisme, CMV), anomalie fœtale, ou petit bébé constitutionnel.","មូលហេតុអាចមាន៖ គណនាខែខុស សុកដំណើរការមិនល្អ (សម្ពាធឡើង / ក្រឡាភ្លើង) ម្តាយស្លេកស្លាំង ឬខ្វះអាហារ ជក់បារី ការឆ្លង (ស្វាយ គ្រុនចាញ់ CMV) ពិការភាពកូន ឬកូនតូចតាមធម្មជាតិ។"],
+  a:["Umbilical artery Doppler and amniotic fluid; growth scan in 2 weeks; BP and urine protein; count baby's movements daily.","Doppler ombilical et liquide ; croissance à 2 semaines ; TA et protéinurie ; compter les mouvements chaque jour.","ធ្វើ Doppler និងពិនិត្យទឹកភ្លោះ; អេកូការលូតលាស់ក្រោយ ២ សប្តាហ៍; វាស់សម្ពាធ និងប្រូតេអ៊ីនទឹកនោម; រាប់ចលនាកូនរាល់ថ្ងៃ។"]},
+ large:{c:["Possible causes: diabetes in pregnancy, mother overweight, too much amniotic fluid, wrong dates, or a big healthy baby.","Causes possibles : diabète gestationnel, surpoids maternel, hydramnios, erreur de terme, ou gros bébé constitutionnel.","មូលហេតុអាចមាន៖ ទឹកនោមផ្អែមពេលមានផ្ទៃពោះ ម្តាយលើសទម្ងន់ ទឹកភ្លោះច្រើន គណនាខែខុស ឬកូនធំតាមធម្មជាតិ។"],
+  a:["Glucose test (OGTT) if not done; diet advice; growth scan in 2–4 weeks; plan the place of delivery.","HGPO si non faite ; conseils alimentaires ; croissance à 2–4 semaines ; choisir le lieu d'accouchement.","តេស្តជាតិស្ករ (OGTT) បើមិនទាន់ធ្វើ; ណែនាំរបបអាហារ; អេកូការលូតលាស់ក្រោយ ២–៤ សប្តាហ៍; រៀបចំកន្លែងសម្រាល។"]},
+ lowaf:{c:["Possible causes: leaking of amniotic fluid (ruptured membranes), placenta not working well, baby kidney / urinary problem, post-term pregnancy, dehydration.","Causes possibles : rupture des membranes, insuffisance placentaire, anomalie rénale fœtale, terme dépassé, déshydratation.","មូលហេតុអាចមាន៖ ធ្លាយទឹកភ្លោះ សុកដំណើរការមិនល្អ តម្រងនោមកូនមានបញ្ហា ហួសខែ ខ្វះជាតិទឹក។"],
+  a:["Ask about fluid leaking; Doppler and CTG; drink 2–3 litres a day; repeat fluid check in 2–3 days; refer if < 34 weeks or abnormal Doppler.","Rechercher une perte de liquide ; Doppler et RCF ; boire 2–3 litres/j ; contrôle à 2–3 jours ; transfert si < 34 SA ou Doppler anormal.","សួរពីការធ្លាយទឹកភ្លោះ; Doppler និង CTG; ផឹកទឹក ២–៣ លីត្រ/ថ្ងៃ; ពិនិត្យទឹកភ្លោះម្តងទៀតក្រោយ ២–៣ ថ្ងៃ; បញ្ជូនបើ < ៣៤ សប្តាហ៍ ឬ Doppler មិនធម្មតា។"]},
+ highaf:{c:["Possible causes: diabetes in pregnancy, twins, baby anomaly (e.g. swallowing / gut problem), infection, unknown in many cases.","Causes possibles : diabète, grossesse gémellaire, anomalie fœtale (déglutition / digestive), infection, souvent idiopathique.","មូលហេតុអាចមាន៖ ទឹកនោមផ្អែម កូនភ្លោះ ពិការភាពកូន (ការលេប / ពោះវៀន) ការឆ្លង ច្រើនមិនដឹងមូលហេតុ។"],
+  a:["Glucose test (OGTT), detailed anomaly scan, watch for early labour and breathlessness.","HGPO, échographie morphologique détaillée, surveiller menace d'accouchement prématuré et dyspnée.","តេស្តជាតិស្ករ (OGTT) អេកូរូបរាងលម្អិត តាមដានការឈឺពោះសម្រាលមុនខែ និងការហត់។"]},
+ dop:{c:["Abnormal umbilical artery Doppler: the placenta is not giving enough blood flow to the baby (placental insufficiency).","Doppler ombilical anormal : insuffisance placentaire.","Doppler ទងផ្ចិតមិនធម្មតា៖ សុកផ្គត់ផ្គង់ឈាមទៅកូនមិនគ្រប់គ្រាន់។"],
+  a:["Close monitoring (Doppler twice a week or daily), steroids if delivery < 34 weeks likely, refer to a hospital with a neonatal unit.","Surveillance rapprochée (Doppler 2 ×/semaine ou quotidien), corticoïdes si naissance < 34 SA, transfert en maternité avec néonatologie.","តាមដានជិតស្និទ្ធ (Doppler ២ ដង/សប្តាហ៍ ឬរាល់ថ្ងៃ) ចាក់ស្តេរ៉ូអ៊ីតបើអាចសម្រាល < ៣៤ សប្តាហ៍ បញ្ជូនទៅមន្ទីរពេទ្យមានផ្នែកទារក។"]},
+ breech:{c:["Baby is not head-down. Most babies turn by 32–36 weeks; only 3–4% stay breech at term. Causes: first pregnancy, low placenta, too much / too little fluid, twins, uterine shape, sometimes the baby.","Bébé non céphalique. La plupart se retournent vers 32–36 SA ; 3–4 % restent en siège à terme. Causes : primiparité, placenta bas, excès / manque de liquide, jumeaux, utérus malformé, parfois fœtale.","កូនមិនទាន់ក្បាលចុះ។ ភាគច្រើនបង្វិលនៅ ៣២–៣៦ សប្តាហ៍; មានតែ ៣–៤% នៅគូទពេលគ្រប់ខែ។ មូលហេតុ៖ កូនដំបូង សុកទាប ទឹកភ្លោះច្រើន / តិច កូនភ្លោះ រាងស្បូន ជួនមកពីកូន។"],
+  a:["Before 36 weeks: wait, it often turns by itself. From 36 weeks (first baby) / 37 weeks (others): offer external cephalic version (ECV) in hospital (≈ 50% success). If it fails or is declined: planned caesarean at 39 weeks, or vaginal breech birth only in an experienced centre. Transverse lie at term: admit — caesarean.","Avant 36 SA : attendre. Dès 36 SA (primipare) / 37 SA (multipare) : proposer une version par manœuvre externe (VME) à l'hôpital (≈ 50 % de succès). Si échec ou refus : césarienne programmée à 39 SA, ou voie basse en centre expérimenté. Présentation transverse à terme : hospitaliser — césarienne.","មុន ៣៦ សប្តាហ៍៖ រង់ចាំ ច្រើនបង្វិលដោយខ្លួនឯង។ ពី ៣៦ សប្តាហ៍ (កូនដំបូង) / ៣៧ សប្តាហ៍ (កូនបន្ទាប់)៖ បង្វិលកូនពីខាងក្រៅ (ECV) នៅមន្ទីរពេទ្យ (ជោគជ័យ ≈ ៥០%)។ បើបរាជ័យ ឬមិនព្រម៖ វះកាត់តាមគម្រោងនៅ ៣៩ សប្តាហ៍ ឬសម្រាលគូទតាមទ្វារមាសតែនៅមន្ទីរពេទ្យមានបទពិសោធន៍។ ទទឹងពេលគ្រប់ខែ៖ សម្រាកពេទ្យ — វះកាត់។"]},
+ placenta:{c:["Placenta is low or covers the cervix. Most low placentas seen at 20 weeks move up by 32 weeks; it is confirmed only on a vaginal scan at 32 weeks (repeat at 36 weeks if still low). Risk is higher after previous caesarean, many pregnancies, smoking, twins.","Placenta bas inséré ou recouvrant. La plupart migrent avant 32 SA ; le diagnostic se confirme par échographie endovaginale à 32 SA (contrôle à 36 SA si toujours bas). Risque accru : utérus cicatriciel, multiparité, tabac, jumeaux.","សុកទាប ឬបាំងមាត់ស្បូន។ សុកទាបភាគច្រើនដែលឃើញនៅ ២០ សប្តាហ៍ ឡើងខ្ពស់វិញមុន ៣២ សប្តាហ៍; បញ្ជាក់បានតែតាមអេកូទ្វារមាសនៅ ៣២ សប្តាហ៍ (ធ្វើម្តងទៀតនៅ ៣៦ សប្តាហ៍ បើនៅទាប)។ ហានិភ័យខ្ពស់ក្រោយធ្លាប់វះកាត់ កូនច្រើន ជក់បារី កូនភ្លោះ។"],
+  a:["No sex and no vaginal examination; come immediately if any bleeding. Praevia at 32–36 weeks: deliver by caesarean at 36–37 weeks in a hospital with blood bank; previous caesarean + anterior praevia → check for placenta accreta.","Pas de rapports ni de toucher vaginal ; consulter immédiatement en cas de saignement. Prævia confirmé : césarienne à 36–37 SA en maternité avec banque de sang ; utérus cicatriciel + prævia antérieur → rechercher un placenta accreta.","កុំរួមភេទ និងកុំពិនិត្យតាមទ្វារមាស; មកភ្លាមបើធ្លាក់ឈាម។ សុកបាំងបញ្ជាក់៖ វះកាត់នៅ ៣៦–៣៧ សប្តាហ៍ នៅមន្ទីរពេទ្យមានធនាគារឈាម; ធ្លាប់វះកាត់ + សុកបាំងខាងមុខ → ពិនិត្យ placenta accreta។"]},
+ fhr:{c:["Fetal heart rate outside 110–160/min: possible arrhythmia, fever, or baby distress.","RCF hors 110–160/min : arythmie, fièvre maternelle ou souffrance fœtale.","ចង្វាក់បេះដូងកូនក្រៅ ១១០–១៦០/នាទី៖ អាចជាចង្វាក់មិនទៀង គ្រុន ឬកូនមានទុក្ខលំបាក។"],
+  a:["CTG now; refer if persistent.","RCF immédiat ; transfert si persistant.","ធ្វើ CTG ភ្លាម; បញ្ជូនបើនៅតែមិនធម្មតា។"]}};
+function usgKeys(e,ev){ var k=[]; if(ev.r!==null&&ev.r<0.85) k.push("small"); if(ev.r!==null&&ev.r>1.15) k.push("large"); var afi=parseFloat(e.afi); if(!isNaN(afi)&&afi<5) k.push("lowaf"); if(!isNaN(afi)&&afi>24) k.push("highaf");
+  if(e.dop==="pi"||e.dop==="aedf"||e.dop==="redf") k.push("dop"); if((e.pres==="breech"||e.pres==="trans")&&ev.ga!==null&&ev.ga>=196) k.push("breech"); if(e.plac==="low"||e.plac==="previa") k.push("placenta");
+  var fhr=parseFloat(e.fhr); if(!isNaN(fhr)&&(fhr<110||fhr>160)) k.push("fhr"); return k; }
+function usgReportText(e,b0){
+  var ev=usgEval(e,b0), keys=usgKeys(e,ev), L=function(a){return cL(a);}, li={en:0,fr:1,kh:2}[langPrim()]||0, n=parseInt(e.n||"1",10)||1;
+  var gaTxt=ev.ga!==null?pgWd(Math.max(0,ev.ga)):"—";
+  var find=[], conc=[], adv=[];
+  find.push(L(["Number of fetuses: ","Nombre de fœtus : ","ចំនួនទារក៖ "])+n+(n>1?L([" (twins)"," (gémellaire)"," (កូនភ្លោះ)"]):""));
+  find.push(L(["Fetal heart: ","Activité cardiaque : ","ចង្វាក់បេះដូងកូន៖ "])+(e.fhr?e.fhr+" /min":L(["present","présente","មាន"])));
+  var bio=[["BPD",e.bpd],["HC",e.hc],["AC",e.ac],["FL",e.fl]].filter(function(x){return x[1];}).map(function(x){return x[0]+" "+x[1]+" mm";}); if(bio.length) find.push(L(["Biometry: ","Biométrie : ","ការវាស់៖ "])+bio.join(", "));
+  if(e.efw) find.push(L(["Estimated fetal weight: ","Poids fœtal estimé : ","ទម្ងន់កូនប៉ាន់ស្មាន៖ "])+e.efw+" g"+(ev.exp?" ("+L(["expected ≈ ","attendu ≈ ","រំពឹង ≈ "])+Math.round(ev.exp)+" g · "+Math.round(ev.r*100)+"%)":""));
+  if(e.afi) find.push(L(["Amniotic fluid: AFI ","Liquide amniotique : ILA ","ទឹកភ្លោះ៖ AFI "])+e.afi+" cm");
+  if(e.plac) find.push(L(["Placenta: ","Placenta : ","សុក៖ "])+cL(USG_PLAC.find(function(o){return o[0]===e.plac;})[1]));
+  if(e.pres) find.push(L(["Presentation: ","Présentation : ","ទីតាំងទារក៖ "])+cL(USG_PRES.find(function(o){return o[0]===e.pres;})[1]));
+  if(e.dop) find.push(L(["Umbilical artery Doppler: ","Doppler ombilical : ","Doppler ទងផ្ចិត៖ "])+USG_DOP.find(function(o){return o[0]===e.dop;})[1][li]);
+  if(e.cx) find.push(L(["Cervix length: ","Longueur du col : ","ប្រវែងមាត់ស្បូន៖ "])+e.cx+" mm"+(parseFloat(e.cx)<25&&ev.ga!==null&&ev.ga<168?" ⚠":""));
+  if(e.sex) find.push(L(["Sex (on request): ","Sexe (à la demande) : ","ភេទ (តាមសំណើ)៖ "])+L({M:["boy","garçon","ប្រុស"],F:["girl","fille","ស្រី"],"?":["not seen","non visible","មើលមិនឃើញ"]}[e.sex]||[e.sex,e.sex,e.sex]));
+  if(e.note) find.push(L(["Other: ","Autres : ","ផ្សេងៗ៖ "])+e.note);
+  conc.push((n>1?L(["Live twin intrauterine pregnancy","Grossesse gémellaire intra-utérine évolutive","គភ៌ភ្លោះក្នុងស្បូន មានជីវិត"]):L(["Single live intrauterine pregnancy","Grossesse intra-utérine unique évolutive","គភ៌តែមួយក្នុងស្បូន មានជីវិត"]))+", "+gaTxt+(PG.mode!=="ga"?" ("+L(["by dates","selon la DDR","តាម LMP"])+")":""));
+  if(!keys.length) conc.push(L(["Growth, amniotic fluid and placenta appropriate for gestational age.","Croissance, liquide et placenta adaptés au terme.","ការលូតលាស់ ទឹកភ្លោះ និងសុក សមស្របនឹងអាយុគភ៌។"]));
+  keys.forEach(function(k){ var lab={small:["Fetus small for gestational age","Fœtus petit pour l'âge gestationnel","កូនតូចធៀបអាយុគភ៌"],large:["Fetus large for gestational age","Fœtus gros pour l'âge gestationnel","កូនធំធៀបអាយុគភ៌"],lowaf:["Reduced amniotic fluid (oligohydramnios)","Oligoamnios","ទឹកភ្លោះតិច"],highaf:["Increased amniotic fluid (polyhydramnios)","Hydramnios","ទឹកភ្លោះច្រើន"],dop:["Abnormal umbilical artery Doppler","Doppler ombilical pathologique","Doppler ទងផ្ចិតមិនធម្មតា"],breech:["Non-cephalic presentation","Présentation non céphalique","ទារកមិនក្បាលចុះ"],placenta:["Low-lying placenta / placenta praevia","Placenta bas inséré / prævia","សុកទាប / សុកបាំងមាត់ស្បូន"],fhr:["Abnormal fetal heart rate","RCF anormal","ចង្វាក់បេះដូងកូនមិនធម្មតា"]}[k];
+    conc.push(L(lab)); });
+  var cause=keys.map(function(k){return L(USG_CAUSE[k].c);}); keys.forEach(function(k){ adv.push(L(USG_CAUSE[k].a)); });
+  if(!keys.length){ var nx=usgNext(e,ev,b0); adv.push(nx.why); }
+  adv.push(L(["Come immediately if: bleeding, fluid leaking, belly pain, severe headache or blurred vision, baby moving less.","Consulter immédiatement si : saignement, perte de liquide, douleur abdominale, céphalée intense ou vision floue, bébé qui bouge moins.","មកភ្លាម បើ៖ ធ្លាក់ឈាម ធ្លាយទឹកភ្លោះ ឈឺពោះ ឈឺក្បាលខ្លាំង ឬភ្នែកព្រិល កូនកម្រើកតិច។"]));
+  return {find:find,conc:conc,cause:cause,adv:adv,ga:gaTxt,ev:ev,next:usgNext(e,ev,b0)};
+}
+function usgReportOpen(e,b0){
+  var R=usgReportText(e,b0), L=function(a){return cL(a);};
+  var ov=$("usgRepOv"); if(!ov){ ov=mk("div","calcov noprint"); ov.id="usgRepOv"; document.body.appendChild(ov); ov.addEventListener("mousedown",function(ev){ if(ev.target===ov) ov.hidden=true; }); }
+  ov.innerHTML=""; ov.hidden=false;
+  var bx=mk("div","calcbox"), hd=mk("div","calch"), tt=mk("b"); tt.textContent="🧾 "+L(["Obstetric ultrasound report","Compte rendu d'échographie obstétricale","លទ្ធផលអេកូផ្ទៃពោះ"]); hd.appendChild(tt);
+  var x=mk("button","calcx"); x.type="button"; x.textContent="✕"; x.onclick=function(){ ov.hidden=true; }; hd.appendChild(x); bx.appendChild(hd);
+  var body=mk("div","calcbody usgrep"); body.id="usgRepBody";
+  var tag=mk("div","airtag noprint"); tag.textContent="✨ "+L(["Draft written by the assistant from the measurements — check and edit before printing.","Brouillon rédigé par l'assistant à partir des mesures — vérifier et corriger avant impression.","សេចក្តីព្រាងសរសេរដោយជំនួយការពីលទ្ធផលវាស់ — សូមពិនិត្យ និងកែមុនបោះពុម្ព។"]); body.appendChild(tag);
+  var sec=function(title,lines,ol){ var h=mk("h4"); h.textContent=title; body.appendChild(h); var d=mk(ol?"ol":"ul","usgedit"); d.contentEditable="true"; lines.forEach(function(l){ var li=mk("li"); li.textContent=l; d.appendChild(li); }); body.appendChild(d); };
+  var pt=mk("table","usgpt"), cell=function(a,b){ var tr=mk("tr"), t1=mk("th"), t2=mk("td"); t1.textContent=a; t2.textContent=b||"—"; tr.appendChild(t1); tr.appendChild(t2); pt.appendChild(tr); };
+  cell(L(["Name","Nom","ឈ្មោះ"]),$("pName").textContent.trim()); cell(L(["Age","Âge","អាយុ"]),$("pAge").textContent.trim()); cell(L(["Scan date","Date","ថ្ងៃធ្វើអេកូ"]),pgDmy(pgD(e.date)));
+  cell("LMP / EDD",(PG.mode==="lmp"&&pgD(PG.lmp)?pgDmy(pgD(PG.lmp)):pgDmy(b0))+" / "+pgDmy(pgAdd(b0,280))); cell(L(["Gestational age","Âge gestationnel","អាយុគភ៌"]),R.ga);
+  var curT=lib.find(function(x){return x.id===currentId;}); cell(L(["Indication","Indication","មូលហេតុធ្វើអេកូ"]),(curT&&curT.group==="obs"&&$("fDx").textContent.trim())||L(["Routine antenatal scan","Échographie de surveillance","អេកូតាមដានផ្ទៃពោះ"]));
+  body.appendChild(pt);
+  sec(L(["Findings","Résultats","លទ្ធផល"]),R.find);
+  sec(L(["Conclusion","Conclusion","សេចក្តីសន្និដ្ឋាន"]),R.conc);
+  if(R.cause.length) sec(L(["Likely causes","Causes possibles","មូលហេតុដែលអាចមាន"]),R.cause);
+  sec(L(["Advice","Conduite à tenir","ការណែនាំ"]),R.adv);
+  var nx=mk("p","usgnx"); nx.contentEditable="true"; nx.textContent="📅 "+L(["Next scan: ","Prochaine échographie : ","អេកូបន្ទាប់៖ "])+pgDmy(R.next.date<visitDate()?visitDate():R.next.date); body.appendChild(nx);
+  var sg=mk("p","usgsig"); sg.textContent=L(["Doctor / sonographer: ","Médecin / échographiste : ","វេជ្ជបណ្ឌិត / អ្នកធ្វើអេកូ៖ "])+(SET.doctor||"……………………")+"     "+L(["Signature","Signature","ហត្ថលេខា"])+": …………"; body.appendChild(sg);
+  var dis=mk("p","usgdisc"); dis.textContent=L(["Ultrasound estimates of weight can differ by ± 10–15%. This report does not exclude all anomalies.","L'estimation du poids peut varier de ± 10–15 %. Ce compte rendu n'exclut pas toutes les anomalies.","ទម្ងន់ពីអេកូអាចខុស ± ១០–១៥%។ លទ្ធផលនេះមិនអាចបដិសេធពិការភាពទាំងអស់បានទេ។"]); body.appendChild(dis);
+  bx.appendChild(body);
+  var ft=mk("div","calcfoot"), pr=mk("button","btn"); pr.type="button"; pr.textContent="🖨 "+L(["Print for the patient","Imprimer pour la patiente","បោះពុម្ពឱ្យអ្នកជំងឺ"]);
+  pr.onclick=function(){ var w=window.open("","_blank"); if(!w){ say(L(["Allow pop-ups to print.","Autorisez les fenêtres pour imprimer.","សូមអនុញ្ញាត pop-up ដើម្បីបោះពុម្ព។"]),true); return; }
+    var head=[$("hName").textContent,$("hAddr").textContent,$("hPhone").textContent].filter(function(x){return x&&x.trim();}).map(function(x){return x.replace(/</g,"&lt;");});
+    var c=body.cloneNode(true); [].forEach.call(c.querySelectorAll(".noprint"),function(n){n.remove();});
+    w.document.write('<!doctype html><html><head><meta charset="utf-8"><title>Ultrasound report</title><style>body{font:13px "Noto Sans Khmer","Kantumruy Pro",Arial,sans-serif;margin:18mm 16mm;color:#111}h1{font-size:17px;margin:0}h2{font-size:15px;margin:10px 0 6px;text-align:center;letter-spacing:.04em}h4{font-size:13px;margin:12px 0 4px;border-bottom:1px solid #999;padding-bottom:2px}table{border-collapse:collapse;width:100%}th{text-align:left;width:32%;font-weight:600;color:#444}td,th{padding:2px 4px;vertical-align:top}ul,ol{margin:2px 0 2px 18px;padding:0}li{margin:2px 0}.usgsig{margin-top:22px}.usgdisc{font-size:10.5px;color:#666;margin-top:14px}.hd{border-bottom:2px solid #333;padding-bottom:6px}.hd div{font-size:11.5px;color:#444}</style></head><body><div class="hd"><h1>'+(head[0]||"")+'</h1>'+head.slice(1).map(function(x){return "<div>"+x+"</div>";}).join("")+'</div><h2>'+tt.textContent.replace("🧾 ","").replace(/</g,"&lt;")+'</h2>'+c.innerHTML+'</body></html>');
+    w.document.close(); setTimeout(function(){ w.focus(); w.print(); },300); };
+  var ho=mk("button","cadd"); ho.type="button"; ho.textContent="✍ "+L(["Copy conclusion to Dx 2 / H/O","Copier la conclusion","ចម្លងសេចក្តីសន្និដ្ឋានទៅ H/O"]);
+  ho.onclick=function(){ var cc=[].map.call(body.querySelectorAll("ul.usgedit")[1].querySelectorAll("li"),function(li){return li.textContent;}).join("; "), f=$("fHo"); f.textContent=(f.textContent.trim()?f.textContent.trim()+" · ":"")+"US "+pgDmy(pgD(e.date))+": "+cc; f.dispatchEvent(new Event("input",{bubbles:true})); say("✓ H/O"); };
+  ft.appendChild(pr); ft.appendChild(ho); ft.style.display="flex"; ft.style.gap="8px"; ft.style.color="inherit"; bx.appendChild(ft);
+  ov.appendChild(bx);
+}
+
+
+/* ---------- v64: 🩺 NCD — diagnosis criteria and when to start medicines (WHO 2021 HTN, WHO/ADA diabetes, WHO HEARTS) ---------- */
+var NCD={sec:"htn",s1:"",d1:"",s2:"",d2:"",dm:false,cvd:false,ckd:false,fpg:"",a1c:"",ogtt:"",rbs:"",sym:false,ldl:"",tg:"",age:"",uric:"",att:"0",tophi:false,stone:false,unit:"mg"};
+function ncdIn(lab,key,ph,w){ var l=mk("label"), s=mk("span"); s.textContent=cL(lab); var i=mk("input"); i.type="number"; i.inputMode="decimal"; i.placeholder=ph||""; i.value=NCD[key]; if(w) i.style.width=w; i.oninput=function(){ NCD[key]=i.value; ncdOut(); }; l.appendChild(s); l.appendChild(i); return l; }
+function ncdCk(lab,key){ var l=mk("label","ncdck"), i=mk("input"); i.type="checkbox"; i.checked=!!NCD[key]; i.onchange=function(){ NCD[key]=i.checked; ncdOut(); }; l.appendChild(i); l.appendChild(document.createTextNode(" "+cL(lab))); return l; }
+function ncdBox(cls,title,lines){ var d=mk("div","ncdres "+cls), b=mk("b"); b.textContent=title; d.appendChild(b); var ul=mk("ul"); lines.filter(Boolean).forEach(function(t){ var li=mk("li"); li.textContent=t; ul.appendChild(li); }); d.appendChild(ul); return d; }
+function calcNcd(){
+  var box=$("cBody"); box.textContent="";
+  var a=ptAgeYears(); if(a!==null&&!NCD.age) NCD.age=String(Math.round(a));
+  var bp=($("vBp").value||"").match(/(\d{2,3})\s*\/\s*(\d{2,3})/); if(bp&&!NCD.s1){ NCD.s1=bp[1]; NCD.d1=bp[2]; }
+  var nav=mk("div","pgnav"); [["htn",["🫀 Hypertension","🫀 HTA","🫀 លើសឈាម"]],["dm",["🩸 Diabetes","🩸 Diabète","🩸 ទឹកនោមផ្អែម"]],["lip",["🧈 Cholesterol / TG","🧈 Lipides","🧈 ខ្លាញ់ក្នុងឈាម"]],["uric",["🦶 Uric acid / gout","🦶 Acide urique","🦶 អាស៊ីតអ៊ុយរិក"]]].forEach(function(n){ var b=mk("button"); b.type="button"; b.textContent=cL(n[1]); b.setAttribute("aria-pressed",String(NCD.sec===n[0])); b.onclick=function(){ NCD.sec=n[0]; calcNcd(); }; nav.appendChild(b); });
+  box.appendChild(nav);
+  var f=mk("div","usgform ncdform");
+  if(NCD.sec==="htn"){
+    f.appendChild(ncdIn(["Visit 1 systolic","SYS visite 1","ស៊ីស្តូលិក លើកទី ១"],"s1","140","80px")); f.appendChild(ncdIn(["diastolic","DIA","ឌីអាស្តូលិក"],"d1","90","80px"));
+    f.appendChild(ncdIn(["Visit 2 (another day) systolic","SYS visite 2 (autre jour)","លើកទី ២ (ថ្ងៃផ្សេង) ស៊ីស្តូលិក"],"s2","","80px")); f.appendChild(ncdIn(["diastolic","DIA","ឌីអាស្តូលិក"],"d2","","80px"));
+    f.appendChild(ncdIn(["Age","Âge","អាយុ"],"age","","70px"));
+    f.appendChild(ncdCk(["Diabetes","Diabète","ទឹកនោមផ្អែម"],"dm")); f.appendChild(ncdCk(["Heart disease / stroke","Cardiopathie / AVC","ជំងឺបេះដូង / ស្ទះសរសៃឈាមខួរ"],"cvd")); f.appendChild(ncdCk(["Kidney disease","Néphropathie","ជំងឺតម្រងនោម"],"ckd"));
+  } else if(NCD.sec==="dm"){
+    f.appendChild(ncdIn(["Fasting glucose (mg/dl)","Glycémie à jeun (mg/dl)","ស្ករពេលពោះទទេ (mg/dl)"],"fpg","","100px")); f.appendChild(ncdIn(["HbA1c (%)","HbA1c (%)","HbA1c (%)"],"a1c","","80px"));
+    f.appendChild(ncdIn(["OGTT 2 h (mg/dl)","HGPO 2 h (mg/dl)","OGTT ២ ម៉ោង (mg/dl)"],"ogtt","","100px")); f.appendChild(ncdIn(["Random glucose (mg/dl)","Glycémie aléatoire (mg/dl)","ស្ករពេលណាក៏បាន (mg/dl)"],"rbs","","100px"));
+    f.appendChild(ncdCk(["Symptoms (thirst, lots of urine, weight loss)","Symptômes (soif, polyurie, amaigrissement)","រោគសញ្ញា (ស្រេកទឹក នោមច្រើន ស្រកទម្ងន់)"],"sym"));
+  } else if(NCD.sec==="lip"){
+    f.appendChild(ncdIn(["LDL (mg/dl)","LDL (mg/dl)","LDL (mg/dl)"],"ldl","","90px")); f.appendChild(ncdIn(["Triglycerides (mg/dl)","Triglycérides (mg/dl)","Triglyceride (mg/dl)"],"tg","","100px")); f.appendChild(ncdIn(["Age","Âge","អាយុ"],"age","","70px"));
+    f.appendChild(ncdCk(["Diabetes","Diabète","ទឹកនោមផ្អែម"],"dm")); f.appendChild(ncdCk(["Heart disease / stroke","Cardiopathie / AVC","ជំងឺបេះដូង / ស្ទះសរសៃឈាមខួរ"],"cvd")); f.appendChild(ncdCk(["Kidney disease","Néphropathie","ជំងឺតម្រងនោម"],"ckd"));
+  } else {
+    f.appendChild(ncdIn(["Uric acid (mg/dl)","Acide urique (mg/dl)","អាស៊ីតអ៊ុយរិក (mg/dl)"],"uric","","90px")); f.appendChild(ncdIn(["Gout attacks per year","Crises par an","ចំនួនឈឺ gout ក្នុង ១ ឆ្នាំ"],"att","","70px"));
+    f.appendChild(ncdCk(["Tophi","Tophus","ដុំ tophi"],"tophi")); f.appendChild(ncdCk(["Uric acid kidney stones","Lithiase urique","គ្រួសតម្រងនោម (uric)"],"stone")); f.appendChild(ncdCk(["Kidney disease (eGFR < 60)","IRC (DFG < 60)","តម្រងនោមខ្សោយ (eGFR < 60)"],"ckd"));
+  }
+  box.appendChild(f); var out=mk("div"); out.id="ncdOut"; box.appendChild(out);
+  var ref=mk("div"); ref.id="ncdRef"; box.appendChild(ref); ncdOut();
+}
+function ncdOut(){
+  var out=$("ncdOut"), ref=$("ncdRef"); if(!out) return; out.textContent=""; ref.textContent="";
+  var n=function(k){ var v=parseFloat(String(NCD[k]).replace(",",".")); return isNaN(v)?null:v; }, L=cL;
+  if(NCD.sec==="htn"){
+    var s1=n("s1"),d1=n("d1"),s2=n("s2"),d2=n("d2"), age=n("age"), hr=NCD.dm||NCD.cvd||NCD.ckd;
+    if(s1===null&&d1===null){ out.appendChild(ncdBox("lo",L(["Enter the blood pressure","Saisir la tension","ដាក់សម្ពាធឈាម"]),[])); }
+    else { var S=s2!==null?Math.round((s1+s2)/2):s1, D=d2!==null&&d1!==null?Math.round((d1+d2)/2):d1, confirmed=s2!==null;
+      var cls,ttl,lines=[];
+      if(S>=180||D>=110){ cls="hi"; ttl=L(["Severe hypertension (≥ 180/110)","HTA sévère (≥ 180/110)","លើសឈាមធ្ងន់ (≥ ១៨០/១១០)"]); lines=[L(["Start medicine TODAY — no need to wait for a second visit (WHO 2021).","Traitement DÈS AUJOURD'HUI — sans attendre une 2e mesure (OMS 2021).","ចាប់ផ្តើមថ្នាំថ្ងៃនេះ — មិនចាំបាច់រង់ចាំលើកទី ២ (WHO 2021)។"]),L(["Look for danger signs: chest pain, breathlessness, headache with confusion, weakness, vision loss, little urine → emergency.","Rechercher des signes de gravité : douleur thoracique, dyspnée, céphalée avec confusion, déficit, baisse de vision, oligurie → urgence.","មើលសញ្ញាគ្រោះថ្នាក់៖ ឈឺទ្រូង ហត់ ឈឺក្បាលជាមួយវង្វេង ខ្សោយ ភ្នែកព្រិល នោមតិច → បន្ទាន់។"]),L(["Start two drugs: amlodipine 5 mg + losartan 50 mg (or enalapril / HCTZ).","Bithérapie : amlodipine 5 mg + losartan 50 mg (ou énalapril / HCTZ).","ចាប់ផ្តើមថ្នាំ ២ មុខ៖ amlodipine 5 mg + losartan 50 mg (ឬ enalapril / HCTZ)។"])]; }
+      else if(S>=140||D>=90){ cls=confirmed?"hi":"mid"; ttl=L(["Hypertension (≥ 140/90)","HTA (≥ 140/90)","លើសឈាម (≥ ១៤០/៩០)"])+(confirmed?"":L([" — confirm on another day"," — à confirmer un autre jour"," — បញ្ជាក់នៅថ្ងៃផ្សេង"]));
+        lines=[confirmed?L(["Confirmed on 2 days → START medicine together with lifestyle (WHO 2021).","Confirmée sur 2 jours → DÉBUTER le traitement avec les mesures hygiéno-diététiques (OMS 2021).","បញ្ជាក់ ២ ថ្ងៃ → ចាប់ផ្តើមថ្នាំ រួមនឹងការកែរបៀបរស់នៅ (WHO 2021)។"]):L(["Measure again on another day (2 readings, seated 5 min) or home BP ≥ 135/85 before diagnosing.","Remesurer un autre jour (2 mesures après 5 min assis) ou automesure ≥ 135/85 avant de conclure.","វាស់ម្តងទៀតនៅថ្ងៃផ្សេង (២ ដង អង្គុយ ៥ នាទី) ឬវាស់នៅផ្ទះ ≥ ១៣៥/៨៥ មុនសន្និដ្ឋាន។"]),
+          L(["First drug: amlodipine 5 mg (or losartan / enalapril if diabetes, kidney disease or proteinuria; HCTZ 12.5–25 mg). If BP ≥ 160/100: start two drugs.","1er médicament : amlodipine 5 mg (ou losartan / énalapril si diabète, néphropathie, protéinurie ; HCTZ 12,5–25 mg). Si ≥ 160/100 : bithérapie d'emblée.","ថ្នាំដំបូង៖ amlodipine 5 mg (ឬ losartan / enalapril បើទឹកនោមផ្អែម តម្រងនោម ប្រូតេអ៊ីនទឹកនោម; HCTZ 12.5–25 mg)។ បើ ≥ ១៦០/១០០៖ ចាប់ផ្តើម ២ មុខ។"])]; }
+      else if(S>=130||D>=80){ cls=hr?"mid":"lo"; ttl=L(["High-normal BP (130–139 / 80–89)","TA normale haute (130–139 / 80–89)","សម្ពាធខ្ពស់បន្តិច (១៣០–១៣៩ / ៨០–៨៩)"]);
+        lines=[hr?L(["With diabetes, heart disease or kidney disease: START medicine if SBP 130–139 is confirmed (WHO 2021).","Avec diabète, cardiopathie ou néphropathie : DÉBUTER si PAS 130–139 confirmée (OMS 2021).","មានទឹកនោមផ្អែម ជំងឺបេះដូង ឬតម្រងនោម៖ ចាប់ផ្តើមថ្នាំ បើ SBP ១៣០–១៣៩ បញ្ជាក់ (WHO 2021)។"]):L(["No medicine yet: lifestyle (less salt, exercise, weight loss). Recheck in 3–6 months.","Pas de médicament : hygiène de vie (sel, activité, poids). Recontrôler dans 3–6 mois.","មិនទាន់ត្រូវការថ្នាំ៖ កែរបៀបរស់នៅ (អំបិលតិច ហាត់ប្រាណ ស្រកទម្ងន់)។ វាស់ម្តងទៀតក្រោយ ៣–៦ ខែ។"])]; }
+      else { cls="ok"; ttl=L(["Normal BP (< 130/80)","TA normale (< 130/80)","សម្ពាធធម្មតា (< ១៣០/៨០)"]); lines=[L(["Check BP every year (every visit if over 40).","Contrôle annuel (à chaque visite après 40 ans).","វាស់រៀងរាល់ឆ្នាំ (រាល់ពេលមក បើលើស ៤០ ឆ្នាំ)។"])]; }
+      lines.push(L(["Target: below 140/90; below 130/80 if diabetes, heart / kidney disease or high risk. Review monthly until controlled, then every 3–6 months.","Objectif : < 140/90 ; < 130/80 si diabète, cardiopathie / néphropathie ou haut risque. Revoir chaque mois jusqu'au contrôle, puis tous les 3–6 mois.","គោលដៅ៖ < ១៤០/៩០; < ១៣០/៨០ បើទឹកនោមផ្អែម ជំងឺបេះដូង/តម្រងនោម ឬហានិភ័យខ្ពស់។ មកពិនិត្យរៀងរាល់ខែ រហូតគ្រប់គ្រងបាន បន្ទាប់មក ៣–៦ ខែម្តង។"]));
+      if(age!==null&&age>=40&&(NCD.dm||NCD.cvd)) lines.push(L(["Also: statin (atorvastatin 20–40 mg) — diabetes / heart disease (WHO HEARTS).","Aussi : statine (atorvastatine 20–40 mg) — diabète / cardiopathie (OMS HEARTS).","បន្ថែម៖ statin (atorvastatin 20–40 mg) — ទឹកនោមផ្អែម / ជំងឺបេះដូង (WHO HEARTS)។"]));
+      out.appendChild(ncdBox(cls,ttl+" · "+S+"/"+(D===null?"?":D),lines)); }
+    ref.appendChild(ncdBox("ref",L(["How to diagnose","Comment diagnostiquer","របៀបរករោគវិនិច្ឆ័យ"]),[L(["Seated 5 min, arm at heart level, right cuff size; 2 readings 1–2 min apart, use the average.","Assis 5 min, bras au niveau du cœur, brassard adapté ; 2 mesures à 1–2 min, faire la moyenne.","អង្គុយ ៥ នាទី ដៃនៅកម្រិតបេះដូង ខ្សែរុំទំហំត្រូវ; វាស់ ២ ដងឃ្លាត ១–២ នាទី យកមធ្យម។"]),L(["Diagnosis: ≥ 140/90 on 2 different days (or home ≥ 135/85). ≥ 180/110 once with symptoms: treat now.","Diagnostic : ≥ 140/90 sur 2 jours différents (ou automesure ≥ 135/85). ≥ 180/110 avec symptômes : traiter immédiatement.","រោគវិនិច្ឆ័យ៖ ≥ ១៤០/៩០ នៅ ២ ថ្ងៃផ្សេងគ្នា (ឬនៅផ្ទះ ≥ ១៣៥/៨៥)។ ≥ ១៨០/១១០ ម្តងជាមួយរោគសញ្ញា៖ ព្យាបាលភ្លាម។"]),L(["At diagnosis check: creatinine, potassium, glucose, lipids, urine protein, ECG.","Au diagnostic : créatinine, kaliémie, glycémie, lipides, protéinurie, ECG.","ពេលរកឃើញ៖ creatinine K⁺ ស្ករ ខ្លាញ់ ប្រូតេអ៊ីនទឹកនោម ECG។"]),L(["Under 30 years, very high BP or low potassium: look for a secondary cause (kidney, hormones).","< 30 ans, HTA très sévère ou hypokaliémie : rechercher une cause secondaire.","អាយុ < ៣០ ឆ្នាំ សម្ពាធខ្ពស់ខ្លាំង ឬ K⁺ ទាប៖ ស្វែងរកមូលហេតុផ្សេង (តម្រងនោម អរម៉ូន)។"])]));
+  } else if(NCD.sec==="dm"){
+    var fpg=n("fpg"),a1c=n("a1c"),og=n("ogtt"),rbs=n("rbs"), dmHits=[], pre=[];
+    if(fpg!==null){ if(fpg>=126) dmHits.push("FPG "+fpg); else if(fpg>=100) pre.push("FPG "+fpg); }
+    if(a1c!==null){ if(a1c>=6.5) dmHits.push("HbA1c "+a1c+"%"); else if(a1c>=5.7) pre.push("HbA1c "+a1c+"%"); }
+    if(og!==null){ if(og>=200) dmHits.push("OGTT "+og); else if(og>=140) pre.push("OGTT "+og); }
+    var rbsDm=rbs!==null&&rbs>=200&&NCD.sym;
+    if(fpg===null&&a1c===null&&og===null&&rbs===null) out.appendChild(ncdBox("lo",L(["Enter a glucose result","Saisir un résultat de glycémie","ដាក់លទ្ធផលស្ករ"]),[]));
+    else if(dmHits.length>=2||rbsDm||(dmHits.length===1&&NCD.sym)){
+      var hi=(a1c!==null&&a1c>=9)||(fpg!==null&&fpg>=250)||(rbs!==null&&rbs>=300);
+      out.appendChild(ncdBox("hi",L(["DIABETES — diagnosis confirmed","DIABÈTE — diagnostic confirmé","ទឹកនោមផ្អែម — បញ្ជាក់"])+" ("+dmHits.concat(rbsDm?["RBS "+rbs+" + symptoms"]:[]).join(", ")+")",[
+        L(["Start metformin now with lifestyle (500 mg once daily → 1 g twice daily). Not if eGFR < 30.","Débuter la metformine avec les mesures hygiéno-diététiques (500 mg/j → 1 g × 2/j). Pas si DFG < 30.","ចាប់ផ្តើម metformin ឥឡូវ រួមនឹងកែរបៀបរស់នៅ (500 mg/ថ្ងៃ → 1 g ២ ដង/ថ្ងៃ)។ មិនឱ្យបើ eGFR < ៣០។"]),
+        hi?L(["Very high (HbA1c ≥ 9% / glucose ≥ 300 with symptoms): add a second drug (gliclazide) or insulin from the start; check ketones if vomiting / drowsy.","Très élevé (HbA1c ≥ 9 % / glycémie ≥ 3 g/l symptomatique) : 2e médicament (gliclazide) ou insuline d'emblée ; cétonurie si vomissements / somnolence.","ខ្ពស់ខ្លាំង (HbA1c ≥ ៩% / ស្ករ ≥ ៣០០ មានរោគសញ្ញា)៖ បន្ថែមថ្នាំទី ២ (gliclazide) ឬ insulin តាំងពីដំបូង; ពិនិត្យ ketone បើក្អួត / ងងុយ។"]):L(["After 3 months: if HbA1c still > 7% add gliclazide; then basal insulin.","Après 3 mois : si HbA1c > 7 %, ajouter gliclazide ; puis insuline basale.","ក្រោយ ៣ ខែ៖ បើ HbA1c នៅ > ៧% បន្ថែម gliclazide; បន្ទាប់មក insulin basal។"]),
+        L(["Age ≥ 40: statin (atorvastatin 20 mg). BP target < 130/80.","≥ 40 ans : statine (atorvastatine 20 mg). TA cible < 130/80.","អាយុ ≥ ៤០៖ statin (atorvastatin 20 mg)។ គោលដៅសម្ពាធ < ១៣០/៨០។"]),
+        L(["Targets: fasting 80–130 mg/dl, HbA1c < 7% (elderly / frail < 8%). HbA1c every 3 months; feet, eyes, kidneys every year.","Objectifs : à jeun 0,80–1,30 g/l, HbA1c < 7 % (sujet âgé < 8 %). HbA1c /3 mois ; pieds, yeux, reins chaque année.","គោលដៅ៖ ពោះទទេ ៨០–១៣០ mg/dl, HbA1c < ៧% (មនុស្សចាស់ < ៨%)។ HbA1c រៀងរាល់ ៣ ខែ; ជើង ភ្នែក តម្រងនោម រៀងរាល់ឆ្នាំ។"])])); }
+    else if(dmHits.length===1){ out.appendChild(ncdBox("mid",L(["Possible diabetes — repeat the test to confirm","Diabète possible — refaire le test pour confirmer","អាចជាទឹកនោមផ្អែម — ធ្វើតេស្តម្តងទៀតដើម្បីបញ្ជាក់"])+" ("+dmHits[0]+")",[L(["Without symptoms, one abnormal result must be repeated (same or another test) on another day before starting treatment.","Sans symptômes, un seul résultat anormal doit être confirmé un autre jour avant traitement.","គ្មានរោគសញ្ញា ត្រូវធ្វើតេស្តម្តងទៀតនៅថ្ងៃផ្សេង មុនចាប់ផ្តើមព្យាបាល។"])])); }
+    else if(pre.length){ out.appendChild(ncdBox("mid",L(["Prediabetes","Prédiabète","ជិតទឹកនោមផ្អែម"])+" ("+pre.join(", ")+")",[L(["No medicine usually: lose 5–7% weight, walk 150 min/week, less sugar and white rice. Metformin only if BMI ≥ 35, previous gestational diabetes or rising glucose.","En général pas de médicament : perdre 5–7 % du poids, 150 min d'activité / semaine. Metformine si IMC ≥ 35, ATCD de diabète gestationnel ou glycémie en hausse.","ជាធម្មតាមិនចាំបាច់ថ្នាំ៖ ស្រកទម្ងន់ ៥–៧% ដើរ ១៥០ នាទី/សប្តាហ៍ ស្ករ និងបាយសតិច។ Metformin តែបើ BMI ≥ ៣៥ ធ្លាប់ទឹកនោមផ្អែមពេលមានផ្ទៃពោះ ឬស្ករកំពុងឡើង។"]),L(["Recheck every year.","Recontrôler chaque année.","ពិនិត្យម្តងទៀតរៀងរាល់ឆ្នាំ។"])])); }
+    else out.appendChild(ncdBox("ok",L(["Normal glucose","Glycémie normale","ស្ករធម្មតា"]),[L(["Screen again every 3 years (yearly if overweight, family history, high BP).","Dépistage tous les 3 ans (annuel si surpoids, ATCD familial, HTA).","ពិនិត្យម្តងទៀតរៀងរាល់ ៣ ឆ្នាំ (រៀងរាល់ឆ្នាំ បើលើសទម្ងន់ ប្រវត្តិគ្រួសារ សម្ពាធឡើង)។"])]));
+    ref.appendChild(ncdBox("ref",L(["Diagnostic criteria (WHO / ADA)","Critères diagnostiques (OMS / ADA)","លក្ខណៈវិនិច្ឆ័យ (WHO / ADA)"]),["Diabetes: FPG ≥ 126 mg/dl (7.0 mmol/l) · HbA1c ≥ 6.5% · OGTT 2 h ≥ 200 mg/dl (11.1) · random ≥ 200 + "+L(["symptoms","symptômes","រោគសញ្ញា"]),"Prediabetes: FPG 100–125 · HbA1c 5.7–6.4% · OGTT 2 h 140–199",L(["Fasting = no food for 8 hours. mmol/l × 18 = mg/dl.","À jeun = 8 h sans manger. mmol/l × 18 = mg/dl.","ពោះទទេ = មិនញ៉ាំ ៨ ម៉ោង។ mmol/l × ១៨ = mg/dl។"]),L(["Pregnancy (OGTT 75 g at 24–28 w): fasting ≥ 92, 1 h ≥ 180, 2 h ≥ 153 mg/dl = gestational diabetes.","Grossesse (HGPO 75 g à 24–28 SA) : à jeun ≥ 0,92, 1 h ≥ 1,80, 2 h ≥ 1,53 g/l = diabète gestationnel.","ផ្ទៃពោះ (OGTT 75 g នៅ ២៤–២៨ សប្តាហ៍)៖ ពោះទទេ ≥ ៩២, ១ ម៉ោង ≥ ១៨០, ២ ម៉ោង ≥ ១៥៣ mg/dl = ទឹកនោមផ្អែមពេលមានផ្ទៃពោះ។"])]));
+  } else if(NCD.sec==="lip"){
+    var ldl=n("ldl"),tg=n("tg"),age2=n("age"), L2=[], cls2="ok";
+    if(ldl===null&&tg===null) out.appendChild(ncdBox("lo",L(["Enter LDL and/or triglycerides","Saisir LDL et/ou triglycérides","ដាក់ LDL និង/ឬ Triglyceride"]),[]));
+    else {
+      if(NCD.cvd){ cls2="hi"; L2.push(L(["Heart disease / stroke: high-intensity statin for everyone (atorvastatin 40–80 mg), target LDL < 70 mg/dl.","Cardiopathie / AVC : statine forte pour tous (atorvastatine 40–80 mg), LDL cible < 0,70 g/l.","ជំងឺបេះដូង / ស្ទះសរសៃឈាមខួរ៖ statin ខ្លាំងសម្រាប់ទាំងអស់ (atorvastatin 40–80 mg) គោលដៅ LDL < ៧០ mg/dl។"])); }
+      else if(NCD.dm&&age2!==null&&age2>=40){ cls2="hi"; L2.push(L(["Diabetes and age ≥ 40: statin (atorvastatin 20 mg), whatever the LDL (WHO HEARTS).","Diabète et ≥ 40 ans : statine (atorvastatine 20 mg), quel que soit le LDL (OMS HEARTS).","ទឹកនោមផ្អែម និងអាយុ ≥ ៤០៖ statin (atorvastatin 20 mg) មិនគិត LDL (WHO HEARTS)។"])); }
+      if(ldl!==null&&ldl>=190){ cls2="hi"; L2.push(L(["LDL ≥ 190: statin now (high intensity); check family members.","LDL ≥ 1,90 g/l : statine d'emblée (forte) ; dépister la famille.","LDL ≥ ១៩០៖ statin ឥឡូវ (ខ្លាំង); ពិនិត្យសមាជិកគ្រួសារ។"])); }
+      else if(ldl!==null&&ldl>=130&&!NCD.cvd&&!(NCD.dm&&age2>=40)){ if(cls2==="ok") cls2="mid"; L2.push(L(["LDL 130–189 without diabetes / heart disease: lifestyle 3 months; statin if still high and age ≥ 40 with risk factors (smoking, BP, family history) or 10-year risk ≥ 10% (WHO chart).","LDL 1,30–1,89 sans diabète / cardiopathie : hygiène 3 mois ; statine si persistance et ≥ 40 ans avec facteurs de risque ou risque à 10 ans ≥ 10 % (diagramme OMS).","LDL ១៣០–១៨៩ គ្មានទឹកនោមផ្អែម / ជំងឺបេះដូង៖ កែរបៀបរស់នៅ ៣ ខែ; statin បើនៅខ្ពស់ ហើយអាយុ ≥ ៤០ មានកត្តាហានិភ័យ (បារី សម្ពាធ គ្រួសារ) ឬហានិភ័យ ១០ ឆ្នាំ ≥ ១០% (តារាង WHO)។"])); }
+      if(tg!==null&&tg>=500){ cls2="hi"; L2.push(L(["TG ≥ 500: fenofibrate + stop alcohol and sugar (pancreatitis risk).","TG ≥ 5 g/l : fénofibrate + arrêt alcool et sucre (risque de pancréatite).","TG ≥ ៥០០៖ fenofibrate + ឈប់ស្រា និងស្ករ (ហានិភ័យរលាកលំពែង)។"])); }
+      else if(tg!==null&&tg>=150){ if(cls2==="ok") cls2="mid"; L2.push(L(["TG 150–499: diet, alcohol, sugar, weight, diabetes control; statin if indicated for LDL / risk.","TG 1,50–4,99 g/l : régime, alcool, sucre, poids, contrôle du diabète ; statine selon le risque.","TG ១៥០–៤៩៩៖ របបអាហារ ស្រា ស្ករ ទម្ងន់ គ្រប់គ្រងទឹកនោមផ្អែម; statin តាមហានិភ័យ។"])); }
+      if(!L2.length) L2.push(L(["No medicine needed now. Recheck in 5 years (sooner if diabetes / high BP).","Pas de médicament. Recontrôler dans 5 ans (plus tôt si diabète / HTA).","មិនទាន់ត្រូវការថ្នាំ។ ពិនិត្យម្តងទៀតក្រោយ ៥ ឆ្នាំ (ឆាប់ជាងនេះបើទឹកនោមផ្អែម / សម្ពាធ)។"]));
+      out.appendChild(ncdBox(cls2,L(["Lipids — decision","Lipides — décision","ខ្លាញ់ក្នុងឈាម — ការសម្រេច"]),L2)); }
+    ref.appendChild(ncdBox("ref",L(["Reference values (mg/dl)","Valeurs de référence (mg/dl)","តម្លៃយោង (mg/dl)"]),["LDL: < 100 "+L(["optimal","optimal","ល្អ"])+" · 130–159 "+L(["borderline","limite","ជិតខ្ពស់"])+" · ≥ 160 "+L(["high","élevé","ខ្ពស់"])+" · ≥ 190 "+L(["very high","très élevé","ខ្ពស់ខ្លាំង"]),"TG: < 150 "+L(["normal","normal","ធម្មតា"])+" · 150–499 "+L(["high","élevé","ខ្ពស់"])+" · ≥ 500 "+L(["very high","très élevé","ខ្ពស់ខ្លាំង"]),"HDL: < 40 (♂) / < 50 (♀) "+L(["low","bas","ទាប"]),L(["mmol/l → mg/dl: cholesterol × 38.7, TG × 88.6.","mmol/l → mg/dl : cholestérol × 38,7, TG × 88,6.","mmol/l → mg/dl៖ cholesterol × ៣៨.៧, TG × ៨៨.៦។"])]));
+  } else {
+    var ua=n("uric"),att=n("att")||0, need=att>=2||NCD.tophi||NCD.stone||(NCD.ckd&&att>=1);
+    if(ua===null&&!att&&!NCD.tophi&&!NCD.stone) out.appendChild(ncdBox("lo",L(["Enter uric acid and gout history","Saisir l'uricémie et l'historique des crises","ដាក់អាស៊ីតអ៊ុយរិក និងប្រវត្តិ gout"]),[]));
+    else if(need) out.appendChild(ncdBox("hi",L(["Urate-lowering treatment indicated","Traitement hypo-uricémiant indiqué","ត្រូវការថ្នាំបញ្ចុះអាស៊ីតអ៊ុយរិក"]),[L(["Allopurinol 100 mg/day (50 mg if eGFR < 30), increase by 100 mg every 2–4 weeks to uric acid < 6 mg/dl (< 5 if tophi).","Allopurinol 100 mg/j (50 mg si DFG < 30), +100 mg toutes les 2–4 semaines jusqu'à < 60 mg/l (< 50 si tophus).","Allopurinol 100 mg/ថ្ងៃ (50 mg បើ eGFR < ៣០) បង្កើន 100 mg រៀងរាល់ ២–៤ សប្តាហ៍ រហូត < ៦ mg/dl (< ៥ បើមាន tophi)។"]),L(["Colchicine 0.5 mg daily for the first 3–6 months to prevent attacks.","Colchicine 0,5 mg/j pendant 3–6 mois pour prévenir les crises.","Colchicine 0.5 mg/ថ្ងៃ ៣–៦ ខែដំបូង ដើម្បីការពារការឈឺ។"]),L(["Stop and come if any rash (rare severe allergy).","Arrêter et consulter en cas d'éruption (allergie grave rare).","ឈប់ ហើយមកភ្លាម បើមានកន្ទួល (អាឡែកហ្ស៊ីធ្ងន់ កម្រ)។"])]));
+    else if(att===1) out.appendChild(ncdBox("mid",L(["One gout attack","Une crise de goutte","ឈឺ gout ម្តង"]),[L(["Treat the attack (colchicine or NSAID); diet and weight; urate-lowering drug usually not yet (unless CKD, tophi, stones, uric acid > 9).","Traiter la crise (colchicine ou AINS) ; régime et poids ; hypo-uricémiant en général pas encore (sauf IRC, tophus, lithiase, uricémie > 90 mg/l).","ព្យាបាលការឈឺ (colchicine ឬ NSAID); តមអាហារ ស្រកទម្ងន់; ជាធម្មតាមិនទាន់ត្រូវការថ្នាំបញ្ចុះ (លើកលែងតម្រងនោមខ្សោយ tophi គ្រួស ឬ > ៩ mg/dl)។"])]));
+    else out.appendChild(ncdBox(ua!==null&&ua>7?"mid":"ok",ua!==null&&ua>7?L(["High uric acid without gout","Hyperuricémie asymptomatique","អាស៊ីតអ៊ុយរិកខ្ពស់ គ្មាន gout"]):L(["Uric acid normal","Uricémie normale","អាស៊ីតអ៊ុយរិកធម្មតា"]),[ua!==null&&ua>7?L(["No medicine (allopurinol is not recommended without gout). Diet: less beer, offal, seafood, sweet drinks; lose weight; drink water; review diuretics.","Pas de médicament (allopurinol non recommandé sans goutte). Régime : moins de bière, abats, fruits de mer, sodas ; perte de poids ; boire ; revoir les diurétiques.","មិនចាំបាច់ថ្នាំ (allopurinol មិនណែនាំបើគ្មាន gout)។ តមអាហារ៖ ស្រាបៀរ គ្រឿងក្នុង គ្រឿងសមុទ្រ ភេសជ្ជៈផ្អែម តិច; ស្រកទម្ងន់; ផឹកទឹក; ពិនិត្យថ្នាំបញ្ចុះទឹក។"]):L(["Normal: men < 7, women < 6 mg/dl.","Normal : homme < 70, femme < 60 mg/l.","ធម្មតា៖ បុរស < ៧, ស្ត្រី < ៦ mg/dl។"])]));
+    ref.appendChild(ncdBox("ref",L(["Gout attack treatment","Traitement de la crise","ព្យាបាលពេលឈឺ gout"]),[L(["Colchicine 1 mg then 0.5 mg after 1 hour (day 1), then 0.5 mg 2–3 times a day; or ibuprofen / naproxen; or prednisolone 30 mg × 5 days if NSAID not possible.","Colchicine 1 mg puis 0,5 mg 1 h après (J1), puis 0,5 mg 2–3 ×/j ; ou ibuprofène / naproxène ; ou prednisolone 30 mg × 5 j.","Colchicine 1 mg រួច 0.5 mg ក្រោយ ១ ម៉ោង (ថ្ងៃទី ១) បន្ទាប់មក 0.5 mg ២–៣ ដង/ថ្ងៃ; ឬ ibuprofen / naproxen; ឬ prednisolone 30 mg × ៥ ថ្ងៃ។"]),L(["Ice, rest, raise the joint; continue allopurinol if already taking it.","Glace, repos, surélévation ; poursuivre l'allopurinol s'il est déjà pris.","ស្អំទឹកកក សម្រាក លើកសន្លាក់; បន្ត allopurinol បើកំពុងលេប។"])]));
+  }
+  var tl=lib.filter(function(t){ return {htn:/^(d-htn|n-htn2|k-htndm|k-htn3|x-htnurg)$/,dm:/^(d-dm2|n-dm2b|k-dmnew|k-dmins|y-prediab)$/,lip:/^(n-lipid|k-tg)$/,uric:/^(n-gout|k-uric)$/}[NCD.sec].test(t.id); });
+  if(tl.length){ var h=mk("div","pgact"); tl.forEach(function(t){ var b=mk("button","cadd"); b.type="button"; b.textContent="📋 "+sxName(t); b.onclick=function(){ $("calcOv").hidden=true; openTemplate(t.id); }; h.appendChild(b); }); ref.appendChild(h); }
 }
 
 /* ---------- PE / medical history / evaluation / SOAP follow the language buttons (ខ្មែរ · EN · FR · EN+ខ្មែរ · FR+ខ្មែរ) ---------- */
