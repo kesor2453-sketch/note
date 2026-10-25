@@ -822,6 +822,21 @@ tr.pgnow td{background:#fdf2f8;font-weight:700}
 .aitools{display:flex;gap:4px;flex-shrink:0}
 .aishort{display:flex;flex-wrap:wrap;gap:6px;padding:0 12px 10px}
 .aiflash{outline:3px solid #a78bfa!important;outline-offset:2px;transition:outline .2s}
+.vacage td{vertical-align:top}
+.vacage tr.vacfirst td{border-top:2px solid var(--rule)}
+.vacage0{width:120px;background:var(--paper)}
+.vacage0 b{display:block;font:700 14px var(--kh);color:var(--pen)}
+.vacage0 small{display:block;font-size:11.5px;color:var(--muted)}
+.vacage0 .vacst{font-weight:700;color:#9d174d}
+tr.pgpast2 td{color:var(--muted)}
+.vacgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
+.vaccard{border:1px solid var(--rule);border-radius:10px;padding:8px 10px;background:var(--paper)}
+.vach{display:flex;justify-content:space-between;align-items:center;gap:6px;font:700 14px var(--body)}
+.vacprot{font:13px var(--kh);color:#0b5e53;margin:4px 0}
+.vacdoses{margin:6px 0 2px 18px;padding:0;font:13px var(--kh)}
+.vacdoses li{margin:2px 0}
+.vacdoses li.pgnow{font-weight:700;color:#9d174d}
+.vacdoses li.pgpast2{color:var(--muted)}
 </style>
 </head>
 <body class="lang-both gated">
@@ -1142,7 +1157,7 @@ tr.pgnow td{background:#fdf2f8;font-weight:700}
       <button type="button" id="gUp">បង្កើតគណនីថ្មី</button>
       <button type="button" id="gReset">ភ្លេចពាក្យសម្ងាត់?</button>
     </div>
-    <p class="gate-note" id="gateNote">ព័ត៌មានអ្នកជំងឺមិនត្រូវបានផ្ញើទៅ cloud ទេ។ · v57</p>
+    <p class="gate-note" id="gateNote">ព័ត៌មានអ្នកជំងឺមិនត្រូវបានផ្ញើទៅ cloud ទេ។ · v58</p>
   </form>
 </div>
 
@@ -1244,7 +1259,7 @@ tr.pgnow td{background:#fdf2f8;font-weight:700}
       <p class="hint">ឯកសារត្រូវមានជួរឈរ៖ ICD 10 · EN · KH · FR។ បញ្ជីនេះរក្សាទុកក្នុង browser ហើយប្រើសម្រាប់ស្វែងរករោគវិនិច្ឆ័យទាំងអស់។</p>
     </fieldset>
     <div class="actions">
-      <span style="margin-right:auto;font:12px var(--body);color:var(--muted)">Rx Clinic v57</span>
+      <span style="margin-right:auto;font:12px var(--body);color:var(--muted)">Rx Clinic v58</span>
       <button class="btn alt" id="settingsClose" type="button">បិទ</button>
       <button class="btn" type="submit">រក្សាទុកការកំណត់</button>
     </div>
@@ -6752,6 +6767,25 @@ var VAC_ADULT=[
  ["HPV","0.5 ml",["IM · deltoid","IM · deltoïde","IM · ស្មា"],["Women up to 26 (catch-up): 1–2 doses per national programme.","Femmes jusqu'à 26 ans (rattrapage) : 1–2 doses selon le programme.","ស្ត្រីរហូតដល់ ២៦ ឆ្នាំ៖ ១–២ ដូស តាមកម្មវិធីជាតិ។"]],
  ["Rabies pre-exposure","1 dose IM or 0.1 ml ID",["IM deltoid / ID","IM deltoïde / ID","IM ស្មា / ID"],["Days 0 and 7 (WHO): vets, lab staff, children in high-risk areas.","J0 et J7 (OMS) : vétérinaires, laborantins, enfants en zone à risque.","ថ្ងៃ ០ និង ៧ (WHO)៖ ពេទ្យសត្វ បុគ្គលិកមន្ទីរពិសោធន៍ កុមារតំបន់ហានិភ័យ។"]],
  ["COVID-19","per product",["IM · deltoid","IM · deltoïde","IM · ស្មា"],["Per national guideline (older adults and high risk).","Selon recommandations nationales (âgés et à risque).","តាមគោលការណ៍ជាតិ (មនុស្សចាស់ និងហានិភ័យខ្ពស់)។"]]];
+/* v58: what each vaccine protects against + view by vaccine */
+var VAC_PROT=[
+ [/^BCG/,["Tuberculosis (severe forms in children: TB meningitis, miliary TB)","Tuberculose (formes graves de l'enfant : méningite, miliaire)","របេង (ទម្រង់ធ្ងន់លើកុមារ៖ របេងស្រោមខួរ របេងរាលដាល)"]],
+ [/^Hepatitis B/,["Hepatitis B (liver infection, cirrhosis, liver cancer); birth dose stops mother-to-baby transmission","Hépatite B (cirrhose, cancer du foie) ; la dose de naissance évite la transmission mère-enfant","រលាកថ្លើម B (ក្រិនថ្លើម មហារីកថ្លើម); ដូសពេលកើតការពារការឆ្លងពីម្តាយទៅកូន"]],
+ [/^Pentavalent|^DTP/,["Diphtheria, tetanus, whooping cough (pertussis), hepatitis B, Hib (meningitis, pneumonia)","Diphtérie, tétanos, coqueluche, hépatite B, Hib (méningite, pneumonie)","ខាន់ស្លាក់ តេតាណូស ក្អកមាន់ រលាកថ្លើម B និង Hib (រលាកស្រោមខួរ រលាកសួត)"]],
+ [/^PCV/,["Pneumococcus: pneumonia, meningitis, blood infection, ear infection","Pneumocoque : pneumonie, méningite, septicémie, otite","Pneumococcus៖ រលាកសួត រលាកស្រោមខួរ ឆ្លងឈាម រលាកត្រចៀក"]],
+ [/^OPV|^IPV/,["Polio (paralysis)","Poliomyélite (paralysie)","គ្រុនស្វិតដៃជើង (ប៉ូលីយ៉ូ)"]],
+ [/^Rotavirus/,["Rotavirus: severe diarrhoea and dehydration in babies","Rotavirus : diarrhée sévère et déshydratation du nourrisson","Rotavirus៖ រាករូសធ្ងន់ និងខ្វះជាតិទឹកលើទារក"]],
+ [/^MR/,["Measles and rubella (German measles; protects babies from congenital rubella)","Rougeole et rubéole (protège de la rubéole congénitale)","កញ្ជ្រឹល និងស្អូច (ការពារទារកពីស្អូចពីកំណើត)"]],
+ [/^JE/,["Japanese encephalitis (brain infection from mosquitoes)","Encéphalite japonaise (transmise par les moustiques)","រលាកខួរក្បាលជប៉ុន (ឆ្លងតាមមូស)"]],
+ [/^HPV/,["HPV: cervical cancer and genital warts","HPV : cancer du col de l'utérus et condylomes","HPV៖ មហារីកមាត់ស្បូន និងឬសប្រដាប់ភេទ"]],
+ [/^Vitamin A/,["Not a vaccine: reduces death from measles and diarrhoea, protects eyes","Pas un vaccin : réduit la mortalité (rougeole, diarrhée), protège les yeux","មិនមែនវ៉ាក់សាំង៖ កាត់បន្ថយការស្លាប់ដោយកញ្ជ្រឹល និងរាក ការពារភ្នែក"]],
+ [/^Td|^Tdap/,["Tetanus and diphtheria (Tdap also whooping cough); protects mother and newborn from tetanus","Tétanos et diphtérie (dTca : aussi coqueluche) ; protège mère et nouveau-né","តេតាណូស និងខាន់ស្លាក់ (Tdap ក្អកមាន់ផង); ការពារម្តាយ និងទារកពីតេតាណូស"]],
+ [/^Influenza/,["Seasonal flu and its complications (pneumonia)","Grippe saisonnière et complications","ផ្តាសាយធំតាមរដូវ និងផលវិបាក (រលាកសួត)"]],
+ [/^Pneumococcal/,["Pneumococcal pneumonia, meningitis","Pneumonie et méningite à pneumocoque","រលាកសួត និងរលាកស្រោមខួរដោយ pneumococcus"]],
+ [/^Typhoid/,["Typhoid fever","Fièvre typhoïde","គ្រុនពោះវៀន (Typhoid)"]],
+ [/^Rabies/,["Rabies (always fatal once symptoms start)","Rage (mortelle une fois déclarée)","ឆ្កែឆ្កួត (ស្លាប់ ១០០% ពេលមានរោគសញ្ញា)"]],
+ [/^COVID/,["COVID-19 severe disease","COVID-19 sévère","COVID-19 ធ្ងន់"]]];
+function vacProt(name){ var r=VAC_PROT.find(function(x){return x[0].test(name);}); return r?cL(r[1]):""; }
 function vxTable(head,rows){ var t=mk("table","ctable"), hr=mk("tr"); head.forEach(function(h){ var th=mk("th"); th.textContent=cL(h); hr.appendChild(th); });
   var th0=mk("thead"); th0.appendChild(hr); t.appendChild(th0); var tb=mk("tbody"); t.appendChild(tb);
   rows.forEach(function(r){ var tr=mk("tr"); if(r.cls) tr.className=r.cls; r.c.forEach(function(c,i){ var td=mk("td"); if(i===0){ var b=mk("b"); b.textContent=c; td.appendChild(b); } else td.textContent=c; if(r.small&&i===r.c.length-1) td.className="pgwhat"; tr.appendChild(td); }); tb.appendChild(tr); });
@@ -6768,10 +6802,34 @@ function calcVac(){
     var dob=pgD(VX.dob), ageTxt=mk("div","cage"); if(dob){ var ad=pgDiff(today,dob); ageTxt.textContent=cL(["Age: ","Âge : ","អាយុ៖ "])+(ad<98?Math.floor(ad/7)+cL([" weeks"," semaines"," សប្តាហ៍"]):ad<730?Math.floor(ad/30.44)+cL([" months"," mois"," ខែ"]):Math.floor(ad/365.25)+cL([" years"," ans"," ឆ្នាំ"])); inp.appendChild(ageTxt); }
     box.appendChild(inp);
     var lab=function(a){ return a===0?cL(["Birth","Naissance","ពេលកើត"]):a<180?Math.round(a/7)+cL([" weeks"," sem."," សប្តាហ៍"]):a<3000?Math.round(a/30.44)+cL([" months"," mois"," ខែ"]):"9–14 "+cL(["years","ans","ឆ្នាំ"]); };
-    var rows=VAC_CHILD.map(function(v){ var due=dob?pgAdd(dob,v[0]):null, st="";
-      if(due){ var dd=pgDiff(today,due); st=dd<-7?cL(["upcoming","à venir","មិនទាន់ដល់"]):dd<=28?cL(["DUE NOW","À FAIRE","ដល់ពេល"]):cL(["past — check card, catch up if missed","passé — vérifier le carnet, rattraper si oublié","កន្លងហើយ — ពិនិត្យប័ណ្ណ ចាក់តាមក្រោយបើខកខាន"]); }
-      return {c:[v[1],lab(v[0]),due?pgDmy(due):"",v[2],cL(v[3]),st?st+(cL(v[4]).trim()?" · "+cL(v[4]):""):cL(v[4])],small:1,cls:due?(pgDiff(today,due)<-7?"":pgDiff(today,due)<=28?"pgnow":""):""}; });
-    box.appendChild(vxTable([["Vaccine","Vaccin","វ៉ាក់សាំង"],["Age","Âge","អាយុ"],["Due date","Date","ថ្ងៃត្រូវចាក់"],["Dose","Dose","ដូស"],["Route · site","Voie · site","វិធីចាក់ · កន្លែង"],["Status / note","Statut / note","ស្ថានភាព / ចំណាំ"]],rows));
+    var stOf=function(due){ if(!due) return ["",""]; var dd=pgDiff(today,due); return dd<-7?[cL(["upcoming","à venir","មិនទាន់ដល់"]),""]:dd<=28?[cL(["DUE NOW","À FAIRE","ដល់ពេល"]),"pgnow"]:[cL(["past — check card","passé — vérifier le carnet","កន្លងហើយ — ពិនិត្យប័ណ្ណ"]),"pgpast2"]; };
+    var vseg=mk("div","pgnav"); [["age",["📅 By age (visit)","📅 Par âge (visite)","📅 តាមអាយុ (ការមក)"]],["vac",["💉 By vaccine (doses)","💉 Par vaccin (doses)","💉 តាមវ៉ាក់សាំង (ដូស)"]]].forEach(function(m){ var b=mk("button"); b.type="button"; b.textContent=cL(m[1]); b.dataset.k=m[0]; b.setAttribute("aria-pressed",String((VX.view||"age")===m[0])); b.onclick=function(){ VX.view=m[0]; calcVac(); }; vseg.appendChild(b); });
+    box.appendChild(vseg);
+    if((VX.view||"age")==="age"){
+      /* one block per visit age */
+      var ages=[]; VAC_CHILD.forEach(function(v){ if(ages.indexOf(v[0])<0) ages.push(v[0]); });
+      var tbl=mk("table","ctable vacage"), hr=mk("tr"); [["Age · date","Âge · date","អាយុ · ថ្ងៃ"],["Vaccine (dose)","Vaccin (dose)","វ៉ាក់សាំង (ដូស)"],["Protects against","Protège contre","ការពារ"],["Dose · route · site","Dose · voie · site","ដូស · វិធីចាក់ · កន្លែង"]].forEach(function(h){ var th=mk("th"); th.textContent=cL(h); hr.appendChild(th); });
+      var th0=mk("thead"); th0.appendChild(hr); tbl.appendChild(th0); var tb=mk("tbody"); tbl.appendChild(tb);
+      ages.forEach(function(a){ var list=VAC_CHILD.filter(function(v){return v[0]===a;}), due=dob?pgAdd(dob,a):null, st=stOf(due);
+        list.forEach(function(v,i){ var tr=mk("tr"); tr.className=(st[1]||"")+(i===0?" vacfirst":"");
+          if(i===0){ var c0=mk("td","vacage0"); c0.rowSpan=list.length; var b=mk("b"); b.textContent=lab(a); c0.appendChild(b); if(due){ var sm=mk("small"); sm.textContent=pgDmy(due); c0.appendChild(sm); var s2=mk("small","vacst"); s2.textContent=st[0]; c0.appendChild(s2); } tr.appendChild(c0); }
+          var c1=mk("td"), bb=mk("b"); bb.textContent=v[1]; c1.appendChild(bb); var nt=cL(v[4]).trim(); if(nt){ var n1=mk("div","cnote"); n1.textContent=nt; c1.appendChild(n1); }
+          var c2=mk("td","pgwhat"); c2.textContent=vacProt(v[1]); var c3=mk("td","pgwhat"); c3.textContent=v[2]+" · "+cL(v[3]);
+          tr.appendChild(c1); tr.appendChild(c2); tr.appendChild(c3); tb.appendChild(tr); }); });
+      box.appendChild(tbl);
+    } else {
+      /* one block per vaccine with its doses */
+      var groups=[]; VAC_CHILD.forEach(function(v){ var base=v[1].replace(/\s*\d+\b.*$/,"").replace(/\s*\(.*$/,"").trim()||v[1]; if(/^Hepatitis B/.test(v[1])) base="Hepatitis B"; if(/^Pentavalent/.test(v[1])) base="Pentavalent (DTP-HepB-Hib)"; if(/^OPV/.test(v[1])) base="OPV (polio, oral)"; if(/^IPV/.test(v[1])) base="IPV (polio, injection)";
+        var g=groups.find(function(x){return x.name===base;}); if(!g){ g={name:base,doses:[],ref:v[1]}; groups.push(g); } g.doses.push(v); });
+      var wrap=mk("div","vacgrid");
+      groups.forEach(function(g){ var card=mk("div","vaccard"), h=mk("div","vach"), b=mk("b"); b.textContent=g.name; h.appendChild(b); var cnt=mk("span","schip lo"); cnt.textContent=g.doses.length+" "+cL([g.doses.length>1?"doses":"dose",g.doses.length>1?"doses":"dose","ដូស"]); h.appendChild(cnt); card.appendChild(h);
+        var pr=mk("div","vacprot"); pr.textContent="🛡 "+vacProt(g.ref); card.appendChild(pr);
+        var info=mk("div","cnote"); info.textContent=g.doses[0][2]+" · "+cL(g.doses[0][3]); card.appendChild(info);
+        var ol=mk("ol","vacdoses"); g.doses.forEach(function(v,i){ var li=mk("li"), due=dob?pgAdd(dob,v[0]):null, st=stOf(due); li.className=st[1]; li.textContent=cL(["Dose ","Dose ","ដូសទី "])+(i+1)+": "+lab(v[0])+(due?" — "+pgDmy(due)+(st[0]?" ("+st[0]+")":""):""); ol.appendChild(li); });
+        card.appendChild(ol); var nt=cL(g.doses[g.doses.length-1][4]).trim(); if(nt){ var n2=mk("div","cnote"); n2.textContent=nt; card.appendChild(n2); }
+        wrap.appendChild(card); });
+      box.appendChild(wrap);
+    }
     var n=mk("div","cnote"); n.textContent=cL(["Minimum 4 weeks between doses of the same vaccine. Several vaccines can be given on the same day at different sites. Missed doses: give now, do not restart the series. Fever or mild illness is not a reason to delay. Schedule follows WHO / Cambodia NIP — check the current national card.","Intervalle minimal 4 semaines entre doses d'un même vaccin. Plusieurs vaccins le même jour à des sites différents. Dose oubliée : la faire, sans recommencer. Fièvre ou maladie bénigne : pas de report. Calendrier OMS / PNV Cambodge — vérifier la carte nationale.","យ៉ាងតិច ៤ សប្តាហ៍រវាងដូសនៃវ៉ាក់សាំងដដែល។ អាចចាក់ច្រើនមុខថ្ងៃតែមួយ ខុសកន្លែង។ ខកខាន៖ ចាក់ឥឡូវ មិនចាំបាច់ចាប់ផ្តើមឡើងវិញ។ គ្រុនតិចៗ ឬជំងឺស្រាល មិនមែនហេតុផលពន្យារ។ កាលវិភាគតាម WHO / កម្មវិធីជាតិកម្ពុជា — ពិនិត្យប័ណ្ណជាតិបច្ចុប្បន្ន។"]); box.appendChild(n);
   } else if(VX.pop==="preg"){
     vxH(box,"💉 "+cL(["Td schedule in pregnancy (WHO)","Calendrier Td pendant la grossesse (OMS)","កាលវិភាគ Td ពេលមានផ្ទៃពោះ (WHO)"]));
@@ -6784,9 +6842,9 @@ function calcVac(){
     box.appendChild(vxTable([["Dose","Dose","ដូស"],["Date","Date","កាលបរិច្ឆេទ"],["When","Quand","ពេល"],["Protection","Protection","ការពារបាន"]],rows2));
     var n2=mk("div","cnote"); n2.textContent=cL(["Td 0.5 ml IM deltoid. In this pregnancy give at least the next dose (and Td2 if < 2 doses before). Childhood DTP 3 doses = 3 previous doses.","Td 0,5 ml IM deltoïde. Faire au moins la dose suivante (et Td2 si < 2 doses). DTC 3 doses dans l'enfance = 3 doses.","Td 0.5 ml IM ស្មា។ ក្នុងផ្ទៃពោះនេះ ចាក់យ៉ាងហោចណាស់ដូសបន្ទាប់ (និង Td2 បើពីមុន < ២ ដូស)។ DTP ៣ ដូសពេលតូច = ៣ ដូសពីមុន។"]); box.appendChild(n2);
     vxH(box,"🤰 "+cL(["Other vaccines in pregnancy","Autres vaccins pendant la grossesse","វ៉ាក់សាំងផ្សេងពេលមានផ្ទៃពោះ"]));
-    box.appendChild(vxTable([["Vaccine","Vaccin","វ៉ាក់សាំង"],["Dose","Dose","ដូស"],["Route · site","Voie · site","វិធីចាក់ · កន្លែង"],["Note","Note","ចំណាំ"]],VAC_PREG.map(function(v){ return {c:[v[0],v[1],cL(v[2]),cL(v[3])],small:1,cls:/^✕/.test(v[0])?"repbad":""}; })));
+    box.appendChild(vxTable([["Vaccine","Vaccin","វ៉ាក់សាំង"],["Protects against","Protège contre","ការពារ"],["Dose","Dose","ដូស"],["Route · site","Voie · site","វិធីចាក់ · កន្លែង"],["Note","Note","ចំណាំ"]],VAC_PREG.map(function(v){ return {c:[v[0],vacProt(v[0]),v[1],cL(v[2]),cL(v[3])],small:1,cls:/^✕/.test(v[0])?"repbad":""}; })));
   } else if(VX.pop==="adult"){
-    box.appendChild(vxTable([["Vaccine","Vaccin","វ៉ាក់សាំង"],["Dose","Dose","ដូស"],["Route · site","Voie · site","វិធីចាក់ · កន្លែង"],["Who / schedule","Qui / calendrier","អ្នកណា / កាលវិភាគ"]],VAC_ADULT.map(function(v){ return {c:[v[0],v[1],cL(v[2]),cL(v[3])],small:1}; })));
+    box.appendChild(vxTable([["Vaccine","Vaccin","វ៉ាក់សាំង"],["Protects against","Protège contre","ការពារ"],["Dose","Dose","ដូស"],["Route · site","Voie · site","វិធីចាក់ · កន្លែង"],["Who / schedule","Qui / calendrier","អ្នកណា / កាលវិភាគ"]],VAC_ADULT.map(function(v){ return {c:[v[0],vacProt(v[0]),v[1],cL(v[2]),cL(v[3])],small:1}; })));
   } else {
     /* rabies PEP (WHO 2018) */
     vxH(box,"🐕 "+cL(["Rabies post-exposure prophylaxis (WHO 2018)","Prophylaxie post-exposition rage (OMS 2018)","ការការពារក្រោយត្រូវខាំ ឆ្កែឆ្កួត (WHO 2018)"]));
