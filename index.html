@@ -890,6 +890,88 @@ tr.pgpast2 td{color:var(--muted)}
 .ncdres.ok{background:#f0fdf4;border-color:#bbf7d0}.ncdres.ok b{color:#17663a}
 .ncdres.lo{background:var(--paper);color:var(--muted)}
 .ncdres.ref{background:var(--paper)}.ncdres.ref b{color:#0b6e99;font-size:13px}
+
+/* ---------- v66: cleaner app look — header actions, ☰ menu, calculator cards ---------- */
+@media screen{
+:root{--desk:#eef2f7;--rule:#dbe2ee;--shadow:0 1px 2px rgba(27,42,74,.06),0 4px 14px rgba(27,42,74,.06)}
+.topbar{background:linear-gradient(90deg,#16244a,#1f3f9e);box-shadow:0 2px 10px rgba(16,30,70,.25)}
+.nav{border-radius:10px;transition:background .15s,color .15s}
+.nav[aria-pressed="true"]{background:rgba(255,255,255,.18);box-shadow:inset 0 -3px 0 #9fb6ff}
+.btn{border-radius:10px;transition:filter .15s,box-shadow .15s,transform .1s;box-shadow:0 1px 2px rgba(27,42,74,.12)}
+.btn:hover{filter:brightness(1.08)}.btn:active{transform:translateY(1px)}
+.btn.alt{box-shadow:none}.btn.alt:hover{background:var(--pen-soft);filter:none}
+.seg{border-radius:10px}
+.bar{position:relative;background:var(--paper);border:1px solid var(--rule);border-radius:14px;padding:10px;box-shadow:var(--shadow);display:block}
+.bar-main{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.bar-main .tplwrap{flex:1 1 320px}
+.bar-main .tplwrap input{font-size:15.5px;padding:10px 14px;border-radius:12px;border:1.5px solid var(--rule);background:var(--panel)}
+.bar-main .tplwrap input:focus{border-color:var(--pen);background:var(--paper);outline:0;box-shadow:0 0 0 3px var(--pen-soft)}
+.bar-acts{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.bar-acts .btn{padding:9px 14px;white-space:nowrap}
+#printBtn{background:linear-gradient(180deg,#2a4fc0,#1f3f9e);padding-inline:18px}
+.mbtn{display:inline-flex;align-items:center;gap:7px}
+.mbtn .hb{display:inline-flex;flex-direction:column;gap:3px;width:16px}
+.mbtn .hb i{display:block;height:2px;border-radius:2px;background:currentColor;transition:transform .2s,opacity .2s}
+.mbtn[aria-expanded="true"]{background:var(--pen);color:#fff}
+.mbtn[aria-expanded="true"] .hb i:nth-child(1){transform:translateY(5px) rotate(45deg)}
+.mbtn[aria-expanded="true"] .hb i:nth-child(2){opacity:0}
+.mbtn[aria-expanded="true"] .hb i:nth-child(3){transform:translateY(-5px) rotate(-45deg)}
+.rxmenu{position:absolute;z-index:35;right:10px;top:calc(100% + 6px);width:min(560px,calc(100vw - 32px));max-height:calc(100vh - 170px);overflow:auto;
+  background:var(--paper);border:1px solid var(--rule);border-radius:16px;box-shadow:0 18px 50px rgba(16,30,70,.22);padding:8px 14px 14px;animation:rmIn .16s ease-out}
+@keyframes rmIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+.rm-sec{padding:10px 0;border-bottom:1px solid var(--rule)}
+.rm-sec:last-of-type{border-bottom:0}
+.rm-sec h4{margin:0 0 8px;font:700 12.5px var(--kh);color:var(--muted);letter-spacing:.02em}
+.rm-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px}
+.rm-grid .btn{width:100%;text-align:left;padding:10px 12px;border-radius:10px}
+.rm-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px}
+.rm-row select{flex:1 1 200px!important;padding:9px 10px!important;border-radius:10px!important}
+.rxmenu .seg{display:flex;flex-wrap:wrap;width:100%}
+.rxmenu .seg button{flex:1 1 auto;padding:9px 10px}
+.rm-scrim{position:fixed;inset:0;z-index:34;background:rgba(16,30,70,.18)}
+.bar .toast{position:absolute;left:14px;bottom:-22px;flex-basis:auto;pointer-events:none}
+.bar .toast:empty{display:none}
+.bar-main .vseg{border-radius:10px}
+
+/* calculator buttons as cards */
+.toolrow{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:8px;margin:12px 0 2px}
+.toolrow button{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:5px;white-space:normal;text-align:center;
+  padding:10px 6px 9px;border-radius:14px;border:1px solid var(--rule)!important;background:var(--paper);box-shadow:var(--shadow);
+  font:600 12.5px/1.25 var(--kh);transition:transform .12s,box-shadow .12s,border-color .12s}
+.toolrow button i{font-style:normal;font-size:20px;width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:var(--pen-soft)}
+.toolrow button:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(27,42,74,.12);border-color:var(--pen)!important;color:var(--ink)}
+.toolrow button[aria-pressed=true]{background:var(--pen);color:#fff;border-color:var(--pen)!important}
+.toolrow button[aria-pressed=true] i{background:rgba(255,255,255,.2)}
+.toolrow button[data-t=sym] i{background:#e0e7ff}.toolrow button[data-t=ncd] i{background:#fee2e2}
+.toolrow button[data-t=ped] i{background:#fef3c7}.toolrow button[data-t=icu] i{background:#fde2e2}
+.toolrow button[data-t=fluid] i{background:#dbeafe}.toolrow button[data-t=preg] i{background:#fce7f3}
+.toolrow button[data-t=vac] i{background:#dcfce7}.toolrow button[data-t=sti] i{background:#fef9c3}
+
+/* paper & panels */
+.sheet{border-radius:14px;box-shadow:var(--shadow)}
+.tile{border-radius:16px;box-shadow:var(--shadow)}
+.tile:hover{box-shadow:0 10px 24px rgba(27,42,74,.12)}
+.home h2.hello{font-size:24px}
+.drawer{border-radius:0 16px 16px 0}
+
+@media (max-width:900px){ .toolrow{grid-template-columns:repeat(4,minmax(0,1fr))} }
+@media (max-width:640px){
+  .bar{padding:8px;border-radius:12px}
+  .bar-main .tplwrap{flex-basis:100%}
+  .bar-acts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));width:100%;gap:6px}
+  .bar-acts .btn{padding:8px 4px;font-size:12.5px;white-space:normal;line-height:1.2;min-height:42px}
+  .mbtn{justify-content:center}
+  .bar-main .vseg{width:100%}.bar-main .vseg button{flex:1}
+  .rxmenu{position:fixed;left:0;right:0;bottom:0;top:auto;width:auto;max-height:78vh;border-radius:18px 18px 0 0;padding:6px 14px calc(16px + env(safe-area-inset-bottom,0px));animation:rmUp .2s ease-out}
+  .rxmenu::before{content:"";display:block;width:42px;height:4px;border-radius:4px;background:var(--rule);margin:4px auto 4px}
+  .rm-grid{grid-template-columns:1fr 1fr}
+  .toolrow{gap:6px}
+  .toolrow button{padding:8px 2px 7px;font-size:11px;border-radius:12px}
+  .toolrow button i{width:34px;height:34px;font-size:18px;border-radius:10px}
+}
+@keyframes rmUp{from{transform:translateY(30px);opacity:.4}to{transform:none;opacity:1}}
+}
+@media screen{.home-h{margin:22px 0 4px;font:700 15px var(--kh);color:var(--ink)}}
 </style>
 </head>
 <body class="lang-both gated">
@@ -920,6 +1002,8 @@ tr.pgpast2 td{color:var(--muted)}
     <button class="tile" type="button" id="tileSettings"><span class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></span><b>ការកំណត់</b><small>ឈ្មោះគ្លីនិក អាសយដ្ឋាន ទូរស័ព្ទ ក្រដាស និង Backup</small></button>
     <button class="tile" type="button" id="tilePrint"><span class="ic"><svg viewBox="0 0 24 24"><path d="M7 9V3h10v6"/><rect x="3" y="9" width="18" height="8" rx="2"/><path d="M7 14h10v7H7z"/></svg></span><b>បោះពុម្ព</b><small>បោះពុម្ពវេជ្ជបញ្ជាដែលកំពុងបើក</small></button>
   </div>
+  <h3 class="home-h">🧮 ឧបករណ៍គណនា · ជំនួយ</h3>
+  <div class="toolrow" id="homeTools"><button type="button" data-t="sym"><i>🔎</i><span>រោគសញ្ញា → Dx</span></button><button type="button" data-t="ncd"><i>🩺</i><span>លើសឈាម · ទឹកនោមផ្អែម</span></button><button type="button" data-t="ped"><i>👶</i><span>កុមារ</span></button><button type="button" data-t="icu"><i>🏥</i><span>ICU · ម៉ាស៊ីន</span></button><button type="button" data-t="fluid"><i>💧</i><span>សេរ៉ូ</span></button><button type="button" data-t="preg"><i>🤰</i><span>ថ្ងៃគ្រប់ខែ</span></button><button type="button" data-t="vac"><i>💉</i><span>វ៉ាក់សាំង</span></button><button type="button" data-t="sti"><i>🦠</i><span>កាមរោគ · WHO</span></button></div>
 </section>
 
 <!-- Side panel: templates & search -->
@@ -990,38 +1074,53 @@ tr.pgpast2 td{color:var(--muted)}
 <div class="view" id="rxView" hidden>
   <div class="work">
     <div class="bar">
+      <div class="bar-main">
       <div class="tplwrap">
         <input id="tplName" type="text" placeholder="🔍 ស្វែងរក រោគសញ្ញា / រោគវិនិច្ឆ័យ · ឬដាក់ឈ្មោះគំរូ" autocomplete="off" aria-label="ស្វែងរក ឬឈ្មោះគំរូ">
         <div class="tpl-ac" id="tplAc" hidden></div>
       </div>
-      <select id="tplGroup" aria-label="Disease group"></select>
-      <select id="tplCare" aria-label="OPD or IPD"><option value="opd">🩺 OPD ពិគ្រោះក្រៅ</option><option value="ipd">🏥 IPD សម្រាកពេទ្យ</option></select>
       <div class="vseg" id="viewSeg" role="group" aria-label="IPD orders or discharge prescription" hidden>
         <button type="button" data-v="orders">🏥 បញ្ជាការ IPD</button>
         <button type="button" data-v="dis">💊 វេជ្ជបញ្ជាចេញពីពេទ្យ</button>
       </div>
-      <button class="btn" id="saveBtn" type="button">រក្សាទុក</button>
-      <button class="btn alt" id="saveNewBtn" type="button">រក្សាទុកជាថ្មី</button>
-      <button class="btn danger" id="deleteBtn" type="button">លុប</button>
-      <span class="spacer"></span>
-      <span class="seg-label">ការណែនាំ:</span>
-      <div class="seg" role="group" aria-label="Advice language">
+      <div class="bar-acts">
+        <button class="btn alt aibtn" id="aiBtn" type="button" title="ជំនួយការពិនិត្យកំហុស">✨ AI</button>
+        <button class="btn alt" id="newPatientBtn" type="button">👤 អ្នកជំងឺថ្មី</button>
+        <button class="btn" id="printBtn" type="button">🖨 បោះពុម្ព</button>
+        <button class="btn alt mbtn" id="rxMenuBtn" type="button" aria-haspopup="true" aria-expanded="false" title="ម៉ឺនុយ"><span class="hb" aria-hidden="true"><i></i><i></i><i></i></span><span class="ml">ម៉ឺនុយ</span></button>
+      </div>
+      </div>
+      <div class="rxmenu" id="rxMenu" hidden role="menu">
+        <div class="rm-sec"><h4>📄 វេជ្ជបញ្ជា</h4><div class="rm-grid">
+          <button class="btn alt" id="newBtn" type="button">＋ គំរូថ្មី</button>
+          <button class="btn alt" id="payBtn" type="button" aria-pressed="false" title="ការទូទាត់ HEF / NSSF / NPCA">💳 ការទូទាត់</button>
+          <button class="btn alt" id="repBtn" type="button" title="របាយការណ៍អ្នកជំងឺ · NPCA">📊 របាយការណ៍</button>
+        </div></div>
+        <div class="rm-sec"><h4>👁 បង្ហាញ / លាក់</h4><div class="rm-grid">
+          <button class="btn alt" id="peBtn" type="button" aria-pressed="true" title="បង្ហាញ / លាក់ Physical examination">🩺 PE</button>
+          <button class="btn alt" id="soapBtn" type="button" aria-pressed="true" title="បង្ហាញ / លាក់ SOAP note">📝 SOAP</button>
+        </div></div>
+        <div class="rm-sec"><h4>🌐 ភាសាការណែនាំ</h4>
+          <span class="seg-label" hidden>ការណែនាំ:</span>
+          <div class="seg" role="group" aria-label="Advice language">
         <button type="button" data-lang="kh">ខ្មែរ</button>
         <button type="button" data-lang="en">EN</button>
         <button type="button" data-lang="fr">FR</button>
         <button type="button" data-lang="both">EN+ខ្មែរ</button>
         <button type="button" data-lang="frkh">FR+ខ្មែរ</button>
       </div>
-      <button class="btn alt" id="newBtn" type="button">+ ថ្មី</button>
-      <button class="btn alt" id="payBtn" type="button" aria-pressed="false" title="ការទូទាត់ HEF / NSSF / NPCA">💳 ការទូទាត់</button>
-      <button class="btn alt" id="peBtn" type="button" aria-pressed="true" title="បង្ហាញ / លាក់ Physical examination">🩺 PE</button>
-      <button class="btn alt" id="soapBtn" type="button" aria-pressed="true" title="បង្ហាញ / លាក់ SOAP note">📝 SOAP</button>
-      <button class="btn alt aibtn" id="aiBtn" type="button" title="ជំនួយការពិនិត្យកំហុស">✨ AI</button>
-      <button class="btn alt" id="repBtn" type="button" title="របាយការណ៍អ្នកជំងឺ · NPCA">📊</button>
-      <button class="btn alt" id="pregBtn" hidden type="button" title="គណនាថ្ងៃគ្រប់ខែ · EDD · LMP · សប្តាហ៍">🤰</button>
-      <button class="btn alt" id="calcBtn" hidden type="button" title="គណនាដូស · កុមារ · ICU · សេរ៉ូ">🧮 ដូស</button>
-      <button class="btn alt" id="newPatientBtn" type="button">អ្នកជំងឺថ្មី</button>
-      <button class="btn" id="printBtn" type="button">បោះពុម្ព</button>
+        </div>
+        <div class="rm-sec"><h4>💾 គំរូ (ក្រុមជំងឺ · OPD/IPD)</h4><div class="rm-row">
+          <select id="tplGroup" aria-label="Disease group"></select>
+          <select id="tplCare" aria-label="OPD or IPD"><option value="opd">🩺 OPD ពិគ្រោះក្រៅ</option><option value="ipd">🏥 IPD សម្រាកពេទ្យ</option></select>
+        </div><div class="rm-grid">
+          <button class="btn" id="saveBtn" type="button">💾 រក្សាទុក</button>
+          <button class="btn alt" id="saveNewBtn" type="button">រក្សាទុកជាថ្មី</button>
+          <button class="btn danger" id="deleteBtn" type="button">លុប</button>
+        </div></div>
+        <button class="btn alt" id="pregBtn" hidden type="button" title="គណនាថ្ងៃគ្រប់ខែ · EDD · LMP · សប្តាហ៍">🤰</button>
+        <button class="btn alt" id="calcBtn" hidden type="button" title="គណនាដូស · កុមារ · ICU · សេរ៉ូ">🧮 ដូស</button>
+      </div>
       <div class="toast" id="toast" role="status" aria-live="polite"></div>
     </div>
     <div class="toolrow noprint" id="toolRow" role="toolbar" aria-label="Calculators">
@@ -1220,7 +1319,7 @@ tr.pgpast2 td{color:var(--muted)}
       <button type="button" id="gUp">បង្កើតគណនីថ្មី</button>
       <button type="button" id="gReset">ភ្លេចពាក្យសម្ងាត់?</button>
     </div>
-    <p class="gate-note" id="gateNote">ព័ត៌មានអ្នកជំងឺមិនត្រូវបានផ្ញើទៅ cloud ទេ។ · v65</p>
+    <p class="gate-note" id="gateNote">ព័ត៌មានអ្នកជំងឺមិនត្រូវបានផ្ញើទៅ cloud ទេ។ · v66</p>
   </form>
 </div>
 
@@ -1322,7 +1421,7 @@ tr.pgpast2 td{color:var(--muted)}
       <p class="hint">ឯកសារត្រូវមានជួរឈរ៖ ICD 10 · EN · KH · FR។ បញ្ជីនេះរក្សាទុកក្នុង browser ហើយប្រើសម្រាប់ស្វែងរករោគវិនិច្ឆ័យទាំងអស់។</p>
     </fieldset>
     <div class="actions">
-      <span style="margin-right:auto;font:12px var(--body);color:var(--muted)">Rx Clinic v65</span>
+      <span style="margin-right:auto;font:12px var(--body);color:var(--muted)">Rx Clinic v66</span>
       <button class="btn alt" id="settingsClose" type="button">បិទ</button>
       <button class="btn" type="submit">រក្សាទុកការកំណត់</button>
     </div>
@@ -6335,7 +6434,7 @@ var CSTATE={tab:"ped",q:"",str:{},icu:{}};
 function cWt(){ var v=parseFloat(String(($("cWt")&&$("cWt").value)||"").replace(",",".")); return isNaN(v)||v<=0?null:v; }
 function cMgkg(d,w){ return Array.isArray(d[2])?(w<d[2][1]?d[2][0]:d[2][2]):d[2]; }
 function toolRowPaint(){ var lab={ncd:["🩺 BP · diabetes · lipids","🩺 HTA · diabète · lipides","🩺 លើសឈាម · ទឹកនោមផ្អែម"],sym:["🔎 Symptoms → Dx","🔎 Symptômes → Dx","🔎 រោគសញ្ញា → Dx"],ped:["👶 Child","👶 Enfant","👶 កុមារ"],icu:["🏥 ICU infusion","🏥 Réa · IVSE","🏥 ICU · ម៉ាស៊ីន"],fluid:["💧 IV fluids","💧 Solutés","💧 សេរ៉ូ"],preg:["🤰 Pregnancy dates","🤰 Grossesse (terme)","🤰 ថ្ងៃគ្រប់ខែ"],vac:["💉 Vaccines","💉 Vaccins","💉 វ៉ាក់សាំង"],sti:["🦠 STI · WHO","🦠 IST · OMS","🦠 កាមរោគ · WHO"]};
-  var ov=$("calcOv"), open=ov&&!ov.hidden; [].forEach.call(document.querySelectorAll("#toolRow button"),function(b){ b.textContent=cL(lab[b.dataset.t]); b.setAttribute("aria-pressed",String(open&&b.dataset.t===CSTATE.tab)); }); }
+  var ov=$("calcOv"), open=ov&&!ov.hidden; [].forEach.call(document.querySelectorAll("#toolRow button"),function(b){ var L=cL(lab[b.dataset.t]), k=L.indexOf(" "); b.innerHTML=""; var ic=mk("i"); ic.textContent=L.slice(0,k); var sp=mk("span"); sp.textContent=L.slice(k+1); b.appendChild(ic); b.appendChild(sp); b.setAttribute("aria-pressed",String(open&&b.dataset.t===CSTATE.tab)); }); }
 function calcOpen(tab){
   var ov=$("calcOv"); if(!ov){ ov=calcBuild(); }
   if(typeof tab==="string") CSTATE.tab=tab; else if(!CSTATE.opened&&ptMode()==="preg") CSTATE.tab="preg"; CSTATE.opened=1;
@@ -7971,6 +8070,24 @@ function ncdOut2(out,ref){
   }
 }
 
+/* ---------- v66: ☰ menu on the prescription toolbar ---------- */
+(function(){
+  var mb=$("rxMenuBtn"), m=$("rxMenu"); if(!mb||!m) return;
+  var scrim=null;
+  function close(){ if(m.hidden) return; m.hidden=true; mb.setAttribute("aria-expanded","false"); if(scrim){ scrim.remove(); scrim=null; } }
+  function open(){ m.hidden=false; mb.setAttribute("aria-expanded","true");
+    if(window.matchMedia&&window.matchMedia("(max-width:640px)").matches){ scrim=mk("div","rm-scrim"); scrim.onclick=close; document.body.appendChild(scrim); } }
+  mb.addEventListener("click",function(e){ e.stopPropagation(); if(m.hidden) open(); else close(); });
+  document.addEventListener("click",function(e){ if(m.hidden) return; if(e.target.closest&&(e.target.closest("#rxMenu")||e.target.closest("#rxMenuBtn"))) return; close(); });
+  document.addEventListener("keydown",function(e){ if(e.key==="Escape") close(); });
+  /* actions that open a dialog or start something new close the menu; toggles, language and template controls keep it open */
+  ["newBtn","payBtn","repBtn","saveNewBtn"].forEach(function(id){ var b=$(id); if(b) b.addEventListener("click",function(){ setTimeout(close,0); }); });
+  function lab(){ var t={en:"Menu",fr:"Menu",kh:"ម៉ឺនុយ"}, c=document.body.className, l=/\blang-en\b/.test(c)?"en":/\blang-fr\b/.test(c)?"fr":"kh"; var s=mb.querySelector(".ml"); if(s) s.textContent=t[l]||t.kh; }
+  lab();
+  [].forEach.call(document.querySelectorAll(".seg button"),function(b){ b.addEventListener("click",function(){ setTimeout(lab,0); }); });
+})();
+/* v66: calculator shortcuts on the home page */
+[].forEach.call(document.querySelectorAll("#homeTools button"),function(b){ b.onclick=function(){ go("rx"); calcOpen(b.dataset.t); }; });
 /* ---------- PE / medical history / evaluation / SOAP follow the language buttons (ខ្មែរ · EN · FR · EN+ខ្មែរ · FR+ខ្មែរ) ---------- */
 var TRX={"General Appearance":["Aspect général","រូបរាងទូទៅ"],"ENT (ORL)":["ORL","ត្រចៀក ច្រមុះ បំពង់ក"],"Cardiovascular System":["Appareil cardiovasculaire","បេះដូង និងសរសៃឈាម"],"Respiratory System":["Appareil respiratoire","ប្រព័ន្ធដង្ហើម"],"Gastro-Intestinal System":["Appareil digestif","ប្រព័ន្ធរំលាយអាហារ"],"Central Nervous System":["Système nerveux central","ប្រព័ន្ធប្រសាទកណ្តាល"],"Skin & Extremities":["Peau et extrémités","ស្បែក និងចុងដៃជើង"],"Urogenital System":["Appareil uro-génital","ប្រព័ន្ធទឹកនោម និងប្រដាប់បន្តពូជ"],"Mental Status":["État mental","ស្ថានភាពផ្លូវចិត្ត"],"Other body parts":["Autres","ផ្នែកផ្សេងៗ"],"Vaccine":["Vaccins","វ៉ាក់សាំង"],"Past Medical":["Antécédents médicaux","ជំងឺធ្លាប់មាន"],"Past Operation":["Antécédents chirurgicaux","ធ្លាប់វះកាត់"],"Family History":["Antécédents familiaux","ប្រវត្តិគ្រួសារ"],"Social History":["Mode de vie","ប្រវត្តិសង្គម"],"Other":["Autres","ផ្សេងៗ"],"Allergy":["Allergies","អាឡែកហ្ស៊ី"],"EPI complete":["PEV complet","វ៉ាក់សាំង PEV គ្រប់"],"Not up to date":["Pas à jour","មិនទាន់គ្រប់"],"COVID-19 vaccinated":["Vacciné COVID-19","បានចាក់វ៉ាក់សាំង COVID-19"],"Tetanus up to date":["Tétanos à jour","វ៉ាក់សាំងតេតាណូសគ្រប់"],"Hepatitis B vaccinated":["Vacciné hépatite B","បានចាក់វ៉ាក់សាំងរលាកថ្លើម B"],"Unknown":["Inconnu","មិនដឹង"],"Hypertension":["HTA","លើសសម្ពាធឈាម"],"Diabetes":["Diabète","ទឹកនោមផ្អែម"],"Asthma":["Asthme","ហឺត"],"COPD":["BPCO","COPD"],"Heart disease":["Cardiopathie","ជំងឺបេះដូង"],"Stroke":["AVC","ស្ទះសរសៃឈាមខួរក្បាល"],"Tuberculosis":["Tuberculose","របេង"],"Hepatitis B":["Hépatite B","រលាកថ្លើម B"],"Gastritis / ulcer":["Gastrite / ulcère","រលាកក្រពះ / ដំបៅក្រពះ"],"Kidney disease":["Maladie rénale","ជំងឺតម្រងនោម"],"Epilepsy":["Épilepsie","ឆ្កួតជ្រូក"],"None":["Aucun","គ្មាន"],"Appendectomy":["Appendicectomie","វះខ្នែងពោះវៀន"],"Caesarean section":["Césarienne","វះកាត់យកកូន"],"Cholecystectomy":["Cholécystectomie","វះកាត់ថង់ទឹកប្រមាត់"],"Hernia repair":["Cure de hernie","វះជួសជុលក្លូន"],"Fracture fixation":["Ostéosynthèse","វះកាត់ភ្ជាប់ឆ្អឹងបាក់"],"Cancer":["Cancer","មហារីក"],"Thalassaemia":["Thalassémie","ថាឡាសេមី"],"Non-smoker":["Non-fumeur","មិនជក់បារី"],"Smoker":["Fumeur","ជក់បារី"],"Ex-smoker":["Ex-fumeur","ធ្លាប់ជក់បារី"],"Alcohol occasionally":["Alcool occasionnel","ផឹកស្រាម្តងម្កាល"],"Alcohol daily":["Alcool quotidien","ផឹកស្រារាល់ថ្ងៃ"],"Farmer":["Agriculteur","កសិករ"],"Office worker":["Employé de bureau","បុគ្គលិកការិយាល័យ"],"Student":["Étudiant","សិស្ស / និស្សិត"],"Pregnant / breastfeeding":["Enceinte / allaitante","មានផ្ទៃពោះ / បំបៅដោះ"],"Current medicines: …":["Traitement en cours : …","ថ្នាំកំពុងប្រើ៖ …"],"Traditional medicine use":["Médecine traditionnelle","ប្រើថ្នាំបុរាណ"],"NKDA (no known drug allergy)":["Pas d'allergie médicamenteuse connue","គ្មានអាឡែកហ្ស៊ីថ្នាំ"],"Penicillin":["Pénicilline","Penicillin"],"Sulfa":["Sulfamides","Sulfa"],"NSAIDs / Aspirin":["AINS / Aspirine","NSAID / Aspirin"],"Cephalosporin":["Céphalosporines","Cephalosporin"],"Seafood":["Fruits de mer","គ្រឿងសមុទ្រ"],"Alert":["Éveillé","ភ្ញាក់ដឹងខ្លួន"],"oriented":["orienté","ស្គាល់ពេល ទីកន្លែង មនុស្ស"],"not in distress":["pas de détresse","មិនមានទុក្ខលំបាក"],"well hydrated":["bien hydraté","មានជាតិទឹកគ្រប់គ្រាន់"],"no pallor":["pas de pâleur","មិនស្លេក"],"no jaundice":["pas d'ictère","មិនលឿង"],"Ill-looking":["Aspect malade","មើលទៅឈឺ"],"In pain":["Douloureux","ឈឺចាប់"],"Lethargic":["Léthargique","ល្ហិតល្ហៃ"],"Pale":["Pâle","ស្លេក"],"Jaundiced":["Ictérique","លឿង"],"Dehydrated (sunken eyes":["Déshydraté (yeux enfoncés","ខ្វះជាតិទឹក (ភ្នែកស្រុត"],"dry mucosa)":["muqueuses sèches)","ភ្នាសស្ងួត)"],"Cyanosis":["Cyanose","ស្វាយ"],"Flushed / febrile":["Rouge / fébrile","ក្រហម / ក្តៅខ្លួន"],"Malnourished":["Dénutri","កង្វះអាហារូបត្ថម្ភ"],"Obese":["Obèse","ធាត់លើស"],"Ears":["Oreilles","ត្រចៀក"],"nose and throat normal":["nez et gorge normaux","ច្រមុះ និងបំពង់កធម្មតា"],"tonsils not enlarged":["amygdales non hypertrophiées","ទន្សិលមិនធំ"],"no cervical lymph nodes":["pas d'adénopathie cervicale","គ្មានកូនកណ្តុរក"],"Pharynx red":["Pharynx rouge","បំពង់កក្រហម"],"Tonsils enlarged with exudate":["Amygdales hypertrophiées avec exsudat","ទន្សិលធំមានខ្ទុះស"],"Tympanic membrane red / bulging":["Tympan rouge / bombé","ក្រដាសត្រចៀកក្រហម / ប៉ោង"],"Ear discharge":["Otorrhée","ហូរខ្ទុះត្រចៀក"],"Nasal discharge":["Rhinorrhée","ហៀរសំបោរ"],"Nasal congestion":["Obstruction nasale","តឹងច្រមុះ"],"Cervical lymph nodes enlarged":["Adénopathies cervicales","កូនកណ្តុរកធំ"],"Oral ulcers":["Ulcérations buccales","ដំបៅមាត់"],"Dental caries / abscess":["Carie / abcès dentaire","ធ្មេញពុក / អាប់សេធ្មេញ"],"S1 S2 regular":["B1 B2 réguliers","S1 S2 ទៀងទាត់"],"no murmur":["pas de souffle","គ្មានសូរ murmur"],"CRT < 2 s":["TRC < 2 s","CRT < 2 វិនាទី"],"peripheral pulses normal":["pouls périphériques normaux","ជីពចរដៃជើងធម្មតា"],"Tachycardia":["Tachycardie","បេះដូងដើរលឿន"],"Bradycardia":["Bradycardie","បេះដូងដើរយឺត"],"Irregular rhythm":["Rythme irrégulier","ចង្វាក់មិនទៀង"],"Murmur":["Souffle","សូរ murmur"],"CRT > 2 s":["TRC > 2 s","CRT > 2 វិនាទី"],"Weak peripheral pulses":["Pouls périphériques faibles","ជីពចរដៃជើងខ្សោយ"],"Raised JVP":["Turgescence jugulaire","សរសៃករីកធំ (JVP ខ្ពស់)"],"Leg oedema":["Œdème des membres inférieurs","ហើមជើង"],"Normal breath sounds both sides":["Murmure vésiculaire normal des deux côtés","សូរដង្ហើមធម្មតាទាំងសងខាង"],"no crackles":["pas de crépitants","គ្មានសូរក្រេបៗ"],"no wheeze":["pas de sibilants","គ្មានសូរហួច"],"no chest indrawing":["pas de tirage","គ្មានទ្រូងស្រុត"],"Tachypnoea":["Polypnée","ដកដង្ហើមញាប់"],"Chest indrawing":["Tirage","ទ្រូងស្រុត"],"Wheeze":["Sibilants","សូរហួច"],"Crackles right base":["Crépitants base droite","សូរក្រេបៗបាតសួតស្តាំ"],"Crackles left base":["Crépitants base gauche","សូរក្រេបៗបាតសួតឆ្វេង"],"Reduced air entry":["Diminution du murmure vésiculaire","ខ្យល់ចូលថយ"],"Bronchial breathing":["Souffle tubaire","សូរដង្ហើមបំពង់"],"Dull to percussion":["Matité à la percussion","គោះសូរស្ងួត"],"Accessory muscle use":["Mise en jeu des muscles accessoires","ប្រើសាច់ដុំជំនួយដកដង្ហើម"],"Abdomen soft":["Abdomen souple","ពោះទន់"],"non-tender":["indolore","មិនឈឺពេលស្ទាប"],"no organomegaly":["pas d'organomégalie","សរីរាង្គមិនធំ"],"bowel sounds normal":["bruits intestinaux normaux","សូរពោះវៀនធម្មតា"],"Epigastric tenderness":["Sensibilité épigastrique","ឈឺត្រង់ក្រពះពេលស្ទាប"],"Right iliac fossa tenderness":["Sensibilité de la fosse iliaque droite","ឈឺពោះក្រោមខាងស្តាំពេលស្ទាប"],"Right upper quadrant tenderness":["Sensibilité de l'hypochondre droit","ឈឺពោះលើខាងស្តាំពេលស្ទាប"],"Guarding / rebound":["Défense / rebond","ពោះរឹងការពារ / ឈឺពេលលែងដៃ"],"Distended":["Distendu","ពោះប៉ោង"],"Hepatomegaly":["Hépatomégalie","ថ្លើមធំ"],"Splenomegaly":["Splénomégalie","លំពែងធំ"],"Ascites":["Ascite","ទឹកក្នុងពោះ"],"Hyperactive bowel sounds":["Bruits intestinaux augmentés","សូរពោះវៀនខ្លាំង"],"Absent bowel sounds":["Silence abdominal","គ្មានសូរពោះវៀន"],"Conscious":["Conscient","ដឹងខ្លួន"],"GCS 15/15":["GCS 15/15","GCS 15/15"],"no focal deficit":["pas de déficit focal","គ្មានការខ្សោយផ្នែកណាមួយ"],"no neck stiffness":["pas de raideur de nuque","កមិនរឹង"],"GCS < 15":["GCS < 15","GCS < 15"],"Neck stiffness":["Raideur de nuque","រឹងក"],"Kernig / Brudzinski positive":["Kernig / Brudzinski positif","Kernig / Brudzinski វិជ្ជមាន"],"Focal weakness":["Déficit moteur focal","ខ្សោយផ្នែកណាមួយ"],"Facial palsy":["Paralysie faciale","ខ្វិនមុខ"],"Confusion":["Confusion","វង្វេង"],"Convulsion":["Convulsion","ប្រកាច់"],"Abnormal reflexes":["Réflexes anormaux","រ៉េផ្លិចមិនធម្មតា"],"Skin normal":["Peau normale","ស្បែកធម្មតា"],"no rash":["pas d'éruption","គ្មានកន្ទួល"],"no oedema":["pas d'œdème","មិនហើម"],"joints normal":["articulations normales","សន្លាក់ធម្មតា"],"Maculopapular rash":["Éruption maculo-papuleuse","កន្ទួលក្រហម"],"Petechiae":["Pétéchies","ចំណុចឈាមក្រោមស្បែក"],"Tourniquet test positive":["Test du garrot positif","តេស្ត Tourniquet វិជ្ជមាន"],"Urticaria":["Urticaire","កន្ទួលរមាស់ (Urticaria)"],"Wound / laceration":["Plaie / lacération","របួស / របួសដាច់"],"Cellulitis":["Cellulite","រលាកស្បែក និងជាលិកា"],"Abscess":["Abcès","អាប់សេ"],"Vesicles":["Vésicules","ពងទឹក"],"Joint swelling":["Gonflement articulaire","ហើមសន្លាក់"],"No costovertebral angle tenderness":["Pas de douleur à l'ébranlement lombaire","មិនឈឺត្រង់តម្រងនោមពេលគោះ"],"no suprapubic tenderness":["pas de sensibilité sus-pubienne","មិនឈឺពោះក្រោមពេលស្ទាប"],"Costovertebral angle tenderness":["Douleur à l'ébranlement lombaire","ឈឺត្រង់តម្រងនោមពេលគោះ"],"Suprapubic tenderness":["Sensibilité sus-pubienne","ឈឺពោះក្រោមពេលស្ទាប"],"Urethral discharge":["Écoulement urétral","ហូរខ្ទុះបង្ហួរនោម"],"Vaginal discharge":["Leucorrhées","ធ្លាក់ស"],"Genital ulcer":["Ulcération génitale","ដំបៅប្រដាប់ភេទ"],"Scrotal swelling":["Tuméfaction scrotale","ហើមពងស្វាស"],"Calm":["Calme","ស្ងប់"],"oriented to time":["orienté dans le temps","ស្គាល់ពេលវេលា"],"place and person":["l'espace et les personnes","ទីកន្លែង និងមនុស្ស"],"normal mood and speech":["humeur et discours normaux","អារម្មណ៍ និងការនិយាយធម្មតា"],"Anxious":["Anxieux","ថប់បារម្ភ"],"Low mood":["Humeur triste","អារម្មណ៍ធ្លាក់ចុះ"],"Agitated":["Agité","រំជើបរំជួល"],"Disoriented":["Désorienté","វង្វេងស្មារតី"],"Hallucinations":["Hallucinations","ការយល់ឃើញខុស"],"Suicidal ideation — assess risk":["Idées suicidaires — évaluer le risque","គំនិតចង់ធ្វើអត្តឃាត — វាយតម្លៃហានិភ័យ"],"Nothing abnormal detected":["Rien d'anormal","គ្មានអ្វីមិនធម្មតា"],"Conjunctiva red":["Conjonctive rouge","ស្រោមភ្នែកក្រហម"],"Eyes jaundiced":["Ictère conjonctival","ភ្នែកលឿង"],"Thyroid enlarged":["Goitre","ក្រពេញទីរ៉ូអ៊ីតធំ"],"Breast lump":["Nodule mammaire","ដុំក្នុងដោះ"],"Pregnant uterus":["Utérus gravide","ស្បូនមានផ្ទៃពោះ"],"fundal height ... cm":["hauteur utérine ... cm","កម្ពស់ស្បូន ... cm"],"Lymph nodes enlarged":["Adénopathies","កូនកណ្តុរធំ"],"Febrile":["Fébrile","ក្តៅខ្លួន"],"ill-looking":["aspect malade","មើលទៅឈឺ"],"crackles at lung base":["crépitants aux bases","សូរក្រេបៗបាតសួត"],"reduced air entry":["diminution du murmure vésiculaire","ខ្យល់ចូលថយ"],"bilateral wheeze and fine crackles":["sibilants et crépitants fins bilatéraux","សូរហួច និងសូរក្រេបៗទាំងសងខាង"],"Bilateral expiratory wheeze":["Sibilants expiratoires bilatéraux","សូរហួចពេលដកដង្ហើមចេញទាំងសងខាង"],"prolonged expiration":["expiration prolongée","ដកដង្ហើមចេញយូរ"],"Scattered rhonchi":["Ronchi diffus","សូររ៉ូនស៊ីរាយប៉ាយ"],"Weight loss":["Amaigrissement","ស្រកទម្ងន់"],"crackles at apex":["crépitants au sommet","សូរក្រេបៗកំពូលសួត"],"Nasal congestion with clear discharge":["Obstruction nasale avec rhinorrhée claire","តឹងច្រមុះ ហៀរសំបោរថ្លា"],"pharynx mildly red":["pharynx légèrement rouge","បំពង់កក្រហមបន្តិច"],"Purulent nasal discharge":["Rhinorrhée purulente","សំបោរមានខ្ទុះ"],"tenderness over maxillary sinuses":["sensibilité des sinus maxillaires","ឈឺពេលចុចលើប្រហោងឆ្អឹងថ្ពាល់"],"tonsils enlarged with exudate":["amygdales hypertrophiées avec exsudat","ទន្សិលធំមានខ្ទុះស"],"tender cervical lymph nodes":["adénopathies cervicales sensibles","កូនកណ្តុរកឈឺ"],"Tympanic membrane red and bulging":["Tympan rouge et bombé","ក្រដាសត្រចៀកក្រហម និងប៉ោង"],"Ear canal swollen and tender":["Conduit auditif œdématié et douloureux","ប្រឡាយត្រចៀកហើម និងឈឺ"],"pain on pulling the pinna":["douleur à la traction du pavillon","ឈឺពេលទាញស្លឹកត្រចៀក"],"Ear canal blocked by wax":["Bouchon de cérumen","ប្រឡាយត្រចៀកស្ទះដោយអាចម៍ត្រចៀក"],"Bleeding from anterior nasal septum":["Saignement de la cloison nasale antérieure","ហូរឈាមពីជញ្ជាំងច្រមុះខាងមុខ"],"Dental caries with gum swelling and tenderness":["Carie avec gencive gonflée et douloureuse","ធ្មេញពុក អញ្ចាញហើម និងឈឺ"],"Shallow painful oral ulcers":["Ulcérations buccales superficielles douloureuses","ដំបៅមាត់រាក់ៗ ឈឺ"],"White plaques on oral mucosa":["Plaques blanches sur la muqueuse buccale","ស្នាមសៗលើភ្នាសមាត់"],"Vesicles on palms and soles":["Vésicules palmo-plantaires","ពងទឹកលើបាតដៃ បាតជើង"],"flushed":["rouge","ក្រហម"],"Flushed skin":["Peau rouge","ស្បែកក្រហម"],"petechiae":["pétéchies","ចំណុចឈាមក្រោមស្បែក"],"tourniquet test positive":["test du garrot positif","តេស្ត Tourniquet វិជ្ជមាន"],"Mild abdominal tenderness":["Sensibilité abdominale légère","ឈឺពោះបន្តិចពេលស្ទាប"],"no ascites":["pas d'ascite","គ្មានទឹកក្នុងពោះ"],"pale":["pâle","ស្លេក"],"Diffuse abdominal tenderness":["Sensibilité abdominale diffuse","ឈឺពោះទូទាំងពេលស្ទាប"],"hepatosplenomegaly":["hépatosplénomégalie","ថ្លើម និងលំពែងធំ"],"lethargic":["léthargique","ល្ហិតល្ហៃ"],"Conjunctival suffusion":["Hyperhémie conjonctivale","ស្រោមភ្នែកក្រហម"],"calf muscle tenderness":["douleur des mollets","ឈឺសាច់ដុំកំភួនជើង"],"Vesicles at different stages":["Vésicules d'âges différents","ពងទឹកច្រើនដំណាក់កាល"],"mostly on trunk":["surtout sur le tronc","ភាគច្រើននៅដងខ្លួន"],"Painful grouped vesicles along one dermatome":["Vésicules groupées douloureuses sur un dermatome","ពងទឹកជាចង្កោមឈឺ តាមសរសៃប្រសាទមួយ"],"Mild dehydration":["Déshydratation légère","ខ្វះជាតិទឹកស្រាល"],"dry mucosa":["muqueuses sèches","ភ្នាសស្ងួត"],"mild diffuse tenderness":["sensibilité diffuse légère","ឈឺពោះទូទាំងបន្តិច"],"sunken eyes":["yeux enfoncés","ភ្នែកស្រុត"],"skin pinch goes back very slowly":["pli cutané persistant","ស្បែកចាប់ឡើងត្រឡប់យឺតខ្លាំង"],"weak pulse":["pouls faible","ជីពចរខ្សោយ"],"Lower abdominal tenderness":["Sensibilité du bas-ventre","ឈឺពោះក្រោមពេលស្ទាប"],"hyperactive bowel sounds":["bruits intestinaux augmentés","សូរពោះវៀនខ្លាំង"],"no guarding":["pas de défense","មិនរឹងការពារ"],"Diffuse cramping tenderness":["Sensibilité diffuse à type de crampes","ឈឺចុកពោះទូទាំង"],"no guarding or rebound":["pas de défense ni de rebond","មិនរឹងការពារ មិនឈឺពេលលែងដៃ"],"Soft abdomen":["Abdomen souple","ពោះទន់"],"stool palpable in left iliac fossa":["selles palpables en fosse iliaque gauche","ស្ទាបឃើញលាមកពោះក្រោមខាងឆ្វេង"],"Perianal: external haemorrhoids":["Région périanale : hémorroïdes externes","ជុំវិញរន្ធគូទ៖ ឫសដូងបាតខាងក្រៅ"],"Soft":["Souple","ទន់"],"mild periumbilical tenderness":["légère sensibilité périombilicale","ឈឺបន្តិចជុំវិញផ្ចិត"],"Tender hepatomegaly":["Hépatomégalie douloureuse","ថ្លើមធំ ឈឺពេលស្ទាប"],"no costovertebral angle tenderness":["pas de douleur à l'ébranlement lombaire","មិនឈឺត្រង់តម្រងនោមពេលគោះ"],"Cervical motion tenderness":["Douleur à la mobilisation du col","ឈឺពេលកម្រើកមាត់ស្បូន"],"lower abdominal tenderness":["sensibilité du bas-ventre","ឈឺពោះក្រោមពេលស្ទាប"],"BP raised":["TA élevée","សម្ពាធឈាមខ្ពស់"],"heart sounds normal":["bruits du cœur normaux","សូរបេះដូងធម្មតា"],"Brisk reflexes":["Réflexes vifs","រ៉េផ្លិចខ្លាំង"],"Oedema of face and hands":["Œdème du visage et des mains","ហើមមុខ និងដៃ"],"Sweating":["Sueurs","បែកញើស"],"confused":["confus","វង្វេង"],"Pale conjunctiva and palms":["Conjonctives et paumes pâles","ស្រោមភ្នែក និងបាតដៃស្លេក"],"Soft systolic flow murmur":["Souffle systolique fonctionnel","សូរ murmur systolic ស្រាល"],"Urticarial wheals":["Papules urticariennes","កន្ទួលរមាស់ប៉ោងៗ"],"Distressed":["En détresse","មានទុក្ខលំបាក"],"Generalised urticaria":["Urticaire généralisée","កន្ទួលរមាស់ពេញខ្លួន"],"Hypotension":["Hypotension","សម្ពាធឈាមទាប"],"tachycardia":["tachycardie","បេះដូងដើរលឿន"],"Papules and burrows on hands":["Papules et sillons sur les mains","គ្រាប់ និងផ្លូវកមលើដៃ"],"wrists":["poignets","កដៃ"],"waist":["taille","ចង្កេះ"],"Annular scaly plaque with raised edge":["Plaque annulaire squameuse à bordure surélevée","ស្នាមរង្វង់មានស្រកា គែមលើក"],"Honey-coloured crusted lesions":["Lésions croûteuses mélicériques","ដំបៅមានក្រមរពណ៌ទឹកឃ្មុំ"],"Warm":["Chaud","ក្តៅ"],"red":["rouge","ក្រហម"],"tender swelling with ill-defined edge":["tuméfaction douloureuse à bords mal limités","ហើមឈឺ គែមមិនច្បាស់"],"Fluctuant tender swelling":["Tuméfaction fluctuante douloureuse","ហើមទន់មានខ្ទុះ និងឈឺ"],"Comedones and inflamed papules on face":["Comédons et papules inflammatoires du visage","មុន និងគ្រាប់រលាកលើមុខ"],"Erythematous scaly itchy patches":["Plaques érythémato-squameuses prurigineuses","ស្នាមក្រហមមានស្រកា រមាស់"],"Burn wound":["Brûlure","របួសរលាក"],"blistering":["phlyctènes","ពងទឹក"],"Fang marks with local swelling":["Traces de crochets avec œdème local","ស្នាមចង្កូមពស់ ហើមកន្លែងខាំ"],"Bite wound":["Plaie de morsure","របួសសត្វខាំ"],"Laceration":["Lacération","របួសដាច់"],"clean edges":["bords nets","គែមស្អាត"],"Ingrown toenail with inflamed nail fold":["Ongle incarné avec bourrelet inflammatoire","ក្រចកដុះចូលសាច់ រលាកជុំវិញ"],"Mobile subcutaneous cyst with punctum":["Kyste sous-cutané mobile avec orifice","ដុំគីសក្រោមស្បែកកម្រើកបាន មានរន្ធ"],"Puncture wound":["Plaie punctiforme","របួសមុត"],"foreign body felt":["corps étranger palpable","ស្ទាបឃើញវត្ថុចម្លែក"],"Swelling and tenderness over lateral ankle":["Gonflement et douleur de la malléole externe","ហើម និងឈឺកជើងខាងក្រៅ"],"able to bear weight":["appui possible","អាចឈរដាក់ទម្ងន់បាន"],"Swelling and tenderness at injury site":["Gonflement et douleur au site du traumatisme","ហើម និងឈឺកន្លែងរបួស"],"Paraspinal muscle tenderness":["Contracture paravertébrale","ឈឺសាច់ដុំក្បែរឆ្អឹងខ្នង"],"straight leg raise negative":["Lasègue négatif","តេស្តលើកជើងត្រង់អវិជ្ជមាន"],"Paraspinal neck muscle tenderness":["Contracture paravertébrale cervicale","ឈឺសាច់ដុំក"],"normal power":["force normale","កម្លាំងធម្មតា"],"Knee crepitus":["Craquements du genou","ជង្គង់មានសូរក្រេប"],"no effusion":["pas d'épanchement","គ្មានទឹកក្នុងសន្លាក់"],"Red":["Rouge","ក្រហម"],"hot":["chaud","ក្តៅ"],"swollen joint":["articulation gonflée","សន្លាក់ហើម"],"Positive Dix-Hallpike":["Dix-Hallpike positif","តេស្ត Dix-Hallpike វិជ្ជមាន"],"Lower motor neurone facial palsy":["Paralysie faciale périphérique","ខ្វិនមុខប្រភេទ LMN"],"forehead involved":["front atteint","ថ្ងាសក៏ខ្វិនដែរ"],"Post-ictal drowsiness":["Somnolence post-critique","ងងុយក្រោយប្រកាច់"],"Kernig positive":["Kernig positif","Kernig វិជ្ជមាន"],"Conjunctiva red with discharge":["Conjonctive rouge avec sécrétions","ស្រោមភ្នែកក្រហម មានអាចម៍ភ្នែក"],"vision normal":["acuité visuelle normale","មើលឃើញធម្មតា"],"Tender swelling of eyelid margin":["Tuméfaction douloureuse du bord palpébral","ហើមឈឺគែមត្របកភ្នែក"],"low mood":["humeur triste","អារម្មណ៍ធ្លាក់ចុះ"],"fetal heart present":["BCF présents","មានចង្វាក់បេះដូងទារក"],"Uterus soft and boggy":["Utérus mou et mal rétracté","ស្បូនទន់ មិនរួញ"],"heavy vaginal bleeding":["saignement vaginal abondant","ហូរឈាមច្រើនតាមទ្វារមាស"],"Breast red":["Sein rouge","ដោះក្រហម"],"warm and tender":["chaud et douloureux","ក្តៅ និងឈឺ"]};
 var TRX_REV={}; Object.keys(TRX).forEach(function(en){ TRX_REV[fold(en)]=en; TRX_REV[fold(TRX[en][0])]=TRX_REV[fold(TRX[en][0])]||en; TRX_REV[fold(TRX[en][1])]=TRX_REV[fold(TRX[en][1])]||en; });
