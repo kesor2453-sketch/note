@@ -1619,7 +1619,7 @@ body.rm-open #rxView .bar{z-index:35}
       <button type="button" id="gUp">បង្កើតគណនីថ្មី</button>
       <button type="button" id="gReset">ភ្លេចពាក្យសម្ងាត់?</button>
     </div>
-    <p class="gate-note" id="gateNote">ព័ត៌មានអ្នកជំងឺមិនត្រូវបានផ្ញើទៅ cloud ទេ។ · v90</p>
+    <p class="gate-note" id="gateNote">ព័ត៌មានអ្នកជំងឺមិនត្រូវបានផ្ញើទៅ cloud ទេ។ · v91</p>
   </form>
 </div>
 
@@ -1721,7 +1721,7 @@ body.rm-open #rxView .bar{z-index:35}
       <p class="hint">ឯកសារត្រូវមានជួរឈរ៖ ICD 10 · EN · KH · FR។ បញ្ជីនេះរក្សាទុកក្នុង browser ហើយប្រើសម្រាប់ស្វែងរករោគវិនិច្ឆ័យទាំងអស់។</p>
     </fieldset>
     <div class="actions">
-      <span style="margin-right:auto;font:12px var(--body);color:var(--muted)">Rx Clinic v90</span>
+      <span style="margin-right:auto;font:12px var(--body);color:var(--muted)">Rx Clinic v91</span>
       <button class="btn alt" id="settingsClose" type="button">បិទ</button>
       <button class="btn" type="submit">រក្សាទុកការកំណត់</button>
     </div>
@@ -5907,10 +5907,13 @@ function startSync(role){
         x.onclick=function(){cref().collection("members").doc(d.id).delete().catch(fbErr);}; row.appendChild(n); row.appendChild(x); box.appendChild(row);});
     },function(){});
   }
+  /* v91: the data listeners do not fire when only the "from cache" flag changes, so the status could stay on "no internet" while online — watch the clinic document's metadata instead */
+  CLOUD.srvOk=false;
+  try{ CLOUD.unsub.push(cref().onSnapshot({includeMetadataChanges:true},function(d){ CLOUD.srvOk=!(d.metadata&&d.metadata.fromCache); syncedMsg(!CLOUD.srvOk); },function(){})); }catch(e){}
   setCloud("wait","កំពុងទាញទិន្នន័យ…");
 }
 function syncedMsg(fromCache){
-  if(!(CLOUD.ready.templates&&CLOUD.ready.stock)) return;
+  if(!(CLOUD.ready.templates&&CLOUD.ready.stock)) return; if(fromCache&&CLOUD.srvOk) fromCache=false;
   setCloud(fromCache?"wait":"on",(fromCache?"គ្មានអ៊ីនធឺណិត · កំពុងប្រើទិន្នន័យដែលបានរក្សាទុក · ":"ភ្ជាប់ហើយ · ")+"គ្លីនិក “"+CLOUD.clinic+"” · "+(CLOUD.role==="owner"?"ម្ចាស់":"សមាជិក")+" · "+(CLOUD.user.email||""));
 }
 function renderStockTile(){ if($("tileStock")){var out=stock.filter(needsBuy).length; $("tileStock").textContent=stock.length?("ថ្នាំ "+stock.length+" មុខ · ត្រូវទិញ "+out+" មុខ"):"បញ្ជីថ្នាំក្នុងស្តុក";} }
