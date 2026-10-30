@@ -1260,6 +1260,7 @@ body.rm-open #rxView .bar{z-index:35}
 .ecoli{display:grid;grid-template-columns:auto 1fr;gap:0 10px;text-align:left;border:1px solid #e1e5ee;background:#fff;border-radius:8px;padding:6px 10px;cursor:pointer;color:#111}
 .ecoli small{grid-column:2;color:#667}.ecoli:hover{background:#f3f6fc}
 .tile.t-eco .ic{background:#e8eefc}
+.ecotw{font-weight:700;color:#1d3a8a;margin:8px 0 2px 112px;border-bottom:1px solid #dbe2f0}.ecot2{margin-top:10px;border-color:#9fb3e0;background:#f8faff}.ecot2 legend{font-size:14px}
 .ecogrid{grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important}.ecocol,.ecores,.ecoimgs{min-width:0}
 .ecomain{grid-template-columns:minmax(200px,30%) minmax(0,1fr)}.ecou{min-width:0;max-width:92px;font-size:12.5px;line-height:1.2}
 .ecogrid .ecol{flex-basis:104px}
@@ -1617,7 +1618,7 @@ body.rm-open #rxView .bar{z-index:35}
       <button type="button" id="gUp">បង្កើតគណនីថ្មី</button>
       <button type="button" id="gReset">ភ្លេចពាក្យសម្ងាត់?</button>
     </div>
-    <p class="gate-note" id="gateNote">ព័ត៌មានអ្នកជំងឺមិនត្រូវបានផ្ញើទៅ cloud ទេ។ · v82</p>
+    <p class="gate-note" id="gateNote">ព័ត៌មានអ្នកជំងឺមិនត្រូវបានផ្ញើទៅ cloud ទេ។ · v83</p>
   </form>
 </div>
 
@@ -1719,7 +1720,7 @@ body.rm-open #rxView .bar{z-index:35}
       <p class="hint">ឯកសារត្រូវមានជួរឈរ៖ ICD 10 · EN · KH · FR។ បញ្ជីនេះរក្សាទុកក្នុង browser ហើយប្រើសម្រាប់ស្វែងរករោគវិនិច្ឆ័យទាំងអស់។</p>
     </fieldset>
     <div class="actions">
-      <span style="margin-right:auto;font:12px var(--body);color:var(--muted)">Rx Clinic v82</span>
+      <span style="margin-right:auto;font:12px var(--body);color:var(--muted)">Rx Clinic v83</span>
       <button class="btn alt" id="settingsClose" type="button">បិទ</button>
       <button class="btn" type="submit">រក្សាទុកការកំណត់</button>
     </div>
@@ -6760,7 +6761,7 @@ function calcRender(keepFocus){
   var lab={spec:["🏥 By specialty","🏥 Par spécialité","🏥 តាមឯកទេស"],echo:["🖥 Echo report","🖥 Compte rendu écho","🖥 Report អេកូ"],lab:["🩸 Blood tests","🩸 Bilan sanguin","🩸 លទ្ធផលឈាម"],ncd:["🩺 BP · diabetes · lipids","🩺 HTA · diabète · lipides","🩺 លើសឈាម · ទឹកនោមផ្អែម"],sym:["🔎 Symptoms → Dx","🔎 Symptômes → Dx","🔎 រោគសញ្ញា → Dx"],ped:["👶 Child","👶 Enfant","👶 កុមារ"],icu:["🏥 ICU infusion","🏥 Réa · IVSE","🏥 ICU · ម៉ាស៊ីន"],fluid:["💧 IV fluids","💧 Solutés","💧 សេរ៉ូ"],preg:["🤰 Pregnancy dates","🤰 Grossesse (terme)","🤰 ថ្ងៃគ្រប់ខែ"],vac:["💉 Vaccines","💉 Vaccins","💉 វ៉ាក់សាំង"],sti:["🦠 STI · WHO","🦠 IST · OMS","🦠 កាមរោគ · WHO"]};
   [].forEach.call(document.querySelectorAll("#cTabs button"),function(b){ b.textContent=cL(lab[b.dataset.t]); b.setAttribute("aria-pressed",String(b.dataset.t===CSTATE.tab)); });
   toolRowPaint();
-  $("cFoot").textContent=CSTATE.tab==="echo"?cL(["⚠ Draft only — the sonographer / doctor confirms the findings and signs the report.","⚠ Brouillon — l'échographiste / le médecin confirme et signe.","⚠ សេចក្តីព្រាងប៉ុណ្ណោះ — អ្នកធ្វើអេកូ / វេជ្ជបណ្ឌិតត្រូវបញ្ជាក់ និងចុះហត្ថលេខា។"]):cL(["⚠ Check every dose against the patient, the product label and national guidelines before giving.","⚠ Vérifiez chaque dose (patient, notice, recommandations nationales) avant administration.","⚠ សូមពិនិត្យដូសនីមួយៗជាមួយអ្នកជំងឺ ស្លាកថ្នាំ និងគោលការណ៍ជាតិ មុនពេលឱ្យ។"]);
+  $("cFoot").textContent=CSTATE.tab==="echo"?cL(["⚠ Draft only — the doctor confirms the findings and signs the report.","⚠ Brouillon — le médecin confirme et signe.","⚠ សេចក្តីព្រាងប៉ុណ្ណោះ — វេជ្ជបណ្ឌិតត្រូវបញ្ជាក់ និងចុះហត្ថលេខា។"]):cL(["⚠ Check every dose against the patient, the product label and national guidelines before giving.","⚠ Vérifiez chaque dose (patient, notice, recommandations nationales) avant administration.","⚠ សូមពិនិត្យដូសនីមួយៗជាមួយអ្នកជំងឺ ស្លាកថ្នាំ និងគោលការណ៍ជាតិ មុនពេលឱ្យ។"]);
   if(CSTATE.tab==="sym") calcSym(); else if(CSTATE.tab==="ncd") calcNcd(); else if(CSTATE.tab==="ped") calcPed(); else if(CSTATE.tab==="icu") calcIcu(); else if(CSTATE.tab==="preg") calcPreg(); else if(CSTATE.tab==="vac") calcVac(); else if(CSTATE.tab==="sti") calcSti(); else if(CSTATE.tab==="lab") calcLab(); else if(CSTATE.tab==="echo") calcEcho(); else if(CSTATE.tab==="spec") calcSpec(); else calcFluid();
   var wl=document.querySelector("#calcOv .cwt"); if(wl) wl.style.visibility=CSTATE.tab==="preg"||CSTATE.tab==="sym"||CSTATE.tab==="ncd"||CSTATE.tab==="lab"||CSTATE.tab==="echo"||CSTATE.tab==="spec"||(CSTATE.tab==="vac"&&VX.pop!=="bite")?"hidden":"";
 }
@@ -8180,7 +8181,7 @@ function usgReportOpen(e,b0){
   if(R.cause.length) sec(L(["Likely causes","Causes possibles","មូលហេតុដែលអាចមាន"]),R.cause);
   sec(L(["Advice","Conduite à tenir","ការណែនាំ"]),R.adv);
   var nx=mk("p","usgnx"); nx.contentEditable="true"; nx.textContent="📅 "+L(["Next scan: ","Prochaine échographie : ","អេកូបន្ទាប់៖ "])+pgDmy(R.next.date<visitDate()?visitDate():R.next.date); body.appendChild(nx);
-  var sg=mk("p","usgsig"); sg.textContent=L(["Doctor / sonographer: ","Médecin / échographiste : ","វេជ្ជបណ្ឌិត / អ្នកធ្វើអេកូ៖ "])+(SET.doctor||"……………………")+"     "+L(["Signature","Signature","ហត្ថលេខា"])+": …………"; body.appendChild(sg);
+  var sg=mk("p","usgsig"); sg.textContent=L(["Doctor: ","Médecin : ","វេជ្ជបណ្ឌិត៖ "])+(SET.doctor||"……………………")+"     "+L(["Signature","Signature","ហត្ថលេខា"])+": …………"; body.appendChild(sg);
   var dis=mk("p","usgdisc"); dis.textContent=L(["Ultrasound estimates of weight can differ by ± 10–15%. This report does not exclude all anomalies.","L'estimation du poids peut varier de ± 10–15 %. Ce compte rendu n'exclut pas toutes les anomalies.","ទម្ងន់ពីអេកូអាចខុស ± ១០–១៥%។ លទ្ធផលនេះមិនអាចបដិសេធពិការភាពទាំងអស់បានទេ។"]); body.appendChild(dis);
   bx.appendChild(body);
   var ft=mk("div","calcfoot"), pr=mk("button","btn"); pr.type="button"; pr.textContent="🖨 "+L(["Print for the patient","Imprimer pour la patiente","បោះពុម្ពឱ្យអ្នកជំងឺ"]);
@@ -9129,7 +9130,7 @@ function calcEcho(){
   var wr=mk("button","btn"); wr.type="button"; wr.textContent="✨ "+L(["Write the report","Rédiger le compte rendu","សរសេររបាយការណ៍"]); wr.onclick=eReportOpen;
   var cl=mk("button","btn danger"); cl.type="button"; cl.textContent="🗑 "+L(["Clear","Effacer","សម្អាត"]); cl.onclick=function(){ var ex0=ECHO.ex, rl0=ECHO.rl; ECHO.sel={}; ECHO.sz={}; ECHO.m={}; ECHO.ind=""; ECHO.post=false; ECHO.ep={n:"1",loc:"iu",msd:"",crl:["",""],fhr:["",""],ys:"yes",chor:"dcda",sch:"",nt:["",""],adn:""}; ECHO.ob.f.forEach(function(f){ Object.assign(f,{pres:"ceph",fhr:"",bpd:"",hc:"",ac:"",fl:"",dvp:"",sex:"",ua:"n",cpr:false,an:{},asz:{}}); }); Object.assign(ECHO.ob,{n:"1",chor:"dcda",gaw:"",gad:"",plpos:"ant",pled:"normal",prevcs:false,abr:false,afi:"",cx:""}); ECHO.ex=ex0; ECHO.rl=rl0; calcEcho(); };
   acts.appendChild(wr); acts.appendChild(cl); box.appendChild(acts);
-  var ft=mk("div","cnote"); ft.textContent=L(["✨ Rule-based draft on this device: tick what you see, type sizes — the report, conclusion, likely causes and advice are written for you. The sonographer / doctor checks and signs.","✨ Brouillon par règles sur l'appareil : cocher ce que vous voyez, saisir les tailles — le compte rendu, la conclusion et les conseils sont rédigés. L'échographiste / le médecin vérifie et signe.","✨ សេចក្តីព្រាងតាមច្បាប់ នៅលើឧបករណ៍៖ ចុចរើសអ្វីដែលឃើញ វាយទំហំ — របាយការណ៍ សេចក្តីសន្និដ្ឋាន មូលហេតុ និងការណែនាំ នឹងសរសេរឲ្យ។ អ្នកធ្វើអេកូ / វេជ្ជបណ្ឌិតត្រូវពិនិត្យ និងចុះហត្ថលេខា។"]); box.appendChild(ft);
+  var ft=mk("div","cnote"); ft.textContent=L(["✨ Rule-based draft on this device: tick what you see, type sizes — the report, conclusion, likely causes and advice are written for you. The doctor checks and signs.","✨ Brouillon par règles sur l'appareil : cocher ce que vous voyez, saisir les tailles — le compte rendu, la conclusion et les conseils sont rédigés. Le médecin vérifie et signe.","✨ សេចក្តីព្រាងតាមច្បាប់ នៅលើឧបករណ៍៖ ចុចរើសអ្វីដែលឃើញ វាយទំហំ — របាយការណ៍ សេចក្តីសន្និដ្ឋាន មូលហេតុ និងការណែនាំ នឹងសរសេរឲ្យ។ វេជ្ជបណ្ឌិតត្រូវពិនិត្យ និងចុះហត្ថលេខា។"]); box.appendChild(ft);
   eLive(); box.scrollTop=keepTop;
 }
 function eIn(lab,get,set,ph,w,type){ var l=mk("label"), s=mk("span"); s.textContent=cL(lab); var i=mk("input"); i.type=type||"text"; if(!type) i.inputMode="decimal"; i.value=get()||""; i.placeholder=ph||""; if(w) i.style.width=w; i.oninput=function(){ set(i.value); eLive(); }; l.appendChild(s); l.appendChild(i); return l; }
@@ -9214,7 +9215,7 @@ function eReportOpen(){
   var cd=sec(LL(["Conclusion","Conclusion","សេចក្តីសន្និដ្ឋាន"]),R.conc.map(function(c){ return c[0]; }),true,"econc"); [].forEach.call(cd.children,function(li,i){ if(R.conc[i][1]===2) li.className="ehi"; });
   if(R.adv.length) sec(LL(["Likely causes & recommendations","Causes possibles & conduite à tenir","មូលហេតុដែលអាចមាន & ការណែនាំ"]),R.adv,false);
   var nx=mk("p","usgnx"); nx.contentEditable="true"; nx.textContent="📅 "+LL(["Next scan / follow-up: ","Prochain contrôle : ","ពិនិត្យបន្ទាប់៖ "])+(R.next||LL(["as advised by the doctor","selon l'avis du médecin","តាមការណែនាំរបស់វេជ្ជបណ្ឌិត"])); body.appendChild(nx);
-  var sg=mk("p","usgsig"); sg.textContent=LL(["Sonographer / doctor: ","Échographiste / médecin : ","អ្នកធ្វើអេកូ / វេជ្ជបណ្ឌិត៖ "])+(SET.doctor||"……………………")+"     "+LL(["Signature","Signature","ហត្ថលេខា"])+": ……………………"; body.appendChild(sg);
+  var sg=mk("p","usgsig"); sg.textContent=LL(["Doctor: ","Médecin : ","វេជ្ជបណ្ឌិត៖ "])+(SET.doctor||"……………………")+"     "+LL(["Signature","Signature","ហត្ថលេខា"])+": ……………………"; body.appendChild(sg);
   var dis=mk("p","usgdisc"); dis.textContent=LL(["Ultrasound is operator-dependent and may not show every abnormality; measurements can vary by ± 10–15%.","L'échographie est opérateur-dépendante et ne détecte pas toutes les anomalies ; mesures ± 10–15 %.","អេកូអាស្រ័យលើអ្នកធ្វើ និងមិនអាចឃើញភាពមិនប្រក្រតីទាំងអស់ រង្វាស់អាចខុស ± ១០–១៥%។"]); body.appendChild(dis);
   }
   bx.appendChild(body);
@@ -9304,7 +9305,7 @@ function eKhBody(body,R,p){
   if(ECHO.adv&&R.adv.length){ var ha=mk("h4","khh"); ha.textContent=H(["Recommendations","Recommandations","ការណែនាំ"]); body.appendChild(ha); var ua=mk("ul","usgedit"); ua.contentEditable="true"; R.adv.forEach(function(a){ var li=mk("li"); li.textContent=a; ua.appendChild(li); }); body.appendChild(ua); }
   var nx=mk("p","khnext"); nx.contentEditable="true"; nx.textContent="📅 "+H(["Next visit","Prochain contrôle","ណាត់ពិនិត្យបន្ទាប់"])+" : "+(R.next||"……………………"); body.appendChild(nx);
   if(ECHO.img.length){ var ig=mk("div","khimgs"); ECHO.img.forEach(function(src){ var im=mk("img"); im.src=src; im.alt="ultrasound image"; ig.appendChild(im); }); body.appendChild(ig); }
-  var sg=mk("div","khsig"); sg.contentEditable="true"; sg.textContent=eKhDate(visitDate())+"\n"+(fl?"Le médecin échographiste":"Sonographer")+" / វេជ្ជបណ្ឌិតអ្នកធ្វើអេកូ\n\n\n"+(SET.doctor||"……………………"); body.appendChild(sg);
+  var sg=mk("div","khsig"); sg.contentEditable="true"; sg.textContent=eKhDate(visitDate())+"\n"+(fl?"Le médecin":"Doctor")+" / វេជ្ជបណ្ឌិត\n\n\n"+(SET.doctor||"……………………"); body.appendChild(sg);
 }
 /* ---------- v70: what each abnormal blood result can mean (causes → next step), per test, high and low ---------- */
 /* add monocytes, basophils, MCHC, RDW to the CBC card */
@@ -10384,7 +10385,7 @@ var ECO_OPT_KEY="rxTemplates.ecoOpts", ECO_DOC_KEY="rxTemplates.ecoDocs", ECO_SE
 var ECO_OPTS={
  n:["01","02","03"], fsex:["ស្រី","ប្រុស","មិនទាន់ឃើញ"], health:["ល្អ","ខ្សោយ","គ្មានចលនា"],
  pres:["ក្បាលចុះក្រោម","គូថចុះក្រោម","ទទឹង","មិនទាន់កំណត់"], plac:["លើ","ក្រោយ","មុខ","ខាងស្តាំ","ខាងឆ្វេង","ទាប","បាំងមាត់ស្បូន"],
- fluid:["ធម្មតា","តិច","ច្រើន"], feat:["គ្មាន","សុករុំកមួយជុំ","សុករុំកពីរជុំ","ទងសុករុំខ្លួន"]
+ fluid:["ធម្មតា","តិច","ច្រើន"], feat:["គ្មាន","សុករុំកមួយជុំ","សុករុំកពីរជុំ","ទងសុករុំខ្លួន"], chor:["សុក ២ ថង់ ២ (DCDA)","សុក ១ ថង់ ២ (MCDA)","សុក ១ ថង់ ១ (MCMA)"]
 };
 function ecoEl(tag,cls,txt){ var e=mk(tag,cls); if(txt!=null) e.textContent=txt; return e; }
 function ecoKh(n){ return typeof eKhNum==="function"?eKhNum(n):String(n); }
@@ -10409,41 +10410,57 @@ function ecoSeqSeen(reg){ var m=String(reg||"").match(/^(A[12])(\d+)$/); if(!m) 
 function ecoBlank(mode){ var sx=(typeof $==="function"&&$("pSex"))?$("pSex").textContent.trim():"";
   return {reg:ecoSeq(mode,true),isNew:true,mode:mode,pid:"",sex:/ប្រុស|^m|male|homme/i.test(sx)?"ប្រុស":"ស្រី",age:($("pAge")?$("pAge").textContent.trim().replace(/[^\d.]/g,""):""),date:ecoIso(new Date()),
     name:$("pName")?$("pName").textContent.trim():"", doc:ecoDocs()[0]||"", img:[],
-    f:{grav:"01",n:"01",fsex:"",health:"ល្អ",pres:"",plac:"",fluid:"ធម្មតា",wt:"",bpd:"",fl:"",fhr:"",gaw:"",gad:"",feat:"",conc:"",concAuto:true},
+    f:{grav:"01",n:"01",fsex:"",health:"ល្អ",pres:"",plac:"",fluid:"ធម្មតា",wt:"",bpd:"",fl:"",fhr:"",gaw:"",gad:"",feat:"",conc:"",concAuto:true,chor:"",t2:{fsex:"",health:"ល្អ",pres:"",plac:"",fluid:"ធម្មតា",wt:"",bpd:"",fl:"",fhr:"",feat:""}},
     tpl:"", text:"", ep:{gs:"",crl:"",fhr:"",gaw:"",gad:"",n:"1"} }; }
 /* ---- pregnancy form → GA, EDD, report lines ---- */
 function ecoGa(f){ var w=ecoNum(f.gaw); if(w!==null) return w*7+(ecoNum(f.gad)||0);
   return typeof eGaBio==="function"?eGaBio({bpd:f.bpd,fl:f.fl}):null; }
 function ecoEdd(r){ var g=ecoGa(r.f); if(g==null) return null; return pgAdd(ecoDate(r.date),280-Math.round(g)); }
-function ecoFormLines(r){ var f=r.f, L=[], n=ecoNum(f.n)||1, g=ecoGa(f), e=ecoEdd(r);
+function ecoFetLines(x,pre){ var L=[];
+  L.push(pre+"សុខភាពទារក "+(x.health||"…")+(x.fhr?" · ចង្វាក់បេះដូង "+x.fhr+" ដង/នាទី":"")+(x.fsex?" · ភេទ "+x.fsex:""));
+  if(x.pres) L.push(pre+"ទំរង់ទារក "+x.pres);
+  if(x.plac) L.push(pre+"ទីតាំងសុក "+x.plac);
+  if(x.fluid) L.push(pre+"ទឹកភ្លោះ "+x.fluid);
+  var m=[]; if(x.bpd) m.push("ទំហំក្បាល (BPD) "+x.bpd+" មម"); if(x.fl) m.push("ប្រវែងឆ្អឹងភ្លៅ (FL) "+x.fl+" មម"); if(m.length) L.push(pre+m.join(" · "));
+  if(x.wt) L.push(pre+"ទម្ងន់ទារក "+x.wt+" ក្រាម");
+  if(x.feat&&x.feat!=="គ្មាន") L.push(pre+"លក្ខណៈពិសេស៖ "+x.feat);
+  return L; }
+function ecoTwin(f){ return (ecoNum(f.n)||1)>=2; }
+function ecoFormLines(r){ var f=r.f, L=[];
   L.push("- ផ្ទៃពោះលើកទី "+(f.grav||"…"));
-  L.push("- ចំនួនទារក "+f.n+(n>1?" (កូនភ្លោះ)":"")+(f.fsex?" · ភេទ "+f.fsex:""));
-  L.push("- សុខភាពទារក "+(f.health||"…")+(f.fhr?" · ចង្វាក់បេះដូង "+f.fhr+" ដង/នាទី":""));
-  if(f.pres) L.push("- ទំរង់ទារក "+f.pres);
-  if(f.plac) L.push("- ទីតាំងសុក "+f.plac);
-  if(f.fluid) L.push("- ទឹកភ្លោះ "+f.fluid);
-  var m=[]; if(f.bpd) m.push("ទំហំក្បាល (BPD) "+f.bpd+" មម"); if(f.fl) m.push("ប្រវែងឆ្អឹងភ្លៅ (FL) "+f.fl+" មម"); if(m.length) L.push("- "+m.join(" · "));
-  if(f.wt) L.push("- ទម្ងន់ទារក "+f.wt+" ក្រាម");
-  if(f.feat&&f.feat!=="គ្មាន") L.push("- លក្ខណៈពិសេស៖ "+f.feat);
+  if(!ecoTwin(f)){ L.push("- ចំនួនទារក "+f.n); return L.concat(ecoFetLines(f,"- ")); }
+  L.push("- ចំនួនទារក "+f.n+" (កូនភ្លោះ"+(f.chor?" · "+f.chor:"")+")");
+  L.push("● ទារកទី ១៖"); L=L.concat(ecoFetLines(f,"   - "));
+  L.push("● ទារកទី ២៖"); L=L.concat(ecoFetLines(f.t2,"   - "));
   return L; }
 function ecoFormConc(r){ var f=r.f, g=ecoGa(f), e=ecoEdd(r), n=ecoNum(f.n)||1, out=[];
   if(g!=null){ var w=Math.floor(g/7), d=Math.round(g-w*7); if(d===7){ w++; d=0; }
-    out.push("* * * "+(n>1?"ទារក "+ecoKh(n)+" (កូនភ្លោះ)":"ទារកមួយ")+(f.health==="គ្មានចលនា"?" ":" មានជីវិត ")+"នៅក្នុងស្បូន អាយុ "+ecoKh(ecoP2(w))+" សប្តាហ៍ "+ecoKh(ecoP2(d))+" ថ្ងៃ។"); }
+    var dead=f.health==="គ្មានចលនា"||(n>1&&f.t2&&f.t2.health==="គ្មានចលនា");
+    out.push("* * * "+(n>1?"កូនភ្លោះ "+ecoKh(n)+" នាក់":"ទារកមួយ")+(dead?" ":" មានជីវិត ")+"នៅក្នុងស្បូន អាយុ "+ecoKh(ecoP2(w))+" សប្តាហ៍ "+ecoKh(ecoP2(d))+" ថ្ងៃ។"); }
   if(e) out.push("* * * គ្រប់ខែ ថ្ងៃទី"+ecoKh(ecoP2(e.getDate()))+" ខែ"+ecoKh(ecoP2(e.getMonth()+1))+" ឆ្នាំ"+ecoKh(e.getFullYear())+" មុនក្រោយ "+ecoKh("07")+"ថ្ងៃ។");
   return out.join("\n"); }
 /* assistant checks on the numbers (shown on screen only; the doctor decides what goes in the report) */
-function ecoWarn(r){ var f=r.f, w=[], h=ecoNum(f.fhr), g=ecoGa(f), wt=ecoNum(f.wt);
+function ecoWarn1(r,f,P){ var w=[], h=ecoNum(f.fhr), g=ecoGa(r.f), wt=ecoNum(f.wt);
   if(h!=null&&h>0&&h<110) w.push(["ចង្វាក់បេះដូងទារកយឺត ("+h+" < 110) — ពិនិត្យ CTG / បញ្ជូនបន្ទាន់","ចង្វាក់បេះដូងទារកយឺត ត្រូវតាមដានបន្ទាន់។"]);
   if(h!=null&&h>160) w.push(["ចង្វាក់បេះដូងទារកលឿន ("+h+" > 160) — រកគ្រុនក្តៅម្តាយ ការខ្វះអុកស៊ីសែន","ចង្វាក់បេះដូងទារកលឿន ត្រូវតាមដាន។"]);
   if(h===0||f.health==="គ្មានចលនា") w.push(["គ្មានចង្វាក់បេះដូង — ពិនិត្យបញ្ជាក់ដោយវេជ្ជបណ្ឌិតម្នាក់ទៀត","គ្មានសកម្មភាពបេះដូងទារក។"]);
   if(g!=null&&wt&&typeof usgExp==="function"){ var e=usgExp(g); if(e){ var p=wt/e; if(p<0.85) w.push(["ទម្ងន់ "+wt+" ក្រាម តិចជាងអាយុ ("+Math.round(p*100)+"% នៃមធ្យម) — សង្ស័យទារកលូតលាស់យឺត (FGR): Doppler ទងសុក, ណាត់ ២ សប្តាហ៍","សង្ស័យទារកលូតលាស់យឺត (FGR) — ណាត់ពិនិត្យឡើងវិញក្នុង ២ សប្តាហ៍។"]); else if(p>1.2) w.push(["ទម្ងន់ធំជាងអាយុ ("+Math.round(p*100)+"%) — ពិនិត្យជាតិស្ករ (OGTT)","ទារកធំជាងអាយុ — ពិនិត្យជាតិស្ករម្តាយ។"]); } }
-  if(g!=null&&f.bpd&&f.fl&&typeof eGaBio==="function"){ var b=eGaBio({bpd:f.bpd,fl:f.fl}); if(b&&Math.abs(b-g)>14) w.push(["អាយុតាមរង្វាស់ ("+eGaTxt(b)+") ខុសពីអាយុដែលបានវាយ ("+eGaTxt(g)+") លើស ២ សប្តាហ៍ — ពិនិត្យឡើងវិញ",""]); }
+  if(!P&&g!=null&&f.bpd&&f.fl&&typeof eGaBio==="function"){ var b=eGaBio({bpd:f.bpd,fl:f.fl}); if(b&&Math.abs(b-g)>14) w.push(["អាយុតាមរង្វាស់ ("+eGaTxt(b)+") ខុសពីអាយុដែលបានវាយ ("+eGaTxt(g)+") លើស ២ សប្តាហ៍ — ពិនិត្យឡើងវិញ",""]); }
   if(f.plac==="បាំងមាត់ស្បូន") w.push(["សុកបាំងមាត់ស្បូន — ហាមរួមភេទ ត្រៀមវះកាត់ ពិនិត្យម្តងទៀតពេល ៣២ សប្តាហ៍","សុកបាំងមាត់ស្បូន (placenta praevia) — ត្រៀមសម្រាលដោយវះកាត់។"]);
   if(f.plac==="ទាប") w.push(["សុកទាប — ពិនិត្យម្តងទៀតពេល ៣២ សប្តាហ៍","សុកទាប — ពិនិត្យឡើងវិញពេល ៣២ សប្តាហ៍។"]);
   if(f.fluid==="តិច") w.push(["ទឹកភ្លោះតិច — វាស់ AFI, សួររកការធ្លាក់ទឹកភ្លោះ","ទឹកភ្លោះតិច — តាមដាន។"]);
   if(f.fluid==="ច្រើន") w.push(["ទឹកភ្លោះច្រើន — ពិនិត្យជាតិស្ករ និងរូបរាងទារក","ទឹកភ្លោះច្រើន — តាមដាន។"]);
-  if(g!=null&&g>=36*7&&f.pres==="គូថចុះក្រោម") w.push(["គូថចុះក្រោមនៅ ≥ ៣៦ សប្តាហ៍ — ពិភាក្សាវិធីសម្រាល","ទារកគូថចុះក្រោម — ពិភាក្សាវិធីសម្រាល។"]);
+  if(g!=null&&g>=36*7&&!P&&!ecoTwin(r.f)&&f.pres==="គូថចុះក្រោម") w.push(["គូថចុះក្រោមនៅ ≥ ៣៦ សប្តាហ៍ — ពិភាក្សាវិធីសម្រាល","ទារកគូថចុះក្រោម — ពិភាក្សាវិធីសម្រាល។"]);
   if(/រុំក/.test(f.feat||"")) w.push(["ទងសុករុំក — ភាគច្រើនមិនគ្រោះថ្នាក់ តែតាមដានចលនាទារក",""]);
+  if(P) w.forEach(function(x){ x[0]=P+x[0]; if(x[1]) x[1]=P+x[1]; });
+  return w; }
+function ecoWarn(r){ var f=r.f; if(!ecoTwin(f)) return ecoWarn1(r,f,"");
+  var w=ecoWarn1(r,f,"ទារកទី ១: ").concat(ecoWarn1(r,f.t2,"ទារកទី ២: ")), a=ecoNum(f.wt), b=ecoNum(f.t2.wt), mc=/MC/.test(f.chor||"");
+  if(a&&b){ var d=Math.abs(a-b)/Math.max(a,b); if(d>=0.2) w.unshift(["ទម្ងន់កូនភ្លោះខុសគ្នា "+Math.round(d*100)+"% (≥ 20%) — សង្ស័យទារកម្នាក់លូតលាស់យឺត (sFGR)"+(mc?" / TTTS":"")+" → Doppler, បញ្ជូនមន្ទីរពេទ្យសម្ភព","ទម្ងន់កូនភ្លោះខុសគ្នា "+Math.round(d*100)+"% — ត្រូវតាមដានជិតស្និទ្ធ។"]); }
+  if(mc&&((f.fluid==="តិច"&&f.t2.fluid==="ច្រើន")||(f.fluid==="ច្រើន"&&f.t2.fluid==="តិច"))) w.unshift(["ទឹកភ្លោះម្នាក់តិច ម្នាក់ច្រើន ក្នុងសុកតែមួយ — សង្ស័យ TTTS → បញ្ជូនបន្ទាន់","សង្ស័យ Twin-to-twin transfusion syndrome (TTTS) — បញ្ជូនបន្ទាន់។"]);
+  if(mc) w.push(["កូនភ្លោះសុកតែមួយ ("+f.chor+") — អេកូរៀងរាល់ ២ សប្តាហ៍ចាប់ពី ១៦ សប្តាហ៍ (រក TTTS), សម្រាលនៅមន្ទីរពេទ្យ","កូនភ្លោះសុកតែមួយ — អេកូរៀងរាល់ ២ សប្តាហ៍។"]);
+  else w.push(["កូនភ្លោះ — អេកូរៀងរាល់ ៤ សប្តាហ៍ចាប់ពី ២០ សប្តាហ៍ ជាតិដែក + folic, សម្រាលនៅមន្ទីរពេទ្យ",""]);
+  if(!f.chor) w.unshift(["សូមជ្រើសប្រភេទសុក/ថង់ (DCDA / MCDA / MCMA) — សំខាន់សម្រាប់ការតាមដាន",""]);
   return w; }
 /* ---- Echo General: normal templates and findings (French, as written in the clinic) ---- */
 var ECO_TPL={
@@ -10610,7 +10627,9 @@ function ecoFormUI(rf,r,regI){ var f=r.f, gd=ecoEl("div","ecogrid"), c1=ecoEl("d
   var S=function(k){ var a=ecoSelect(k,function(){ return f[k]; },function(v){ f[k]=v; }); return [a[0],[a[1],a[2]]]; };
   c1.appendChild(ecoField("លេខរៀង",regI));
   c1.appendChild(ecoField("ផ្ទៃពោះលើកទី",ecoInput(function(){return f.grav;},function(v){f.grav=v;},"01","text","numeric")));
-  [["n","ចំនួនទារក"],["fsex","ទារកភេទ"],["health","សុខភាពទារក"],["pres","ទំរង់ទារក"],["plac","ទីតាំងសុក"],["fluid","ទឹកភ្លោះ"]].forEach(function(x){ var s=S(x[0]); c1.appendChild(ecoField(x[1],s[0],null,s[1])); });
+  var sn=ecoSelect("n",function(){ return f.n; },function(v){ f.n=v||"01"; setTimeout(ecoRender,0); }); c1.appendChild(ecoField("ចំនួនទារក",sn[0],null,[sn[1],sn[2]]));
+  if(ecoTwin(f)){ var sc=S("chor"); c1.appendChild(ecoField("ប្រភេទសុក/ថង់",sc[0],null,sc[1])); var h1=ecoEl("div","ecotw","👶 ទារកទី ១"); c1.appendChild(h1); }
+  [["fsex","ទារកភេទ"],["health","សុខភាពទារក"],["pres","ទំរង់ទារក"],["plac","ទីតាំងសុក"],["fluid","ទឹកភ្លោះ"]].forEach(function(x){ var s=S(x[0]); c1.appendChild(ecoField(x[1],s[0],null,s[1])); });
   c1.appendChild(ecoField("ទម្ងន់ទារក",I("wt","725","numeric"),"ក្រាម"));
   c1.appendChild(ecoField("ទំហំក្បាល",I("bpd","BPD"),"មម"));
   c2.appendChild(ecoField("ប្រវែងឆ្អឹងភ្លៅ",I("fl","FL"),"មម"));
@@ -10623,6 +10642,13 @@ function ecoFormUI(rf,r,regI){ var f=r.f, gd=ecoEl("div","ecogrid"), c1=ecoEl("d
   var ra=ecoEl("button","ecoic","↺"); ra.type="button"; ra.title="សរសេរស្វ័យប្រវត្តិម្តងទៀត"; ra.onclick=function(){ f.concAuto=true; ecoLive(); };
   c2.appendChild(ecoField("សន្និដ្ឋាន",ta,null,[ra])); c2.appendChild(ecoDocField(r));
   gd.appendChild(c1); gd.appendChild(c2); rf.appendChild(gd);
+  if(ecoTwin(f)){ var t=f.t2, fs=ecoEl("fieldset","ecofs ecot2"); fs.appendChild(ecoEl("legend",null,"👶 ទារកទី ២ (កូនភ្លោះ)")); var g2=ecoEl("div","ecogrid"), d1=ecoEl("div","ecocol"), d2=ecoEl("div","ecocol");
+    var I2=function(k,ph,mode){ return ecoInput(function(){ return t[k]; },function(v){ t[k]=v; },ph,"text",mode||"decimal"); };
+    var S2=function(k,lab,col){ var a=ecoSelect(k==="fsex2"?"fsex":k,function(){ return t[k==="fsex2"?"fsex":k]; },function(v){ t[k==="fsex2"?"fsex":k]=v; }); col.appendChild(ecoField(lab,a[0],null,[a[1],a[2]])); };
+    S2("fsex2","ទារកភេទ",d1); S2("health","សុខភាពទារក",d1); S2("pres","ទំរង់ទារក",d1); S2("plac","ទីតាំងសុក",d1); S2("fluid","ទឹកភ្លោះ",d1);
+    d2.appendChild(ecoField("ទម្ងន់ទារក",I2("wt","","numeric"),"ក្រាម")); d2.appendChild(ecoField("ទំហំក្បាល",I2("bpd","BPD"),"មម")); d2.appendChild(ecoField("ប្រវែងឆ្អឹងភ្លៅ",I2("fl","FL"),"មម"));
+    d2.appendChild(ecoField("ចង្វាក់បេះដូង",I2("fhr","","numeric"),"ក្នុង១នាទី")); S2("feat","លក្ខណៈពិសេស",d2);
+    g2.appendChild(d1); g2.appendChild(d2); fs.appendChild(g2); rf.appendChild(fs); }
   var wb=ecoEl("div","ecowarn"); wb.id="ecoWarn"; rf.appendChild(wb);
   var pv=ecoEl("details","ecoprev"), sm=ecoEl("summary",null,"👁 មើលអត្ថបទដែលនឹងបោះពុម្ព"); pv.appendChild(sm); var pre=ecoEl("pre"); pre.id="ecoPrev"; pv.appendChild(pre); rf.appendChild(pv); }
 function ecoGenUI(rf,r,regI){ var row=ecoEl("div","ecogenrow"); row.appendChild(ecoField("លេខរៀង",regI));
@@ -10688,7 +10714,7 @@ function ecoPrint(r){ var w=window.open("","_blank"); if(!w){ say("សូមអ�
       '.sig{margin:18px 0 0 auto;width:260px;text-align:center}.sig .d{margin-top:56px;font-weight:700}</style></head><body>'+head+
       '<div class="info"><div>លេខរៀង : &nbsp;'+e(r.reg)+'</div><div>លេខសំគាល់ : &nbsp;'+e(r.pid)+'</div><div class="r">'+e(city)+' ថ្ងៃទី: '+ecoDmy(d)+'</div>'+
       '<div>ឈ្មោះ : &nbsp;'+e(r.name)+'</div><div>ភេទ: &nbsp;'+e(r.sex)+'</div><div class="r">អាយុ: &nbsp;'+e(r.age)+' &nbsp;ឆ្នាំ</div></div>'+
-      '<h1>ECHOGRAPHIE RESULTAT</h1>'+body+'<div class="sig">'+(typeof eKhDate==="function"?eKhDate(d):ecoDmy(d))+'<br>វេជ្ជបណ្ឌិតអ្នកធ្វើអេកូ<div class="d">'+e(r.doc||"")+'</div></div></body></html>');
+      '<h1>ECHOGRAPHIE RESULTAT</h1>'+body+'<div class="sig">'+(typeof eKhDate==="function"?eKhDate(d):ecoDmy(d))+'<br>វេជ្ជបណ្ឌិត<div class="d">'+e(r.doc||"")+'</div></div></body></html>');
     w.document.close(); setTimeout(function(){ w.focus(); w.print(); },400); }); }
 /* ---- entry points: Tools menu, ☰ menu, home ---- */
 (function(){
