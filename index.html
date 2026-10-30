@@ -1190,8 +1190,9 @@ body.as-open .asfab{background:#475569}
 @media (max-width:640px){ .sitem{grid-template-columns:52px 1fr} .sirt{grid-column:1/-1;flex-direction:row;justify-content:flex-end} .siph{width:52px;height:52px} }
 
 /* v78 action bar always visible */
+body.rm-open #rxView .bar{z-index:35}
 @media screen{
- #rxView .bar{position:sticky;top:calc(var(--top) + 6px + env(safe-area-inset-top,0px));z-index:30;transition:box-shadow .2s,padding .2s}
+ #rxView .bar{position:sticky;top:calc(var(--top) + 6px + env(safe-area-inset-top,0px));z-index:29;transition:box-shadow .2s,padding .2s}
  body.bar-stuck #rxView .bar{box-shadow:0 8px 24px rgba(16,30,70,.16);padding:6px 8px}
  #sideNotes{top:calc(var(--top) + var(--barh,80px) + 16px)!important;max-height:calc(100vh - var(--top) - var(--barh,80px) - 28px)!important}
 }
@@ -1200,6 +1201,71 @@ body.as-open .asfab{background:#475569}
  body.bar-stuck #rxView .bar .bar-acts{margin:0}
 }
 @media screen and (max-width:640px){ .namewrap{flex-wrap:wrap} .namewrap .drug{flex:1 1 calc(100% - 30px);min-width:60%} }
+
+/* v79 observation médicale */
+.obsbox{max-width:880px!important;width:calc(100vw - 24px)!important}
+.obsbody{background:#e9edf4}
+.obspaper{background:#fff;max-width:800px;margin:0 auto;padding:22px 26px;box-shadow:0 2px 12px rgba(0,0,0,.15);border-radius:4px;overflow-x:auto}
+.obsfoot{display:flex;gap:8px;flex-wrap:wrap}
+@media (max-width:640px){.obspaper{padding:12px 10px}.obs .i1{padding-left:14px!important}.obs .i2{padding-left:28px!important}.obs .logo{width:60px!important;height:60px!important}.obs .cn{font-size:17px!important}}
+/* v80 echo workspace */
+#ecoOv .ecobox{max-width:1280px!important;width:calc(100vw - 20px)!important;max-height:calc(100vh - 20px)!important;height:calc(100vh - 20px);display:flex;flex-direction:column}
+.ecoh{gap:12px;flex-wrap:wrap}
+.ecotabs{display:flex;gap:6px;flex:1;flex-wrap:wrap}
+.ecotabs button{border:1px solid var(--rule);background:var(--paper);border-radius:999px;padding:6px 14px;font:600 14px var(--sans,inherit);cursor:pointer;color:inherit}
+.ecotabs button[aria-pressed=true]{background:#1d3a8a;color:#fff;border-color:#1d3a8a}
+.ecobody{flex:1;overflow:auto;display:flex;flex-direction:column;gap:10px;background:#f3f5fa}
+.ecofs{border:1px solid #cfd6e4;border-radius:10px;background:#fff;padding:8px 12px 10px;margin:0;min-width:0}
+.ecofs legend{font-weight:700;font-size:13px;padding:0 6px;color:#1d3a8a}
+.ecotop{display:grid;grid-template-columns:260px 1fr;gap:10px}
+.ecofind input{width:100%;font-size:15px;padding:7px 9px;border:1px solid #b9c2d6;border-radius:8px}
+.ecoptg{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px 12px}
+.ecoptg .econame{grid-column:1/-1}
+.ecof{display:flex;align-items:center;gap:8px;margin:4px 0;min-width:0}
+.ecol{flex:0 0 112px;font-size:14px;color:#223;text-align:right}
+.ecoptg .ecol{flex-basis:auto;min-width:56px}
+.ecov{flex:1;display:flex;gap:4px;min-width:0}
+.ecov input,.ecov select,.ecov textarea{flex:1;min-width:0;font-size:15px;padding:6px 8px;border:1px solid #b9c2d6;border-radius:6px;background:#fff;color:#111;font-family:inherit}
+.ecov input[readonly]{background:#eef1f6}
+.ecou{flex:0 0 auto;font-size:13px;color:#445;min-width:40px}
+.ecoic{flex:none;width:30px;border:1px solid #cfd6e4;border-radius:6px;background:#fff;cursor:pointer;font-size:14px}
+.ecoic.del{color:#c62828}.ecoic.add{color:#1565c0;font-weight:800}
+.ecomain{display:grid;grid-template-columns:minmax(220px,32%) 1fr;gap:10px;flex:1;min-height:0}
+.ecoimgs.drag{outline:3px dashed #1d3a8a}
+#ecoImgs{display:flex;flex-direction:column;gap:8px}
+.ecoimg{position:relative}.ecoimg img{width:100%;display:block;border-radius:6px;background:#000}
+.ecox,.ecoup{position:absolute;top:6px;right:6px;border:0;border-radius:50%;width:28px;height:28px;background:rgba(0,0,0,.6);color:#fff;cursor:pointer}
+.ecoup{right:40px}
+.ecoadd{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;border:2px dashed #b9c2d6;border-radius:8px;padding:22px 8px;text-align:center;cursor:pointer;color:#456;font-size:13px}
+.ecoadd b{font-size:22px}
+.ecotitle{text-align:center;font:700 20px Calibri,Arial,sans-serif;color:#1d3a8a;margin:2px 0 8px;letter-spacing:.3px}
+.ecogrid{display:grid;grid-template-columns:1fr 1fr;gap:4px 22px}
+.ecoconc{min-height:110px;resize:vertical}
+.ecowarn{margin-top:8px;display:flex;flex-direction:column;gap:4px}
+.ecow{display:flex;gap:8px;align-items:center;background:#fff6e0;border:1px solid #f0c36d;border-radius:8px;padding:5px 8px;font-size:13.5px}
+.ecow span{flex:1}.ecow button{border:1px solid #c98a00;background:#fff;border-radius:6px;cursor:pointer;font-size:12.5px;white-space:nowrap}
+.ecoprev{margin-top:8px;font-size:13px}.ecoprev pre{white-space:pre-wrap;background:#f7f8fb;border:1px solid #e1e5ee;border-radius:8px;padding:8px;font:13.5px/1.6 Arial,"Noto Sans Khmer",sans-serif;margin:6px 0 0}
+.ecogenrow{display:grid;grid-template-columns:1fr 1.3fr;gap:12px}
+.ecoep{display:flex;flex-wrap:wrap;align-items:center;gap:2px 10px;background:#eef3ff;border-radius:8px;padding:4px 8px;margin:4px 0}
+.ecoep .ecol{flex-basis:auto}
+.ecochips{display:flex;flex-wrap:wrap;gap:5px;margin:6px 0}
+.ecochips .ecoch{font-size:13px;font-weight:700;color:#1d3a8a;align-self:center}
+.ecochips button{border:1px solid #c9d3ea;background:#fff;border-radius:999px;padding:3px 10px;font-size:13px;cursor:pointer;color:#223}
+.ecochips button:hover{background:#eef3ff}
+.ecotext{width:100%;box-sizing:border-box;min-height:300px;font:14.5px/1.75 Arial,"Noto Sans Khmer",sans-serif;padding:8px 10px;border:1px solid #9aa6bf;border-radius:6px;tab-size:4;resize:vertical}
+.ecofoot{display:flex;flex-wrap:wrap;gap:6px}
+.ecomore{position:fixed;inset:5vh 50% auto auto;transform:translateX(50%);width:min(560px,94vw);max-height:86vh;background:#fff;border-radius:14px;box-shadow:0 12px 40px rgba(0,0,0,.3);display:flex;flex-direction:column;z-index:5;padding:0 0 10px}
+.ecomore>input{margin:8px 12px;padding:8px;font-size:15px;border:1px solid #b9c2d6;border-radius:8px}
+.ecolist{overflow:auto;padding:0 12px;display:flex;flex-direction:column;gap:4px}
+.ecoli{display:grid;grid-template-columns:auto 1fr;gap:0 10px;text-align:left;border:1px solid #e1e5ee;background:#fff;border-radius:8px;padding:6px 10px;cursor:pointer;color:#111}
+.ecoli small{grid-column:2;color:#667}.ecoli:hover{background:#f3f6fc}
+.tile.t-eco .ic{background:#e8eefc}
+.ecogrid{grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important}.ecocol,.ecores,.ecoimgs{min-width:0}
+.ecomain{grid-template-columns:minmax(200px,30%) minmax(0,1fr)}.ecou{min-width:0;max-width:92px;font-size:12.5px;line-height:1.2}
+.ecogrid .ecol{flex-basis:104px}
+@media (max-width:820px){.ecogrid,.ecomain{grid-template-columns:minmax(0,1fr)!important}}
+
+@media (max-width:820px){.ecotop,.ecomain,.ecogrid,.ecogenrow{grid-template-columns:1fr}.ecoptg{grid-template-columns:1fr 1fr}.ecol{flex-basis:96px;text-align:left}#ecoImgs{flex-direction:row;overflow-x:auto}.ecoimg{flex:0 0 70%}.ecoadd{flex:0 0 60%}}
 </style>
 </head>
 <body class="lang-both gated">
@@ -1551,7 +1617,7 @@ body.as-open .asfab{background:#475569}
       <button type="button" id="gUp">បង្កើតគណនីថ្មី</button>
       <button type="button" id="gReset">ភ្លេចពាក្យសម្ងាត់?</button>
     </div>
-    <p class="gate-note" id="gateNote">ព័ត៌មានអ្នកជំងឺមិនត្រូវបានផ្ញើទៅ cloud ទេ។ · v78</p>
+    <p class="gate-note" id="gateNote">ព័ត៌មានអ្នកជំងឺមិនត្រូវបានផ្ញើទៅ cloud ទេ។ · v80</p>
   </form>
 </div>
 
@@ -1653,7 +1719,7 @@ body.as-open .asfab{background:#475569}
       <p class="hint">ឯកសារត្រូវមានជួរឈរ៖ ICD 10 · EN · KH · FR។ បញ្ជីនេះរក្សាទុកក្នុង browser ហើយប្រើសម្រាប់ស្វែងរករោគវិនិច្ឆ័យទាំងអស់។</p>
     </fieldset>
     <div class="actions">
-      <span style="margin-right:auto;font:12px var(--body);color:var(--muted)">Rx Clinic v78</span>
+      <span style="margin-right:auto;font:12px var(--body);color:var(--muted)">Rx Clinic v80</span>
       <button class="btn alt" id="settingsClose" type="button">បិទ</button>
       <button class="btn" type="submit">រក្សាទុកការកំណត់</button>
     </div>
@@ -10201,7 +10267,438 @@ function shopLinkUI(body,cfg){ var u=shopUrl(), w=mk("div","slink");
   function upd(){ tick=false; var rv=$("rxView"); if(!rv||rv.hidden) return; var stuck=window.scrollY>40; document.body.classList.toggle("bar-stuck",stuck);
     document.documentElement.style.setProperty("--barh",bar.offsetHeight+"px"); }
   window.addEventListener("scroll",function(){ if(!tick){ tick=true; requestAnimationFrame(upd); } },{passive:true});
-  window.addEventListener("resize",upd); setTimeout(upd,300); })();
+  window.addEventListener("resize",upd); setTimeout(upd,300);
+  /* a phone menu puts a dimmed layer over the page: lift the bar above it so its menu stays tappable */
+  if(window.MutationObserver) new MutationObserver(function(){ document.body.classList.toggle("rm-open",!!document.querySelector("body>.rm-scrim")); }).observe(document.body,{childList:true}); })();
+/* ---------- v79: Observation médicale — the clinic's paper form, filled from the visit ---------- */
+var OBS_NFR={gen:"Conscient, orienté, pas de détresse, bien hydraté, pas de pâleur, pas d'ictère",ent:"ORL normal, amygdales non hypertrophiées, pas d'adénopathie cervicale",
+ cv:"B1 B2 réguliers, pas de souffle, TRC < 2 s, pouls périphériques bien perçus",resp:"MV bien perçu des deux côtés, pas de râles, pas de sibilants, pas de tirage",
+ gi:"Abdomen souple, indolore, pas d'organomégalie, bruits hydro-aériques normaux",cns:"Conscient, GCS 15/15, pas de déficit focal, pas de raideur de nuque",
+ skin:"Peau normale, pas d'éruption, pas d'œdème",uro:"Pas de douleur à l'ébranlement lombaire, pas de douleur sus-pubienne",
+ mental:"Calme, orienté dans le temps et l'espace, humeur et langage normaux",other:"RAS"};
+var OBS_LOGO="rxTemplates.obsLogo";
+function obsTx(id){ var e=$(id); if(!e) return ""; return String(e.value!=null&&e.tagName==="INPUT"?e.value:e.textContent).split(" | ")[0].trim(); }
+function obsFr(t){ t=String(t||"").trim(); if(!t) return ""; if(typeof TRX_REV==="undefined") return t; var en=TRX_REV[fold(t)]; if(en) return L1(en,"fr");
+  try{ return typeof trIn==="function"?trIn(t,"fr"):t; }catch(e){ return t; } }
+function obsPe(sys){ var r=document.querySelector('.perow[data-sys="'+sys+'"]'); if(!r) return ["",""]; var sy=PE_SYS.find(function(x){return x[0]===sys;});
+  if(r.dataset.st==="normal") return ["n",OBS_NFR[sys]||L1(sy[3],"fr")]; var t=r.querySelector(".pv").textContent.split(" | ")[0].trim(); return [t?"a":"",obsFr(t)]; }
+function obsEv(ids){ if(typeof EV_FIELDS==="undefined"||typeof EV_STATE==="undefined") return [];
+  var out=[]; ids.forEach(function(id){ var f=EV_FIELDS.find(function(x){return x[0]===id;}), st=EV_STATE[id]; if(!f||!st) return; if(typeof evActive==="function"&&!evActive(f)) return;
+    var v=st.txt||st.sel.map(function(i){ return f[2][i][0]; }).join(", "); if(v) out.push(f[1].fr+" : "+v); }); return out; }
+/* PE first when abnormal, then the evaluation items; a normal PE line is used only when there is no evaluation */
+function obsSys(sys,ev){ var p=obsPe(sys), e=obsEv(ev||[]); if(p[0]==="a") return [p[1]].concat(e).join(" ; "); return e.length?e.join(" ; "):p[1]; }
+function obsMale(){ return /^(m\b|male|homme|masc|ប្រុស)/.test(fold(obsTx("pSex"))); }
+function obsData(){
+  var d=typeof visitDate==="function"?visitDate():new Date(), now=new Date(), adm=obsTx("pAdmit"), m;
+  var day=d.getDate(), mon=d.getMonth()+1, yr=String(d.getFullYear()).slice(2), hh=now.getHours(), mm=now.getMinutes();
+  if(adm&&(m=adm.match(/(\d{1,2})[\/.\-](\d{1,2})[\/.\-](\d{2,4})/))){ day=+m[1]; mon=+m[2]; yr=m[3].slice(-2); }
+  if(adm&&(m=adm.match(/(\d{1,2})[:h](\d{2})/))){ hh=+m[1]; mm=+m[2]; }
+  var skin=obsPe("skin"), skel=skin[0]==="a"?skin[1].split(/,\s*|;\s*/).filter(function(x){ return /articul|arthr|joint|oed|œd|membre|jambe|fract|gonfl|swell|knee|genou|cheville|ankle|crepit|deform/i.test(x); }).join(", "):"";
+  var cons=obsEv(["evCons"]).join(""), gcs="";
+  if(typeof EV_ICU!=="undefined"&&EV_ICU&&EV_GCS) gcs=EV_GCS.reduce(function(a,b){return a+b;},0)+"/15";
+  else if((m=(cons+" "+obsPe("cns")[1]).match(/GCS\s*(\d{1,2})\s*\/\s*15/i))) gcs=m[1]+"/15";
+  var gen=obsEv(["evEG","evCons"]), teg=obsEv(["evTC","evHyd"]);
+  var co=obsTx("fCo"), ab=[["gen"],["ent"],["cv"],["resp"],["gi"],["uro"],["cns"],["skin"],["mental"],["other"]].map(function(s){ var p=obsPe(s[0]); return p[0]==="a"?p[1]:""; }).filter(Boolean);
+  var age=obsTx("pAge"), who=obsMale()?"Patient":"Patiente";
+  var bilan=[who+(age?" de "+age+(/\d$/.test(age)?" ans":""):""), co?"admis"+(obsMale()?"":"e")+" pour "+co.replace(/[.\s]+$/,""):""].filter(Boolean).join(", ")+"."+(ab.length?" À l'examen : "+ab.join(" ; ")+".":"");
+  var rx=(typeof rxItems==="function"?rxItems():[]).map(function(tb,i){ var dr=tb.querySelector(".drug"), us=tb.querySelector(".usage"); var n=dr?dr.textContent.trim():""; if(!n) return "";
+    var u=us?us.textContent.trim():""; return (i+1)+". "+n+(u?" — "+u:""); }).filter(Boolean);
+  return {
+    day:String(day), mon:String(mon), yr:yr, hh:String(hh), mm:("0"+mm).slice(-2), bed:obsTx("pBed"), room:obsTx("pWard"), phone:"", fact:"", id:obsTx("pPayId"),
+    name:obsTx("pName"), age:age, sex:obsTx("pSex"), nat:"Cambodgienne",
+    motif:co, hist:obsTx("fHo"), atcd:(typeof mhText==="function"?mhText():[]).join(" ; "),
+    sf:co, eg:gen.length?gen.join(" ; "):obsPe("gen")[1],
+    pouls:obsTx("vP"), ta:obsTx("vBp"), temp:obsTx("vT"), fr:obsTx("vRr"), gcs:gcs, spo2:obsTx("vSpo2"),
+    teg:teg.length?teg.join(" ; "):"",
+    dig:obsSys("gi",["evVentre","evSelle","evGaz"]), resp:obsSys("resp",["evResp","evPoum","evTir"]), cardio:obsSys("cv",["evCoeur","evOed"]),
+    uro:obsSys("uro",["evUrine"]), snc:obsSys("cns",[]), squel:skel||"Pas de déformation, mobilité conservée", peau:skin[1], orl:obsPe("ent")[1],
+    bilan:bilan, ddx:obsTx("fDdx"), para:obsTx("fInv"), dx:[obsTx("fDx"),obsTx("fDx2")].filter(Boolean).join(" ; "), rx:rx.join("\n"),
+    doc:(typeof SET!=="undefined"&&SET.doctor)||""
+  };
+}
+function obsHtml(D,logo,clinic){
+  var e=function(x){ return String(x==null?"":x).replace(/&/g,"&amp;").replace(/</g,"&lt;"); };
+  var f=function(k,cls){ return '<span class="f '+(cls||"")+'" data-k="'+k+'" contenteditable="true">'+e(D[k])+'</span>'; };
+  var blk=function(k,lines){ return '<div class="b" data-k="'+k+'" contenteditable="true" style="min-height:'+(lines*24)+'px">'+e(D[k]).replace(/\n/g,"<br>")+'</div>'; };
+  var row=function(lab,k,lines,ind){ return '<div class="r'+(ind?" i"+ind:"")+'"><b>'+lab+'</b>'+blk(k,lines||1)+'</div>'; };
+  var lg=logo?'<img src="'+logo+'" alt="">':'<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" fill="none" stroke="#222" stroke-width="3"/><circle cx="50" cy="50" r="38" fill="none" stroke="#222" stroke-width="1"/><path d="M42 24h16v18h18v16H58v18H42V58H24V42h18z" fill="#222"/></svg>';
+  return '<div class="obs">'+
+   '<div class="hd"><div class="logo">'+lg+'</div><div class="ht"><div class="cn" contenteditable="true">'+e(clinic)+'</div><div class="tt">OBSERVATION MEDICALE</div></div></div>'+
+   '<div class="ln">ចូលសម្រាក ថ្ងៃទី'+f("day","s")+'ខែ'+f("mon","s")+'ឆ្នាំ20'+f("yr","xs")+' ម៉ោង'+f("hh","xs")+'និង'+f("mm","xs")+'នាទី &nbsp; លេខគ្រែ:'+f("bed","xs")+' Room:'+f("room","xs")+'</div>'+
+   '<div class="ln">លេខទូរស័ព្ទ:'+f("phone","m")+' រោងចក្រ:'+f("fact","m")+' ID:'+f("id","m")+'</div>'+
+   '<div class="ln"><b>I. Nom et Prénom:</b>'+f("name","l")+' <b>Age</b>'+f("age","s")+' <b>Sex</b>'+f("sex","s")+' <b>Nationalité</b>'+f("nat","m")+'</div>'+
+   row("II. Motif d'entrée:","motif",1)+row("III. Histoire de la maladie:","hist",4)+row("IV. ATCD:","atcd",2)+
+   '<div class="r"><b>V. Examens Clinique:</b></div>'+
+   row("1- Signes Fonctionnelles :","sf",2,1)+'<div class="r i1"><b>2- Signes Général:</b></div>'+row("- Etat Général:","eg",1,2)+
+   '<div class="ln i2">- Pouls:'+f("pouls","s")+'TA:'+f("ta","s")+'T°'+f("temp","s")+'Fr:'+f("fr","s")+'Glasgow:'+f("gcs","s")+'SaO2%'+f("spo2","s")+'</div>'+
+   row("- Teguments et muqueuses:","teg",1,2)+row("3- App Digestif:","dig",2,1)+row("4- App Respiratoire:","resp",2,1)+row("5- App Cardio-Vasculaires:","cardio",2,1)+
+   row("6- App Uro-Génital:","uro",2,1)+row("7- Système Nerveux Central:","snc",2,1)+row("8- Squelette et Membres:","squel",2,1)+row("9- Peau:","peau",2,1)+row("10- ORL:","orl",2,1)+
+   row("VI. Bilan Clinique :","bilan",3)+row("VII. DIAGNOSTIC DIFFERENCIEL:","ddx",2)+row("VIII. Examen Para Clinique:","para",1)+row("IX. DIAGNOSTIC POSITIF:","dx",2)+
+   '<div class="r"><b>X. TRAITEMENT PROVISOIRE:</b>'+blk("rx",8).replace('class="b"','class="b rx"')+'</div>'+
+   '<div class="sg"><div>Nom du Médecin</div><div class="f" data-k="doc" contenteditable="true">'+e(D.doc)+'</div><div>Signature</div>'+
+   (($("sigImg")&&!$("sigImg").hidden&&$("sigImg").src)?'<img class="sig" src="'+$("sigImg").src+'" alt="">':'')+'</div></div>';
+}
+var OBS_CSS='.obs,.obs *{-webkit-print-color-adjust:exact;print-color-adjust:exact}.obs{font:13.5px/24px Calibri,"Carlito","Noto Sans Khmer","Kantumruy Pro",Arial,sans-serif;color:#111;background:#fff}'+
+ '.obs .hd{display:flex;align-items:center;gap:14px;margin-bottom:10px}.obs .logo{width:92px;height:92px;flex:none}.obs .logo img,.obs .logo svg{width:100%;height:100%;object-fit:contain}'+
+ '.obs .ht{flex:1;text-align:center}.obs .cn{font:700 25px/1.5 "Khmer OS Muol Light","Moul","Noto Serif Khmer","Noto Sans Khmer",serif}.obs .tt{font-weight:800;font-size:16px;text-decoration:underline;letter-spacing:.3px;font-style:italic}'+
+ '.obs .ln{margin:2px 0}.obs .f{display:inline-block;min-width:60px;border-bottom:1.5px dotted #333;padding:0 4px;line-height:22px;vertical-align:bottom;color:#0b2a8a}'+
+ '.obs .f.xs{min-width:26px}.obs .f.s{min-width:48px}.obs .f.m{min-width:120px}.obs .f.l{min-width:220px}'+
+ '.obs .r{margin:2px 0}.obs .r>b{font-weight:600;margin-right:6px;position:relative;z-index:1;background:#fff;padding-right:4px}.obs .i1{padding-left:56px}.obs .i2{padding-left:110px}'+
+ '.obs .b{display:block;color:#0b2a8a;white-space:pre-wrap;background-image:radial-gradient(circle,#444 .7px,transparent 1px);background-size:5px 24px;background-position:0 21px;background-repeat:repeat;padding:0 2px;outline:none}'+
+ '.obs .r>b+.b{margin-top:-24px;text-indent:var(--ti,0)}.obs .b.rx{background-image:linear-gradient(#333 1px,transparent 1px);background-size:100% 30px;background-position:0 29px;line-height:30px;min-height:240px!important;margin-top:4px!important;text-indent:0}'+
+ '.obs .sg{width:220px;margin:16px 0 0 auto;text-align:center}.obs .sg .f{min-width:180px}.obs .sig{max-height:60px;max-width:180px}'+
+ '.obs [contenteditable]:focus{background-color:#fffbe6}';
+function obsIndent(root){ [].forEach.call(root.querySelectorAll(".r>b"),function(b){ var nx=b.nextElementSibling; if(nx&&nx.classList.contains("b")&&!nx.classList.contains("rx")) nx.style.setProperty("--ti",(b.offsetWidth+8)+"px"); }); }
+function obsOpen(){
+  var L=cL, logo=""; try{ logo=localStorage.getItem(OBS_LOGO)||""; }catch(e){}
+  var ov=$("obsOv"); if(!ov){ ov=mk("div","calcov noprint"); ov.id="obsOv"; document.body.appendChild(ov); ov.addEventListener("mousedown",function(ev){ if(ev.target===ov) ov.hidden=true; }); }
+  ov.innerHTML=""; ov.hidden=false;
+  var bx=mk("div","calcbox obsbox"), hd=mk("div","calch"), tt=mk("b"); tt.textContent="📋 Observation médicale"; hd.appendChild(tt);
+  var x=mk("button","calcx"); x.type="button"; x.textContent="✕"; x.onclick=function(){ ov.hidden=true; }; hd.appendChild(x); bx.appendChild(hd);
+  var body=mk("div","calcbody obsbody"), tag=mk("div","airtag"); tag.textContent="✨ "+L(["Filled from the visit — tap any line to correct it before printing.","Rempli à partir de la consultation — touchez une ligne pour corriger avant d'imprimer.","បំពេញស្វ័យប្រវត្តិពីការពិនិត្យ — ចុចលើបន្ទាត់ណាមួយដើម្បីកែ មុនបោះពុម្ព។"]); body.appendChild(tag);
+  var paper=mk("div","obspaper"); var clinic=($("hName")&&$("hName").textContent.trim())||(SET&&SET.name)||"";
+  paper.innerHTML=obsHtml(obsData(),logo,clinic); body.appendChild(paper); bx.appendChild(body);
+  var ft=mk("div","calcfoot obsfoot");
+  var pr=mk("button","btn"); pr.type="button"; pr.textContent="🖨 "+L(["Print","Imprimer","បោះពុម្ព"]);
+  var lb=mk("label","btn alt"); lb.textContent="🖼 "+L(["Clinic logo","Logo","ឡូហ្គោគ្លីនិក"]); var fi=mk("input"); fi.type="file"; fi.accept="image/*"; fi.hidden=true; lb.appendChild(fi);
+  var rs=mk("button","btn alt"); rs.type="button"; rs.textContent="↺ "+L(["Refill","Recharger","បំពេញម្តងទៀត"]); rs.onclick=function(){ ov.hidden=true; obsOpen(); };
+  var bl=mk("button","btn alt"); bl.type="button"; bl.textContent="▭ "+L(["Blank form","Formulaire vierge","ទម្រង់ទទេ"]);
+  bl.onclick=function(){ var D=obsData(); Object.keys(D).forEach(function(k){ if(k!=="doc") D[k]=""; }); paper.innerHTML=obsHtml(D,logo,clinic); obsIndent(paper); };
+  fi.onchange=function(){ var file=fi.files&&fi.files[0]; if(!file) return; var rd=new FileReader(); rd.onload=function(){ var im=new Image(); im.onload=function(){ var c=document.createElement("canvas"), s=Math.min(1,240/Math.max(im.width,im.height)); c.width=Math.round(im.width*s); c.height=Math.round(im.height*s); c.getContext("2d").drawImage(im,0,0,c.width,c.height);
+      logo=c.toDataURL("image/png"); try{ localStorage.setItem(OBS_LOGO,logo); }catch(e){} var lg=paper.querySelector(".logo"); if(lg) lg.innerHTML='<img src="'+logo+'" alt="">'; }; im.src=rd.result; }; rd.readAsDataURL(file); };
+  pr.onclick=function(){ var w=window.open("","_blank"); if(!w){ say(L(["Allow pop-ups to print.","Autorisez les fenêtres pour imprimer.","សូមអនុញ្ញាត pop-up ដើម្បីបោះពុម្ព។"]),true); return; }
+    var c=paper.cloneNode(true); [].forEach.call(c.querySelectorAll("[contenteditable]"),function(n){ n.removeAttribute("contenteditable"); });
+    w.document.write('<!doctype html><html><head><meta charset="utf-8"><title>Observation médicale</title><style>@page{size:A4;margin:12mm 14mm}body{margin:0}'+OBS_CSS+'.obs .f,.obs .b{color:#000}.obs .r{break-inside:avoid}</style></head><body>'+c.innerHTML+'</body></html>');
+    w.document.close(); setTimeout(function(){ w.focus(); w.print(); },350); };
+  [pr,rs,bl,lb].forEach(function(b){ ft.appendChild(b); }); bx.appendChild(ft); ov.appendChild(bx);
+  setTimeout(function(){ obsIndent(paper); },30);
+}
+(function(){
+  var st=document.createElement("style"); st.textContent=OBS_CSS; document.head.appendChild(st);
+  var g=document.querySelector("#rxMenu .rm-grid"); if(g){ var b=mk("button","btn alt"); b.type="button"; b.id="obsBtn"; b.textContent="📋 Observation"; b.title="Observation médicale (A4)";
+    b.onclick=function(){ var m=$("rxMenu"); if(m&&!m.hidden) $("rxMenuBtn").click(); obsOpen(); }; g.appendChild(b); }
+})();
+/* ---------- v80: Echo workspace like the clinic's echo software — Echo Form (pregnancy) + Echo General, images, register, history, A4 report ---------- */
+var ECO={mode:"form",cur:null,list:[],idx:-1,dirty:false,db:null};
+var ECO_OPT_KEY="rxTemplates.ecoOpts", ECO_DOC_KEY="rxTemplates.ecoDocs", ECO_SEQ_KEY="rxTemplates.ecoSeq";
+var ECO_OPTS={
+ n:["01","02","03"], fsex:["ស្រី","ប្រុស","មិនទាន់ឃើញ"], health:["ល្អ","ខ្សោយ","គ្មានចលនា"],
+ pres:["ក្បាលចុះក្រោម","គូថចុះក្រោម","ទទឹង","មិនទាន់កំណត់"], plac:["លើ","ក្រោយ","មុខ","ខាងស្តាំ","ខាងឆ្វេង","ទាប","បាំងមាត់ស្បូន"],
+ fluid:["ធម្មតា","តិច","ច្រើន"], feat:["គ្មាន","សុករុំកមួយជុំ","សុករុំកពីរជុំ","ទងសុករុំខ្លួន"]
+};
+function ecoEl(tag,cls,txt){ var e=mk(tag,cls); if(txt!=null) e.textContent=txt; return e; }
+function ecoKh(n){ return typeof eKhNum==="function"?eKhNum(n):String(n); }
+function ecoP2(n){ return ("0"+n).slice(-2); }
+function ecoDmy(d){ return ecoP2(d.getDate())+"-"+ecoP2(d.getMonth()+1)+"-"+d.getFullYear(); }
+function ecoDate(s){ var m=String(s||"").match(/^(\d{4})-(\d{2})-(\d{2})$/); return m?new Date(+m[1],+m[2]-1,+m[3],12):new Date(); }
+function ecoIso(d){ return d.getFullYear()+"-"+ecoP2(d.getMonth()+1)+"-"+ecoP2(d.getDate()); }
+function ecoNum(x){ var v=parseFloat(String(x==null?"":x).replace(",",".")); return isNaN(v)?null:v; }
+function ecoOpts(k){ var o=null; try{ o=JSON.parse(localStorage.getItem(ECO_OPT_KEY)||"null"); }catch(e){} return (o&&o[k])||ECO_OPTS[k].slice(); }
+function ecoOptsSet(k,a){ var o={}; try{ o=JSON.parse(localStorage.getItem(ECO_OPT_KEY)||"{}")||{}; }catch(e){} o[k]=a; try{ localStorage.setItem(ECO_OPT_KEY,JSON.stringify(o)); }catch(e){} }
+function ecoDocs(){ var a=null; try{ a=JSON.parse(localStorage.getItem(ECO_DOC_KEY)||"null"); }catch(e){} if(!a||!a.length) a=SET&&SET.doctor?[SET.doctor]:[]; return a; }
+/* ---- storage: IndexedDB on this device only (records + images kept apart so lists stay light) ---- */
+function ecoDb(cb){ if(ECO.db) return cb(ECO.db); if(!window.indexedDB) return cb(null);
+  try{ var rq=indexedDB.open("rxEcho",1); rq.onupgradeneeded=function(){ var d=rq.result; if(!d.objectStoreNames.contains("rec")) d.createObjectStore("rec",{keyPath:"reg"}); if(!d.objectStoreNames.contains("img")) d.createObjectStore("img"); if(!d.objectStoreNames.contains("cfg")) d.createObjectStore("cfg"); };
+    rq.onsuccess=function(){ ECO.db=rq.result; cb(ECO.db); }; rq.onerror=function(){ cb(null); }; }catch(e){ cb(null); } }
+function ecoTx(store,mode,fn,done){ ecoDb(function(d){ if(!d){ if(done) done(null); return; } try{ var t=d.transaction(store,mode), s=t.objectStore(store), r=fn(s); t.oncomplete=function(){ if(done) done(r&&r.result!==undefined?r.result:null); }; t.onerror=function(){ if(done) done(null); }; }catch(e){ if(done) done(null); } }); }
+function ecoAll(cb){ ecoTx("rec","readonly",function(s){ return s.getAll(); },function(r){ cb((r||[]).sort(function(a,b){ return a.reg<b.reg?-1:a.reg>b.reg?1:0; })); }); }
+/* ---- register number: A1xxxxxxxx pregnancy form, A2xxxxxxxx general ---- */
+function ecoSeq(mode,peek){ var o={}; try{ o=JSON.parse(localStorage.getItem(ECO_SEQ_KEY)||"{}")||{}; }catch(e){} var k=mode==="form"?"A1":"A2", n=(o[k]||0)+1;
+  if(!peek){ o[k]=n; try{ localStorage.setItem(ECO_SEQ_KEY,JSON.stringify(o)); }catch(e){} } return k+String(n).padStart(8,"0"); }
+function ecoSeqSeen(reg){ var m=String(reg||"").match(/^(A[12])(\d+)$/); if(!m) return; var o={}; try{ o=JSON.parse(localStorage.getItem(ECO_SEQ_KEY)||"{}")||{}; }catch(e){} if(+m[2]>(o[m[1]]||0)){ o[m[1]]=+m[2]; try{ localStorage.setItem(ECO_SEQ_KEY,JSON.stringify(o)); }catch(e){} } }
+function ecoBlank(mode){ var sx=(typeof $==="function"&&$("pSex"))?$("pSex").textContent.trim():"";
+  return {reg:ecoSeq(mode,true),isNew:true,mode:mode,pid:"",sex:/ប្រុស|^m|male|homme/i.test(sx)?"ប្រុស":"ស្រី",age:($("pAge")?$("pAge").textContent.trim().replace(/[^\d.]/g,""):""),date:ecoIso(new Date()),
+    name:$("pName")?$("pName").textContent.trim():"", doc:ecoDocs()[0]||"", img:[],
+    f:{grav:"01",n:"01",fsex:"",health:"ល្អ",pres:"",plac:"",fluid:"ធម្មតា",wt:"",bpd:"",fl:"",fhr:"",gaw:"",gad:"",feat:"",conc:"",concAuto:true},
+    tpl:"", text:"", ep:{gs:"",crl:"",fhr:"",gaw:"",gad:"",n:"1"} }; }
+/* ---- pregnancy form → GA, EDD, report lines ---- */
+function ecoGa(f){ var w=ecoNum(f.gaw); if(w!==null) return w*7+(ecoNum(f.gad)||0);
+  return typeof eGaBio==="function"?eGaBio({bpd:f.bpd,fl:f.fl}):null; }
+function ecoEdd(r){ var g=ecoGa(r.f); if(g==null) return null; return pgAdd(ecoDate(r.date),280-Math.round(g)); }
+function ecoFormLines(r){ var f=r.f, L=[], n=ecoNum(f.n)||1, g=ecoGa(f), e=ecoEdd(r);
+  L.push("- ផ្ទៃពោះលើកទី "+(f.grav||"…"));
+  L.push("- ចំនួនទារក "+f.n+(n>1?" (កូនភ្លោះ)":"")+(f.fsex?" · ភេទ "+f.fsex:""));
+  L.push("- សុខភាពទារក "+(f.health||"…")+(f.fhr?" · ចង្វាក់បេះដូង "+f.fhr+" ដង/នាទី":""));
+  if(f.pres) L.push("- ទំរង់ទារក "+f.pres);
+  if(f.plac) L.push("- ទីតាំងសុក "+f.plac);
+  if(f.fluid) L.push("- ទឹកភ្លោះ "+f.fluid);
+  var m=[]; if(f.bpd) m.push("ទំហំក្បាល (BPD) "+f.bpd+" មម"); if(f.fl) m.push("ប្រវែងឆ្អឹងភ្លៅ (FL) "+f.fl+" មម"); if(m.length) L.push("- "+m.join(" · "));
+  if(f.wt) L.push("- ទម្ងន់ទារក "+f.wt+" ក្រាម");
+  if(f.feat&&f.feat!=="គ្មាន") L.push("- លក្ខណៈពិសេស៖ "+f.feat);
+  return L; }
+function ecoFormConc(r){ var f=r.f, g=ecoGa(f), e=ecoEdd(r), n=ecoNum(f.n)||1, out=[];
+  if(g!=null){ var w=Math.floor(g/7), d=Math.round(g-w*7); if(d===7){ w++; d=0; }
+    out.push("* * * "+(n>1?"ទារក "+ecoKh(n)+" (កូនភ្លោះ)":"ទារកមួយ")+(f.health==="គ្មានចលនា"?" ":" មានជីវិត ")+"នៅក្នុងស្បូន អាយុ "+ecoKh(ecoP2(w))+" សប្តាហ៍ "+ecoKh(ecoP2(d))+" ថ្ងៃ។"); }
+  if(e) out.push("* * * គ្រប់ខែ ថ្ងៃទី"+ecoKh(ecoP2(e.getDate()))+" ខែ"+ecoKh(ecoP2(e.getMonth()+1))+" ឆ្នាំ"+ecoKh(e.getFullYear())+" មុនក្រោយ "+ecoKh("07")+"ថ្ងៃ។");
+  return out.join("\n"); }
+/* assistant checks on the numbers (shown on screen only; the doctor decides what goes in the report) */
+function ecoWarn(r){ var f=r.f, w=[], h=ecoNum(f.fhr), g=ecoGa(f), wt=ecoNum(f.wt);
+  if(h!=null&&h>0&&h<110) w.push(["ចង្វាក់បេះដូងទារកយឺត ("+h+" < 110) — ពិនិត្យ CTG / បញ្ជូនបន្ទាន់","ចង្វាក់បេះដូងទារកយឺត ត្រូវតាមដានបន្ទាន់។"]);
+  if(h!=null&&h>160) w.push(["ចង្វាក់បេះដូងទារកលឿន ("+h+" > 160) — រកគ្រុនក្តៅម្តាយ ការខ្វះអុកស៊ីសែន","ចង្វាក់បេះដូងទារកលឿន ត្រូវតាមដាន។"]);
+  if(h===0||f.health==="គ្មានចលនា") w.push(["គ្មានចង្វាក់បេះដូង — ពិនិត្យបញ្ជាក់ដោយវេជ្ជបណ្ឌិតម្នាក់ទៀត","គ្មានសកម្មភាពបេះដូងទារក។"]);
+  if(g!=null&&wt&&typeof usgExp==="function"){ var e=usgExp(g); if(e){ var p=wt/e; if(p<0.85) w.push(["ទម្ងន់ "+wt+" ក្រាម តិចជាងអាយុ ("+Math.round(p*100)+"% នៃមធ្យម) — សង្ស័យទារកលូតលាស់យឺត (FGR): Doppler ទងសុក, ណាត់ ២ សប្តាហ៍","សង្ស័យទារកលូតលាស់យឺត (FGR) — ណាត់ពិនិត្យឡើងវិញក្នុង ២ សប្តាហ៍។"]); else if(p>1.2) w.push(["ទម្ងន់ធំជាងអាយុ ("+Math.round(p*100)+"%) — ពិនិត្យជាតិស្ករ (OGTT)","ទារកធំជាងអាយុ — ពិនិត្យជាតិស្ករម្តាយ។"]); } }
+  if(g!=null&&f.bpd&&f.fl&&typeof eGaBio==="function"){ var b=eGaBio({bpd:f.bpd,fl:f.fl}); if(b&&Math.abs(b-g)>14) w.push(["អាយុតាមរង្វាស់ ("+eGaTxt(b)+") ខុសពីអាយុដែលបានវាយ ("+eGaTxt(g)+") លើស ២ សប្តាហ៍ — ពិនិត្យឡើងវិញ",""]); }
+  if(f.plac==="បាំងមាត់ស្បូន") w.push(["សុកបាំងមាត់ស្បូន — ហាមរួមភេទ ត្រៀមវះកាត់ ពិនិត្យម្តងទៀតពេល ៣២ សប្តាហ៍","សុកបាំងមាត់ស្បូន (placenta praevia) — ត្រៀមសម្រាលដោយវះកាត់។"]);
+  if(f.plac==="ទាប") w.push(["សុកទាប — ពិនិត្យម្តងទៀតពេល ៣២ សប្តាហ៍","សុកទាប — ពិនិត្យឡើងវិញពេល ៣២ សប្តាហ៍។"]);
+  if(f.fluid==="តិច") w.push(["ទឹកភ្លោះតិច — វាស់ AFI, សួររកការធ្លាក់ទឹកភ្លោះ","ទឹកភ្លោះតិច — តាមដាន។"]);
+  if(f.fluid==="ច្រើន") w.push(["ទឹកភ្លោះច្រើន — ពិនិត្យជាតិស្ករ និងរូបរាងទារក","ទឹកភ្លោះច្រើន — តាមដាន។"]);
+  if(g!=null&&g>=36*7&&f.pres==="គូថចុះក្រោម") w.push(["គូថចុះក្រោមនៅ ≥ ៣៦ សប្តាហ៍ — ពិភាក្សាវិធីសម្រាល","ទារកគូថចុះក្រោម — ពិភាក្សាវិធីសម្រាល។"]);
+  if(/រុំក/.test(f.feat||"")) w.push(["ទងសុករុំក — ភាគច្រើនមិនគ្រោះថ្នាក់ តែតាមដានចលនាទារក",""]);
+  return w; }
+/* ---- Echo General: normal templates and findings (French, as written in the clinic) ---- */
+var ECO_TPL={
+ abdF:{n:"Abdomino-pelvienne (femme)",o:["foie","veine","vb","vbp","panc","rate","reins","uterus","ovaire","vessie","douglas"],c:"Echographie abdomino-pelvienne actuellement normale."},
+ abdM:{n:"Abdomino-pelvienne (homme)",o:["foie","veine","vb","vbp","panc","rate","reins","prostate","vessie"],c:"Echographie abdomino-pelvienne actuellement normale."},
+ abd:{n:"Abdominale",o:["foie","veine","vb","vbp","panc","rate","reins"],c:"Echographie abdominale actuellement normale."},
+ pelv:{n:"Pelvienne (femme)",o:["uterus","endo","ovaire","vessie","douglas"],c:"Echographie pelvienne actuellement normale."},
+ kub:{n:"Reins – vessie – prostate",o:["reins","vessie","prostate"],c:"Echographie de l'appareil urinaire actuellement normale."},
+ thy:{n:"Thyroïde",o:["thyD","thyG","isthme","thyN"],c:"Echographie thyroïdienne normale."},
+ sein:{n:"Seins",o:["sein","axil"],c:"Echographie mammaire normale (BI-RADS 1)."},
+ early:{n:"ផ្ទៃពោះដំបូង (ខ្មែរ)",o:[],c:""},
+ free:{n:"អត្ថបទទទេ",o:[],c:""}
+};
+var ECO_ORG={
+ foie:"- Le foie est de taille normale, de contours réguliers, d'écho-structure homogène dans son ensemble.",
+ veine:"- Les systèmes veineux (porte et sus-hépatiques) sont libres et de calibre normal.",
+ vb:"- La vésicule biliaire est alithiasique, de taille normale, à parois fines.",
+ vbp:"- Les voies biliaires intra et extra-hépatiques ne sont pas dilatées.",
+ panc:"- Le pancréas est de taille normale, d'échostructure homogène.",
+ rate:"- La rate est homogène, de taille normale.",
+ reins:"- Les deux reins sont de taille et d'échostructure normales, absence de calcul ni de dilatation des cavités pyélocalicielles.",
+ uterus:"- L'utérus est de taille normale, d'échostructure homogène, endomètre fin.",
+ endo:"- L'endomètre est fin, régulier (… mm).",
+ ovaire:"- Les ovaires sont de taille et d'aspect normaux.",
+ prostate:"- La prostate est de taille normale, homogène (volume < 25 ml).",
+ vessie:"- La vessie est en réplétion, à paroi fine, à contenu anéchogène.",
+ douglas:"- Le cul-de-sac de Douglas : libre.",
+ thyD:"- Le lobe droit mesure … x … x … mm, d'échostructure homogène.",
+ thyG:"- Le lobe gauche mesure … x … x … mm, d'échostructure homogène.",
+ isthme:"- L'isthme est fin (… mm).",
+ thyN:"- Absence de nodule thyroïdien, absence d'adénopathie cervicale.",
+ sein:"- Les deux seins sont d'échostructure normale, absence de masse solide ou kystique.",
+ axil:"- Absence d'adénopathie axillaire."
+};
+/* finding: [label, organ key (line replaced) or "+" (added), new line, conclusion] */
+var ECO_FIND=[
+ ["Stéatose hépatique","foie","- Le foie est de taille normale, hyperéchogène (brillant), de contours réguliers : aspect de stéatose.","Stéatose hépatique."],
+ ["Hépatomégalie","foie","- Le foie est augmenté de taille (flèche hépatique … cm), de contours réguliers, homogène.","Hépatomégalie homogène."],
+ ["Foie cirrhotique","foie","- Le foie est de taille réduite, à contours bosselés, d'échostructure hétérogène.","Aspect de foie cirrhotique."],
+ ["Nodule hépatique","foie","- Le foie est de taille normale, siège d'une formation … de … mm au segment …","Formation hépatique de … mm à explorer (TDM / AFP)."],
+ ["Lithiase vésiculaire","vb","- La vésicule biliaire contient un (des) calcul(s) de … mm avec cône d'ombre postérieur, à parois fines.","Lithiase vésiculaire non compliquée."],
+ ["Cholécystite","vb","- La vésicule biliaire est distendue, à paroi épaissie (> 4 mm) et feuilletée, lithiasique, Murphy échographique positif.","Aspect de cholécystite aiguë lithiasique."],
+ ["Vésicule non vue (à jeun ?)","vb","- La vésicule biliaire est mal visible (patient non à jeun).",""],
+ ["Pancréas mal visible","panc","- Le pancréas mal visible (gaz digestifs).",""],
+ ["Splénomégalie","rate","- La rate est augmentée de taille (… cm), homogène.","Splénomégalie homogène."],
+ ["Lithiase rénale","reins","- Rein … : présence d'un calcul de … mm, sans dilatation des cavités. L'autre rein est normal.","Lithiase rénale … non obstructive."],
+ ["Hydronéphrose","reins","- Rein … : dilatation des cavités pyélocalicielles (grade …), avec / sans calcul visible.","Urétéro-hydronéphrose … ; rechercher un obstacle."],
+ ["Kyste rénal","reins","- Rein … : présence d'un kyste simple cortical de … mm.","Kyste rénal simple (Bosniak I)."],
+ ["Néphropathie chronique","reins","- Les deux reins sont de taille réduite, hyperéchogènes, avec mauvaise différenciation cortico-médullaire.","Aspect de néphropathie chronique bilatérale."],
+ ["Myome utérin","uterus","- L'utérus est augmenté de taille, siège d'un nodule hypoéchogène … de … mm évoquant un myome.","Utérus myomateux."],
+ ["Endomètre épais","endo","- L'endomètre est épaissi (… mm).","Endomètre épaissi — corréler au cycle / ménopause."],
+ ["DIU en place","uterus","- L'utérus est de taille normale, DIU en place, normalement positionné.","DIU en place."],
+ ["Kyste ovarien","ovaire","- Ovaire … : formation kystique anéchogène, à paroi fine, de … mm.","Kyste ovarien … d'allure fonctionnelle, contrôle après les règles."],
+ ["Ovaires polykystiques","ovaire","- Les deux ovaires sont augmentés de volume avec de multiples petits follicules périphériques (≥ 20).","Aspect d'ovaires polykystiques."],
+ ["Ovaires mal visibles","ovaire","- L'ovaires : mal visible.",""],
+ ["Hypertrophie prostatique","prostate","- La prostate est augmentée de taille (volume … ml), homogène.","Hypertrophie bénigne de la prostate."],
+ ["Vessie vide","vessie","- La vessie : vide.",""],
+ ["Cystite","vessie","- La vessie a une paroi épaissie et irrégulière, contenu échogène.","Aspect de cystite."],
+ ["Ascite","douglas","- Présence d'un épanchement liquidien intra-péritonéal de … abondance.","Ascite de … abondance."],
+ ["Épanchement Douglas","douglas","- Le cul-de-sac de Douglas : présence d'une petite lame liquidienne.","Petit épanchement du Douglas."],
+ ["Appendicite","+","- En FID : structure tubulaire borgne non compressible de … mm de diamètre, avec infiltration de la graisse péri-appendiculaire.","Aspect d'appendicite aiguë — avis chirurgical."],
+ ["Nodule thyroïdien","thyN","- Présence d'un nodule … du lobe … de … mm, … (EU-TIRADS …).","Nodule thyroïdien … EU-TIRADS …"],
+ ["Goitre","thyN","- Thyroïde augmentée de volume, homogène, sans nodule.","Goitre homogène."],
+ ["Masse mammaire","sein","- Sein … : formation … de … mm à … h, …","Formation mammaire … BI-RADS …"]
+];
+function ecoTplText(k,sex){ var t=ECO_TPL[k]; if(!t||!t.o.length) return ""; return t.o.map(function(o){ return ECO_ORG[o]; }).join("\n")+"\n* * * Conclusion :\n   - "+t.c; }
+function ecoApplyFind(ta,fd){ var t=ta.value, lines=t.split("\n"), ci=lines.findIndex(function(l){ return /\*\s*\*\s*\*\s*conclusion/i.test(l); });
+  if(fd[1]==="+"){ if(ci<0) lines.push(fd[2]); else lines.splice(ci,0,fd[2]); }
+  else { var norm=ECO_ORG[fd[1]], i=lines.findIndex(function(l){ return l.trim()===norm; });
+    if(i<0){ var sib=ECO_FIND.filter(function(x){ return x[1]===fd[1]; }).map(function(x){ return x[2]; }); i=lines.findIndex(function(l){ return sib.indexOf(l.trim())>-1; }); }
+    if(i>-1) lines[i]=fd[2]; else { if(ci<0) lines.push(fd[2]); else lines.splice(ci,0,fd[2]); } }
+  if(fd[3]){ ci=lines.findIndex(function(l){ return /\*\s*\*\s*\*\s*conclusion/i.test(l); });
+    if(ci<0){ lines.push("* * * Conclusion :"); ci=lines.length-1; }
+    var ni=lines.findIndex(function(l,j){ return j>ci&&/actuellement normale|thyroïdienne normale|mammaire normale|appareil urinaire actuellement/i.test(l); });
+    if(ni>-1) lines[ni]="   - "+fd[3]; else { var end=ci+1; while(end<lines.length&&/^\s*-/.test(lines[end])) end++; lines.splice(end,0,"   - "+fd[3]); } }
+  ta.value=lines.join("\n"); }
+function ecoEarlyText(ep,date){ var n=ecoNum(ep.n)||1, w=ecoNum(ep.gaw), d=ecoNum(ep.gad)||0, g=null;
+  if(w!==null) g=w*7+d; else if(ecoNum(ep.crl)) g=Math.round(8.052*Math.sqrt(ecoNum(ep.crl))+23.73); else if(ecoNum(ep.gs)) g=Math.round(ecoNum(ep.gs)+30);
+  var L=["-ចំនួនថង់=មាន"+ecoKh(n)+"នៅក្នុងស្បូន","\t-កំពុងមានការលូតលាស់និងបន្តតាមដាន","\t-ដៃស្បូនខាងស្តាំធម្មតា","\t-ដៃស្បូនខាងឆ្វេងធម្មតា"];
+  if(ep.gs) L.push("\t- GS="+ep.gs+"mm"); if(ep.crl) L.push("\t- CRL="+ep.crl+"mm"); if(ep.fhr) L.push("\t- ចង្វាក់បេះដូងទារក="+ep.fhr+"ដង/នាទី");
+  L.push("");
+  if(g!=null){ var ww=Math.floor(g/7), dd=g-ww*7, e=pgAdd(date,280-g);
+    L.push("* * *ថង់កូនចំនួន"+ecoKh(ecoP2(n))+" ដែលនៅក្នុងស្បូនមានអាយុ"+ecoKh(ecoP2(ww))+"សប្តាហ៍"+ecoKh(ecoP2(dd))+"ថ្ងៃនៃការបាត់រដូវ។");
+    L.push("* * *គ្រប់ខែ ថ្ងៃ"+ecoKh(ecoP2(e.getDate()))+"ខែ"+ecoKh(ecoP2(e.getMonth()+1))+" ឆ្នាំ"+ecoKh(e.getFullYear())+"មុនក្រោយ "+ecoKh("07")+"ថ្ងៃ"); }
+  return L.join("\n"); }
+/* ---- images: file, drag-drop or paste; shrunk to JPEG so many records fit on the device ---- */
+function ecoShrink(file,cb){ var rd=new FileReader(); rd.onload=function(){ var im=new Image(); im.onload=function(){ var s=Math.min(1,1100/Math.max(im.width,im.height)), c=document.createElement("canvas"); c.width=Math.round(im.width*s); c.height=Math.round(im.height*s); c.getContext("2d").drawImage(im,0,0,c.width,c.height); cb(c.toDataURL("image/jpeg",0.82)); }; im.onerror=function(){ cb(null); }; im.src=rd.result; }; rd.readAsDataURL(file); }
+/* ---- UI ---- */
+function ecoOpen(mode){
+  var ov=$("ecoOv"); if(!ov){ ov=ecoEl("div","calcov noprint"); ov.id="ecoOv"; document.body.appendChild(ov);
+    document.addEventListener("paste",function(e){ if(ov.hidden||!ECO.cur) return; var it=[].slice.call((e.clipboardData&&e.clipboardData.items)||[]).filter(function(x){ return /^image\//.test(x.type); }); if(!it.length) return; e.preventDefault(); it.forEach(function(x){ ecoAddImg(x.getAsFile()); }); }); }
+  ov.hidden=false; if(mode) ECO.mode=mode; if(!ECO.cur||ECO.cur.mode!==ECO.mode) ECO.cur=ecoBlank(ECO.mode);
+  ecoAll(function(l){ ECO.list=l; ecoRender(); }); }
+function ecoClose(){ var ov=$("ecoOv"); if(ov) ov.hidden=true; }
+function ecoAddImg(file){ if(!file||!ECO.cur) return; if(ECO.cur.img.length>=4){ say("អាចដាក់រូបបាន ៤ ប៉ុណ្ណោះ",true); return; } ecoShrink(file,function(u){ if(!u) return; ECO.cur.img.push(u); ECO.dirty=true; ecoImgs(); }); }
+function ecoImgs(){ var box=$("ecoImgs"); if(!box) return; box.textContent=""; var r=ECO.cur;
+  r.img.forEach(function(u,i){ var w=ecoEl("div","ecoimg"), im=ecoEl("img"); im.src=u; im.alt="echo image "+(i+1); w.appendChild(im);
+    var x=ecoEl("button","ecox","✕"); x.type="button"; x.title="លុបរូប"; x.onclick=function(){ r.img.splice(i,1); ECO.dirty=true; ecoImgs(); }; w.appendChild(x);
+    if(i>0){ var up=ecoEl("button","ecoup","▲"); up.type="button"; up.title="ឡើងលើ"; up.onclick=function(){ var t=r.img[i-1]; r.img[i-1]=r.img[i]; r.img[i]=t; ecoImgs(); }; w.appendChild(up); }
+    box.appendChild(w); });
+  if(r.img.length<4){ var add=ecoEl("label","ecoadd"); var ic=ecoEl("b",null,"＋ 🖼"); add.appendChild(ic); add.appendChild(ecoEl("span",null,"បន្ថែមរូបអេកូ (ជ្រើសឯកសារ · អូសទម្លាក់ · Ctrl+V)"));
+    var fi=ecoEl("input"); fi.type="file"; fi.accept="image/*"; fi.multiple=true; fi.hidden=true; fi.onchange=function(){ [].slice.call(fi.files||[]).forEach(ecoAddImg); }; add.appendChild(fi); box.appendChild(add); } }
+function ecoField(lab,el,unit,extra){ var row=ecoEl("label","ecof"), s=ecoEl("span","ecol",lab); row.appendChild(s); var w=ecoEl("div","ecov"); w.appendChild(el); if(extra) extra.forEach(function(x){ w.appendChild(x); }); row.appendChild(w); if(unit) row.appendChild(ecoEl("span","ecou",unit)); return row; }
+function ecoInput(get,set,ph,type,mode){ var i=ecoEl("input"); i.type=type||"text"; if(mode) i.inputMode=mode; i.value=get()||""; if(ph) i.placeholder=ph; i.oninput=function(){ set(i.value); ECO.dirty=true; ecoLive(); }; return i; }
+function ecoSelect(k,get,set){ var s=ecoEl("select"); var fill=function(){ s.textContent=""; var o0=ecoEl("option",null,"—"); o0.value=""; s.appendChild(o0); var a=ecoOpts(k), v=get(); if(v&&a.indexOf(v)<0) a=a.concat([v]); a.forEach(function(x){ var o=ecoEl("option",null,x); o.value=x; s.appendChild(o); }); s.value=v||""; }; fill();
+  s.onchange=function(){ set(s.value); ECO.dirty=true; ecoLive(); };
+  var del=ecoEl("button","ecoic del","🗑"); del.type="button"; del.title="លុបជម្រើសនេះចេញពីបញ្ជី"; del.onclick=function(){ var v=s.value; if(!v) return; ecoOptsSet(k,ecoOpts(k).filter(function(x){ return x!==v; })); set(""); fill(); ecoLive(); };
+  var add=ecoEl("button","ecoic add","＋"); add.type="button"; add.title="បន្ថែមជម្រើសថ្មី"; add.onclick=function(){ var v=window.prompt("ជម្រើសថ្មី:"); if(!v||!v.trim()) return; v=v.trim(); var a=ecoOpts(k); if(a.indexOf(v)<0){ a.push(v); ecoOptsSet(k,a); } set(v); fill(); ECO.dirty=true; ecoLive(); };
+  return [s,del,add]; }
+function ecoRender(){
+  var ov=$("ecoOv"), r=ECO.cur; ov.textContent="";
+  var bx=ecoEl("div","calcbox ecobox"), hd=ecoEl("div","calch ecoh");
+  var tt=ecoEl("b",null,"🖥 អេកូ"); hd.appendChild(tt);
+  var tabs=ecoEl("div","ecotabs"); [["form","🤰 Echo Form · ផ្ទៃពោះ"],["gen","📄 Echo General"]].forEach(function(t){ var b=ecoEl("button",null,t[1]); b.type="button"; b.setAttribute("aria-pressed",String(ECO.mode===t[0]));
+    b.onclick=function(){ if(ECO.mode===t[0]) return; if(ECO.dirty&&!window.confirm("មិនទាន់រក្សាទុក — បោះបង់ការកែ?")) return; ECO.mode=t[0]; ECO.cur=ecoBlank(t[0]); ECO.dirty=false; ecoRender(); }; tabs.appendChild(b); }); hd.appendChild(tabs);
+  var x=ecoEl("button","calcx","✕"); x.type="button"; x.onclick=ecoClose; hd.appendChild(x); bx.appendChild(hd);
+  var body=ecoEl("div","calcbody ecobody");
+  /* top: find + patient */
+  var top=ecoEl("div","ecotop");
+  var fs=ecoEl("fieldset","ecofs ecofind"), lg=ecoEl("legend",null,"🔎 ស្វែងរកអ្នកជំងឺ"); fs.appendChild(lg);
+  var q=ecoEl("input"); q.placeholder="លេខរៀង ឬ ឈ្មោះ"; q.setAttribute("list","ecoDl"); var dl=ecoEl("datalist"); dl.id="ecoDl";
+  ECO.list.slice(-300).reverse().forEach(function(it){ var o=ecoEl("option"); o.value=it.reg; o.label=it.name+" · "+it.date; dl.appendChild(o); });
+  q.onkeydown=function(e){ if(e.key==="Enter"){ e.preventDefault(); ecoFind(q.value); } }; q.onchange=function(){ ecoFind(q.value); };
+  fs.appendChild(q); fs.appendChild(dl); top.appendChild(fs);
+  var pf=ecoEl("fieldset","ecofs ecopt"); pf.appendChild(ecoEl("legend",null,"👤 ព័ត៌មានអ្នកជំងឺ"));
+  var g=ecoEl("div","ecoptg");
+  g.appendChild(ecoField("លេខសំគាល់",ecoInput(function(){return r.pid;},function(v){r.pid=v;})));
+  var sx=ecoEl("select"); ["ស្រី","ប្រុស"].forEach(function(v){ var o=ecoEl("option",null,v); o.value=v; sx.appendChild(o); }); sx.value=r.sex; sx.onchange=function(){ r.sex=sx.value; ECO.dirty=true; };
+  g.appendChild(ecoField("ភេទ",sx));
+  g.appendChild(ecoField("អាយុ",ecoInput(function(){return r.age;},function(v){r.age=v;},"","text","numeric"),"ឆ្នាំ"));
+  g.appendChild(ecoField("ថ្ងៃទី",ecoInput(function(){return r.date;},function(v){r.date=v;},"","date")));
+  var nm=ecoField("ឈ្មោះ",ecoInput(function(){return r.name;},function(v){r.name=v;})); nm.classList.add("econame"); g.appendChild(nm);
+  pf.appendChild(g); top.appendChild(pf); body.appendChild(top);
+  /* main: images + results */
+  var main=ecoEl("div","ecomain");
+  var imf=ecoEl("fieldset","ecofs ecoimgs"); imf.appendChild(ecoEl("legend",null,"🖼 រូបភាព")); var ib=ecoEl("div"); ib.id="ecoImgs"; imf.appendChild(ib);
+  imf.addEventListener("dragover",function(e){ e.preventDefault(); imf.classList.add("drag"); }); imf.addEventListener("dragleave",function(){ imf.classList.remove("drag"); });
+  imf.addEventListener("drop",function(e){ e.preventDefault(); imf.classList.remove("drag"); [].slice.call(e.dataTransfer.files||[]).forEach(ecoAddImg); });
+  main.appendChild(imf);
+  var rf=ecoEl("fieldset","ecofs ecores"); rf.appendChild(ecoEl("legend",null,"📋 លទ្ធផលពិនិត្យ"));
+  var ttl=ecoEl("div","ecotitle","ECHOGRAPHIE RESULTAT"); rf.appendChild(ttl);
+  var regI=ecoEl("input","ecoreg"); regI.value=r.reg; regI.readOnly=!r.isNew; regI.title=r.isNew?"លេខរៀងស្វ័យប្រវត្តិ (កែបាន)":"លេខរៀង"; regI.oninput=function(){ r.reg=regI.value.trim(); };
+  if(ECO.mode==="form") ecoFormUI(rf,r,regI); else ecoGenUI(rf,r,regI);
+  main.appendChild(rf); body.appendChild(main); bx.appendChild(body);
+  /* footer: like the clinic software */
+  var ft=ecoEl("div","calcfoot ecofoot"), B=function(t,fn,cls,title){ var b=ecoEl("button","btn "+(cls||"alt"),t); b.type="button"; b.onclick=fn; if(title) b.title=title; ft.appendChild(b); return b; };
+  B("＋ "+(ECO.mode==="form"?"New Result":"New Echo"),function(){ if(ECO.dirty&&!window.confirm("មិនទាន់រក្សាទុក — បោះបង់ការកែ?")) return; ECO.cur=ecoBlank(ECO.mode); ECO.dirty=false; ecoRender(); },"alt","អ្នកជំងឺថ្មី");
+  B("💾🖨 Save & Print",function(){ ecoSave(function(ok){ if(ok) ecoPrint(ECO.cur); }); },"");
+  B("💾 Save",function(){ ecoSave(); },"alt");
+  B("◀ Previous",function(){ ecoNav(-1); }); B("Next ▶",function(){ ecoNav(1); });
+  B("📋 More Result",ecoMore);
+  B("🧹 Clear",function(){ if(!window.confirm("សម្អាតទម្រង់?")) return; var keep=ECO.cur.reg, nw=ECO.cur.isNew; ECO.cur=ecoBlank(ECO.mode); ECO.cur.reg=keep; ECO.cur.isNew=nw; ECO.cur.name=""; ECO.cur.age=""; ecoRender(); });
+  B("⚙ ក្បាលលិខិត",ecoBanner,"alt","ដាក់រូបក្បាលលិខិតគ្លីនិក (banner) សម្រាប់បោះពុម្ព");
+  if(typeof calcOpen==="function") B("✨ AI លម្អិត",function(){ ecoClose(); calcOpen("echo"); },"alt","Report អេកូលម្អិតដោយជំនួយការ (ច្រើនប្រភេទ)");
+  bx.appendChild(ft); ov.appendChild(bx); ecoImgs(); ecoLive();
+}
+function ecoDocField(r){ var s=ecoEl("select"), fill=function(){ s.textContent=""; var a=ecoDocs(); if(r.doc&&a.indexOf(r.doc)<0) a=a.concat([r.doc]); if(!a.length){ var o=ecoEl("option",null,"—"); o.value=""; s.appendChild(o); } a.forEach(function(d){ var o=ecoEl("option",null,d); o.value=d; s.appendChild(o); }); s.value=r.doc||a[0]||""; r.doc=s.value; }; fill();
+  s.onchange=function(){ r.doc=s.value; ECO.dirty=true; };
+  var add=ecoEl("button","ecoic add","＋"); add.type="button"; add.title="បន្ថែមវេជ្ជបណ្ឌិត"; add.onclick=function(){ var v=window.prompt("ឈ្មោះវេជ្ជបណ្ឌិត:"); if(!v||!v.trim()) return; var a=ecoDocs(); if(a.indexOf(v.trim())<0){ a.push(v.trim()); try{ localStorage.setItem(ECO_DOC_KEY,JSON.stringify(a)); }catch(e){} } r.doc=v.trim(); fill(); };
+  var del=ecoEl("button","ecoic del","🗑"); del.type="button"; del.title="លុបចេញពីបញ្ជី"; del.onclick=function(){ var a=ecoDocs().filter(function(d){ return d!==s.value; }); try{ localStorage.setItem(ECO_DOC_KEY,JSON.stringify(a)); }catch(e){} r.doc=a[0]||""; fill(); };
+  return ecoField("វេជ្ជបណ្ឌិត",s,null,[del,add]); }
+function ecoFormUI(rf,r,regI){ var f=r.f, gd=ecoEl("div","ecogrid"), c1=ecoEl("div","ecocol"), c2=ecoEl("div","ecocol");
+  var I=function(k,ph,mode){ return ecoInput(function(){ return f[k]; },function(v){ f[k]=v; },ph,"text",mode||"decimal"); };
+  var S=function(k){ var a=ecoSelect(k,function(){ return f[k]; },function(v){ f[k]=v; }); return [a[0],[a[1],a[2]]]; };
+  c1.appendChild(ecoField("លេខរៀង",regI));
+  c1.appendChild(ecoField("ផ្ទៃពោះលើកទី",ecoInput(function(){return f.grav;},function(v){f.grav=v;},"01","text","numeric")));
+  [["n","ចំនួនទារក"],["fsex","ទារកភេទ"],["health","សុខភាពទារក"],["pres","ទំរង់ទារក"],["plac","ទីតាំងសុក"],["fluid","ទឹកភ្លោះ"]].forEach(function(x){ var s=S(x[0]); c1.appendChild(ecoField(x[1],s[0],null,s[1])); });
+  c1.appendChild(ecoField("ទម្ងន់ទារក",I("wt","725","numeric"),"ក្រាម"));
+  c1.appendChild(ecoField("ទំហំក្បាល",I("bpd","BPD"),"មម"));
+  c2.appendChild(ecoField("ប្រវែងឆ្អឹងភ្លៅ",I("fl","FL"),"មម"));
+  c2.appendChild(ecoField("ចង្វាក់បេះដូង",I("fhr","146","numeric"),"ក្នុង១នាទី"));
+  var gw=I("gaw","","numeric"), gdd=I("gad","","numeric"); gw.id="ecoGaw"; gdd.id="ecoGad";
+  c2.appendChild(ecoField("អាយុទារក",gw,"សប្តាហ៍")); c2.appendChild(ecoField("",gdd,"ថ្ងៃ"));
+  var ed=ecoEl("input"); ed.readOnly=true; ed.id="ecoEdd"; ed.tabIndex=-1; c2.appendChild(ecoField("ទារកគ្រប់ខែ ថ្ងៃ",ed,"(មុនក្រោយ ៧ថ្ងៃ)"));
+  var fe=S("feat"); c2.appendChild(ecoField("លក្ខណៈពិសេស",fe[0],null,fe[1]));
+  var ta=ecoEl("textarea","ecoconc"); ta.id="ecoConc"; ta.rows=5; ta.value=f.conc||""; ta.oninput=function(){ f.conc=ta.value; f.concAuto=false; ECO.dirty=true; };
+  var ra=ecoEl("button","ecoic","↺"); ra.type="button"; ra.title="សរសេរស្វ័យប្រវត្តិម្តងទៀត"; ra.onclick=function(){ f.concAuto=true; ecoLive(); };
+  c2.appendChild(ecoField("សន្និដ្ឋាន",ta,null,[ra])); c2.appendChild(ecoDocField(r));
+  gd.appendChild(c1); gd.appendChild(c2); rf.appendChild(gd);
+  var wb=ecoEl("div","ecowarn"); wb.id="ecoWarn"; rf.appendChild(wb);
+  var pv=ecoEl("details","ecoprev"), sm=ecoEl("summary",null,"👁 មើលអត្ថបទដែលនឹងបោះពុម្ព"); pv.appendChild(sm); var pre=ecoEl("pre"); pre.id="ecoPrev"; pv.appendChild(pre); rf.appendChild(pv); }
+function ecoGenUI(rf,r,regI){ var row=ecoEl("div","ecogenrow"); row.appendChild(ecoField("លេខរៀង",regI));
+  var ts=ecoEl("select"); var o0=ecoEl("option",null,"📄 គំរូធម្មតា…"); o0.value=""; ts.appendChild(o0); Object.keys(ECO_TPL).forEach(function(k){ var o=ecoEl("option",null,ECO_TPL[k].n); o.value=k; ts.appendChild(o); }); ts.value=r.tpl||"";
+  row.appendChild(ecoField("គំរូ",ts)); rf.appendChild(row);
+  var ep=ecoEl("div","ecoep"); ep.hidden=r.tpl!=="early";
+  [["gs","GS","mm"],["crl","CRL","mm"],["fhr","FHR","/min"],["gaw","អាយុ","សប្តាហ៍"],["gad","","ថ្ងៃ"],["n","ចំនួនថង់",""]].forEach(function(x){ var i=ecoInput(function(){ return r.ep[x[0]]; },function(v){ r.ep[x[0]]=v; },"","text","decimal"); i.style.width="70px"; ep.appendChild(ecoField(x[1],i,x[2])); });
+  var gen=ecoEl("button","btn","✨ សរសេរ"); gen.type="button"; gen.onclick=function(){ ta.value=ecoEarlyText(r.ep,ecoDate(r.date)); r.text=ta.value; ECO.dirty=true; }; ep.appendChild(gen); rf.appendChild(ep);
+  var chips=ecoEl("div","ecochips"); rf.appendChild(chips);
+  var ta=ecoEl("textarea","ecotext"); ta.rows=16; ta.value=r.text||""; ta.oninput=function(){ r.text=ta.value; ECO.dirty=true; };
+  var paintChips=function(){ chips.textContent=""; var k=ts.value, org=k&&ECO_TPL[k]?ECO_TPL[k].o:[]; if(!org.length){ chips.hidden=true; return; } chips.hidden=false; chips.appendChild(ecoEl("span","ecoch","✨ រកឃើញ៖"));
+    ECO_FIND.filter(function(fd){ return fd[1]==="+"?/abd/.test(k):org.indexOf(fd[1])>-1; }).forEach(function(fd){ var b=ecoEl("button",null,fd[0]); b.type="button"; b.title=fd[2]; b.onclick=function(){ ecoApplyFind(ta,fd); r.text=ta.value; ECO.dirty=true; var i=ta.value.indexOf("…"); if(i>-1){ ta.focus(); ta.setSelectionRange(i,i+1); } }; chips.appendChild(b); }); };
+  ts.onchange=function(){ var k=ts.value; r.tpl=k; ep.hidden=k!=="early"; if(k&&k!=="early"&&k!=="free"&&(!ta.value.trim()||window.confirm("ជំនួសអត្ថបទដោយគំរូ \""+ECO_TPL[k].n+"\"?"))){ ta.value=ecoTplText(k,r.sex); r.text=ta.value; ECO.dirty=true; } paintChips(); };
+  paintChips(); rf.appendChild(ta);
+  if(!r.tpl&&!r.text){ ts.value=r.sex==="ប្រុស"?"abdM":"abdF"; r.tpl=ts.value; ta.value=ecoTplText(ts.value,r.sex); r.text=ta.value; paintChips(); }
+  rf.appendChild(ecoDocField(r)); }
+function ecoLive(){ var r=ECO.cur; if(!r||ECO.mode!=="form") return; var f=r.f, e=ecoEdd(r), g=ecoGa(f);
+  var ed=$("ecoEdd"); if(ed) ed.value=e?ecoDmy(e):"";
+  var gw=$("ecoGaw"), gd=$("ecoGad"); if(gw&&!f.gaw&&g!=null){ gw.placeholder=String(Math.floor(g/7)); if(gd) gd.placeholder=String(Math.round(g-Math.floor(g/7)*7)); } else if(gw){ gw.placeholder=""; if(gd) gd.placeholder=""; }
+  if(f.concAuto){ f.conc=ecoFormConc(r); var ta=$("ecoConc"); if(ta) ta.value=f.conc; }
+  var wb=$("ecoWarn"); if(wb){ wb.textContent=""; ecoWarn(r).forEach(function(w){ var d=ecoEl("div","ecow"); d.appendChild(ecoEl("span",null,"⚠ "+w[0])); if(w[1]){ var b=ecoEl("button",null,"+ សន្និដ្ឋាន"); b.type="button"; b.onclick=function(){ f.conc=(f.conc?f.conc.replace(/\s+$/,"")+"\n":"")+"* * * "+w[1]; f.concAuto=false; var ta=$("ecoConc"); if(ta) ta.value=f.conc; ECO.dirty=true; }; d.appendChild(b); } wb.appendChild(d); }); }
+  var pv=$("ecoPrev"); if(pv) pv.textContent=ecoText(r); }
+function ecoText(r){ if(r.mode==="gen") return r.text||""; return ecoFormLines(r).join("\n")+(r.f.conc?"\n\n"+r.f.conc:""); }
+function ecoSave(cb){ var r=ECO.cur; if(!r.reg){ say("សូមដាក់លេខរៀង",true); if(cb) cb(false); return; }
+  if(!r.name.trim()&&!window.confirm("មិនទាន់មានឈ្មោះអ្នកជំងឺ — រក្សាទុកដដែល?")){ if(cb) cb(false); return; }
+  var finish=function(){ if(r.isNew){ ecoSeqSeen(r.reg); } var rec=JSON.parse(JSON.stringify(r)); var imgs=rec.img; delete rec.img; delete rec.isNew; rec.nimg=imgs.length; rec.ts=Date.now();
+    ecoTx("rec","readwrite",function(s){ return s.put(rec); },function(){ ecoTx("img","readwrite",function(s){ return s.put(imgs,rec.reg); },function(){
+      r.isNew=false; ECO.dirty=false; say("✓ បានរក្សាទុក "+r.reg+" (នៅលើឧបករណ៍នេះ)");
+      ecoAll(function(l){ ECO.list=l; ECO.idx=l.findIndex(function(x){ return x.reg===r.reg; }); var ri=document.querySelector(".ecoreg"); if(ri) ri.readOnly=true; if(cb) cb(true); }); }); }); };
+  if(r.isNew&&ECO.list.some(function(x){ return x.reg===r.reg; })){ if(!window.confirm("លេខរៀង "+r.reg+" មានរួចហើយ — សរសេរជាន់?")){ if(cb) cb(false); return; } }
+  finish(); }
+function ecoLoad(reg){ var rec=ECO.list.find(function(x){ return x.reg===reg; }); if(!rec) return;
+  ecoTx("img","readonly",function(s){ return s.get(reg); },function(imgs){ var r=JSON.parse(JSON.stringify(rec)); r.img=imgs||[]; r.isNew=false; var b=ecoBlank(r.mode); r.f=Object.assign(b.f,r.f||{}); r.ep=Object.assign(b.ep,r.ep||{});
+    ECO.cur=r; ECO.mode=r.mode; ECO.dirty=false; ECO.idx=ECO.list.indexOf(rec); ecoRender(); }); }
+function ecoFind(q){ q=fold(String(q||"").trim()); if(!q) return; var hit=ECO.list.find(function(x){ return fold(x.reg)===q; })||ECO.list.slice().reverse().find(function(x){ return fold(x.reg).indexOf(q)>-1||fold(x.name||"").indexOf(q)>-1||fold(x.pid||"")===q; });
+  if(hit){ if(ECO.dirty&&!window.confirm("មិនទាន់រក្សាទុក — បោះបង់ការកែ?")) return; ecoLoad(hit.reg); } else say("រកមិនឃើញ",true); }
+function ecoNav(d){ if(!ECO.list.length){ say("មិនទាន់មានលទ្ធផលរក្សាទុក",true); return; } if(ECO.dirty&&!window.confirm("មិនទាន់រក្សាទុក — បោះបង់ការកែ?")) return;
+  var l=ECO.list.filter(function(x){ return x.mode===ECO.mode; }); if(!l.length) l=ECO.list; var i=l.findIndex(function(x){ return x.reg===ECO.cur.reg; });
+  if(i<0) i=d<0?l.length:-1; i+=d; if(i<0||i>=l.length){ say(d<0?"នេះជាលទ្ធផលដំបូង":"នេះជាលទ្ធផលចុងក្រោយ"); return; } ecoLoad(l[i].reg); }
+function ecoMore(){ var ov=$("ecoOv"), bx=ecoEl("div","ecomore"), hd=ecoEl("div","calch"); hd.appendChild(ecoEl("b",null,"📋 លទ្ធផលអេកូទាំងអស់ ("+ECO.list.length+")"));
+  var x=ecoEl("button","calcx","✕"); x.type="button"; x.onclick=function(){ bx.remove(); }; hd.appendChild(x); bx.appendChild(hd);
+  var q=ecoEl("input"); q.placeholder="🔎 ឈ្មោះ · លេខរៀង · ថ្ងៃ"; bx.appendChild(q); var tb=ecoEl("div","ecolist"); bx.appendChild(tb);
+  var paint=function(){ tb.textContent=""; var w=fold(q.value.trim()); ECO.list.slice().reverse().filter(function(it){ return !w||fold([it.reg,it.name,it.pid,it.date,it.doc].join(" ")).indexOf(w)>-1; }).slice(0,300).forEach(function(it){
+      var b=ecoEl("button","ecoli"); b.type="button"; b.appendChild(ecoEl("b",null,it.reg)); b.appendChild(ecoEl("span",null,(it.name||"—")+" · "+(it.sex||"")+" "+(it.age||"")+" ឆ្នាំ")); b.appendChild(ecoEl("small",null,(it.mode==="form"?"🤰 ":"📄 ")+ecoDmy(ecoDate(it.date))+(it.nimg?" · 🖼"+it.nimg:"")));
+      b.onclick=function(){ bx.remove(); if(ECO.dirty&&!window.confirm("មិនទាន់រក្សាទុក — បោះបង់ការកែ?")) return; ecoLoad(it.reg); }; tb.appendChild(b); });
+    if(!tb.children.length) tb.appendChild(ecoEl("p",null,"មិនទាន់មានលទ្ធផលរក្សាទុក")); };
+  q.oninput=paint; paint(); ov.appendChild(bx); q.focus(); }
+function ecoBanner(){ var fi=ecoEl("input"); fi.type="file"; fi.accept="image/*"; fi.onchange=function(){ var f=fi.files&&fi.files[0]; if(!f) return; var rd=new FileReader(); rd.onload=function(){ var im=new Image(); im.onload=function(){ var s=Math.min(1,1600/im.width), c=document.createElement("canvas"); c.width=Math.round(im.width*s); c.height=Math.round(im.height*s); c.getContext("2d").drawImage(im,0,0,c.width,c.height);
+      var u=c.toDataURL("image/jpeg",0.9); ecoTx("cfg","readwrite",function(st){ return st.put(u,"banner"); },function(){ say("✓ បានដាក់ក្បាលលិខិត — វានឹងនៅខាងលើរាល់ report អេកូ"); }); }; im.src=rd.result; }; rd.readAsDataURL(f); };
+  if(window.confirm("ជ្រើសរូបក្បាលលិខិតគ្លីនិក (រូបបណ្តោយ ដូចក្បាលក្រដាស report)?\n\nចុច Cancel ដើម្បីលុបរូបចាស់ ហើយប្រើឈ្មោះគ្លីនិកជាអក្សរវិញ។")) fi.click();
+  else ecoTx("cfg","readwrite",function(st){ return st.delete("banner"); },function(){ say("ប្រើឈ្មោះគ្លីនិកជាអក្សរ"); }); }
+function ecoPrint(r){ var w=window.open("","_blank"); if(!w){ say("សូមអនុញ្ញាត pop-up ដើម្បីបោះពុម្ព",true); return; }
+  ecoTx("cfg","readonly",function(s){ return s.get("banner"); },function(banner){
+    var e=function(x){ return String(x==null?"":x).replace(/&/g,"&amp;").replace(/</g,"&lt;"); }, d=ecoDate(r.date);
+    var head=banner?'<img class="ban" src="'+banner+'" alt="">':'<div class="tx"><div class="cn">'+e($("hName")?$("hName").textContent:SET.name)+'</div><div class="ca">'+e([$("hAddr")?$("hAddr").textContent:"",$("hPhone")?$("hPhone").textContent:""].filter(function(x){return x&&x.trim();}).join(" · "))+'</div></div>';
+    var city=(($("hAddr")&&$("hAddr").textContent)||"").match(/ភ្នំពេញ|សៀមរាប|បាត់ដំបង|កំពង់[^\s,]*|តាកែវ|កំពត|ព្រះសីហនុ|កណ្តាល/); city=city?city[0]:"ភ្នំពេញ";
+    var txt=ecoText(r), imgs=r.img.map(function(u){ return '<img src="'+u+'" alt="">'; }).join("");
+    var body=imgs?'<div class="two"><div class="im">'+imgs+'</div><div class="tt">'+e(txt)+'</div></div>':'<div class="tt full">'+e(txt)+'</div>';
+    w.document.write('<!doctype html><html><head><meta charset="utf-8"><title>'+e(r.reg+" "+r.name)+'</title><style>@page{size:A4;margin:8mm 12mm}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}body{margin:0;font:14.5px/1.75 "Khmer OS Siemreap","Khmer OS","Noto Sans Khmer",Arial,sans-serif;color:#111}'+
+      '.ban{width:100%;display:block;margin-bottom:6px}.tx{text-align:center;border-bottom:2px solid #1d3a8a;padding-bottom:6px;margin-bottom:8px}.cn{font:700 22px "Khmer OS Muol Light","Moul","Noto Serif Khmer",serif;color:#1d3a8a}.ca{font-size:13px}'+
+      '.info{display:grid;grid-template-columns:1.1fr 1.1fr 1fr;gap:0 10px;font-size:15px;margin:4px 0}.info .r{text-align:right}h1{font:700 19px Calibri,Arial,sans-serif;color:#1d3a8a;text-align:center;margin:10px 0}'+
+      '.two{display:grid;grid-template-columns:44% 1fr;gap:14px;align-items:start}.im img{width:100%;display:block;margin-bottom:10px}.tt{white-space:pre-wrap;font-family:Arial,"Khmer OS Siemreap","Noto Sans Khmer",sans-serif;font-size:14px;tab-size:4}.tt.full{font-size:15px}'+
+      '.sig{margin:18px 0 0 auto;width:260px;text-align:center}.sig .d{margin-top:56px;font-weight:700}</style></head><body>'+head+
+      '<div class="info"><div>លេខរៀង : &nbsp;'+e(r.reg)+'</div><div>លេខសំគាល់ : &nbsp;'+e(r.pid)+'</div><div class="r">'+e(city)+' ថ្ងៃទី: '+ecoDmy(d)+'</div>'+
+      '<div>ឈ្មោះ : &nbsp;'+e(r.name)+'</div><div>ភេទ: &nbsp;'+e(r.sex)+'</div><div class="r">អាយុ: &nbsp;'+e(r.age)+' &nbsp;ឆ្នាំ</div></div>'+
+      '<h1>ECHOGRAPHIE RESULTAT</h1>'+body+'<div class="sig">'+(typeof eKhDate==="function"?eKhDate(d):ecoDmy(d))+'<br>វេជ្ជបណ្ឌិតអ្នកធ្វើអេកូ<div class="d">'+e(r.doc||"")+'</div></div></body></html>');
+    w.document.close(); setTimeout(function(){ w.focus(); w.print(); },400); }); }
+/* ---- entry points: Tools menu, ☰ menu, home ---- */
+(function(){
+  if(typeof TOOL_GROUPS!=="undefined"){ var gr=TOOL_GROUPS.find(function(g){ return g[2].some(function(t){ return t[0]==="echo"; }); });
+    if(gr){ gr[2].forEach(function(t){ if(t[0]==="echo") t[2]=["Echo · AI detailed","Écho · IA détaillée","អេកូ · AI លម្អិត"]; }); gr[2].splice(1,0,["eco","🖥",["Echo (clinic form)","Écho (formulaire)","អេកូ (ទម្រង់គ្លីនិក)"]]); } }
+  var oc=calcOpen; calcOpen=function(t){ if(t==="eco") return ecoOpen(); return oc.apply(this,arguments); };
+  var g=document.querySelector("#rxMenu .rm-grid"); if(g){ var b=mk("button","btn alt"); b.type="button"; b.id="ecoBtn"; b.textContent="🖥 អេកូ"; b.onclick=function(){ var m=$("rxMenu"); if(m&&!m.hidden) $("rxMenuBtn").click(); ecoOpen(); }; g.appendChild(b); }
+  var tiles=document.querySelector("#home .tiles"); if(tiles){ var t=mk("button","tile t-eco"); t.type="button"; t.innerHTML='<span class="ic">🖥</span><b>អេកូ</b><small>Echo Form · Echo General · រូប · បោះពុម្ព</small>'; t.onclick=function(){ ecoOpen(); }; tiles.insertBefore(t,tiles.children[2]||null); }
+  document.addEventListener("keydown",function(e){ var ov=$("ecoOv"); if(e.key==="Escape"&&ov&&!ov.hidden){ var m=ov.querySelector(".ecomore"); if(m) m.remove(); else ecoClose(); } });
+})();
 /* ---------- PE / medical history / evaluation / SOAP follow the language buttons (ខ្មែរ · EN · FR · EN+ខ្មែរ · FR+ខ្មែរ) ---------- */
 var TRX={"General Appearance":["Aspect général","រូបរាងទូទៅ"],"ENT (ORL)":["ORL","ត្រចៀក ច្រមុះ បំពង់ក"],"Cardiovascular System":["Appareil cardiovasculaire","បេះដូង និងសរសៃឈាម"],"Respiratory System":["Appareil respiratoire","ប្រព័ន្ធដង្ហើម"],"Gastro-Intestinal System":["Appareil digestif","ប្រព័ន្ធរំលាយអាហារ"],"Central Nervous System":["Système nerveux central","ប្រព័ន្ធប្រសាទកណ្តាល"],"Skin & Extremities":["Peau et extrémités","ស្បែក និងចុងដៃជើង"],"Urogenital System":["Appareil uro-génital","ប្រព័ន្ធទឹកនោម និងប្រដាប់បន្តពូជ"],"Mental Status":["État mental","ស្ថានភាពផ្លូវចិត្ត"],"Other body parts":["Autres","ផ្នែកផ្សេងៗ"],"Vaccine":["Vaccins","វ៉ាក់សាំង"],"Past Medical":["Antécédents médicaux","ជំងឺធ្លាប់មាន"],"Past Operation":["Antécédents chirurgicaux","ធ្លាប់វះកាត់"],"Family History":["Antécédents familiaux","ប្រវត្តិគ្រួសារ"],"Social History":["Mode de vie","ប្រវត្តិសង្គម"],"Other":["Autres","ផ្សេងៗ"],"Allergy":["Allergies","អាឡែកហ្ស៊ី"],"EPI complete":["PEV complet","វ៉ាក់សាំង PEV គ្រប់"],"Not up to date":["Pas à jour","មិនទាន់គ្រប់"],"COVID-19 vaccinated":["Vacciné COVID-19","បានចាក់វ៉ាក់សាំង COVID-19"],"Tetanus up to date":["Tétanos à jour","វ៉ាក់សាំងតេតាណូសគ្រប់"],"Hepatitis B vaccinated":["Vacciné hépatite B","បានចាក់វ៉ាក់សាំងរលាកថ្លើម B"],"Unknown":["Inconnu","មិនដឹង"],"Hypertension":["HTA","លើសសម្ពាធឈាម"],"Diabetes":["Diabète","ទឹកនោមផ្អែម"],"Asthma":["Asthme","ហឺត"],"COPD":["BPCO","COPD"],"Heart disease":["Cardiopathie","ជំងឺបេះដូង"],"Stroke":["AVC","ស្ទះសរសៃឈាមខួរក្បាល"],"Tuberculosis":["Tuberculose","របេង"],"Hepatitis B":["Hépatite B","រលាកថ្លើម B"],"Gastritis / ulcer":["Gastrite / ulcère","រលាកក្រពះ / ដំបៅក្រពះ"],"Kidney disease":["Maladie rénale","ជំងឺតម្រងនោម"],"Epilepsy":["Épilepsie","ឆ្កួតជ្រូក"],"None":["Aucun","គ្មាន"],"Appendectomy":["Appendicectomie","វះខ្នែងពោះវៀន"],"Caesarean section":["Césarienne","វះកាត់យកកូន"],"Cholecystectomy":["Cholécystectomie","វះកាត់ថង់ទឹកប្រមាត់"],"Hernia repair":["Cure de hernie","វះជួសជុលក្លូន"],"Fracture fixation":["Ostéosynthèse","វះកាត់ភ្ជាប់ឆ្អឹងបាក់"],"Cancer":["Cancer","មហារីក"],"Thalassaemia":["Thalassémie","ថាឡាសេមី"],"Non-smoker":["Non-fumeur","មិនជក់បារី"],"Smoker":["Fumeur","ជក់បារី"],"Ex-smoker":["Ex-fumeur","ធ្លាប់ជក់បារី"],"Alcohol occasionally":["Alcool occasionnel","ផឹកស្រាម្តងម្កាល"],"Alcohol daily":["Alcool quotidien","ផឹកស្រារាល់ថ្ងៃ"],"Farmer":["Agriculteur","កសិករ"],"Office worker":["Employé de bureau","បុគ្គលិកការិយាល័យ"],"Student":["Étudiant","សិស្ស / និស្សិត"],"Pregnant / breastfeeding":["Enceinte / allaitante","មានផ្ទៃពោះ / បំបៅដោះ"],"Current medicines: …":["Traitement en cours : …","ថ្នាំកំពុងប្រើ៖ …"],"Traditional medicine use":["Médecine traditionnelle","ប្រើថ្នាំបុរាណ"],"NKDA (no known drug allergy)":["Pas d'allergie médicamenteuse connue","គ្មានអាឡែកហ្ស៊ីថ្នាំ"],"Penicillin":["Pénicilline","Penicillin"],"Sulfa":["Sulfamides","Sulfa"],"NSAIDs / Aspirin":["AINS / Aspirine","NSAID / Aspirin"],"Cephalosporin":["Céphalosporines","Cephalosporin"],"Seafood":["Fruits de mer","គ្រឿងសមុទ្រ"],"Alert":["Éveillé","ភ្ញាក់ដឹងខ្លួន"],"oriented":["orienté","ស្គាល់ពេល ទីកន្លែង មនុស្ស"],"not in distress":["pas de détresse","មិនមានទុក្ខលំបាក"],"well hydrated":["bien hydraté","មានជាតិទឹកគ្រប់គ្រាន់"],"no pallor":["pas de pâleur","មិនស្លេក"],"no jaundice":["pas d'ictère","មិនលឿង"],"Ill-looking":["Aspect malade","មើលទៅឈឺ"],"In pain":["Douloureux","ឈឺចាប់"],"Lethargic":["Léthargique","ល្ហិតល្ហៃ"],"Pale":["Pâle","ស្លេក"],"Jaundiced":["Ictérique","លឿង"],"Dehydrated (sunken eyes":["Déshydraté (yeux enfoncés","ខ្វះជាតិទឹក (ភ្នែកស្រុត"],"dry mucosa)":["muqueuses sèches)","ភ្នាសស្ងួត)"],"Cyanosis":["Cyanose","ស្វាយ"],"Flushed / febrile":["Rouge / fébrile","ក្រហម / ក្តៅខ្លួន"],"Malnourished":["Dénutri","កង្វះអាហារូបត្ថម្ភ"],"Obese":["Obèse","ធាត់លើស"],"Ears":["Oreilles","ត្រចៀក"],"nose and throat normal":["nez et gorge normaux","ច្រមុះ និងបំពង់កធម្មតា"],"tonsils not enlarged":["amygdales non hypertrophiées","ទន្សិលមិនធំ"],"no cervical lymph nodes":["pas d'adénopathie cervicale","គ្មានកូនកណ្តុរក"],"Pharynx red":["Pharynx rouge","បំពង់កក្រហម"],"Tonsils enlarged with exudate":["Amygdales hypertrophiées avec exsudat","ទន្សិលធំមានខ្ទុះស"],"Tympanic membrane red / bulging":["Tympan rouge / bombé","ក្រដាសត្រចៀកក្រហម / ប៉ោង"],"Ear discharge":["Otorrhée","ហូរខ្ទុះត្រចៀក"],"Nasal discharge":["Rhinorrhée","ហៀរសំបោរ"],"Nasal congestion":["Obstruction nasale","តឹងច្រមុះ"],"Cervical lymph nodes enlarged":["Adénopathies cervicales","កូនកណ្តុរកធំ"],"Oral ulcers":["Ulcérations buccales","ដំបៅមាត់"],"Dental caries / abscess":["Carie / abcès dentaire","ធ្មេញពុក / អាប់សេធ្មេញ"],"S1 S2 regular":["B1 B2 réguliers","S1 S2 ទៀងទាត់"],"no murmur":["pas de souffle","គ្មានសូរ murmur"],"CRT < 2 s":["TRC < 2 s","CRT < 2 វិនាទី"],"peripheral pulses normal":["pouls périphériques normaux","ជីពចរដៃជើងធម្មតា"],"Tachycardia":["Tachycardie","បេះដូងដើរលឿន"],"Bradycardia":["Bradycardie","បេះដូងដើរយឺត"],"Irregular rhythm":["Rythme irrégulier","ចង្វាក់មិនទៀង"],"Murmur":["Souffle","សូរ murmur"],"CRT > 2 s":["TRC > 2 s","CRT > 2 វិនាទី"],"Weak peripheral pulses":["Pouls périphériques faibles","ជីពចរដៃជើងខ្សោយ"],"Raised JVP":["Turgescence jugulaire","សរសៃករីកធំ (JVP ខ្ពស់)"],"Leg oedema":["Œdème des membres inférieurs","ហើមជើង"],"Normal breath sounds both sides":["Murmure vésiculaire normal des deux côtés","សូរដង្ហើមធម្មតាទាំងសងខាង"],"no crackles":["pas de crépitants","គ្មានសូរក្រេបៗ"],"no wheeze":["pas de sibilants","គ្មានសូរហួច"],"no chest indrawing":["pas de tirage","គ្មានទ្រូងស្រុត"],"Tachypnoea":["Polypnée","ដកដង្ហើមញាប់"],"Chest indrawing":["Tirage","ទ្រូងស្រុត"],"Wheeze":["Sibilants","សូរហួច"],"Crackles right base":["Crépitants base droite","សូរក្រេបៗបាតសួតស្តាំ"],"Crackles left base":["Crépitants base gauche","សូរក្រេបៗបាតសួតឆ្វេង"],"Reduced air entry":["Diminution du murmure vésiculaire","ខ្យល់ចូលថយ"],"Bronchial breathing":["Souffle tubaire","សូរដង្ហើមបំពង់"],"Dull to percussion":["Matité à la percussion","គោះសូរស្ងួត"],"Accessory muscle use":["Mise en jeu des muscles accessoires","ប្រើសាច់ដុំជំនួយដកដង្ហើម"],"Abdomen soft":["Abdomen souple","ពោះទន់"],"non-tender":["indolore","មិនឈឺពេលស្ទាប"],"no organomegaly":["pas d'organomégalie","សរីរាង្គមិនធំ"],"bowel sounds normal":["bruits intestinaux normaux","សូរពោះវៀនធម្មតា"],"Epigastric tenderness":["Sensibilité épigastrique","ឈឺត្រង់ក្រពះពេលស្ទាប"],"Right iliac fossa tenderness":["Sensibilité de la fosse iliaque droite","ឈឺពោះក្រោមខាងស្តាំពេលស្ទាប"],"Right upper quadrant tenderness":["Sensibilité de l'hypochondre droit","ឈឺពោះលើខាងស្តាំពេលស្ទាប"],"Guarding / rebound":["Défense / rebond","ពោះរឹងការពារ / ឈឺពេលលែងដៃ"],"Distended":["Distendu","ពោះប៉ោង"],"Hepatomegaly":["Hépatomégalie","ថ្លើមធំ"],"Splenomegaly":["Splénomégalie","លំពែងធំ"],"Ascites":["Ascite","ទឹកក្នុងពោះ"],"Hyperactive bowel sounds":["Bruits intestinaux augmentés","សូរពោះវៀនខ្លាំង"],"Absent bowel sounds":["Silence abdominal","គ្មានសូរពោះវៀន"],"Conscious":["Conscient","ដឹងខ្លួន"],"GCS 15/15":["GCS 15/15","GCS 15/15"],"no focal deficit":["pas de déficit focal","គ្មានការខ្សោយផ្នែកណាមួយ"],"no neck stiffness":["pas de raideur de nuque","កមិនរឹង"],"GCS < 15":["GCS < 15","GCS < 15"],"Neck stiffness":["Raideur de nuque","រឹងក"],"Kernig / Brudzinski positive":["Kernig / Brudzinski positif","Kernig / Brudzinski វិជ្ជមាន"],"Focal weakness":["Déficit moteur focal","ខ្សោយផ្នែកណាមួយ"],"Facial palsy":["Paralysie faciale","ខ្វិនមុខ"],"Confusion":["Confusion","វង្វេង"],"Convulsion":["Convulsion","ប្រកាច់"],"Abnormal reflexes":["Réflexes anormaux","រ៉េផ្លិចមិនធម្មតា"],"Skin normal":["Peau normale","ស្បែកធម្មតា"],"no rash":["pas d'éruption","គ្មានកន្ទួល"],"no oedema":["pas d'œdème","មិនហើម"],"joints normal":["articulations normales","សន្លាក់ធម្មតា"],"Maculopapular rash":["Éruption maculo-papuleuse","កន្ទួលក្រហម"],"Petechiae":["Pétéchies","ចំណុចឈាមក្រោមស្បែក"],"Tourniquet test positive":["Test du garrot positif","តេស្ត Tourniquet វិជ្ជមាន"],"Urticaria":["Urticaire","កន្ទួលរមាស់ (Urticaria)"],"Wound / laceration":["Plaie / lacération","របួស / របួសដាច់"],"Cellulitis":["Cellulite","រលាកស្បែក និងជាលិកា"],"Abscess":["Abcès","អាប់សេ"],"Vesicles":["Vésicules","ពងទឹក"],"Joint swelling":["Gonflement articulaire","ហើមសន្លាក់"],"No costovertebral angle tenderness":["Pas de douleur à l'ébranlement lombaire","មិនឈឺត្រង់តម្រងនោមពេលគោះ"],"no suprapubic tenderness":["pas de sensibilité sus-pubienne","មិនឈឺពោះក្រោមពេលស្ទាប"],"Costovertebral angle tenderness":["Douleur à l'ébranlement lombaire","ឈឺត្រង់តម្រងនោមពេលគោះ"],"Suprapubic tenderness":["Sensibilité sus-pubienne","ឈឺពោះក្រោមពេលស្ទាប"],"Urethral discharge":["Écoulement urétral","ហូរខ្ទុះបង្ហួរនោម"],"Vaginal discharge":["Leucorrhées","ធ្លាក់ស"],"Genital ulcer":["Ulcération génitale","ដំបៅប្រដាប់ភេទ"],"Scrotal swelling":["Tuméfaction scrotale","ហើមពងស្វាស"],"Calm":["Calme","ស្ងប់"],"oriented to time":["orienté dans le temps","ស្គាល់ពេលវេលា"],"place and person":["l'espace et les personnes","ទីកន្លែង និងមនុស្ស"],"normal mood and speech":["humeur et discours normaux","អារម្មណ៍ និងការនិយាយធម្មតា"],"Anxious":["Anxieux","ថប់បារម្ភ"],"Low mood":["Humeur triste","អារម្មណ៍ធ្លាក់ចុះ"],"Agitated":["Agité","រំជើបរំជួល"],"Disoriented":["Désorienté","វង្វេងស្មារតី"],"Hallucinations":["Hallucinations","ការយល់ឃើញខុស"],"Suicidal ideation — assess risk":["Idées suicidaires — évaluer le risque","គំនិតចង់ធ្វើអត្តឃាត — វាយតម្លៃហានិភ័យ"],"Nothing abnormal detected":["Rien d'anormal","គ្មានអ្វីមិនធម្មតា"],"Conjunctiva red":["Conjonctive rouge","ស្រោមភ្នែកក្រហម"],"Eyes jaundiced":["Ictère conjonctival","ភ្នែកលឿង"],"Thyroid enlarged":["Goitre","ក្រពេញទីរ៉ូអ៊ីតធំ"],"Breast lump":["Nodule mammaire","ដុំក្នុងដោះ"],"Pregnant uterus":["Utérus gravide","ស្បូនមានផ្ទៃពោះ"],"fundal height ... cm":["hauteur utérine ... cm","កម្ពស់ស្បូន ... cm"],"Lymph nodes enlarged":["Adénopathies","កូនកណ្តុរធំ"],"Febrile":["Fébrile","ក្តៅខ្លួន"],"ill-looking":["aspect malade","មើលទៅឈឺ"],"crackles at lung base":["crépitants aux bases","សូរក្រេបៗបាតសួត"],"reduced air entry":["diminution du murmure vésiculaire","ខ្យល់ចូលថយ"],"bilateral wheeze and fine crackles":["sibilants et crépitants fins bilatéraux","សូរហួច និងសូរក្រេបៗទាំងសងខាង"],"Bilateral expiratory wheeze":["Sibilants expiratoires bilatéraux","សូរហួចពេលដកដង្ហើមចេញទាំងសងខាង"],"prolonged expiration":["expiration prolongée","ដកដង្ហើមចេញយូរ"],"Scattered rhonchi":["Ronchi diffus","សូររ៉ូនស៊ីរាយប៉ាយ"],"Weight loss":["Amaigrissement","ស្រកទម្ងន់"],"crackles at apex":["crépitants au sommet","សូរក្រេបៗកំពូលសួត"],"Nasal congestion with clear discharge":["Obstruction nasale avec rhinorrhée claire","តឹងច្រមុះ ហៀរសំបោរថ្លា"],"pharynx mildly red":["pharynx légèrement rouge","បំពង់កក្រហមបន្តិច"],"Purulent nasal discharge":["Rhinorrhée purulente","សំបោរមានខ្ទុះ"],"tenderness over maxillary sinuses":["sensibilité des sinus maxillaires","ឈឺពេលចុចលើប្រហោងឆ្អឹងថ្ពាល់"],"tonsils enlarged with exudate":["amygdales hypertrophiées avec exsudat","ទន្សិលធំមានខ្ទុះស"],"tender cervical lymph nodes":["adénopathies cervicales sensibles","កូនកណ្តុរកឈឺ"],"Tympanic membrane red and bulging":["Tympan rouge et bombé","ក្រដាសត្រចៀកក្រហម និងប៉ោង"],"Ear canal swollen and tender":["Conduit auditif œdématié et douloureux","ប្រឡាយត្រចៀកហើម និងឈឺ"],"pain on pulling the pinna":["douleur à la traction du pavillon","ឈឺពេលទាញស្លឹកត្រចៀក"],"Ear canal blocked by wax":["Bouchon de cérumen","ប្រឡាយត្រចៀកស្ទះដោយអាចម៍ត្រចៀក"],"Bleeding from anterior nasal septum":["Saignement de la cloison nasale antérieure","ហូរឈាមពីជញ្ជាំងច្រមុះខាងមុខ"],"Dental caries with gum swelling and tenderness":["Carie avec gencive gonflée et douloureuse","ធ្មេញពុក អញ្ចាញហើម និងឈឺ"],"Shallow painful oral ulcers":["Ulcérations buccales superficielles douloureuses","ដំបៅមាត់រាក់ៗ ឈឺ"],"White plaques on oral mucosa":["Plaques blanches sur la muqueuse buccale","ស្នាមសៗលើភ្នាសមាត់"],"Vesicles on palms and soles":["Vésicules palmo-plantaires","ពងទឹកលើបាតដៃ បាតជើង"],"flushed":["rouge","ក្រហម"],"Flushed skin":["Peau rouge","ស្បែកក្រហម"],"petechiae":["pétéchies","ចំណុចឈាមក្រោមស្បែក"],"tourniquet test positive":["test du garrot positif","តេស្ត Tourniquet វិជ្ជមាន"],"Mild abdominal tenderness":["Sensibilité abdominale légère","ឈឺពោះបន្តិចពេលស្ទាប"],"no ascites":["pas d'ascite","គ្មានទឹកក្នុងពោះ"],"pale":["pâle","ស្លេក"],"Diffuse abdominal tenderness":["Sensibilité abdominale diffuse","ឈឺពោះទូទាំងពេលស្ទាប"],"hepatosplenomegaly":["hépatosplénomégalie","ថ្លើម និងលំពែងធំ"],"lethargic":["léthargique","ល្ហិតល្ហៃ"],"Conjunctival suffusion":["Hyperhémie conjonctivale","ស្រោមភ្នែកក្រហម"],"calf muscle tenderness":["douleur des mollets","ឈឺសាច់ដុំកំភួនជើង"],"Vesicles at different stages":["Vésicules d'âges différents","ពងទឹកច្រើនដំណាក់កាល"],"mostly on trunk":["surtout sur le tronc","ភាគច្រើននៅដងខ្លួន"],"Painful grouped vesicles along one dermatome":["Vésicules groupées douloureuses sur un dermatome","ពងទឹកជាចង្កោមឈឺ តាមសរសៃប្រសាទមួយ"],"Mild dehydration":["Déshydratation légère","ខ្វះជាតិទឹកស្រាល"],"dry mucosa":["muqueuses sèches","ភ្នាសស្ងួត"],"mild diffuse tenderness":["sensibilité diffuse légère","ឈឺពោះទូទាំងបន្តិច"],"sunken eyes":["yeux enfoncés","ភ្នែកស្រុត"],"skin pinch goes back very slowly":["pli cutané persistant","ស្បែកចាប់ឡើងត្រឡប់យឺតខ្លាំង"],"weak pulse":["pouls faible","ជីពចរខ្សោយ"],"Lower abdominal tenderness":["Sensibilité du bas-ventre","ឈឺពោះក្រោមពេលស្ទាប"],"hyperactive bowel sounds":["bruits intestinaux augmentés","សូរពោះវៀនខ្លាំង"],"no guarding":["pas de défense","មិនរឹងការពារ"],"Diffuse cramping tenderness":["Sensibilité diffuse à type de crampes","ឈឺចុកពោះទូទាំង"],"no guarding or rebound":["pas de défense ni de rebond","មិនរឹងការពារ មិនឈឺពេលលែងដៃ"],"Soft abdomen":["Abdomen souple","ពោះទន់"],"stool palpable in left iliac fossa":["selles palpables en fosse iliaque gauche","ស្ទាបឃើញលាមកពោះក្រោមខាងឆ្វេង"],"Perianal: external haemorrhoids":["Région périanale : hémorroïdes externes","ជុំវិញរន្ធគូទ៖ ឫសដូងបាតខាងក្រៅ"],"Soft":["Souple","ទន់"],"mild periumbilical tenderness":["légère sensibilité périombilicale","ឈឺបន្តិចជុំវិញផ្ចិត"],"Tender hepatomegaly":["Hépatomégalie douloureuse","ថ្លើមធំ ឈឺពេលស្ទាប"],"no costovertebral angle tenderness":["pas de douleur à l'ébranlement lombaire","មិនឈឺត្រង់តម្រងនោមពេលគោះ"],"Cervical motion tenderness":["Douleur à la mobilisation du col","ឈឺពេលកម្រើកមាត់ស្បូន"],"lower abdominal tenderness":["sensibilité du bas-ventre","ឈឺពោះក្រោមពេលស្ទាប"],"BP raised":["TA élevée","សម្ពាធឈាមខ្ពស់"],"heart sounds normal":["bruits du cœur normaux","សូរបេះដូងធម្មតា"],"Brisk reflexes":["Réflexes vifs","រ៉េផ្លិចខ្លាំង"],"Oedema of face and hands":["Œdème du visage et des mains","ហើមមុខ និងដៃ"],"Sweating":["Sueurs","បែកញើស"],"confused":["confus","វង្វេង"],"Pale conjunctiva and palms":["Conjonctives et paumes pâles","ស្រោមភ្នែក និងបាតដៃស្លេក"],"Soft systolic flow murmur":["Souffle systolique fonctionnel","សូរ murmur systolic ស្រាល"],"Urticarial wheals":["Papules urticariennes","កន្ទួលរមាស់ប៉ោងៗ"],"Distressed":["En détresse","មានទុក្ខលំបាក"],"Generalised urticaria":["Urticaire généralisée","កន្ទួលរមាស់ពេញខ្លួន"],"Hypotension":["Hypotension","សម្ពាធឈាមទាប"],"tachycardia":["tachycardie","បេះដូងដើរលឿន"],"Papules and burrows on hands":["Papules et sillons sur les mains","គ្រាប់ និងផ្លូវកមលើដៃ"],"wrists":["poignets","កដៃ"],"waist":["taille","ចង្កេះ"],"Annular scaly plaque with raised edge":["Plaque annulaire squameuse à bordure surélevée","ស្នាមរង្វង់មានស្រកា គែមលើក"],"Honey-coloured crusted lesions":["Lésions croûteuses mélicériques","ដំបៅមានក្រមរពណ៌ទឹកឃ្មុំ"],"Warm":["Chaud","ក្តៅ"],"red":["rouge","ក្រហម"],"tender swelling with ill-defined edge":["tuméfaction douloureuse à bords mal limités","ហើមឈឺ គែមមិនច្បាស់"],"Fluctuant tender swelling":["Tuméfaction fluctuante douloureuse","ហើមទន់មានខ្ទុះ និងឈឺ"],"Comedones and inflamed papules on face":["Comédons et papules inflammatoires du visage","មុន និងគ្រាប់រលាកលើមុខ"],"Erythematous scaly itchy patches":["Plaques érythémato-squameuses prurigineuses","ស្នាមក្រហមមានស្រកា រមាស់"],"Burn wound":["Brûlure","របួសរលាក"],"blistering":["phlyctènes","ពងទឹក"],"Fang marks with local swelling":["Traces de crochets avec œdème local","ស្នាមចង្កូមពស់ ហើមកន្លែងខាំ"],"Bite wound":["Plaie de morsure","របួសសត្វខាំ"],"Laceration":["Lacération","របួសដាច់"],"clean edges":["bords nets","គែមស្អាត"],"Ingrown toenail with inflamed nail fold":["Ongle incarné avec bourrelet inflammatoire","ក្រចកដុះចូលសាច់ រលាកជុំវិញ"],"Mobile subcutaneous cyst with punctum":["Kyste sous-cutané mobile avec orifice","ដុំគីសក្រោមស្បែកកម្រើកបាន មានរន្ធ"],"Puncture wound":["Plaie punctiforme","របួសមុត"],"foreign body felt":["corps étranger palpable","ស្ទាបឃើញវត្ថុចម្លែក"],"Swelling and tenderness over lateral ankle":["Gonflement et douleur de la malléole externe","ហើម និងឈឺកជើងខាងក្រៅ"],"able to bear weight":["appui possible","អាចឈរដាក់ទម្ងន់បាន"],"Swelling and tenderness at injury site":["Gonflement et douleur au site du traumatisme","ហើម និងឈឺកន្លែងរបួស"],"Paraspinal muscle tenderness":["Contracture paravertébrale","ឈឺសាច់ដុំក្បែរឆ្អឹងខ្នង"],"straight leg raise negative":["Lasègue négatif","តេស្តលើកជើងត្រង់អវិជ្ជមាន"],"Paraspinal neck muscle tenderness":["Contracture paravertébrale cervicale","ឈឺសាច់ដុំក"],"normal power":["force normale","កម្លាំងធម្មតា"],"Knee crepitus":["Craquements du genou","ជង្គង់មានសូរក្រេប"],"no effusion":["pas d'épanchement","គ្មានទឹកក្នុងសន្លាក់"],"Red":["Rouge","ក្រហម"],"hot":["chaud","ក្តៅ"],"swollen joint":["articulation gonflée","សន្លាក់ហើម"],"Positive Dix-Hallpike":["Dix-Hallpike positif","តេស្ត Dix-Hallpike វិជ្ជមាន"],"Lower motor neurone facial palsy":["Paralysie faciale périphérique","ខ្វិនមុខប្រភេទ LMN"],"forehead involved":["front atteint","ថ្ងាសក៏ខ្វិនដែរ"],"Post-ictal drowsiness":["Somnolence post-critique","ងងុយក្រោយប្រកាច់"],"Kernig positive":["Kernig positif","Kernig វិជ្ជមាន"],"Conjunctiva red with discharge":["Conjonctive rouge avec sécrétions","ស្រោមភ្នែកក្រហម មានអាចម៍ភ្នែក"],"vision normal":["acuité visuelle normale","មើលឃើញធម្មតា"],"Tender swelling of eyelid margin":["Tuméfaction douloureuse du bord palpébral","ហើមឈឺគែមត្របកភ្នែក"],"low mood":["humeur triste","អារម្មណ៍ធ្លាក់ចុះ"],"fetal heart present":["BCF présents","មានចង្វាក់បេះដូងទារក"],"Uterus soft and boggy":["Utérus mou et mal rétracté","ស្បូនទន់ មិនរួញ"],"heavy vaginal bleeding":["saignement vaginal abondant","ហូរឈាមច្រើនតាមទ្វារមាស"],"Breast red":["Sein rouge","ដោះក្រហម"],"warm and tender":["chaud et douloureux","ក្តៅ និងឈឺ"]};
 var TRX_REV={}; Object.keys(TRX).forEach(function(en){ TRX_REV[fold(en)]=en; TRX_REV[fold(TRX[en][0])]=TRX_REV[fold(TRX[en][0])]||en; TRX_REV[fold(TRX[en][1])]=TRX_REV[fold(TRX[en][1])]||en; });
