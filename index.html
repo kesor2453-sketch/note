@@ -1157,6 +1157,7 @@ body.as-open .asfab{background:#475569}
 .shoptabs{flex-wrap:wrap;margin-bottom:8px}
 .shopwarn{background:#fffbeb;border:1px solid #fde68a;color:#92400e;border-radius:10px;padding:8px 12px;margin:6px 0}
 .shopempty{text-align:center;color:var(--muted);padding:30px 10px}
+.shopempty>b{display:block;font-size:17px;color:var(--ink,#123);margin-bottom:6px}.shopempty .shopst{font-size:12.5px;opacity:.8}.shopacts{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:10px}
 .shopfilter{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 10px}
 .shopfilter button{border:1px solid var(--rule);background:var(--paper);border-radius:999px;padding:5px 12px;font:600 13px var(--kh)}
 .shopfilter button[aria-pressed=true]{background:var(--pen);border-color:var(--pen);color:#fff}
@@ -1618,7 +1619,7 @@ body.rm-open #rxView .bar{z-index:35}
       <button type="button" id="gUp">បង្កើតគណនីថ្មី</button>
       <button type="button" id="gReset">ភ្លេចពាក្យសម្ងាត់?</button>
     </div>
-    <p class="gate-note" id="gateNote">ព័ត៌មានអ្នកជំងឺមិនត្រូវបានផ្ញើទៅ cloud ទេ។ · v89</p>
+    <p class="gate-note" id="gateNote">ព័ត៌មានអ្នកជំងឺមិនត្រូវបានផ្ញើទៅ cloud ទេ។ · v90</p>
   </form>
 </div>
 
@@ -1720,7 +1721,7 @@ body.rm-open #rxView .bar{z-index:35}
       <p class="hint">ឯកសារត្រូវមានជួរឈរ៖ ICD 10 · EN · KH · FR។ បញ្ជីនេះរក្សាទុកក្នុង browser ហើយប្រើសម្រាប់ស្វែងរករោគវិនិច្ឆ័យទាំងអស់។</p>
     </fieldset>
     <div class="actions">
-      <span style="margin-right:auto;font:12px var(--body);color:var(--muted)">Rx Clinic v89</span>
+      <span style="margin-right:auto;font:12px var(--body);color:var(--muted)">Rx Clinic v90</span>
       <button class="btn alt" id="settingsClose" type="button">បិទ</button>
       <button class="btn" type="submit">រក្សាទុកការកំណត់</button>
     </div>
@@ -10143,10 +10144,22 @@ function shopSetStatus(o,st){ var upd={status:st}; upd["t_"+st]=firebase.firesto
 function shopOpen(tab){ var ov=$("shopOv"); if(!ov){ ov=mk("div","calcov shopov noprint"); ov.id="shopOv"; document.body.appendChild(ov); ov.addEventListener("mousedown",function(e){ if(e.target===ov) ov.hidden=true; }); }
   if(tab) SHOP.tab=tab; ov.hidden=false; if(window.Notification&&Notification.permission==="default") try{ Notification.requestPermission(); }catch(e){}
   shopListen(); shopRender(); }
+/* v90: say exactly which step is missing, offer the button for it, and open the shop by itself once connected */
+function shopCloudHelp(body){ var e=mk("div","shopempty"), h=mk("b"), p=mk("p"), st=mk("p","shopst"), acts=mk("div","shopacts"), cid=fbClinicId();
+  var B=function(t,fn,cls){ var b=mk("button","btn"+(cls?" "+cls:"")); b.type="button"; b.textContent=t; b.onclick=fn; acts.appendChild(b); };
+  if(!fbConfig()){ h.textContent="⚠ Cloud មិនទាន់កំណត់"; p.textContent="ហាងអនឡាញត្រូវការ Cloud (Firebase)។ សូមបើក ⚙ ការកំណត់ → Cloud ហើយភ្ជាប់។"; B("⚙ បើកការកំណត់",function(){ $("shopOv").hidden=true; openSettings(); }); }
+  else if(!CLOUD.auth){ h.textContent="⏳ កំពុងភ្ជាប់ Cloud…"; p.textContent="សូមរង់ចាំបន្តិច (ត្រូវការអ៊ីនធឺណិត)។"; initFirebase(); }
+  else if(!CLOUD.user){ h.textContent="🔐 សូមចូលគណនីជាមុនសិន"; p.textContent="ចូលដោយ Email ឬ Google ដូចពេលចូលកម្មវិធី។"; B("🔐 ចូលគណនី",function(){ $("shopOv").hidden=true; showGate(true); }); }
+  else { h.textContent="🔗 មិនទាន់ភ្ជាប់គ្លីនិក"; p.textContent="បានចូលជា "+(CLOUD.user.email||"")+" ប៉ុន្តែមិនទាន់ភ្ជាប់ Clinic ID"+(cid?" “"+cid+"”":"")+"។ ហាងប្រើទិន្នន័យរបស់គ្លីនិកដដែល។";
+    if(cid) B("🔗 ភ្ជាប់គ្លីនិក “"+cid+"”",function(){ connectClinic(false); setTimeout(function(){ shopRender(); },400); });
+    B("⚙ ការកំណត់ Cloud",function(){ $("shopOv").hidden=true; openSettings(); },"alt"); }
+  var cs=$("cloudStatus"); if(cs&&cs.textContent.trim()) st.textContent="ស្ថានភាព Cloud៖ "+cs.textContent.trim();
+  e.appendChild(h); e.appendChild(p); if(st.textContent) e.appendChild(st); e.appendChild(acts); body.appendChild(e);
+  clearTimeout(SHOP.cloudT); SHOP.cloudT=setTimeout(function(){ var ov=$("shopOv"); if(ov&&!ov.hidden){ if(cloudOn()){ shopListen(); } shopRender(); } },2000); }
 function shopRender(){ var ov=$("shopOv"); if(!ov||ov.hidden) return; ov.textContent="";
   var bx=mk("div","calcbox shopbox"), hd=mk("div","calch"), tt=mk("b"); tt.textContent="🛒 ហាងអនឡាញ · Online shop"; hd.appendChild(tt); var x=mk("button","calcx"); x.type="button"; x.textContent="✕"; x.onclick=function(){ ov.hidden=true; }; hd.appendChild(x); bx.appendChild(hd);
   var body=mk("div","calcbody shopbody"); bx.appendChild(body); ov.appendChild(bx);
-  if(!cloudOn()){ var e=mk("div","shopempty"); e.innerHTML="<b>ត្រូវភ្ជាប់ Cloud ជាមុនសិន</b><br>ហាងអនឡាញប្រើ Firebase ដូចការ sync ស្តុក។ សូមចូលគណនី Cloud នៅ ⚙ ការកំណត់ ហើយបើកវិញ។"; body.appendChild(e); return; }
+  if(!cloudOn()){ shopCloudHelp(body); return; }
   var nOpen=SHOP.orders.filter(function(o){return o.status==="new";}).length;
   var tabs=mk("div","pgnav shoptabs"); [["orders","🧾 ការបញ្ជាទិញ"+(nOpen?" ("+nOpen+")":"")],["items","📦 ទំនិញ ("+SHOP.items.length+")"],["settings","⚙ ការកំណត់"],["link","🔗 Link & QR"]].forEach(function(t){ var b=mk("button"); b.type="button"; b.textContent=t[1]; b.setAttribute("aria-pressed",String(SHOP.tab===t[0])); b.onclick=function(){ SHOP.tab=t[0]; shopRender(); }; tabs.appendChild(b); }); body.appendChild(tabs);
   var cfg=shopCfg(); if(!SHOP.cfg){ var w=mk("div","shopwarn"); w.textContent="⚠ ហាងមិនទាន់បានរៀបចំ — សូមទៅ ⚙ ការកំណត់ ហើយចុច 💾 រក្សាទុក ដើម្បីបើកហាង។"; body.appendChild(w); }
