@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="km">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ហាងអនឡាញ · Online shop</title>
+<meta name="theme-color" content="#1f3f9e">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@400;500;600;700&display=swap">
+<style>
+:root{--bg:#eef2f7;--card:#fff;--ink:#1b2a4a;--muted:#5b6780;--rule:#dbe2ee;--pen:#1f3f9e;--pen2:#2a4fc0;--soft:#e6ebf7;--ok:#16a34a;--warn:#b45309;--bad:#b42318;--r:14px}
+*{box-sizing:border-box}[hidden]{display:none!important}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:15px/1.5 "Kantumruy Pro","Noto Sans Khmer",system-ui,sans-serif;padding-bottom:96px}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+a{color:var(--pen)}
+.top{background:linear-gradient(135deg,#16244a,#1f3f9e);color:#fff;padding:18px 16px 54px}
+.top .in{max-width:1100px;margin:0 auto;display:flex;gap:12px;align-items:center}
+.logo{width:52px;height:52px;border-radius:16px;background:rgba(255,255,255,.16);display:grid;place-items:center;font-size:26px;flex:none}
+.top h1{margin:0;font-size:20px;line-height:1.25}
+.top .sub{font-size:13px;opacity:.85}
+.top .sub a{color:#fff}
+.wrap{max-width:1100px;margin:-38px auto 0;padding:0 16px}
+.searchcard{background:var(--card);border-radius:var(--r);box-shadow:0 6px 24px rgba(16,30,70,.12);padding:12px}
+.search{width:100%;border:1.5px solid var(--rule);border-radius:12px;padding:11px 14px;font-size:15px;background:#f8fafc}
+.search:focus{outline:0;border-color:var(--pen);background:#fff}
+.cats{display:flex;gap:8px;overflow-x:auto;padding:10px 2px 2px;scrollbar-width:none}
+.cats::-webkit-scrollbar{display:none}
+.cats button{flex:none;border:1px solid var(--rule);background:#fff;border-radius:999px;padding:6px 14px;font-weight:600;font-size:13.5px;color:var(--muted)}
+.cats button[aria-pressed=true]{background:var(--pen);border-color:var(--pen);color:#fff}
+.banner{margin:12px 0 0;background:#fffbeb;border:1px solid #fde68a;color:#92400e;border-radius:12px;padding:9px 12px;font-size:14px}
+.closed{margin:12px 0 0;background:#fef2f2;border:1px solid #fecaca;color:var(--bad);border-radius:12px;padding:10px 12px;font-weight:600}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(170px,46%),1fr));gap:12px;margin:14px 0}
+.card{background:var(--card);border-radius:var(--r);overflow:hidden;box-shadow:0 1px 3px rgba(16,30,70,.08);display:flex;flex-direction:column}
+.ph{aspect-ratio:1/1;background:#f1f5f9;display:grid;place-items:center;font-size:44px;position:relative}
+.ph img{width:100%;height:100%;object-fit:cover}
+.ph .rx{position:absolute;top:8px;left:8px;background:#fff;color:var(--bad);border-radius:8px;padding:1px 7px;font-weight:700;font-size:12px;box-shadow:0 1px 3px rgba(0,0,0,.15)}
+.ph .out{position:absolute;inset:0;background:rgba(255,255,255,.7);display:grid;place-items:center;font-weight:700;color:var(--muted);font-size:15px}
+.cb{padding:9px 11px 11px;display:flex;flex-direction:column;gap:3px;flex:1}
+.cb b{font-size:14.5px;line-height:1.3}
+.cb small{color:var(--muted);font-size:12px;line-height:1.35}
+.price{font-weight:700;color:var(--pen);font-size:16px;margin-top:auto}
+.price em{font-style:normal;font-weight:500;color:var(--muted);font-size:12px;margin-left:4px}
+.left{font-size:11.5px;color:var(--ok)}
+.add{margin-top:6px;border:0;border-radius:10px;background:var(--pen);color:#fff;padding:8px;font-weight:600}
+.add:disabled{background:#cbd5e1}
+.step{display:flex;align-items:center;justify-content:space-between;margin-top:6px;border:1.5px solid var(--pen);border-radius:10px;overflow:hidden}
+.step button{border:0;background:var(--soft);color:var(--pen);width:38px;height:34px;font-size:18px;font-weight:700}
+.step span{font-weight:700}
+.empty{text-align:center;color:var(--muted);padding:40px 10px}
+.cartbar{position:fixed;left:0;right:0;bottom:0;padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));background:linear-gradient(transparent,rgba(238,242,247,.95) 30%);z-index:20}
+.cartbar button{width:100%;max-width:640px;display:flex;justify-content:space-between;align-items:center;margin:0 auto;border:0;border-radius:16px;background:linear-gradient(135deg,#1f3f9e,#2a4fc0);color:#fff;padding:14px 18px;font-weight:700;font-size:16px;box-shadow:0 8px 24px rgba(31,63,158,.35)}
+.myo{display:block;margin:10px auto 0;border:0;background:none;color:var(--pen);font-weight:600;text-decoration:underline}
+.sheet{position:fixed;inset:0;z-index:40;background:rgba(16,30,70,.35);display:flex;align-items:flex-end;justify-content:center}
+.sheet .box{background:var(--card);width:100%;max-width:640px;max-height:92vh;overflow:auto;border-radius:20px 20px 0 0;padding:6px 16px calc(20px + env(safe-area-inset-bottom,0px));animation:up .2s ease-out}
+@keyframes up{from{transform:translateY(40px);opacity:.5}to{transform:none;opacity:1}}
+@media (min-width:700px){ .sheet{align-items:center} .sheet .box{border-radius:20px} }
+.grab{width:42px;height:4px;border-radius:4px;background:var(--rule);margin:6px auto 4px}
+.sh{display:flex;justify-content:space-between;align-items:center;position:sticky;top:-6px;background:var(--card);padding:8px 0;z-index:1}
+.sh h2{margin:0;font-size:18px}
+.x{border:1px solid var(--rule);background:#fff;border-radius:10px;width:36px;height:36px}
+.line{display:flex;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--rule)}
+.line .n{flex:1;min-width:0}.line .n b{display:block;font-size:14px}.line .n small{color:var(--muted)}
+.line .step{margin:0;width:120px}
+h3{font-size:15px;margin:16px 0 6px}
+.opts{display:grid;gap:8px}
+.opt{display:flex;gap:10px;align-items:flex-start;border:1.5px solid var(--rule);border-radius:12px;padding:10px 12px;cursor:pointer}
+.opt input{margin-top:4px;accent-color:var(--pen)}
+.opt.on{border-color:var(--pen);background:var(--soft)}
+.opt small{display:block;color:var(--muted)}
+.f{display:flex;flex-direction:column;gap:3px;margin:8px 0}
+.f span{font-size:13px;color:var(--muted)}
+.f input,.f textarea{border:1.5px solid var(--rule);border-radius:10px;padding:10px 12px;background:#fff}
+.f input:focus,.f textarea:focus{outline:0;border-color:var(--pen)}
+.loc{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.loc button{border:1.5px dashed var(--pen);background:var(--soft);color:var(--pen);border-radius:10px;padding:8px 12px;font-weight:600}
+.loc small{color:var(--ok)}
+.bank{background:#f8fafc;border:1px solid var(--rule);border-radius:12px;padding:10px;margin-top:8px;font-size:14px}
+.bank img{display:block;max-width:220px;width:100%;margin:8px auto;border-radius:8px}
+.tot{margin-top:12px;border-top:2px solid var(--ink);padding-top:8px}
+.tot div{display:flex;justify-content:space-between;padding:2px 0}
+.tot .g{font-size:18px;font-weight:700;color:var(--pen)}
+.rxw{background:#fef2f2;color:var(--bad);border-radius:10px;padding:8px 10px;font-size:13.5px;margin-top:10px}
+.go{width:100%;margin-top:14px;border:0;border-radius:14px;background:var(--ok);color:#fff;padding:14px;font-weight:700;font-size:16px}
+.go:disabled{background:#94a3b8}
+.err{color:var(--bad);font-size:13.5px;margin-top:6px}
+.done{text-align:center;padding:10px 0}
+.done .big{font-size:54px}
+.code{display:inline-block;background:var(--soft);color:var(--pen);border-radius:10px;padding:4px 14px;font-weight:700;font-size:22px;letter-spacing:.05em}
+.tl{list-style:none;padding:0;margin:14px 0;text-align:left}
+.tl li{display:flex;gap:10px;align-items:center;padding:7px 0;color:#94a3b8}
+.tl li i{font-style:normal;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:#f1f5f9;flex:none}
+.tl li.on{color:var(--ink);font-weight:600}.tl li.on i{background:var(--pen);color:#fff}
+.tl li.cur i{box-shadow:0 0 0 4px var(--soft)}
+.cancel{border:1.5px solid var(--bad);background:#fff;color:var(--bad);border-radius:12px;padding:10px 16px;font-weight:600}
+.ord{border:1px solid var(--rule);border-radius:12px;padding:10px 12px;margin:8px 0;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.ord button{border:0;background:var(--pen);color:#fff;border-radius:10px;padding:7px 12px}
+.foot{text-align:center;color:var(--muted);font-size:12px;margin:24px 0}
+.toast{position:fixed;left:50%;top:16px;transform:translateX(-50%);background:var(--ink);color:#fff;border-radius:12px;padding:9px 16px;z-index:60;font-size:14px;box-shadow:0 8px 24px rgba(0,0,0,.2)}
+</style>
+</head>
+<body>
+<header class="top"><div class="in"><div class="logo">🏥</div><div><h1 id="sName">កំពុងផ្ទុក…</h1><div class="sub" id="sSub"></div></div></div></header>
+<main class="wrap">
+  <div class="searchcard">
+    <input class="search" id="q" type="search" placeholder="🔍 ស្វែងរកថ្នាំ ឬទំនិញ… · Search" autocomplete="off">
+    <div class="cats" id="cats"></div>
+  </div>
+  <div class="banner" id="banner" hidden></div>
+  <div class="closed" id="closed" hidden>⏸ ហាងបិទទទួលការបញ្ជាទិញបណ្តោះអាសន្ន · Orders are paused</div>
+  <div class="grid" id="grid"></div>
+  <div class="empty" id="empty" hidden></div>
+  <button class="myo" id="myOrders" type="button" hidden>🧾 ការបញ្ជាទិញរបស់ខ្ញុំ · My orders</button>
+  <div class="foot">ថ្នាំត្រូវប្រើតាមការណែនាំរបស់គ្រូពេទ្យ ឬឱសថការី · Medicines must be used as advised by a health professional.</div>
+</main>
+<div class="cartbar" id="cartbar" hidden><button type="button" id="cartBtn"><span id="cartN"></span><span id="cartT"></span></button></div>
+<div class="sheet" id="sheet" hidden><div class="box" id="sbox"></div></div>
+<div class="toast" id="toast" hidden></div>
+
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script>
+(function(){
+"use strict";
+var FIREBASE_CONFIG={apiKey:"AIzaSyCerWkFvBtgtKqArik3fTHMzpKCZBq3Mzk",authDomain:"note-a6abe.firebaseapp.com",projectId:"note-a6abe",storageBucket:"note-a6abe.firebasestorage.app",messagingSenderId:"58100703394",appId:"1:58100703394:web:ea3a36cb325a856bd537fb"};
+var $=function(id){return document.getElementById(id);};
+function mk(t,c,txt){var e=document.createElement(t); if(c) e.className=c; if(txt!=null) e.textContent=txt; return e;}
+function fold(x){return String(x||"").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"");}
+var P=new URLSearchParams(location.search), CID=(P.get("c")||"").trim();
+var ST={cfg:null,items:[],cat:"",q:"",cart:{},myOrders:[]};
+var CART_KEY="shop.cart."+CID, ME_KEY="shop.me", MY_KEY="shop.orders."+CID;
+try{ ST.cart=JSON.parse(localStorage.getItem(CART_KEY)||"{}")||{}; ST.myOrders=JSON.parse(localStorage.getItem(MY_KEY)||"[]")||[]; }catch(e){}
+function saveCart(){ try{ localStorage.setItem(CART_KEY,JSON.stringify(ST.cart)); }catch(e){} }
+function toast(t){ var e=$("toast"); e.textContent=t; e.hidden=false; clearTimeout(toast.t); toast.t=setTimeout(function(){ e.hidden=true; },2200); }
+function money(n){ n=+n||0; return ST.cfg&&ST.cfg.currency==="KHR"?Math.round(n).toLocaleString("en")+"៛":"$"+n.toFixed(2); }
+function altKHR(n){ var c=ST.cfg; if(!c||!(+c.rate>0)) return ""; if(c.currency==="KHR") return "≈ $"+(n/c.rate).toFixed(2); return "≈ "+(Math.round(n*c.rate/100)*100).toLocaleString("en")+"៛"; }
+var ICON={"ថ្នាំពេទ្យ":"💊","សម្ភារៈពេទ្យ":"🩺","វីតាមីន & អាហារបំប៉ន":"🍊","ម្តាយ & ទារក":"🍼","ថែរក្សាស្បែក & សម្ផស្ស":"🧴","អីវ៉ាន់ផ្សេងៗ":"🛍"};
+if(!CID){ $("sName").textContent="Link មិនត្រឹមត្រូវ"; $("sSub").textContent="សូមសួរគ្លីនិកសម្រាប់ link ត្រឹមត្រូវ · Missing shop id"; return; }
+var app=firebase.initializeApp(FIREBASE_CONFIG), db=app.firestore(), shop=db.collection("shops").doc(CID);
+shop.onSnapshot(function(d){
+  if(!d.exists){ $("sName").textContent="រកមិនឃើញហាង"; $("sSub").textContent="Shop not found"; return; }
+  ST.cfg=d.data(); var c=ST.cfg; document.title=(c.name||"Shop")+" · ហាងអនឡាញ";
+  $("sName").textContent=c.name||"ហាងអនឡាញ";
+  var sub=$("sSub"); sub.textContent=""; [c.address?"📍 "+c.address:"",c.hours?"🕘 "+c.hours:""].filter(Boolean).forEach(function(t){ sub.appendChild(mk("span",null,t+"  ")); });
+  if(c.phone){ var a=mk("a",null,"📞 "+c.phone); a.href="tel:"+c.phone.replace(/\s/g,""); sub.appendChild(a); sub.appendChild(document.createTextNode("  ")); }
+  if(c.contact&&/^https?:\/\//.test(c.contact)){ var l=mk("a",null,"💬 ទំនាក់ទំនង"); l.href=c.contact; l.target="_blank"; l.rel="noopener"; sub.appendChild(l); }
+  $("banner").hidden=!c.banner; $("banner").textContent="📢 "+(c.banner||""); $("closed").hidden=c.open!==false;
+  render(); },function(e){ $("sName").textContent="មិនអាចភ្ជាប់បាន"; $("sSub").textContent="សូមពិនិត្យអ៊ីនធឺណិត · "+(e.code||""); });
+shop.collection("items").where("show","==",true).onSnapshot(function(s){ ST.items=s.docs.map(function(d){ var x=d.data(); x.id=d.id; return x; }); render(); },function(){});
+function itemOf(id){ return ST.items.find(function(x){return x.id===id;}); }
+function cartLines(){ return Object.keys(ST.cart).map(function(id){ var it=itemOf(id); return it?{it:it,n:ST.cart[id]}:null; }).filter(Boolean); }
+function setQty(it,n){ var max=it.qty==null?99:+it.qty; n=Math.max(0,Math.min(n,max,99)); if(n) ST.cart[it.id]=n; else delete ST.cart[it.id]; if(n===max&&it.qty!=null) toast("នៅសល់តែ "+max+" ប៉ុណ្ណោះ"); saveCart(); render(); if(!$("sheet").hidden&&$("sbox").dataset.v==="cart") showCart(); }
+function render(){
+  var cats=$("cats"); cats.textContent=""; var used=(ST.cfg&&ST.cfg.cats||[]).filter(function(c){ return ST.items.some(function(i){return i.cat===c;}); });
+  ST.items.forEach(function(i){ if(i.cat&&used.indexOf(i.cat)<0) used.push(i.cat); });
+  [["","ទាំងអស់ · All"]].concat(used.map(function(c){return [c,(ICON[c]||"🏷")+" "+c];})).forEach(function(c){ var b=mk("button",null,c[1]); b.type="button"; b.setAttribute("aria-pressed",String(ST.cat===c[0])); b.onclick=function(){ ST.cat=c[0]; render(); }; cats.appendChild(b); });
+  var q=fold(ST.q), g=$("grid"); g.textContent="";
+  var list=ST.items.filter(function(i){ return (!ST.cat||i.cat===ST.cat)&&(!q||fold(i.name+" "+(i.desc||"")+" "+(i.cat||"")).indexOf(q)>-1); }).sort(function(a,b){ var ao=a.qty!=null&&a.qty<=0, bo=b.qty!=null&&b.qty<=0; return ao-bo||(a.name||"").localeCompare(b.name||""); });
+  $("empty").hidden=!!list.length; $("empty").textContent=ST.items.length?"រកមិនឃើញ · Nothing found":"មិនទាន់មានទំនិញ · No products yet";
+  var closed=ST.cfg&&ST.cfg.open===false;
+  list.forEach(function(it){ var c=mk("div","card"), ph=mk("div","ph"); if(it.img){ var im=mk("img"); im.src=it.img; im.alt=it.name; im.loading="lazy"; ph.appendChild(im); } else ph.textContent=ICON[it.cat]||"🛍";
+    if(it.rx) ph.appendChild(mk("span","rx","℞ វេជ្ជបញ្ជា"));
+    var out=it.qty!=null&&+it.qty<=0; if(out) ph.appendChild(mk("div","out","អស់ស្តុក · Out of stock"));
+    c.appendChild(ph); var b=mk("div","cb"); b.appendChild(mk("b",null,it.name)); if(it.desc) b.appendChild(mk("small",null,it.desc));
+    var pr=mk("div","price",money(it.price)+(it.unit?" / "+it.unit:"")); var al=altKHR(+it.price); if(al) pr.appendChild(mk("em",null,al)); b.appendChild(pr);
+    if(it.qty!=null&&+it.qty>0&&+it.qty<=10) b.appendChild(mk("span","left","នៅសល់ "+it.qty));
+    var n=ST.cart[it.id]||0;
+    if(n){ var st=mk("div","step"), m=mk("button",null,"−"), p=mk("button",null,"+"); m.type=p.type="button"; m.onclick=function(){ setQty(it,n-1); }; p.onclick=function(){ setQty(it,n+1); }; st.appendChild(m); st.appendChild(mk("span",null,String(n))); st.appendChild(p); b.appendChild(st); }
+    else { var a=mk("button","add",out?"អស់ស្តុក":"+ ដាក់ក្នុងកន្ត្រក"); a.type="button"; a.disabled=out||closed; a.onclick=function(){ setQty(it,1); }; b.appendChild(a); }
+    c.appendChild(b); g.appendChild(c); });
+  var lines=cartLines(), cnt=lines.reduce(function(s,l){return s+l.n;},0), sub=lines.reduce(function(s,l){return s+l.n*(+l.it.price||0);},0);
+  $("cartbar").hidden=!cnt; $("cartN").textContent="🛒 "+cnt+" មុខ · items"; $("cartT").textContent=money(sub)+" ›";
+  $("myOrders").hidden=!ST.myOrders.length; }
+$("q").addEventListener("input",function(){ ST.q=this.value; render(); });
+$("cartBtn").onclick=showCart;
+$("myOrders").onclick=showMine;
+$("sheet").addEventListener("mousedown",function(e){ if(e.target===$("sheet")) closeSheet(); });
+function closeSheet(){ $("sheet").hidden=true; if(ST.unsubO){ ST.unsubO(); ST.unsubO=null; } }
+function sheet(v,title){ var bx=$("sbox"); bx.textContent=""; bx.dataset.v=v; bx.appendChild(mk("div","grab")); var h=mk("div","sh"); h.appendChild(mk("h2",null,title)); var x=mk("button","x","✕"); x.type="button"; x.onclick=closeSheet; h.appendChild(x); bx.appendChild(h); $("sheet").hidden=false; return bx; }
+var F={mode:"",pay:"",lat:null,lng:null};
+try{ var me=JSON.parse(localStorage.getItem(ME_KEY)||"{}"); F.name=me.name||""; F.phone=me.phone||""; F.address=me.address||""; }catch(e){}
+function showCart(){
+  var c=ST.cfg||{}, d=c.delivery||{}, pk=c.pickup||{}, py=c.pay||{}, bx=sheet("cart","🛒 កន្ត្រក · Cart"), lines=cartLines();
+  if(!lines.length){ bx.appendChild(mk("div","empty","កន្ត្រកទទេ · Cart is empty")); return; }
+  lines.forEach(function(l){ var r=mk("div","line"), n=mk("div","n"); n.appendChild(mk("b",null,l.it.name+(l.it.rx?" ℞":""))); n.appendChild(mk("small",null,money(l.it.price)+(l.it.unit?" / "+l.it.unit:"")+" × "+l.n+" = "+money(l.it.price*l.n))); r.appendChild(n);
+    var st=mk("div","step"), m=mk("button",null,"−"), p=mk("button",null,"+"); m.type=p.type="button"; m.onclick=function(){ setQty(l.it,l.n-1); }; p.onclick=function(){ setQty(l.it,l.n+1); }; st.appendChild(m); st.appendChild(mk("span",null,String(l.n))); st.appendChild(p); r.appendChild(st); bx.appendChild(r); });
+  var modes=[]; if(d.on) modes.push(["delivery","🛵 ដឹកដល់ផ្ទះ · Delivery",(+d.fee?"ថ្លៃដឹក "+money(d.fee):"ឥតគិតថ្លៃ")+(+d.freeOver?" · ឥតគិតថ្លៃ បើលើស "+money(d.freeOver):"")+(d.note?" · "+d.note:"")]);
+  if(pk.on) modes.push(["pickup","🏥 មកយកនៅគ្លីនិក · Pick up",[c.address,pk.note].filter(Boolean).join(" · ")]);
+  if(modes.length===1) F.mode=modes[0][0]; if(modes.map(function(m){return m[0];}).indexOf(F.mode)<0) F.mode="";
+  bx.appendChild(mk("h3",null,"១. ទទួលទំនិញដោយ · How to receive"));
+  bx.appendChild(radios(modes,"mode",showCart));
+  var pays=[]; if(py.cod&&F.mode!=="pickup") pays.push(["cod","💵 បង់ពេលទទួលទំនិញ · Cash on delivery",""]); if(py.clinic&&F.mode!=="delivery") pays.push(["clinic","🏥 បង់នៅគ្លីនិក · Pay at the clinic",""]); if(py.transfer) pays.push(["transfer","🏦 ផ្ទេរប្រាក់ · Bank transfer / KHQR",[py.bank,py.accName].filter(Boolean).join(" · ")]);
+  if(pays.length===1) F.pay=pays[0][0]; if(pays.map(function(m){return m[0];}).indexOf(F.pay)<0) F.pay="";
+  bx.appendChild(mk("h3",null,"២. ព័ត៌មានរបស់អ្នក · Your details"));
+  bx.appendChild(field("ឈ្មោះ · Name","name","text"));
+  bx.appendChild(field("លេខទូរស័ព្ទ · Phone","phone","tel"));
+  if(F.mode==="delivery"){ bx.appendChild(field("អាសយដ្ឋាន · Address (ផ្ទះ ផ្លូវ ភូមិ សង្កាត់)","address","area"));
+    var lc=mk("div","loc"), lb=mk("button",null,"📍 ចែករំលែកទីតាំងខ្ញុំ · Share my location"); lb.type="button"; var ls=mk("small",null,F.lat?"✓ បានទទួលទីតាំង ("+F.lat.toFixed(4)+", "+F.lng.toFixed(4)+")":"");
+    lb.onclick=function(){ if(!navigator.geolocation){ toast("ឧបករណ៍មិនគាំទ្រ GPS"); return; } lb.disabled=true; lb.textContent="កំពុងរក…"; navigator.geolocation.getCurrentPosition(function(p){ F.lat=p.coords.latitude; F.lng=p.coords.longitude; ls.textContent="✓ បានទទួលទីតាំង ("+F.lat.toFixed(4)+", "+F.lng.toFixed(4)+")"; lb.disabled=false; lb.textContent="📍 ធ្វើម្តងទៀត"; },function(){ lb.disabled=false; lb.textContent="📍 ចែករំលែកទីតាំងខ្ញុំ"; toast("មិនអាចយកទីតាំងបាន — សូមអនុញ្ញាត Location"); },{enableHighAccuracy:true,timeout:15000}); };
+    lc.appendChild(lb); lc.appendChild(ls); bx.appendChild(lc); }
+  if(F.mode==="pickup") bx.appendChild(field("ពេលមកយក (ស្រេចចិត្ត) · Pick-up time","pickTime","text"));
+  bx.appendChild(mk("h3",null,"៣. ការបង់ប្រាក់ · Payment"));
+  bx.appendChild(radios(pays,"pay",showCart));
+  if(F.pay==="transfer"){ var bk=mk("div","bank"); bk.appendChild(mk("div",null,"🏦 "+(py.bank||"")+" · "+(py.accName||"")+(py.accNo?" · "+py.accNo:""))); if(py.qr){ var im=mk("img"); im.src=py.qr; im.alt="QR"; bk.appendChild(im); } bk.appendChild(mk("small",null,"ផ្ទេរចំនួនសរុបខាងក្រោម រួចដាក់លេខប្រតិបត្តិការ (ស្រេចចិត្ត) · Transfer the total, then enter the reference.")); bx.appendChild(bk); bx.appendChild(field("លេខប្រតិបត្តិការ · Transaction ref","payRef","text")); }
+  bx.appendChild(field("ចំណាំ · Note (ស្រេចចិត្ត)","note","area"));
+  var sub=lines.reduce(function(s,l){return s+l.n*(+l.it.price||0);},0), fee=F.mode==="delivery"?((+d.freeOver&&sub>=+d.freeOver)?0:(+d.fee||0)):0, tot=sub+fee;
+  var t=mk("div","tot"); var r1=mk("div"); r1.appendChild(mk("span",null,"តម្លៃទំនិញ")); r1.appendChild(mk("span",null,money(sub))); t.appendChild(r1);
+  if(F.mode==="delivery"){ var r2=mk("div"); r2.appendChild(mk("span",null,"ថ្លៃដឹក")); r2.appendChild(mk("span",null,fee?money(fee):"ឥតគិតថ្លៃ")); t.appendChild(r2); }
+  var r3=mk("div","g"); r3.appendChild(mk("span",null,"សរុប · Total")); r3.appendChild(mk("span",null,money(tot))); t.appendChild(r3); var a=altKHR(tot); if(a){ var r4=mk("div"); r4.appendChild(mk("span")); r4.appendChild(mk("small",null,a)); t.appendChild(r4); } bx.appendChild(t);
+  if(lines.some(function(l){return l.it.rx;})) bx.appendChild(mk("div","rxw","℞ មានថ្នាំដែលត្រូវការវេជ្ជបញ្ជា — គ្លីនិកនឹងទូរស័ព្ទបញ្ជាក់មុនប្រគល់ (សូមរៀបចំវេជ្ជបញ្ជា)។ Prescription needed: the clinic will call you first."));
+  var err=mk("div","err"); var go=mk("button","go","✓ បញ្ជាទិញ · Place order"); go.type="button"; go.disabled=ST.cfg&&ST.cfg.open===false;
+  go.onclick=function(){ var msg=""; if(!F.mode) msg="សូមជ្រើសវិធីទទួលទំនិញ"; else if(!F.pay) msg="សូមជ្រើសវិធីបង់ប្រាក់"; else if(!(F.name||"").trim()) msg="សូមដាក់ឈ្មោះ"; else if(!/^[+\d][\d\s-]{6,18}$/.test((F.phone||"").trim())) msg="សូមដាក់លេខទូរស័ព្ទឲ្យត្រឹមត្រូវ"; else if(F.mode==="delivery"&&!(F.address||"").trim()&&F.lat==null) msg="សូមដាក់អាសយដ្ឋាន ឬចែករំលែកទីតាំង"; else if(F.mode==="delivery"&&+d.min&&sub<+d.min) msg="ការដឹក ត្រូវទិញយ៉ាងតិច "+money(d.min);
+    if(msg){ err.textContent="⚠ "+msg; return; } err.textContent=""; go.disabled=true; go.textContent="កំពុងផ្ញើ…";
+    try{ localStorage.setItem(ME_KEY,JSON.stringify({name:F.name,phone:F.phone,address:F.address})); }catch(e){}
+    var code=(Date.now().toString(36).slice(-3)+Math.random().toString(36).slice(2,4)).toUpperCase();
+    var o={code:code,created:firebase.firestore.FieldValue.serverTimestamp(),status:"new",paid:false,name:F.name.trim().slice(0,80),phone:F.phone.trim().slice(0,20),mode:F.mode,
+      address:F.mode==="delivery"?(F.address||"").trim().slice(0,300):"",lat:F.mode==="delivery"?F.lat:null,lng:F.mode==="delivery"?F.lng:null,pickTime:F.mode==="pickup"?(F.pickTime||"").slice(0,60):"",
+      note:(F.note||"").trim().slice(0,300),pay:F.pay,payRef:F.pay==="transfer"?(F.payRef||"").trim().slice(0,60):"",
+      items:lines.map(function(l){ return {id:l.it.id,name:String(l.it.name).slice(0,120),price:+l.it.price||0,qty:l.n,unit:l.it.unit||"",rx:!!l.it.rx,stockId:l.it.stockId||""}; }),
+      subtotal:sub,fee:fee,total:tot,currency:(ST.cfg&&ST.cfg.currency)||"USD"};
+    shop.collection("orders").add(o).then(function(ref){ ST.myOrders.unshift({id:ref.id,code:code,t:Date.now(),total:tot}); ST.myOrders=ST.myOrders.slice(0,20); try{ localStorage.setItem(MY_KEY,JSON.stringify(ST.myOrders)); }catch(e){}
+      ST.cart={}; saveCart(); F.note=""; F.payRef=""; render(); track(ref.id); })
+    .catch(function(e){ go.disabled=false; go.textContent="✓ បញ្ជាទិញ · Place order"; err.textContent="⚠ ផ្ញើមិនបាន ("+(e.code||e.message)+") — សូមព្យាយាមម្តងទៀត ឬទូរស័ព្ទមកគ្លីនិក។"; }); };
+  bx.appendChild(err); bx.appendChild(go); }
+function radios(opts,key,rer){ var w=mk("div","opts"); if(!opts.length) w.appendChild(mk("small",null,"—")); opts.forEach(function(o){ var l=mk("label","opt"+(F[key]===o[0]?" on":"")), r=mk("input"); r.type="radio"; r.name=key; r.checked=F[key]===o[0]; r.onchange=function(){ F[key]=o[0]; rer(); }; l.appendChild(r); var t=mk("div"); t.appendChild(mk("b",null,o[1])); if(o[2]) t.appendChild(mk("small",null,o[2])); l.appendChild(t); w.appendChild(l); }); return w; }
+function field(lab,key,type){ var l=mk("label","f"); l.appendChild(mk("span",null,lab)); var i=mk(type==="area"?"textarea":"input"); if(type!=="area") i.type=type; else i.rows=2; i.value=F[key]||""; i.oninput=function(){ F[key]=i.value; }; l.appendChild(i); return l; }
+var STEPS=[["new","🆕","បានផ្ញើ · Sent"],["confirmed","✓","គ្លីនិកបានទទួល · Confirmed"],["ready","📦","ត្រៀមរួច · Ready"],["delivering","🛵","កំពុងដឹក · On the way"],["done","✅","ទទួលរួច · Completed"]];
+function track(id){ var bx=sheet("track","🧾 ការបញ្ជាទិញ · Order"); var box=mk("div","done"); bx.appendChild(box);
+  if(ST.unsubO) ST.unsubO(); ST.unsubO=shop.collection("orders").doc(id).onSnapshot(function(d){ box.textContent=""; if(!d.exists){ box.appendChild(mk("p",null,"រកមិនឃើញ")); return; } var o=d.data();
+    box.appendChild(mk("div","big",o.status==="cancelled"?"✕":o.status==="done"?"✅":"🎉")); box.appendChild(mk("p",null,o.status==="cancelled"?"ការបញ្ជាទិញត្រូវបានបោះបង់ · Cancelled":"អរគុណ! លេខការបញ្ជាទិញ · Order number")); box.appendChild(mk("div","code","#"+o.code));
+    if(o.status!=="cancelled"){ var ul=mk("ul","tl"), idx=STEPS.map(function(s){return s[0];}).indexOf(o.status); STEPS.forEach(function(s,i){ if(s[0]==="delivering"&&o.mode!=="delivery") return; if(s[0]==="ready"&&o.mode==="pickup") s=[s[0],s[1],"ត្រៀមរួច — អាចមកយកបាន · Ready for pick-up"]; var li=mk("li",(i<=idx?"on":"")+(i===idx?" cur":"")); li.appendChild(mk("i",null,s[1])); li.appendChild(mk("span",null,s[2])); ul.appendChild(li); }); box.appendChild(ul); }
+    box.appendChild(mk("p",null,"សរុប "+money(o.total)+" · "+(o.mode==="delivery"?"🛵 ដឹកដល់ផ្ទះ":"🏥 មកយកនៅគ្លីនិក")));
+    if(ST.cfg&&ST.cfg.phone){ var a=mk("a",null,"📞 ទូរស័ព្ទមកគ្លីនិក "+ST.cfg.phone); a.href="tel:"+ST.cfg.phone.replace(/\s/g,""); box.appendChild(a); }
+    if(o.status==="new"){ var cb=mk("button","cancel","✕ បោះបង់ការបញ្ជាទិញ · Cancel"); cb.type="button"; cb.style.marginTop="14px"; cb.style.display="block"; cb.style.marginLeft="auto"; cb.style.marginRight="auto";
+      cb.onclick=function(){ if(!confirm("បោះបង់ការបញ្ជាទិញនេះ?")) return; shop.collection("orders").doc(id).update({status:"cancelled",t_cancelled:firebase.firestore.FieldValue.serverTimestamp()}).then(function(){ toast("បានបោះបង់"); }).catch(function(){ toast("មិនអាចបោះបង់បាន — គ្លីនិកបានទទួលហើយ សូមទូរស័ព្ទ"); }); }; box.appendChild(cb); }
+  },function(){ box.textContent="មិនអាចផ្ទុកបាន"; }); }
+function showMine(){ var bx=sheet("mine","🧾 ការបញ្ជាទិញរបស់ខ្ញុំ · My orders"); ST.myOrders.forEach(function(m){ var r=mk("div","ord"); var t=new Date(m.t); r.appendChild(mk("span",null,"#"+m.code+" · "+t.toLocaleDateString("en-GB")+" · "+money(m.total))); var b=mk("button",null,"មើល ›"); b.type="button"; b.onclick=function(){ track(m.id); }; r.appendChild(b); bx.appendChild(r); }); }
+})();
+</script>
+</body>
+</html>
