@@ -1157,6 +1157,8 @@ body.as-open .asfab{background:#475569}
 .shoptabs{flex-wrap:wrap;margin-bottom:8px}
 .shopwarn{background:#fffbeb;border:1px solid #fde68a;color:#92400e;border-radius:10px;padding:8px 12px;margin:6px 0}
 .shopempty{text-align:center;color:var(--muted);padding:30px 10px}
+.snewbox{max-width:520px!important}.snew .snrow{display:grid;grid-template-columns:120px 1fr;gap:8px;align-items:center;margin:6px 0}.snew .snrow input,.snew .snrow select{font-size:15px;padding:7px 8px;border:1px solid var(--rule);border-radius:8px;width:100%;box-sizing:border-box}.snew .snph{width:90px;height:90px;display:grid;place-items:center;border:2px dashed var(--rule);border-radius:10px;cursor:pointer;overflow:hidden}.snew .snph img{width:100%;height:100%;object-fit:cover}.sncks{display:flex;gap:16px;flex-wrap:wrap;margin-top:8px}@media(max-width:480px){.snew .snrow{grid-template-columns:1fr}}
+
 .shopempty>b{display:block;font-size:17px;color:var(--ink,#123);margin-bottom:6px}.shopempty .shopst{font-size:12.5px;opacity:.8}.shopacts{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:10px}
 .shopfilter{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 10px}
 .shopfilter button{border:1px solid var(--rule);background:var(--paper);border-radius:999px;padding:5px 12px;font:600 13px var(--kh)}
@@ -1619,7 +1621,7 @@ body.rm-open #rxView .bar{z-index:35}
       <button type="button" id="gUp">បង្កើតគណនីថ្មី</button>
       <button type="button" id="gReset">ភ្លេចពាក្យសម្ងាត់?</button>
     </div>
-    <p class="gate-note" id="gateNote">ព័ត៌មានអ្នកជំងឺមិនត្រូវបានផ្ញើទៅ cloud ទេ។ · v91</p>
+    <p class="gate-note" id="gateNote">ព័ត៌មានអ្នកជំងឺមិនត្រូវបានផ្ញើទៅ cloud ទេ។ · v92</p>
   </form>
 </div>
 
@@ -1721,7 +1723,7 @@ body.rm-open #rxView .bar{z-index:35}
       <p class="hint">ឯកសារត្រូវមានជួរឈរ៖ ICD 10 · EN · KH · FR។ បញ្ជីនេះរក្សាទុកក្នុង browser ហើយប្រើសម្រាប់ស្វែងរករោគវិនិច្ឆ័យទាំងអស់។</p>
     </fieldset>
     <div class="actions">
-      <span style="margin-right:auto;font:12px var(--body);color:var(--muted)">Rx Clinic v91</span>
+      <span style="margin-right:auto;font:12px var(--body);color:var(--muted)">Rx Clinic v92</span>
       <button class="btn alt" id="settingsClose" type="button">បិទ</button>
       <button class="btn" type="submit">រក្សាទុកការកំណត់</button>
     </div>
@@ -10202,7 +10204,7 @@ function shopItemsUI(body,cfg){
   var top=mk("div","shoptop"), q=mk("input"); q.type="search"; q.placeholder="🔍 ស្វែងរកទំនិញ…"; q.value=SHOP.q; q.oninput=function(){ SHOP.q=q.value; shopItemList(); }; top.appendChild(q);
   var cs=mk("select"); var o0=mk("option"); o0.value=""; o0.textContent="គ្រប់ប្រភេទ"; cs.appendChild(o0); cfg.cats.forEach(function(c){ var o=mk("option"); o.value=c; o.textContent=c; cs.appendChild(o); }); cs.value=SHOP.cat; cs.onchange=function(){ SHOP.cat=cs.value; shopItemList(); }; top.appendChild(cs);
   var a1=mk("button","btn"); a1.type="button"; a1.textContent="+ ពីស្តុកថ្នាំ"; a1.onclick=shopPickStock; top.appendChild(a1);
-  var a2=mk("button","btn alt"); a2.type="button"; a2.textContent="+ ទំនិញថ្មី (មិនមែនក្នុងស្តុក)"; a2.onclick=function(){ shopRef().collection("items").add({name:"ទំនិញថ្មី",cat:cfg.cats[cfg.cats.length-1]||"",price:0,unit:"",qty:null,show:false,rx:false,desc:"",img:"",created:Date.now()}).then(function(){ say("បានបន្ថែម — សូមកែឈ្មោះ តម្លៃ ហើយធីក «បង្ហាញ»"); }).catch(fbErr); }; top.appendChild(a2);
+  var a2=mk("button","btn alt"); a2.type="button"; a2.textContent="+ ទំនិញថ្មី (មិនមែនក្នុងស្តុក)"; a2.onclick=function(){ shopNewItem(cfg); }; top.appendChild(a2);
   body.appendChild(top);
   var hint=mk("div","cnote"); hint.textContent="ទំនិញដែលធីក «បង្ហាញ» ទើបអតិថិជនឃើញ។ ទំនិញពីស្តុក ចំនួននៅសល់តាមស្តុកដោយស្វ័យប្រវត្តិ ហើយកាត់ស្តុកពេលចុច «ទទួល» ការបញ្ជាទិញ។ ℞ = ត្រូវការវេជ្ជបញ្ជា។"; body.appendChild(hint);
   var lst=mk("div","sitems"); lst.id="shopItems"; body.appendChild(lst); shopItemList(); }
@@ -10214,9 +10216,9 @@ function shopItemList(){ var lst=$("shopItems"); if(!lst) return; lst.textConten
     var mid=mk("div","simid");
     var nm=mk("input","sinm"); nm.value=it.name||""; nm.onchange=function(){ save({name:nm.value.trim()}); }; mid.appendChild(nm);
     var row=mk("div","sirow");
-    var cs=mk("select"); cfg.cats.forEach(function(c){ var o=mk("option"); o.value=c; o.textContent=c; cs.appendChild(o); }); if(it.cat&&cfg.cats.indexOf(it.cat)<0){ var o2=mk("option"); o2.value=it.cat; o2.textContent=it.cat; cs.appendChild(o2); } cs.value=it.cat||""; cs.onchange=function(){ save({cat:cs.value}); }; row.appendChild(cs);
+    var cs=shopCatSelect(it.cat||"",function(v){ save({cat:v}); }); row.appendChild(cs);
     var pl=mk("label"), pi=mk("input"); pi.type="number"; pi.step="0.01"; pi.min="0"; pi.value=it.price||""; pi.placeholder="តម្លៃ"; pi.onchange=function(){ save({price:+pi.value||0}); }; pl.appendChild(document.createTextNode(cfg.currency==="KHR"?"៛ ":"$ ")); pl.appendChild(pi); row.appendChild(pl);
-    var un=mk("input","siun"); un.value=it.unit||""; un.placeholder="ឯកតា (ប្រអប់, បន្ទះ…)"; un.onchange=function(){ save({unit:un.value.trim()}); }; row.appendChild(un);
+    var un=shopUnitSelect(it.unit||"",function(v){ save({unit:v}); }); un.classList.add("siun"); row.appendChild(un);
     var qq=mk("span","siqty"); if(it.stockId){ qq.textContent="ស្តុក: "+(it.qty==null?"?":it.qty); qq.title="ចំនួនតាមស្តុកថ្នាំ"; } else { var qi=mk("input"); qi.type="number"; qi.min="0"; qi.placeholder="ចំនួន (ទទេ = មិនកំណត់)"; qi.value=it.qty==null?"":it.qty; qi.onchange=function(){ save({qty:qi.value===""?null:+qi.value}); }; qq.appendChild(qi); } row.appendChild(qq);
     mid.appendChild(row);
     var ds=mk("input","sids"); ds.value=it.desc||""; ds.placeholder="ពិពណ៌នាខ្លី (ឧ. ប្រើសម្រាប់…)"; ds.onchange=function(){ save({desc:ds.value.trim()}); }; mid.appendChild(ds);
@@ -10226,6 +10228,44 @@ function shopItemList(){ var lst=$("shopItems"); if(!lst) return; lst.textConten
     var rl=mk("label","sishow"), rc=mk("input"); rc.type="checkbox"; rc.checked=!!it.rx; rc.onchange=function(){ save({rx:rc.checked}); }; rl.appendChild(rc); rl.appendChild(document.createTextNode(" ℞")); rt.appendChild(rl);
     var del=mk("button","del"); del.type="button"; del.textContent="🗑"; del.title="លុបចេញពីហាង (ស្តុកមិនប៉ះពាល់)"; del.onclick=function(){ if(confirm("លុប «"+it.name+"» ចេញពីហាង?")) ref.delete().catch(fbErr); }; rt.appendChild(del);
     r.appendChild(rt); lst.appendChild(r); }); }
+/* v92: own categories, unit dropdown, and a proper form for goods that are not in the clinic stock */
+var SHOP_UNITS=["គ្រាប់","បន្ទះ","ប្រអប់","ដប","កញ្ចប់","បំពង់","អំពូល","កំប៉ុង","ថូ","ឈុត","គូ","ដុំ","សន្លឹក","ម៉ែត្រ","គីឡូ","លីត្រ","ម៉ាស៊ីន","ឯកតា"];
+function shopCfgSave(patch){ var C=shopCfg(); Object.keys(patch).forEach(function(k){ C[k]=patch[k]; }); SHOP.cfg=Object.assign(SHOP.cfg||{},patch); return shopRef().set(patch,{merge:true}).catch(fbErr); }
+function shopCatSelect(cur,onPick){ var s=mk("select"), fill=function(v){ s.textContent=""; var cats=shopCfg().cats.slice(); if(v&&cats.indexOf(v)<0) cats.push(v);
+    if(!v){ var o0=mk("option"); o0.value=""; o0.textContent="— ប្រភេទ —"; s.appendChild(o0); }
+    cats.forEach(function(c){ var o=mk("option"); o.value=c; o.textContent=c; s.appendChild(o); }); var on=mk("option"); on.value="__new"; on.textContent="➕ ប្រភេទថ្មី…"; s.appendChild(on); s.value=v||""; };
+  fill(cur); s.dataset.v=cur||"";
+  s.onchange=function(){ if(s.value==="__new"){ var n=(window.prompt("ឈ្មោះប្រភេទថ្មី (ឧ. គ្រឿងសំអាង, សម្ភារៈកីឡា…):")||"").trim(); if(!n){ s.value=s.dataset.v; return; }
+      var cats=shopCfg().cats.slice(); if(cats.indexOf(n)<0){ cats.push(n); shopCfgSave({cats:cats}); } fill(n); }
+    s.dataset.v=s.value; onPick(s.value); };
+  return s; }
+function shopUnitSelect(cur,onPick){ var s=mk("select"), fill=function(v){ s.textContent=""; var us=SHOP_UNITS.concat((shopCfg().units||[]).filter(function(u){ return SHOP_UNITS.indexOf(u)<0; })); if(v&&us.indexOf(v)<0) us.push(v);
+    var o0=mk("option"); o0.value=""; o0.textContent="— ឯកតា —"; s.appendChild(o0);
+    us.forEach(function(u){ var o=mk("option"); o.value=u; o.textContent=u; s.appendChild(o); }); var on=mk("option"); on.value="__new"; on.textContent="✏ ឯកតាផ្សេង…"; s.appendChild(on); s.value=v||""; };
+  fill(cur); s.dataset.v=cur||""; s.title="ឯកតា";
+  s.onchange=function(){ if(s.value==="__new"){ var n=(window.prompt("ឯកតាថ្មី (ឧ. កែវ, ថង់, រៀល…):")||"").trim(); if(!n){ s.value=s.dataset.v; return; }
+      var us=(shopCfg().units||[]).slice(); if(SHOP_UNITS.indexOf(n)<0&&us.indexOf(n)<0){ us.push(n); shopCfgSave({units:us}); } fill(n); }
+    s.dataset.v=s.value; onPick(s.value); };
+  return s; }
+function shopNewItem(cfg){ var ov=mk("div","calcov"); ov.style.zIndex=90; var bx=mk("div","calcbox snewbox"), hd=mk("div","calch"), tt=mk("b"); tt.textContent="➕ ទំនិញថ្មី (មិនមែនក្នុងស្តុកថ្នាំ)"; hd.appendChild(tt);
+  var x=mk("button","calcx"); x.type="button"; x.textContent="✕"; x.onclick=function(){ ov.remove(); }; hd.appendChild(x); bx.appendChild(hd);
+  var f=mk("div","calcbody snew"), it={name:"",cat:"",unit:"",price:"",qty:"",desc:"",rx:false,show:true,img:""};
+  var row=function(lab,el){ var l=mk("label","snrow"), s=mk("span"); s.textContent=lab; l.appendChild(s); l.appendChild(el); f.appendChild(l); return el; };
+  var nm=row("ឈ្មោះទំនិញ *",mk("input")); nm.placeholder="ឧ. ម៉ាស់មុខ, ទឹកដោះគោម្សៅ, ឧបករណ៍វាស់សម្ពាធ…"; nm.oninput=function(){ it.name=nm.value; };
+  row("ប្រភេទ",shopCatSelect("",function(v){ it.cat=v; }));
+  row("ឯកតា",shopUnitSelect("",function(v){ it.unit=v; }));
+  var pr=row("តម្លៃ ("+(cfg.currency==="KHR"?"៛":"$")+") *",mk("input")); pr.type="number"; pr.step="0.01"; pr.min="0"; pr.inputMode="decimal"; pr.oninput=function(){ it.price=pr.value; };
+  var qt=row("ចំនួនមាន",mk("input")); qt.type="number"; qt.min="0"; qt.placeholder="ទទេ = មិនកំណត់ចំនួន"; qt.oninput=function(){ it.qty=qt.value; };
+  var ds=row("ពិពណ៌នាខ្លី",mk("input")); ds.placeholder="ឧ. ប្រើសម្រាប់…, ទំហំ…"; ds.oninput=function(){ it.desc=ds.value; };
+  var ph=mk("label","siph snph"); ph.textContent="📷 ដាក់រូប"; var fi=mk("input"); fi.type="file"; fi.accept="image/*"; fi.hidden=true; fi.onchange=function(){ if(fi.files[0]) shopImg(fi.files[0],420,function(d){ it.img=d; ph.textContent=""; var im=mk("img"); im.src=d; ph.appendChild(im); ph.appendChild(fi); }); }; ph.appendChild(fi); row("រូបភាព",ph);
+  var ck=function(lab,k){ var l=mk("label","sishow"), c=mk("input"); c.type="checkbox"; c.checked=!!it[k]; c.onchange=function(){ it[k]=c.checked; }; l.appendChild(c); l.appendChild(document.createTextNode(" "+lab)); return l; };
+  var cks=mk("div","sncks"); cks.appendChild(ck("បង្ហាញក្នុងហាងភ្លាម","show")); cks.appendChild(ck("℞ ត្រូវការវេជ្ជបញ្ជា","rx")); f.appendChild(cks);
+  bx.appendChild(f);
+  var ft=mk("div","calcfoot"), ok=mk("button","btn"); ok.type="button"; ok.textContent="💾 រក្សាទុក";
+  ok.onclick=function(){ var n=it.name.trim(); if(!n){ say("សូមដាក់ឈ្មោះទំនិញ",true); nm.focus(); return; } var p=+it.price||0; if(it.show&&!(p>0)&&!confirm("តម្លៃនៅ 0 — បង្ហាញដដែល?")) return;
+    ok.disabled=true; shopRef().collection("items").add({name:n,cat:it.cat||(cfg.cats[cfg.cats.length-1]||""),price:p,unit:it.unit,qty:it.qty===""?null:+it.qty,show:!!it.show,rx:!!it.rx,desc:it.desc.trim(),img:it.img,created:Date.now()})
+      .then(function(){ ov.remove(); say("✓ បានបន្ថែម «"+n+"»"); }).catch(function(e){ ok.disabled=false; fbErr(e); }); };
+  ft.appendChild(ok); ft.style.display="flex"; bx.appendChild(ft); ov.appendChild(bx); document.body.appendChild(ov); setTimeout(function(){ nm.focus(); },50); }
 function shopPickStock(){ var have={}; SHOP.items.forEach(function(it){ if(it.stockId) have[it.stockId]=1; });
   var ov=mk("div","calcov"); ov.style.zIndex=70; document.body.appendChild(ov); var bx=mk("div","calcbox"), hd=mk("div","calch"), tt=mk("b"); tt.textContent="+ ជ្រើសពីស្តុកថ្នាំ"; hd.appendChild(tt); var x=mk("button","calcx"); x.type="button"; x.textContent="✕"; x.onclick=function(){ ov.remove(); }; hd.appendChild(x); bx.appendChild(hd);
   var body=mk("div","calcbody"), q=mk("input"); q.type="search"; q.placeholder="🔍 ស្វែងរកក្នុងស្តុក…"; q.className="specq"; body.appendChild(q); var lst=mk("div","pickl"); body.appendChild(lst);
@@ -10826,6 +10866,7 @@ function ecoFromAi(){ var R=eReport(), L=[];
   ECO.mode="gen"; ECO.cur.tpl="free"; ECO.cur.text=txt; ECO.dirty=true; ecoOpen("gen"); say("📥 បានដាក់របាយការណ៍ AI ចូលអេកូ — ពិនិត្យ ហើយ Save & Print"); }
 (function(){
   if(typeof TOOL_GROUPS!=="undefined") TOOL_GROUPS.forEach(function(g){ g[2]=g[2].filter(function(t){ return t[0]!=="echo"; }); g[2].forEach(function(t){ if(t[0]==="eco") t[2]=["Echo","Écho","អេកូ"]; }); });
+  var hg=document.querySelector(".hometg"); if(hg&&typeof toolGrid==="function"){ var ng=toolGrid(function(t){ go("rx"); calcOpen(t); }); ng.classList.add("hometg"); hg.replaceWith(ng); }
   var st=document.createElement("style"); st.textContent='#cTabs button[data-t="echo"]{display:none!important}.ecotabs .ecoai{border-style:dashed}'; document.head.appendChild(st);
   /* the AI helper gets "put into Echo" and "back to Echo" buttons */
   var oe=calcEcho; calcEcho=function(){ var r=oe.apply(this,arguments), a=document.querySelector("#cBody .labacts");
