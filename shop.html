@@ -97,11 +97,22 @@ h3{font-size:15px;margin:16px 0 6px}
 .ord{border:1px solid var(--rule);border-radius:12px;padding:10px 12px;margin:8px 0;display:flex;justify-content:space-between;align-items:center;gap:8px}
 .ord button{border:0;background:var(--pen);color:#fff;border-radius:10px;padding:7px 12px}
 .foot{text-align:center;color:var(--muted);font-size:12px;margin:24px 0}
+
+.gate{position:fixed;inset:0;z-index:70;background:linear-gradient(160deg,#16244a,#1f3f9e 60%,#2a4fc0);display:flex;align-items:center;justify-content:center;padding:16px;overflow:auto}
+.gbox{background:#fff;border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,.3);width:100%;max-width:400px;padding:22px 20px}
+.gbox h2{margin:0 0 4px;font-size:20px;text-align:center}.gbox .gs{text-align:center;color:var(--muted);font-size:13px;margin-bottom:14px}
+.gtabs{display:flex;background:var(--soft);border-radius:12px;padding:4px;margin-bottom:12px}.gtabs button{flex:1;border:0;background:none;border-radius:9px;padding:8px;font-weight:600;color:var(--muted)}.gtabs button[aria-pressed=true]{background:#fff;color:var(--pen);box-shadow:0 1px 4px rgba(0,0,0,.12)}
+.gbox label{display:block;margin:10px 0}.gbox label span{display:block;font-size:13px;color:var(--muted);margin-bottom:4px}
+.gbox input{width:100%;border:1.5px solid var(--rule);border-radius:12px;padding:11px 12px;font-size:16px;background:#f8fafc}.gbox input:focus{outline:0;border-color:var(--pen);background:#fff}
+.gbox .gbtn{width:100%;border:0;background:var(--pen);color:#fff;border-radius:12px;padding:12px;font-size:16px;font-weight:700;margin-top:8px}.gbox .gbtn:disabled{opacity:.6}
+.gbox .glink{display:block;margin:12px auto 0;border:0;background:none;color:var(--pen);font-weight:600;text-decoration:underline}
+.gbox .gerr{color:var(--bad);font-size:13.5px;min-height:18px;margin-top:6px}.gbox .gok{color:var(--ok)}
+.me{margin-left:auto;display:flex;align-items:center;gap:8px;font-size:13px;flex-wrap:wrap;justify-content:flex-end}.me button{border:1px solid rgba(255,255,255,.5);background:rgba(255,255,255,.12);color:#fff;border-radius:999px;padding:4px 10px;font-size:12.5px}
 .toast{position:fixed;left:50%;top:16px;transform:translateX(-50%);background:var(--ink);color:#fff;border-radius:12px;padding:9px 16px;z-index:60;font-size:14px;box-shadow:0 8px 24px rgba(0,0,0,.2)}
 </style>
 </head>
 <body>
-<header class="top"><div class="in"><div class="logo">🏥</div><div><h1 id="sName">កំពុងផ្ទុក…</h1><div class="sub" id="sSub"></div></div></div></header>
+<header class="top"><div class="in"><div class="logo">🏥</div><div><h1 id="sName">កំពុងផ្ទុក…</h1><div class="sub" id="sSub"></div></div><div class="me" id="me" hidden></div></div></header>
 <main class="wrap">
   <div class="searchcard">
     <input class="search" id="q" type="search" placeholder="🔍 ស្វែងរកថ្នាំ ឬទំនិញ… · Search" autocomplete="off">
@@ -117,6 +128,7 @@ h3{font-size:15px;margin:16px 0 6px}
 <div class="cartbar" id="cartbar" hidden><button type="button" id="cartBtn"><span id="cartN"></span><span id="cartT"></span></button></div>
 <div class="sheet" id="sheet" hidden><div class="box" id="sbox"></div></div>
 <div class="toast" id="toast" hidden></div>
+<div class="gate" id="gate" hidden><div class="gbox" id="gbox"></div></div>
 
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
@@ -146,6 +158,7 @@ shop.onSnapshot(function(d){
   if(c.phone){ var a=mk("a",null,"📞 "+c.phone); a.href="tel:"+c.phone.replace(/\s/g,""); sub.appendChild(a); sub.appendChild(document.createTextNode("  ")); }
   if(c.contact&&/^https?:\/\//.test(c.contact)){ var l=mk("a",null,"💬 ទំនាក់ទំនង"); l.href=c.contact; l.target="_blank"; l.rel="noopener"; sub.appendChild(l); }
   $("banner").hidden=!c.banner; $("banner").textContent="📢 "+(c.banner||""); $("closed").hidden=c.open!==false;
+  var gh=document.querySelector("#gbox h2"); if(gh) gh.textContent=c.name||"ហាងអនឡាញ";
   render(); },function(e){ $("sName").textContent="មិនអាចភ្ជាប់បាន"; $("sSub").textContent="សូមពិនិត្យអ៊ីនធឺណិត · "+(e.code||""); });
 shop.collection("items").where("show","==",true).onSnapshot(function(s){ ST.items=s.docs.map(function(d){ var x=d.data(); x.id=d.id; return x; }); render(); },function(){});
 function itemOf(id){ return ST.items.find(function(x){return x.id===id;}); }
@@ -220,11 +233,11 @@ function showCart(){
       items:lines.map(function(l){ return {id:l.it.id,name:String(l.it.name).slice(0,120),price:+l.it.price||0,qty:l.n,unit:l.it.unit||"",rx:!!l.it.rx,stockId:l.it.stockId||""}; }),
       subtotal:sub,fee:fee,total:tot,currency:(ST.cfg&&ST.cfg.currency)||"USD"};
     shop.collection("orders").add(o).then(function(ref){ ST.myOrders.unshift({id:ref.id,code:code,t:Date.now(),total:tot}); ST.myOrders=ST.myOrders.slice(0,20); try{ localStorage.setItem(MY_KEY,JSON.stringify(ST.myOrders)); }catch(e){}
-      ST.cart={}; saveCart(); F.note=""; F.payRef=""; render(); track(ref.id); })
+      accAddOrder({id:ref.id,code:code,t:Date.now(),total:tot}); ST.cart={}; saveCart(); F.note=""; F.payRef=""; render(); track(ref.id); })
     .catch(function(e){ go.disabled=false; go.textContent="✓ បញ្ជាទិញ · Place order"; err.textContent="⚠ ផ្ញើមិនបាន ("+(e.code||e.message)+") — សូមព្យាយាមម្តងទៀត ឬទូរស័ព្ទមកគ្លីនិក។"; }); };
   bx.appendChild(err); bx.appendChild(go); }
 function radios(opts,key,rer){ var w=mk("div","opts"); if(!opts.length) w.appendChild(mk("small",null,"—")); opts.forEach(function(o){ var l=mk("label","opt"+(F[key]===o[0]?" on":"")), r=mk("input"); r.type="radio"; r.name=key; r.checked=F[key]===o[0]; r.onchange=function(){ F[key]=o[0]; rer(); }; l.appendChild(r); var t=mk("div"); t.appendChild(mk("b",null,o[1])); if(o[2]) t.appendChild(mk("small",null,o[2])); l.appendChild(t); w.appendChild(l); }); return w; }
-function field(lab,key,type){ var l=mk("label","f"); l.appendChild(mk("span",null,lab)); var i=mk(type==="area"?"textarea":"input"); if(type!=="area") i.type=type; else i.rows=2; i.value=F[key]||""; i.oninput=function(){ F[key]=i.value; }; l.appendChild(i); return l; }
+function field(lab,key,type){ var l=mk("label","f"); l.appendChild(mk("span",null,lab)); var i=mk(type==="area"?"textarea":"input"); if(type!=="area") i.type=type; else i.rows=2; if(ACC.s&&key==="phone"){ F.phone=ACC.s.phone; i.readOnly=true; i.title="លេខទូរស័ព្ទគណនី"; } if(ACC.s&&key==="name"&&!F.name) F.name=ACC.s.name; i.value=F[key]||""; i.oninput=function(){ F[key]=i.value; }; l.appendChild(i); return l; }
 var STEPS=[["new","🆕","បានផ្ញើ · Sent"],["confirmed","✓","គ្លីនិកបានទទួល · Confirmed"],["ready","📦","ត្រៀមរួច · Ready"],["delivering","🛵","កំពុងដឹក · On the way"],["done","✅","ទទួលរួច · Completed"]];
 function track(id){ var bx=sheet("track","🧾 ការបញ្ជាទិញ · Order"); var box=mk("div","done"); bx.appendChild(box);
   if(ST.unsubO) ST.unsubO(); ST.unsubO=shop.collection("orders").doc(id).onSnapshot(function(d){ box.textContent=""; if(!d.exists){ box.appendChild(mk("p",null,"រកមិនឃើញ")); return; } var o=d.data();
@@ -235,7 +248,57 @@ function track(id){ var bx=sheet("track","🧾 ការបញ្ជាទិញ
     if(o.status==="new"){ var cb=mk("button","cancel","✕ បោះបង់ការបញ្ជាទិញ · Cancel"); cb.type="button"; cb.style.marginTop="14px"; cb.style.display="block"; cb.style.marginLeft="auto"; cb.style.marginRight="auto";
       cb.onclick=function(){ if(!confirm("បោះបង់ការបញ្ជាទិញនេះ?")) return; shop.collection("orders").doc(id).update({status:"cancelled",t_cancelled:firebase.firestore.FieldValue.serverTimestamp()}).then(function(){ toast("បានបោះបង់"); }).catch(function(){ toast("មិនអាចបោះបង់បាន — គ្លីនិកបានទទួលហើយ សូមទូរស័ព្ទ"); }); }; box.appendChild(cb); }
   },function(){ box.textContent="មិនអាចផ្ទុកបាន"; }); }
-function showMine(){ var bx=sheet("mine","🧾 ការបញ្ជាទិញរបស់ខ្ញុំ · My orders"); ST.myOrders.forEach(function(m){ var r=mk("div","ord"); var t=new Date(m.t); r.appendChild(mk("span",null,"#"+m.code+" · "+t.toLocaleDateString("en-GB")+" · "+money(m.total))); var b=mk("button",null,"មើល ›"); b.type="button"; b.onclick=function(){ track(m.id); }; r.appendChild(b); bx.appendChild(r); }); }
+function showMine(){ var bx=sheet("mine","🧾 ការបញ្ជាទិញរបស់ខ្ញុំ · My orders"); accMergeOrders(); ST.myOrders.forEach(function(m){ var r=mk("div","ord"); var t=new Date(m.t); r.appendChild(mk("span",null,"#"+m.code+" · "+t.toLocaleDateString("en-GB")+" · "+money(m.total))); var b=mk("button",null,"មើល ›"); b.type="button"; b.onclick=function(){ track(m.id); }; r.appendChild(b); bx.appendChild(r); }); }
+/* ---------- customer account: name + phone + secret code; "forgot" = phone → new code (no SMS) ---------- */
+/* customers/{phone} = {phone, ver} (public: only says the number is registered)
+   accounts/{sha256(shop|phone|code|ver)} = {phone, name, ver, orders[]} — only someone who knows the code can find it */
+var ACC={s:null}, SESS_KEY="shop.sess."+CID;
+function normPhone(p){ p=String(p||"").replace(/[០-៩]/g,function(c){ return "០១២៣៤៥៦៧៨៩".indexOf(c); }).replace(/\D/g,""); if(/^855/.test(p)) p="0"+p.slice(3); if(p&&p[0]!=="0") p="0"+p; return p; }
+function sha(t){ var d=new TextEncoder().encode(t); return crypto.subtle.digest("SHA-256",d).then(function(b){ return [].map.call(new Uint8Array(b),function(x){ return ("0"+x.toString(16)).slice(-2); }).join(""); }); }
+function accKey(ph,code,ver){ return sha(CID+"|"+ph+"|"+code+"|"+ver); }
+function accSave(s){ ACC.s=s; try{ if(s) localStorage.setItem(SESS_KEY,JSON.stringify(s)); else localStorage.removeItem(SESS_KEY); }catch(e){} accMe(); }
+function accMe(){ var m=$("me"); m.textContent=""; m.hidden=!ACC.s; if(!ACC.s) return; m.appendChild(mk("span",null,"👤 "+ACC.s.name+" · "+ACC.s.phone)); var b=mk("button",null,"ចាកចេញ"); b.type="button"; b.onclick=function(){ if(confirm("ចាកចេញពីគណនី?")){ accSave(null); F.name=""; F.phone=""; gate("in"); } }; m.appendChild(b); }
+function accAddOrder(o){ if(!ACC.s) return; shop.collection("accounts").doc(ACC.s.key).update({orders:firebase.firestore.FieldValue.arrayUnion(o),updated:Date.now()}).catch(function(){}); }
+function accMergeOrders(){ (ACC.orders||[]).forEach(function(o){ if(!ST.myOrders.some(function(m){ return m.id===o.id; })) ST.myOrders.push(o); }); ST.myOrders.sort(function(a,b){ return b.t-a.t; }); }
+function accLoad(){ if(!ACC.s) return; shop.collection("accounts").doc(ACC.s.key).get().then(function(d){
+    if(!d.exists){ accSave(null); gate("in","គណនីបានប្តូរលេខសម្ងាត់ — សូមចូលម្តងទៀត"); return; }
+    ACC.orders=(d.data().orders||[]).slice(-50); accMergeOrders(); try{ localStorage.setItem(MY_KEY,JSON.stringify(ST.myOrders.slice(0,50))); }catch(e){} render();
+    return shop.collection("customers").doc(ACC.s.phone).get().then(function(c){ if(c.exists&&(c.data().ver||0)!==ACC.s.ver){ accSave(null); gate("in","លេខសម្ងាត់ត្រូវបានប្តូរ — សូមចូលម្តងទៀត"); } }); }).catch(function(){}); }
+function gate(mode,msg){ var g=$("gate"), bx=$("gbox"); g.hidden=false; bx.textContent="";
+  bx.appendChild(mk("h2",null,(ST.cfg&&ST.cfg.name)||"ហាងអនឡាញ")); bx.appendChild(mk("div","gs","សូមចូលគណនី ដើម្បីបញ្ជាទិញ · Please sign in"));
+  if(mode!=="forgot"){ var tb=mk("div","gtabs"); [["in","ចូល · Sign in"],["up","ចុះឈ្មោះ · Register"]].forEach(function(t){ var b=mk("button",null,t[1]); b.type="button"; b.setAttribute("aria-pressed",String(mode===t[0])); b.onclick=function(){ gate(t[0]); }; tb.appendChild(b); }); bx.appendChild(tb); }
+  else bx.appendChild(mk("h3",null,"🔑 ភ្លេចលេខសម្ងាត់ · Forgot code"));
+  var inp=function(lab,type,ph,mode2){ var l=mk("label"); l.appendChild(mk("span",null,lab)); var i=mk("input"); i.type=type; if(ph) i.placeholder=ph; if(mode2) i.inputMode=mode2; l.appendChild(i); bx.appendChild(l); return i; };
+  var nm=mode==="up"?inp("ឈ្មោះ · Name","text","ឈ្មោះរបស់អ្នក"):null;
+  var ph=inp("លេខទូរស័ព្ទ · Phone","tel","012 345 678","tel"); try{ var me=JSON.parse(localStorage.getItem(ME_KEY)||"{}"); if(me.phone) ph.value=me.phone; if(nm&&me.name) nm.value=me.name; }catch(e){}
+  var c1=inp(mode==="forgot"?"លេខសម្ងាត់ថ្មី · New code":"លេខសម្ងាត់ · Code","password","យ៉ាងតិច ៤ តួ","numeric"), c2=mode==="in"?null:inp("វាយលេខសម្ងាត់ម្តងទៀត · Repeat code","password","","numeric");
+  var er=mk("div","gerr"); if(msg) er.textContent=msg; var go=mk("button","gbtn",mode==="in"?"ចូល · Sign in":mode==="up"?"ចុះឈ្មោះ · Register":"💾 រក្សាទុកលេខសម្ងាត់ថ្មី · Save"); go.type="button";
+  var fail=function(t){ er.className="gerr"; er.textContent="⚠ "+t; go.disabled=false; };
+  go.onclick=function(){ var p=normPhone(ph.value), code=c1.value.trim(), name=nm?nm.value.trim():"";
+    if(nm&&!name) return fail("សូមដាក់ឈ្មោះ"); if(!/^0\d{7,10}$/.test(p)) return fail("លេខទូរស័ព្ទមិនត្រឹមត្រូវ"); if(code.length<4) return fail("លេខសម្ងាត់យ៉ាងតិច ៤ តួ"); if(c2&&c2.value.trim()!==code) return fail("លេខសម្ងាត់ទាំងពីរមិនដូចគ្នា");
+    go.disabled=true; er.textContent=""; var cref=shop.collection("customers").doc(p);
+    cref.get().then(function(c){
+      if(mode==="up"){ if(c.exists) return fail("លេខនេះបានចុះឈ្មោះរួចហើយ — សូមចូល ឬចុច «ភ្លេចលេខសម្ងាត់»");
+        return cref.set({phone:p,ver:0,created:Date.now(),updated:Date.now()}).then(function(){ return accKey(p,code,0); }).then(function(k){
+          return shop.collection("accounts").doc(k).set({phone:p,name:name.slice(0,80),ver:0,orders:[],created:Date.now(),updated:Date.now()}).then(function(){ done({phone:p,name:name.slice(0,80),key:k,ver:0},"✓ បានចុះឈ្មោះ"); }); }); }
+      if(!c.exists) return fail("លេខនេះមិនទាន់ចុះឈ្មោះ — សូមចុច «ចុះឈ្មោះ»");
+      var ver=c.data().ver||0;
+      if(mode==="in") return accKey(p,code,ver).then(function(k){ return shop.collection("accounts").doc(k).get().then(function(a){ if(!a.exists) return fail("លេខសម្ងាត់មិនត្រឹមត្រូវ"); done({phone:p,name:a.data().name||"",key:k,ver:ver},"✓ បានចូល"); }); });
+      /* forgot: new code with the phone number only (as the clinic chose) */
+      var nv=ver+1, nmOld="";
+      return cref.update({ver:nv,updated:Date.now()}).then(function(){ return accKey(p,code,nv); }).then(function(k){
+        try{ var me=JSON.parse(localStorage.getItem(ME_KEY)||"{}"); if(normPhone(me.phone)===p) nmOld=me.name||""; }catch(e){}
+        return shop.collection("accounts").doc(k).set({phone:p,name:(nmOld||"").slice(0,80),ver:nv,orders:[],created:Date.now(),updated:Date.now()}).then(function(){ done({phone:p,name:nmOld||p,key:k,ver:nv},"✓ បានរក្សាទុកលេខសម្ងាត់ថ្មី"); }); });
+    }).catch(function(e){ fail("មិនអាចភ្ជាប់បាន ("+(e.code||e.message)+")"); }); };
+  var done=function(s,t){ accSave(s); F.name=s.name; F.phone=s.phone; try{ localStorage.setItem(ME_KEY,JSON.stringify({name:s.name,phone:s.phone,address:F.address||""})); }catch(e){} g.hidden=true; toast(t); accLoad(); };
+  [nm,ph,c1,c2].forEach(function(i){ if(i) i.onkeydown=function(e){ if(e.key==="Enter") go.click(); }; });
+  bx.appendChild(er); bx.appendChild(go);
+  if(mode==="in"){ var fg=mk("button","glink","ភ្លេចលេខសម្ងាត់? · Forgot code"); fg.type="button"; fg.onclick=function(){ gate("forgot"); }; bx.appendChild(fg); }
+  if(mode==="forgot"){ var bk=mk("button","glink","‹ ត្រឡប់ទៅចូល · Back"); bk.type="button"; bk.onclick=function(){ gate("in"); }; bx.appendChild(bk); }
+  setTimeout(function(){ (nm||ph).focus(); },50); }
+try{ ACC.s=JSON.parse(localStorage.getItem(SESS_KEY)||"null"); }catch(e){}
+if(!window.crypto||!crypto.subtle){ toast("Browser នេះមិនគាំទ្រការចូលគណនី"); } else if(ACC.s){ accMe(); F.name=F.name||ACC.s.name; accLoad(); } else gate("in");
+
 })();
 </script>
 </body>
