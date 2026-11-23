@@ -578,12 +578,60 @@ function menuPlus(){ var m=$("rxMenu"); if(!m||$("uxMenu")) return; var ai=findA
   var tr=$("echoBtn"); if(tr) tr.classList.add("ux-hide");
   var st=mk("style"); st.textContent="#rxMenu .rm-sec h4{font:700 13px var(--kh);color:#334155;margin:4px 0 6px}#rxMenu .rm-grid{display:grid!important;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px}#rxMenu .rm-grid .btn{justify-content:flex-start;text-align:left;min-height:42px;font-size:13.5px;white-space:normal}#rxMenu .rm-sec{border-bottom:1px solid #eef1f6;padding:6px 0 10px}#rxMenu .rm-row{display:flex;gap:6px;margin-bottom:6px}#rxMenu .rm-row select{flex:1;min-width:0}#rxMenu .seg{margin-top:8px}";
   document.head.appendChild(st); }
+/* ---------- one search box: templates and ICD-10 together (no tabs) ---------- */
+function mergeSearch(){ var lp=$("libPane"), sp=$("searchPane"), q=$("search"), res=$("sresults"); if(!lp||!sp||!q||!res||$("uxSearch")) return;
+  var box=mk("div","uxsearch"); box.id="uxSearch"; var ic=mk("span","uxs-ic"); ic.textContent="🔎"; box.appendChild(ic); box.appendChild(q);
+  var x=mk("button","uxs-x"); x.type="button"; x.textContent="✕"; x.title="លុប"; x.hidden=true; box.appendChild(x);
+  lp.insertBefore(box,lp.firstChild); res.classList.add("uxs-res"); lp.appendChild(res);
+  q.placeholder="ស្វែងរក គំរូ · ជំងឺ · រោគសញ្ញា · ICD-10 (ឧ. ក្អក, J20, toux)";
+  var others=[].filter.call(lp.children,function(c){ return c!==box&&c!==res; });
+  var paint=function(){ var on=!!q.value.trim(); others.forEach(function(c){ c.classList.toggle("ux-hide",on); }); res.classList.toggle("ux-hide",!on); x.hidden=!on; };
+  q.addEventListener("input",paint); x.onclick=function(){ q.value=""; q.dispatchEvent(new Event("input",{bubbles:true})); paint(); q.focus(); };
+  var tabs=document.querySelector("#drawer .tabs"); if(tabs) tabs.classList.add("ux-hide");
+  var libTab=document.querySelector('#drawer .tab[data-tab="lib"]');
+  /* if something opens the old search tab, show the merged pane instead */
+  new MutationObserver(function(){ if(!sp.hidden){ if(libTab) libTab.click(); sp.hidden=true; lp.hidden=false; setTimeout(function(){ q.focus(); },50); } }).observe(sp,{attributes:true,attributeFilter:["hidden"]});
+  paint();
+  var st=mk("style"); st.textContent=".uxsearch{position:sticky;top:0;z-index:2;display:flex;align-items:center;gap:6px;background:#fff;border:1.5px solid #cdd6e6;border-radius:14px;padding:4px 8px;margin:2px 0 10px;box-shadow:0 2px 8px rgba(15,23,42,.06)}"+
+   ".uxsearch:focus-within{border-color:#2563eb;box-shadow:0 0 0 3px rgba(37,99,235,.15)}.uxs-ic{font-size:16px}.uxsearch #search{flex:1;min-width:0;border:0!important;outline:0;background:none;font:16px var(--kh);padding:9px 2px;margin:0!important;box-shadow:none!important}"+
+   ".uxs-x{border:0;background:#eef1f6;border-radius:50%;width:26px;height:26px;color:#475569;font-size:13px;cursor:pointer}.drawer-head{justify-content:flex-end}.uxsearch #search::-webkit-search-cancel-button{-webkit-appearance:none;display:none}";
+  document.head.appendChild(st); }
+/* ---------- SOAP Objective: only what matters for this disease (vital signs, abnormal findings, the body system of the diagnosis) ---------- */
+function htmlText(el){ var d=document.createElement("textarea"); d.innerHTML=el.innerHTML.replace(/<br\s*\/?>/gi,"\n").replace(/<\/(div|p)>/gi,"\n").replace(/<[^>]+>/g,""); return d.value.replace(/\n+$/,""); }
+function soapKey(){ var o=$("soapO"); if(!o) return; var last="", tm=0;
+  var SYS=[["resp",/respir|pulmo|poumon|សួត|ផ្លូវដង្ហើម/i,/pneum|bronch|asthm|copd|bpco|cough|toux|ក្អក|influenza|grippe|tubercul|\btb\b|croup|wheez|hypox|spo/i],
+   ["dig",/digest|abdom|រំលាយ|ពោះ/i,/gastr|diarr|dysent|abdom|append|colit|cholec|pancrea|hepat|vomit|typho|ulc|dengue|constip|ictère|jaund|ពោះ|រាក/i],
+   ["cv",/cardio|heart|cœur|coeur|បេះដូង/i,/heart|cardi|hypert|angina|infarct|coronar|stroke|avc|shock|choc|dengue|sepsis|dehydr|déshydr/i],
+   ["uro",/uro|urine|ទឹកនោម/i,/urin|pyelo|cystit|\buti\b|renal|kidney|rein|colic|prostat|ទឹកនោម/i],
+   ["cns",/nerv|neuro|snc|ប្រសាទ|conscious/i,/mening|seiz|convuls|epilep|stroke|avc|headache|migraine|céphal|coma|confus|encephal|tetan/i],
+   ["skin",/^\+?\s*(skin|peau|ស្បែក)/i,/cellul|abscess|abcès|derma|rash|burn|brûl|wound|plaie|scabies|gale|eczema|urtic|zona|zoster|varicel|dengue/i],
+   ["ent",/\bent\b|orl|ត្រចៀក|ច្រមុះ/i,/otit|pharyng|tonsil|amygdal|angine|sinus|rhinit|mastoid/i],
+   ["bone",/bones|squelette|membre|ឆ្អឹង/i,/fractur|sprain|entorse|arthr|gout|goutte|trauma|osteo|back pain|lombalg/i]];
+  var NORMAL=/(\bno pain\b|\bnormal\b|well colou?red|well hydrated|no nausea|\bsoft\b|\(\+\)\s*$|no chest indrawing|s1 s2 regular|no oedema|<\s*2\s*s|gcs 15\/15|no focal deficit|no deformity|goes back immediately|nothing abnormal|active, alert|:\s*none\s*$|no nasal discharge|pas de |\bras\b|souple|conservée?|bien colorée?s?|bien hydratée?|réguliers?|normale?s?\b|mange bien|feeds well|eats well|^active$|^alert$|^none$|^aucun|^conscious$|^conscient|gcs 15\/15|good air entry|bonne entrée d'air|^clear$|^calm$|^calme$)/i;
+  var ABN=/(impaired|poor|tachy|brady|crackle|râle|wheez|sibil|indrawing(?! *: *none)|tirage|reduced|diminu|tender|sensible|défense|guarding|distend|ballon|rash|éruption|pale|pâle|jaund|ictèr|cyanos|dehydr|déshydr|sunken|oedema(?! *: *no)|œdème|febrile|fébrile|ill-looking|confus|letharg|drows|somnol|stiff|raideur|purulent|productive|vomit|diarr|blood|sang|murmur(?!.*no pathological)|souffle(?! pathologique)|pain(?!.*no pain)|douleur|swell|gonfl|red\b|rouge|exud|exsud|discharge(?!.*no nasal)|écoulement|weak|faibl)/i;
+  var strip=function(t){ return t.replace(/\s*\([^()]*[ក-៿][^()]*\)/g,""); };
+  var run=function(){ if(document.activeElement===o||o.dataset.edited) return; var t=htmlText(o); if(!t||t===last||!/\n\s*\+ |^\+ /.test(t)) return;
+    var ctx=[($("fDx")||{}).textContent,($("fDx2")||{}).textContent,($("fCo")||{}).textContent,((document.querySelector(".bar-main input")||{}).value)].join(" ");
+    var rel=SYS.filter(function(s){ return s[2].test(ctx); }).map(function(s){ return s[0]; });
+    var lines=t.split("\n"), out=[], cur=null, buf=[], head="";
+    var flush=function(){ if(cur!==null&&buf.length){ out.push(head); buf.forEach(function(b){ out.push(b); }); } buf=[]; };
+    var normPart=function(p){ p=p.trim().toLowerCase(); if(!p) return true; return /(^|\s)(no|not|non|pas|sans|without|absence)\b/.test(p)||NORMAL.test(p); };
+    var keep=function(line,grp){ var x=strip(line).replace(/^\s*-\s*/,"").trim(); if(!x) return false;
+      if(/general condition|état général|^eg\b|ស្ថានភាពទូទៅ/i.test(x)) return true; if(rel.indexOf(grp)>-1) return true;
+      var v=x.indexOf(":")>-1?x.slice(x.indexOf(":")+1):x; return v.split(/\s*,\s*/).some(function(p){ return !normPart(p); }); };
+    lines.forEach(function(L,i){ var m=/^\s*\+\s*([^:]+?)\s*:\s*(.*)$/.exec(L);
+      if(m){ flush(); var g=SYS.find(function(s){ return s[1].test(m[1]); }); cur=g?g[0]:"gen"; head="+ "+m[1].trim()+" :"; if(m[2].trim()){ if(keep("-"+m[2],cur)) buf.push("   -"+strip(m[2]).trim()); } return; }
+      if(cur===null){ out.push(strip(L)); return; }
+      if(/^\s*-/.test(L)){ if(keep(L,cur)) buf.push("   "+strip(L).trim()); return; }
+      flush(); cur=null; if(L.trim()) out.push(strip(L)); });
+    flush(); var res=out.join("\n").replace(/\n{2,}/g,"\n").trim(); last=res; if(res!==t) o.innerText=res; };
+  new MutationObserver(function(){ clearTimeout(tm); tm=setTimeout(run,60); }).observe(o,{childList:true,characterData:true,subtree:true}); setTimeout(run,300); }
 /* ---------- Simple / Full mode ---------- */
 function setSimple(on){ document.body.classList.toggle("ux-simple",!!on); try{ localStorage.setItem(SIMPLE_KEY,on?"1":"0"); }catch(e){} }
 function simpleCss(){ var st=mk("style"); st.textContent="@media screen{body.ux-simple .dx-kh,body.ux-simple .dx-fr,body.ux-simple .dxx,body.ux-simple #dxAddBar,body.ux-simple #rxClsBar,body.ux-simple #mhSec,body.ux-simple .ux-sim-hide{display:none!important}}"; document.head.appendChild(st);
   var v=null; try{ v=localStorage.getItem(SIMPLE_KEY); }catch(e){} setSimple(v===null?true:v==="1"); }
 /* ---------- start once the app has built its buttons ---------- */
-var tries=0; (function wait(){ if(($("tplBtn")&&$("toolsBtn")&&$("invBtn")&&$("kmfBtn"))||tries>60){ try{ theme(); simpleCss(); tiles(); steps(); menuPlus(); }catch(e){ console.error("ux",e); } return; } tries++; setTimeout(wait,200); })();
+var tries=0; (function wait(){ if(($("tplBtn")&&$("toolsBtn")&&$("invBtn")&&$("kmfBtn"))||tries>60){ try{ theme(); simpleCss(); tiles(); steps(); menuPlus(); mergeSearch(); soapKey(); }catch(e){ console.error("ux",e); } return; } tries++; setTimeout(wait,200); })();
 })();
 
 </script>
