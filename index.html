@@ -626,12 +626,104 @@ function soapKey(){ var o=$("soapO"); if(!o) return; var last="", tm=0;
       flush(); cur=null; if(L.trim()) out.push(strip(L)); });
     flush(); var res=out.join("\n").replace(/\n{2,}/g,"\n").trim(); last=res; if(res!==t) o.innerText=res; };
   new MutationObserver(function(){ clearTimeout(tm); tm=setTimeout(run,60); }).observe(o,{childList:true,characterData:true,subtree:true}); setTimeout(run,300); }
+/* ---------- DDx that fits the diagnosis (replaces the automatic list; your own typing is never changed) ---------- */
+var UX_DDX=[
+ [/bronchiolit|\bj21/,"Pneumonia (J18.9); Viral-induced wheeze / asthma (J45.9); Pertussis (A37.9); Foreign body aspiration (T17.9)"],
+ [/pneumon|pneumopath|\bj1[2-8]/,"Acute bronchitis (J20.9); Pulmonary tuberculosis (A15.0); Influenza (J11.1); Heart failure with pulmonary oedema (I50.1); Melioidosis (A24.1)"],
+ [/bronchit|\bj20|\bj40/,"Pneumonia (J18.9); Asthma (J45.9); Pertussis (A37.9); Pulmonary tuberculosis if cough > 2 weeks (A15.0)"],
+ [/asthm|\bj45|\bj46|wheez/,"COPD (J44.9); Acute bronchitis (J20.9); Heart failure (I50.9); Foreign body aspiration (T17.9)"],
+ [/copd|bpco|\bj44/,"Asthma (J45.9); Heart failure (I50.9); Pneumonia (J18.9); Pulmonary tuberculosis (A15.0)"],
+ [/tubercul|\ba1[5-9]/,"Pneumonia (J18.9); Lung cancer (C34.9); Bronchiectasis (J47); Melioidosis (A24.1)"],
+ [/pertussis|\ba37/,"Acute bronchitis (J20.9); Bronchiolitis (J21.9); Foreign body aspiration (T17.9)"],
+ [/croup|laryngit|\bj05|\bj04/,"Epiglottitis (J05.1); Foreign body aspiration (T17.9); Bacterial tracheitis (J04.1)"],
+ [/pharyng|tonsil|amygdal|angine|\bj0[23]/,"Viral pharyngitis (J02.9); Infectious mononucleosis (B27.9); Peritonsillar abscess (J36); Diphtheria (A36.0)"],
+ [/sinusit|\bj01|\bj32/,"Common cold (J00); Allergic rhinitis (J30.4); Dental abscess (K04.7)"],
+ [/rhinit|\bj30/,"Common cold (J00); Acute sinusitis (J01.9); Nasal polyps (J33.9)"],
+ [/common cold|nasopharyng|\bj00|\bj06|urti/,"Allergic rhinitis (J30.4); Influenza (J11.1); Acute sinusitis (J01.9); Streptococcal pharyngitis (J02.0)"],
+ [/influenza|\bj1[01]/,"Dengue (A90); COVID-19 (U07.1); Common cold (J00); Typhoid fever (A01.0)"],
+ [/otitis media|\bh6[5-7]/,"Otitis externa (H60.9); Referred dental pain (K08.8); Eustachian tube dysfunction (H69.8)"],
+ [/otitis externa|\bh60/,"Otitis media (H66.9); Furuncle of ear canal (H60.0); Ear wax impaction (H61.2)"],
+ [/cough|\br05/,"Acute bronchitis (J20.9); Pneumonia (J18.9); Post-nasal drip / rhinosinusitis (J01.9); Pulmonary tuberculosis if > 2 weeks (A15.0)"],
+ [/dengue|\ba9[01]/,"Chikungunya (A92.0); Influenza (J11.1); Leptospirosis (A27.9); Malaria (B54); Typhoid fever (A01.0); Scrub typhus (A75.3)"],
+ [/malaria|paludis|\bb5[0-4]/,"Dengue (A90); Typhoid fever (A01.0); Leptospirosis (A27.9); Sepsis (A41.9)"],
+ [/typho|\ba01/,"Dengue (A90); Malaria (B54); Leptospirosis (A27.9); Scrub typhus (A75.3); Urinary tract infection (N39.0)"],
+ [/leptospir|\ba27/,"Dengue (A90); Malaria (B54); Viral hepatitis (B19.9); Scrub typhus (A75.3)"],
+ [/scrub typhus|rickett|\ba75/,"Dengue (A90); Leptospirosis (A27.9); Typhoid fever (A01.0); Malaria (B54)"],
+ [/sepsis|septic|\ba4[01]/,"Dengue shock syndrome (A91); Pneumonia (J18.9); Pyelonephritis (N10); Melioidosis (A24.1)"],
+ [/mening|\bg0[0-3]/,"Encephalitis (G04.9); Cerebral malaria (B50.0); Febrile seizure (R56.0); Subarachnoid haemorrhage (I60.9)"],
+ [/febrile (seizure|convuls)|\br56\.0/,"Meningitis (G03.9); Epilepsy (G40.9); Hypoglycaemia (E16.2)"],
+ [/epilep|seizure|convuls|\bg40|\br56/,"Syncope (R55); Hypoglycaemia (E16.2); Meningitis / encephalitis (G03.9); Psychogenic non-epileptic seizure (F44.5)"],
+ [/chickenpox|varicel|\bb01/,"Hand, foot and mouth disease (B08.4); Impetigo (L01.0); Herpes zoster (B02.9); Insect bites (T63.4)"],
+ [/hand.? foot|\bb08\.4/,"Chickenpox (B01.9); Herpangina (B08.5); Aphthous stomatitis (K12.0)"],
+ [/measles|\bb05/,"Rubella (B06.9); Dengue (A90); Drug eruption (L27.0); Scarlet fever (A38)"],
+ [/fever|\br50/,"Dengue (A90); Influenza (J11.1); Urinary tract infection (N39.0); Typhoid fever (A01.0); Malaria (B54)"],
+ [/cholera|\ba00/,"Acute gastroenteritis (A09); Food poisoning (A05.9); Enterotoxigenic E. coli (A04.1)"],
+ [/dysent|shigell|amoeb|bloody diarr|\ba03|\ba06/,"Shigellosis (A03.9); Amoebic dysentery (A06.0); Inflammatory bowel disease (K51.9); Intussusception in children (K56.1)"],
+ [/colitis|\bk5[0-2]/,"Infectious dysentery (A03.9); Amoebic colitis (A06.0); Irritable bowel syndrome (K58.9); Colorectal cancer (C18.9)"],
+ [/gastroenter|diarrh|food poison|\ba0[2-9]\b|\ba09/,"Food poisoning (A05.9); Dysentery (A03.9); Cholera (A00.9); Appendicitis (K35.8); Typhoid fever (A01.0)"],
+ [/appendic|\bk3[5-7]/,"Mesenteric adenitis (I88.0); Ectopic pregnancy (O00.9); Ovarian cyst torsion (N83.5); Renal colic (N23); Pelvic inflammatory disease (N73.9)"],
+ [/cholecyst|biliary|gallstone|cholelith|\bk8[0-3]/,"Biliary colic (K80.2); Acute pancreatitis (K85.9); Peptic ulcer (K27.9); Hepatitis (K75.9); Right pyelonephritis (N10)"],
+ [/pancreat|\bk85|\bk86/,"Perforated peptic ulcer (K27.5); Acute cholecystitis (K81.0); Myocardial infarction (I21.9); Bowel obstruction (K56.6)"],
+ [/peptic|gastric ulcer|duodenal ulcer|\bk2[5-8]/,"Gastritis (K29.7); GERD (K21.9); Gastric cancer (C16.9); Acute pancreatitis (K85.9)"],
+ [/gerd|reflux|\bk21/,"Gastritis (K29.7); Peptic ulcer (K27.9); Angina (I20.9); Oesophagitis (K20)"],
+ [/gastrit|dyspeps|epigastr|pylori|\bk29|\bk30/,"Peptic ulcer (K27.9); GERD (K21.9); Biliary colic (K80.2); Acute coronary syndrome (I24.9); Acute pancreatitis (K85.9)"],
+ [/hepatit|\bb1[5-9]|\bk7[0-5]/,"Leptospirosis (A27.9); Cholecystitis / cholangitis (K81.0); Drug-induced liver injury (K71.9); Malaria (B54)"],
+ [/cirrho|ascit|\bk74/,"Heart failure (I50.9); Nephrotic syndrome (N04.9); Tuberculous peritonitis (A18.3); Hepatocellular carcinoma (C22.0)"],
+ [/constipat|\bk59/,"Irritable bowel syndrome (K58.9); Bowel obstruction (K56.6); Hypothyroidism (E03.9)"],
+ [/pyelonephr|\bn10|\bn11/,"Renal colic (N23); Appendicitis (K35.8); Cholecystitis (K81.0); Pelvic inflammatory disease (N73.9)"],
+ [/renal colic|nephrolith|kidney stone|urolith|\bn2[0-3]/,"Pyelonephritis (N10); Appendicitis (K35.8); Biliary colic (K80.2); Ectopic pregnancy (O00.9)"],
+ [/urinary|cystit|\buti\b|\bn39|\bn30/,"Vaginitis (N76.0); Urethritis / STI (A64); Pyelonephritis (N10); Kidney stone (N20.0)"],
+ [/prostat|\bn40|\bn41/,"Urinary tract infection (N39.0); Prostate cancer (C61); Urethral stricture (N35.9)"],
+ [/gestational hypertens|\bo13|\bo16/,"Pre-eclampsia (O14.9); Chronic hypertension (O10.0); White-coat hypertension (R03.0)"],
+ [/hypertensive (crisis|emergency|urgency)|\bi16/,"Stroke (I64); Acute coronary syndrome (I24.9); Pre-eclampsia (O14.9); Pain / anxiety-related rise in BP (R03.0)"],
+ [/hypertens|\bi1[0-5]/,"White-coat hypertension (R03.0); Secondary hypertension (I15.9); Pre-eclampsia if pregnant (O14.9)"],
+ [/heart failure|\bi50/,"Pneumonia (J18.9); COPD exacerbation (J44.1); Nephrotic syndrome (N04.9); Cirrhosis with ascites (K74.6)"],
+ [/angina|coronary|infarct|\bacs\b|\bi2[0-5]/,"GERD (K21.9); Costochondritis (M94.0); Pulmonary embolism (I26.9); Aortic dissection (I71.0); Panic attack (F41.0)"],
+ [/stroke|cerebral infarct|\bavc\b|\bi6[0-4]/,"Hypoglycaemia (E16.2); Todd's paralysis after seizure (G83.8); Bell's palsy (G51.0); Brain tumour (D43.2)"],
+ [/migraine|\bg43/,"Tension-type headache (G44.2); Sinusitis (J01.9); Hypertension (I10); Meningitis (G03.9)"],
+ [/headache|tension.type|\bg44|\br51/,"Migraine (G43.9); Sinusitis (J01.9); Refractive error (H52.7); Hypertension (I10)"],
+ [/vertigo|dizz|\bh81|\br42/,"Hypotension (I95.9); Anaemia (D64.9); Hypoglycaemia (E16.2); Posterior circulation stroke (I63.9)"],
+ [/ketoacid|\bdka\b|\be1[01]\.1/,"Hyperosmolar hyperglycaemic state (E11.0); Sepsis (A41.9); Lactic acidosis (E87.2); Acute abdomen (R10.0)"],
+ [/hypogly|\be16/,"Stroke (I64); Alcohol intoxication (F10.0); Seizure (R56.8); Sepsis (A41.9)"],
+ [/diabet|\be1[0-4]/,"Type 1 diabetes (E10.9); Steroid-induced hyperglycaemia (R73.9); Stress hyperglycaemia (R73.9)"],
+ [/thyro|\be0[0-7]/,"Anxiety disorder (F41.9); Menopause (N95.1); Depression (F32.9)"],
+ [/anaemi|anemi|\bd5[0-9]|\bd6[0-4]/,"Iron deficiency (D50.9); Thalassaemia (D56.9); Hookworm infection (B76.9); Chronic kidney disease (N18.9); GI blood loss (K92.2)"],
+ [/urticar|allerg.*skin|\bl50/,"Drug reaction (L27.0); Scabies (B86); Insect bites (T63.4); Viral exanthem / dengue rash (B09)"],
+ [/scabies|\bb86/,"Eczema (L30.9); Urticaria (L50.9); Insect bites (T63.4); Contact dermatitis (L25.9)"],
+ [/cellulit|erysip|\bl03|\ba46/,"Abscess (L02.9); Deep vein thrombosis (I80.2); Gout (M10.9); Insect bite reaction (T63.4)"],
+ [/abscess|furuncle|boil|\bl02/,"Cellulitis (L03.9); Infected sebaceous cyst (L72.1); Hidradenitis (L73.2)"],
+ [/impetigo|\bl01/,"Herpes simplex (B00.9); Chickenpox (B01.9); Eczema (L30.9)"],
+ [/eczema|dermatit|\bl2[0-5]|\bl30/,"Scabies (B86); Fungal skin infection (B35.9); Psoriasis (L40.9)"],
+ [/tinea|ringworm|fungal skin|\bb35|\bb36/,"Eczema (L30.9); Psoriasis (L40.9); Pityriasis rosea (L42)"],
+ [/zoster|shingles|\bb02/,"Herpes simplex (B00.9); Contact dermatitis (L25.9); Early cellulitis (L03.9)"],
+ [/conjunctiv|\bh10/,"Allergic conjunctivitis (H10.1); Keratitis (H16.9); Acute angle-closure glaucoma (H40.2); Corneal foreign body (T15.0)"],
+ [/back pain|lumbago|\bm54/,"Renal colic (N23); Pyelonephritis (N10); Disc prolapse (M51.2); Spinal tuberculosis (A18.0)"],
+ [/gout|\bm10/,"Septic arthritis (M00.9); Cellulitis (L03.9); Rheumatoid arthritis (M06.9); Pseudogout (M11.2)"],
+ [/osteoarthr|\bm1[5-9]/,"Rheumatoid arthritis (M06.9); Gout (M10.9); Septic arthritis (M00.9)"],
+ [/rheumatoid|\bm0[5-6]/,"Osteoarthritis (M19.9); Gout (M10.9); Systemic lupus erythematosus (M32.9); Reactive arthritis (M02.9)"],
+ [/sprain|strain|\bs[0-9]3\./,"Fracture (T14.2); Ligament rupture (S83.5); Tendon injury (T14.6)"],
+ [/dysmenorr|period pain|\bn94\.[456]/,"Endometriosis (N80.9); Pelvic inflammatory disease (N73.9); Ectopic pregnancy (O00.9); Ovarian cyst (N83.2)"],
+ [/pelvic inflam|\bpid\b|salping|\bn7[034]/,"Ectopic pregnancy (O00.9); Appendicitis (K35.8); Urinary tract infection (N39.0); Ovarian torsion (N83.5)"],
+ [/ectopic|\bo00/,"Threatened abortion (O20.0); Ruptured ovarian cyst (N83.2); Appendicitis (K35.8); Pelvic inflammatory disease (N73.9)"],
+ [/vagin|vulvovag|candid|\bn76|\bb37\.3/,"Vulvovaginal candidiasis (B37.3); Trichomoniasis (A59.0); Bacterial vaginosis (N76.0); Cervicitis (N72)"],
+ [/threatened abortion|\bo20/,"Ectopic pregnancy (O00.9); Molar pregnancy (O01.9); Cervical polyp (N84.1)"],
+ [/pre-?eclamp|\bo1[3-5]/,"Gestational hypertension (O13); Chronic hypertension (O10.0); HELLP syndrome (O14.2); Eclampsia (O15.9)"],
+ [/hyperemes|\bo21/,"Gastroenteritis (A09); Urinary tract infection (N39.0); Molar pregnancy (O01.9); Hepatitis (K75.9)"],
+ [/postpartum ha|\bpph\b|\bo72/,"Uterine atony (O72.1); Retained placenta (O73.0); Genital tract tear (O71.9); Coagulopathy (O72.3)"]];
+function ddxFit(){ var d=$("fDdx"); if(!d) return; var tm=0;
+  var run=function(){ var cur=d.textContent.trim(); if(!cur||d.dataset.auto!==cur||d.dataset.uxDdx===cur) return;
+    var dx=($("fDx")||{}).textContent||"", tt=fold2((document.querySelector(".bar-main input")||{}).value||""), fd=fold2(dx), hit=UX_DDX.find(function(r){ return r[0].test(fd); })||UX_DDX.find(function(r){ return r[0].test(tt); });
+    if(!hit){ d.dataset.uxDdx=cur; return; }
+    var code=((dx.match(/\(([A-Z]\d{2})/)||[])[1]||"").toUpperCase(), list=hit[1].split(/;\s*/).filter(function(x){ var c=(x.match(/\(([A-Z]\d{2})/)||[])[1]; return !(code&&c&&c.toUpperCase()===code)&&fold2(dx).indexOf(fold2(x.replace(/\s*\(.*$/,"")))<0; });
+    var txt=list.join("; "); d.textContent=txt; d.dataset.auto=txt; d.dataset.uxDdx=txt; };
+  new MutationObserver(function(){ clearTimeout(tm); tm=setTimeout(run,80); }).observe(d,{childList:true,characterData:true,subtree:true,attributes:true,attributeFilter:["data-auto"]}); setTimeout(run,400); }
+function fold2(s){ return String(s||"").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,""); }
 /* ---------- Simple / Full mode ---------- */
 function setSimple(on){ document.body.classList.toggle("ux-simple",!!on); try{ localStorage.setItem(SIMPLE_KEY,on?"1":"0"); }catch(e){} }
 function simpleCss(){ var st=mk("style"); st.textContent="@media screen{body.ux-simple .dx-kh,body.ux-simple .dx-fr,body.ux-simple .dxx,body.ux-simple #dxAddBar,body.ux-simple #rxClsBar,body.ux-simple #mhSec,body.ux-simple .ux-sim-hide{display:none!important}}"; document.head.appendChild(st);
   var v=null; try{ v=localStorage.getItem(SIMPLE_KEY); }catch(e){} setSimple(v===null?true:v==="1"); }
 /* ---------- start once the app has built its buttons ---------- */
-var tries=0; (function wait(){ if(($("tplBtn")&&$("toolsBtn")&&$("invBtn")&&$("kmfBtn"))||tries>60){ try{ theme(); simpleCss(); tiles(); steps(); menuPlus(); mergeSearch(); soapKey(); }catch(e){ console.error("ux",e); } return; } tries++; setTimeout(wait,200); })();
+var tries=0; (function wait(){ if(($("tplBtn")&&$("toolsBtn")&&$("invBtn")&&$("kmfBtn"))||tries>60){ try{ theme(); simpleCss(); tiles(); steps(); menuPlus(); mergeSearch(); soapKey(); ddxFit(); }catch(e){ console.error("ux",e); } return; } tries++; setTimeout(wait,200); })();
 })();
 
 </script>
