@@ -749,12 +749,23 @@ function ddxFit(){ var d=$("fDdx"); if(!d) return; var tm=0;
   new MutationObserver(mo).observe(d,{childList:true,characterData:true,subtree:true,attributes:true,attributeFilter:["data-auto"]});
   if($("fDx")) new MutationObserver(mo).observe($("fDx"),{childList:true,characterData:true,subtree:true}); setTimeout(run,400); }
 function fold2(s){ return String(s||"").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,""); }
+/* ---------- no differential diagnosis anywhere: DDx field emptied and hidden, section removed from the Observation and the Admission note (numbers follow on) ---------- */
+var ROMAN=["I","II","III","IV","V","VI","VII","VIII","IX","X","XI","XII","XIII","XIV","XV"];
+function ddxOff(){ var d=$("fDdx"); if(d){ var f=d.closest(".field"); if(f) f.classList.add("ux-hide");
+    var clr=function(){ if(d.textContent.trim()){ d.textContent=""; } delete d.dataset.auto; };
+    clr(); new MutationObserver(function(){ if(d.textContent.trim()) setTimeout(clr,0); }).observe(d,{childList:true,characterData:true,subtree:true}); }
+  var fixObs=function(root){ var b=root.querySelector('[data-k="ddx"]'); if(!b) return;
+    var r=b.closest(".r"); if(r&&root.contains(r)){ r.parentNode.removeChild(r); var i=-1; [].forEach.call(root.querySelectorAll(".r > b"),function(h){ var m=/^([IVX]+)\.\s*/.exec(h.textContent); if(m){ if(i<0) i=ROMAN.indexOf(m[1]); h.textContent=h.textContent.replace(m[0],ROMAN[i]+". "); i++; } }); return; }
+    var sec=b.previousElementSibling; if(sec&&sec.classList.contains("sec")) sec.parentNode.removeChild(sec); b.parentNode.removeChild(b);
+    var j=0; [].forEach.call(root.querySelectorAll(".sec .no"),function(n){ n.textContent=ROMAN[j]+"."; j++; }); };
+  var watch=function(){ ["obsOv","kmfOv"].forEach(function(id){ var ov=$(id); if(ov&&!ov._uxDdx){ ov._uxDdx=1; var go=function(){ var p=ov.querySelector(".obs,.kmf"); if(p) fixObs(p); }; go(); new MutationObserver(function(){ go(); }).observe(ov,{childList:true,subtree:true}); } }); };
+  watch(); new MutationObserver(watch).observe(document.body,{childList:true}); }
 /* ---------- Simple / Full mode ---------- */
 function setSimple(on){ document.body.classList.toggle("ux-simple",!!on); try{ localStorage.setItem(SIMPLE_KEY,on?"1":"0"); }catch(e){} }
 function simpleCss(){ var st=mk("style"); st.textContent="@media screen{body.ux-simple .dx-kh,body.ux-simple .dx-fr,body.ux-simple .dxx,body.ux-simple #dxAddBar,body.ux-simple #rxClsBar,body.ux-simple #mhSec,body.ux-simple .ux-sim-hide{display:none!important}}"; document.head.appendChild(st);
   var v=null; try{ v=localStorage.getItem(SIMPLE_KEY); }catch(e){} setSimple(v===null?true:v==="1"); }
 /* ---------- start once the app has built its buttons ---------- */
-var tries=0; (function wait(){ if(($("tplBtn")&&$("toolsBtn")&&$("invBtn")&&$("kmfBtn"))||tries>60){ try{ theme(); simpleCss(); tiles(); steps(); menuPlus(); mergeSearch(); soapKey(); ddxFit(); }catch(e){ console.error("ux",e); } return; } tries++; setTimeout(wait,200); })();
+var tries=0; (function wait(){ if(($("tplBtn")&&$("toolsBtn")&&$("invBtn")&&$("kmfBtn"))||tries>60){ try{ theme(); simpleCss(); tiles(); steps(); menuPlus(); mergeSearch(); soapKey(); ddxOff(); }catch(e){ console.error("ux",e); } return; } tries++; setTimeout(wait,200); })();
 })();
 
 </script>
