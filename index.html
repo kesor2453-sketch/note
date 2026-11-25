@@ -761,6 +761,138 @@ function ddxOff(){ var d=$("fDdx"); if(d){ var f=d.closest(".field"); if(f) f.cl
   var watch=function(){ ["obsOv","kmfOv"].forEach(function(id){ var ov=$(id); if(ov&&!ov._uxDdx){ ov._uxDdx=1; var go=function(){ var p=ov.querySelector(".obs,.kmf"); if(p) fixObs(p); }; go(); new MutationObserver(function(){ go(); }).observe(ov,{childList:true,subtree:true}); } }); };
   watch(); new MutationObserver(watch).observe(document.body,{childList:true}); }
 /* ---------- 📖 Treatment guideline (WHO / Cambodia) inside the app: ⋯ menu, opens on the current diagnosis ---------- */
+/* extra guideline entries for the template diseases — injected into the 📖 Guideline page */
+var GUIDE_EXTRA=[
+["sepsis","បន្ទាន់ / ICU","Sepsis / ឆក់ដោយមេរោគ","Sepsis","Sepsis","septic shock choc septique",
+ ["Within the first hour: blood culture (before antibiotics if no delay), then broad-spectrum IV antibiotic – ceftriaxone 2 g IV (child 80 mg/kg) ± per source","Fluids: crystalloid (RL/NS) 30 ml/kg within 3 h if hypotension or lactate ≥4 (child 10–20 ml/kg bolus, reassess after each)","Oxygen to SpO2 ≥94%; treat the source (drain abscess, remove catheter)","MAP <65 after fluids → vasopressor (noradrenaline) – refer to ICU"],
+ ["Blood culture, CBC, lactate, glucose, creatinine, LFT, urine/CXR by source; consider melioidosis (diabetes, farmers) → ceftazidime/meropenem"],
+ ["Hypotension, lactate >4, confusion, urine <0.5 ml/kg/h, SpO2 <90% → ICU / refer"]],
+["meningitis","ប្រសាទ","រលាកស្រោមខួរ (Meningitis)","Bacterial meningitis","Méningite bactérienne","meningitis méningite neck stiffness",
+ ["Give ceftriaxone 2 g IV every 12 h (child 100 mg/kg/day, max 4 g) immediately – do not delay for LP/CT","Dexamethasone 0.15 mg/kg IV every 6 h × 4 days, first dose before/with antibiotic (not in neonates, not if already on antibiotics >24 h)","Treat seizures (diazepam), keep glucose normal; consider HSV (aciclovir) and Japanese encephalitis"],
+ ["LP if no contraindication, blood culture, glucose, CBC, malaria RDT"],
+ ["GCS falling, seizures, purpura, shock → ICU / refer"]],
+["dka","បេះដូង/មេតាបូលីក","DKA – Diabetic ketoacidosis","Diabetic ketoacidosis","Acidocétose diabétique","dka acidocétose hyperglycemia",
+ ["NS 0.9% 1 L in the first hour, then ~250–500 ml/h guided by status; child 10 ml/kg bolus then slow correction over 48 h","Check K⁺ before insulin: K⁺ <3.3 → replace first. Insulin regular 0.1 U/kg/h IV infusion (adult may use 0.14 U/kg/h without bolus)","Add potassium 20–40 mmol/L when K⁺ <5.0; add dextrose 5–10% when glucose <250 mg/dl","Find the trigger: infection, missed insulin, MI"],
+ ["Glucose hourly, K⁺/Na⁺ every 2–4 h, ketones, venous gas/HCO₃, creatinine, ECG"],
+ ["Coma, pH <7.0, K⁺ <3.3 or >6, cerebral oedema signs in children (headache, slowing pulse) → ICU"]],
+["hypogly","បេះដូង/មេតាបូលីក","ស្ករទាប (Hypoglycaemia)","Hypoglycaemia","Hypoglycémie","hypoglycemia hypoglycémie low sugar",
+ ["Conscious: 15–20 g fast sugar (juice, sugar water), recheck in 15 min","Unconscious: glucose 50% 50 ml IV (child glucose 10% 2–5 ml/kg); then D10 infusion","Sulfonylurea cause: observe 24 h (prolonged hypoglycaemia)"],
+ ["Capillary glucose every 15–30 min until stable, then hourly"],
+ ["Seizures, persistent coma after correction → look for other cause / refer"]],
+["copd","ផ្លូវដង្ហើម","COPD កាន់តែធ្ងន់ (Exacerbation)","COPD exacerbation","Exacerbation de BPCO","bpco copd",
+ ["Salbutamol ± ipratropium nebulised every 20 min ×3 then every 4–6 h","Prednisolone 40 mg/day × 5 days","Antibiotic if purulent sputum: amoxicillin or doxycycline 5 days","Controlled oxygen: target SpO2 88–92%"],
+ ["SpO2, CXR, ABG if available, CBC"],
+ ["Drowsiness/CO₂ retention, SpO2 <88% on oxygen, exhaustion → refer for NIV/ICU"]],
+["bronchiolitis","កុមារ","Bronchiolitis (កុមារ)","Bronchiolitis","Bronchiolite","bronchiolite wheeze infant",
+ ["Supportive: nasal suction, small frequent feeds or NG fluids, oxygen if SpO2 <90–92%","No routine salbutamol, steroids or antibiotics","Admit if age <3 months, poor feeding, apnoea, SpO2 <92%"],
+ ["SpO2; CXR only if severe or unclear"],
+ ["Apnoea, cyanosis, severe indrawing, poor feeding <50% → admit / refer"]],
+["hf","បេះដូង/មេតាបូលីក","បេះដូងខ្សោយស្រួចស្រាវ (Acute heart failure)","Acute heart failure","Insuffisance cardiaque aiguë","heart failure œdème pulmonaire",
+ ["Sit up, oxygen to SpO2 ≥94%","Furosemide 40–80 mg IV (higher if already on oral diuretic); repeat by urine output","Nitrate (ISDN 5 mg SL) if SBP >110; avoid if hypotension","Then ACEi/ARB, β-blocker (bisoprolol), spironolactone when stable"],
+ ["ECG, troponin, creatinine, K⁺, CXR, echo"],
+ ["SBP <90, SpO2 <90% on oxygen, chest pain/ACS → refer / ICU"]],
+["acs","បេះដូង/មេតាបូលីក","Acute coronary syndrome (ACS)","Acute coronary syndrome","Syndrome coronarien aigu","acs infarctus mi angina",
+ ["Aspirin 300 mg chewed + clopidogrel 300–600 mg","Nitrate SL if SBP >90 (not if RV infarct or PDE5 use); morphine if severe pain","Oxygen only if SpO2 <90%","STEMI → urgent referral for reperfusion; atorvastatin 80 mg"],
+ ["ECG within 10 min, troponin (0 and 3 h), glucose, K⁺"],
+ ["ST elevation, shock, arrhythmia, ongoing pain → refer immediately"]],
+["stroke","ប្រសាទ","Stroke (ដាច់សរសៃឈាមខួរក្បាល)","Stroke","AVC","stroke avc cerebral",
+ ["Check glucose first; keep NPO until swallow test","Note time last seen well – thrombolysis only within 4.5 h in a stroke centre → refer quickly","Do not lower BP unless >220/120 (or >185/110 if thrombolysis)","After CT excludes bleed: aspirin 300 mg, then 75–100 mg/day"],
+ ["CT brain, glucose, ECG, CBC"],
+ ["GCS falling, seizures, severe headache (haemorrhage) → refer"]],
+["cholecystitis","ក្រពះពោះវៀន","រលាកថង់ប្រមាត់ (Acute cholecystitis)","Acute cholecystitis","Cholécystite aiguë","cholecystitis cholécystite gallstone",
+ ["NPO, IV fluids, analgesia (paracetamol/NSAID/opioid)","Ceftriaxone 1–2 g IV daily + metronidazole 500 mg IV every 8 h","Surgical referral for cholecystectomy"],
+ ["Ultrasound, CBC, LFT, lipase"],
+ ["Jaundice + fever (cholangitis), peritonitis, sepsis → urgent surgery"]],
+["pancreatitis","ក្រពះពោះវៀន","រលាកលំពែង (Acute pancreatitis)","Acute pancreatitis","Pancréatite aiguë","pancreatitis pancréatite",
+ ["Ringer lactate 5–10 ml/kg/h guided by urine/HR (avoid fluid overload)","Analgesia (opioid allowed); early oral feeding when pain settles","No routine antibiotics; treat cause (gallstones, alcohol, TG)"],
+ ["Lipase, CBC, creatinine, glucose, calcium, TG, LFT, ultrasound"],
+ ["SIRS/organ failure, falling urine, hypotension → ICU"]],
+["ugib","ក្រពះពោះវៀន","ហូរឈាមក្រពះ (Upper GI bleeding)","Upper GI bleeding","Hémorragie digestive haute","haematemesis melena hématémèse",
+ ["2 large IV lines, NS/RL; transfuse if Hb <7 g/dl (<8 if heart disease)","Omeprazole 80 mg IV then 40 mg IV every 12 h","Suspected varices: ceftriaxone 1 g/day + octreotide/terlipressin if available","Stop NSAIDs/aspirin; endoscopy within 24 h → refer"],
+ ["Hb, group & crossmatch, urea, creatinine, INR"],
+ ["Shock, ongoing haematemesis, Hb falling → refer urgently"]],
+["dysentery","ក្រពះពោះវៀន","រាកមានឈាម (Dysentery / Shigellosis)","Dysentery","Dysenterie","dysentery shigella amoebiasis colitis",
+ ["ORS/fluids; zinc for children","Shigella: ciprofloxacin 500 mg twice daily × 3 days (child 15 mg/kg twice) or azithromycin","Amoebic (trophozoites): metronidazole 500 mg 3 times daily × 7–10 days"],
+ ["Stool microscopy ± culture, CBC, electrolytes"],
+ ["Severe dehydration, toxic, abdominal distension, child <2 months → admit"]],
+["pid","ឈាម / ស្ត្រី","PID (រលាកអាងត្រគាក)","Pelvic inflammatory disease","Infection génitale haute","pid salpingite pelvic",
+ ["Pregnancy test first (exclude ectopic)","Outpatient: ceftriaxone 500 mg IM once + doxycycline 100 mg twice daily × 14 days + metronidazole 500 mg twice daily × 14 days","Inpatient if severe: ceftriaxone IV + doxycycline + metronidazole","Treat partner"],
+ ["hCG, urinalysis, CBC, ultrasound (abscess)"],
+ ["Tubo-ovarian abscess, peritonitis, pregnancy → admit / refer"]],
+["ectopic","សម្ភព","ផ្ទៃពោះក្រៅស្បូន (Ectopic pregnancy)","Ectopic pregnancy","Grossesse extra-utérine","ectopic geu pelvic pain",
+ ["Any woman of childbearing age with pain/bleeding: urine hCG","Unstable / free fluid: 2 IV lines, crossmatch, urgent surgery","Stable, small, unruptured: methotrexate only in a specialist centre"],
+ ["hCG, ultrasound (TVS), Hb, group"],
+ ["Shock, shoulder-tip pain, free fluid → emergency surgery"]],
+["hyperemesis","សម្ភព","ក្អួតខ្លាំងពេលមានផ្ទៃពោះ (Hyperemesis)","Hyperemesis gravidarum","Hyperémèse gravidique","hyperemesis vomiting pregnancy",
+ ["IV NS/RL with KCl as needed; avoid dextrose before thiamine","Thiamine 100 mg daily","Antiemetic: metoclopramide 10 mg or ondansetron 4 mg (after 1st trimester preferred) or promethazine","Small frequent meals, then pyridoxine ± doxylamine"],
+ ["Urine ketones, electrolytes, creatinine, LFT, TSH, ultrasound (twins/mole)"],
+ ["Weight loss >5%, confusion (Wernicke), persistent vomiting → admit"]],
+["pph","សម្ភព","ហូរឈាមក្រោយសម្រាល (PPH)","Postpartum haemorrhage","Hémorragie du post-partum","pph postpartum haemorrhage atony",
+ ["Call for help, 2 IV lines, fundal massage","Oxytocin 10 IU IM/IV then 20–40 IU in 1 L at 60 drops/min","Tranexamic acid 1 g IV within 3 h of birth (repeat after 30 min if bleeding continues)","Misoprostol 800 µg SL if no oxytocin; check placenta and tears"],
+ ["Hb, group & crossmatch, clotting"],
+ ["Shock, bleeding not controlled, retained placenta → refer / theatre"]],
+["lepto","ជំងឺឆ្លង","Leptospirosis","Leptospirosis","Leptospirose","leptospirosis flood rat",
+ ["Mild: doxycycline 100 mg twice daily × 7 days (or amoxicillin/azithromycin)","Severe: ceftriaxone 1 g IV daily or penicillin G × 7 days","Fluids, watch urine output"],
+ ["CBC, creatinine, LFT, CK, urinalysis; IgM/PCR if available"],
+ ["Jaundice + kidney failure (Weil), lung haemorrhage → ICU"]],
+["scrub","ជំងឺឆ្លង","Scrub typhus / Rickettsia","Scrub typhus","Typhus des broussailles","scrub typhus eschar rickettsia",
+ ["Doxycycline 100 mg twice daily × 7 days (child 2.2 mg/kg twice)","Pregnancy/child alternative: azithromycin 500 mg × 3 days","Look for eschar (armpit, groin, waist)"],
+ ["CBC, LFT, IgM if available"],
+ ["Pneumonitis, meningoencephalitis, shock → admit"]],
+["melioid","ជំងឺឆ្លង","Melioidosis","Melioidosis","Mélioïdose","melioidosis burkholderia",
+ ["Intensive phase: ceftazidime 2 g IV every 8 h (or meropenem 1 g every 8 h if severe) ≥ 10–14 days","Eradication: co-trimoxazole + folic acid × 3–6 months","Drain abscesses; control diabetes"],
+ ["Blood/pus culture, CXR, ultrasound abdomen (liver/spleen abscess)"],
+ ["Sepsis, pneumonia with shock → ICU"]],
+["snake","បន្ទាន់ / ICU","ពស់ចឹក (Snake bite)","Snake bite","Morsure de serpent","snake bite venom",
+ ["Immobilise the limb, no tourniquet/cutting/sucking; remove rings","20-min whole blood clotting test (20WBCT) on arrival and every 6 h","Antivenom (specific/polyvalent) if non-clotting blood, neurotoxicity (ptosis), shock or rapid swelling; adrenaline ready","Tetanus prophylaxis; observe ≥24 h"],
+ ["20WBCT, CBC, creatinine, urine for myoglobin, ECG"],
+ ["Ptosis/difficult breathing, bleeding, shock, dark urine → antivenom / refer"]],
+["op","បន្ទាន់ / ICU","ពុលថ្នាំសម្លាប់សត្វល្អិត (Organophosphate)","Organophosphate poisoning","Intoxication aux organophosphorés","organophosphate pesticide poisoning",
+ ["Airway, oxygen; decontaminate (remove clothes, wash skin)","Atropine 1–2 mg IV, double every 5 min until chest clear, HR >80, SBP >80, pupils not pinpoint; then infusion","Pralidoxime if available; diazepam for seizures","Do not induce vomiting"],
+ ["SpO2, ECG, glucose, cholinesterase if available"],
+ ["Respiratory failure, need for intubation → ICU"]],
+["burns","បន្ទាន់ / ICU","រលាកភ្លើង / ទឹកក្តៅ (Burns)","Burns","Brûlures","burn brûlure scald",
+ ["Cool with running water 20 min (within 3 h); cover with cling film","TBSA >15% adult (>10% child): Parkland 4 ml × kg × %TBSA RL in 24 h, half in first 8 h","Analgesia, tetanus; dressing (silver sulfadiazine) for partial thickness"],
+ ["Weight, %TBSA (rule of 9s / palm 1%), urine output"],
+ ["Airway burn, face/hands/genitals, full thickness, electrical, >20% → refer burn unit"]],
+["electrolyte","បេះដូង/មេតាបូលីក","អំបិលរ៉ែ K⁺ / Na⁺ មិនធម្មតា","Electrolyte disorders (K⁺, Na⁺)","Troubles ioniques (K⁺, Na⁺)","hypokalemia hyperkalemia hyponatremia trouble ionique",
+ ["Low K⁺: oral KCl 40–80 mmol/day; IV max 10 mmol/h peripheral, never IV push; check Mg","High K⁺ ≥6.5 or ECG change: calcium gluconate 10% 10 ml IV, insulin 10 IU + glucose 25 g, salbutamol neb; stop K⁺ drugs","Low Na⁺ severe symptoms: NaCl 3% 150 ml over 20 min; do not raise >8–10 mmol/L in 24 h"],
+ ["Repeat K⁺/Na⁺, ECG, creatinine, glucose, Mg"],
+ ["Arrhythmia, seizures, coma → ICU"]],
+["otitis","ភ្នែក / ORL","រលាកត្រចៀកកណ្តាល (Otitis media)","Acute otitis media","Otite moyenne aiguë","otitis otite ear",
+ ["Analgesia (paracetamol/ibuprofen)","Amoxicillin 40–45 mg/kg twice daily × 5 days (10 days if <2 years); adult 500 mg 3 times daily","Discharge >2 weeks: dry mopping + quinolone ear drops"],
+ ["Otoscopy"],
+ ["Mastoid swelling, facial palsy, meningism → refer"]],
+["sinusitis","ភ្នែក / ORL","រលាក Sinus (Acute sinusitis)","Acute sinusitis","Sinusite aiguë","sinusitis sinusite",
+ ["Mostly viral: saline rinse, analgesia, ± intranasal steroid","Antibiotic if >10 days, severe or double-worsening: amoxicillin 500 mg 3 times daily × 5–7 days (amoxi-clav if failure)"],
+ ["Clinical; imaging only if complications"],
+ ["Periorbital swelling, visual change, severe headache → refer"]],
+["rhinitis","ភ្នែក / ORL","រលាកច្រមុះអាឡែស៊ី (Allergic rhinitis)","Allergic rhinitis","Rhinite allergique","allergic rhinitis rhinite",
+ ["Avoid triggers; saline rinse","Non-sedating antihistamine (cetirizine 10 mg / loratadine 10 mg daily)","Intranasal steroid (fluticasone/beclometasone) daily for persistent symptoms"],
+ [],["Unilateral blockage/bleeding → ENT"]],
+["conj","ភ្នែក / ORL","ភ្នែកក្រហម (Conjunctivitis)","Conjunctivitis","Conjonctivite","conjunctivitis conjonctivite red eye",
+ ["Viral: cold compress, hygiene (most)","Bacterial (pus): chloramphenicol or tetracycline eye ointment 4 times daily × 5 days","Allergic: cold compress, antihistamine drops"],
+ [],["Pain, reduced vision, photophobia, contact lens, newborn → refer"]],
+["scabies","ស្បែក","កមរមាស់ (Scabies)","Scabies","Gale","scabies gale itch",
+ ["Permethrin 5% cream neck down, wash off after 8–14 h, repeat in 7 days; or ivermectin 200 µg/kg day 1 and 8 (not <15 kg/pregnancy)","Treat all household contacts at the same time; wash clothes/bedding hot","Antihistamine for itch (may last 2–4 weeks)"],
+ [],["Crusted scabies, secondary infection → antibiotic / refer"]],
+["tinea","ស្បែក","ផ្សិតស្បែក (Tinea)","Tinea / fungal skin infection","Dermatophytose","tinea ringworm fungal",
+ ["Clotrimazole/miconazole cream twice daily, continue 2 weeks after clearing","Extensive/scalp/nail: oral terbinafine or fluconazole/griseofulvin (scalp)","Keep skin dry"],
+ [],["Not improving 4 weeks → reconsider diagnosis"]],
+["varicella","ស្បែក","អុតស្វាយ (Chickenpox) / Herpes zoster","Chickenpox / herpes zoster","Varicelle / zona","chickenpox varicella zoster shingles",
+ ["Chickenpox: paracetamol (no aspirin/NSAID), calamine, cut nails","Aciclovir 800 mg 5 times daily × 7 days for adults/teens if within 24–72 h, or immunocompromised","Zoster: aciclovir 800 mg 5 times daily × 7 days within 72 h; pain relief"],
+ [],["Pneumonia, encephalitis, eye involvement (zoster ophthalmicus), immunocompromised → refer"]],
+["vagin","ឈាម / ស្ត្រី","ទឹករំអិលទ្វារមាស (Vaginitis)","Vaginal discharge","Pertes vaginales","vaginitis candida trichomonas bacterial vaginosis",
+ ["Candida: clotrimazole pessary 500 mg once or fluconazole 150 mg once (not in pregnancy)","Trichomonas / bacterial vaginosis: metronidazole 500 mg twice daily × 7 days (treat partner for trichomonas)","Cervicitis signs: treat gonorrhoea + chlamydia (ceftriaxone 500 mg IM + doxycycline)"],
+ [],["Pelvic pain, fever (PID), pregnancy → assess"]],
+["anaph","បន្ទាន់ / ICU","Anaphylaxis","Anaphylaxis","Anaphylaxie","anaphylaxis allergic shock",
+ ["Adrenaline 0.5 mg IM (1:1000, 0.5 ml) in thigh; child 0.01 mg/kg (max 0.5); repeat every 5 min","Lie flat, legs up; oxygen; NS 1 L bolus (child 20 ml/kg)","Then antihistamine and hydrocortisone 200 mg IV; observe ≥6–12 h"],
+ [],["Stridor, persistent hypotension → ICU"]],
+["seizure","ប្រសាទ","ប្រកាច់ / Epilepsy","Seizures / status epilepticus","Convulsions / état de mal","seizure convulsion epilepsy febrile",
+ ["Protect airway, recovery position, check glucose","Seizure >5 min: diazepam 10 mg IV/rectal (child 0.3 mg/kg IV, 0.5 mg/kg rectal) or midazolam; repeat once","Still seizing: phenobarbital 20 mg/kg IV or phenytoin 20 mg/kg","Febrile seizure (6 m–5 y): treat fever, look for meningitis"],
+ ["Glucose, Na⁺, Ca²⁺, malaria RDT, LP if meningitis suspected"],
+ ["Status epilepticus, first seizure in adult, focal deficit → refer"]]];
+
 var GUIDE_HTML=null;
 function guideSrc(){ if(GUIDE_HTML) return Promise.resolve(GUIDE_HTML); var el=$("guidez"); if(!el) return Promise.reject(new Error("no guide"));
   var bin=atob(el.textContent.trim()), u=new Uint8Array(bin.length); for(var i=0;i<bin.length;i++) u[i]=bin.charCodeAt(i);
@@ -768,18 +900,22 @@ function guideSrc(){ if(GUIDE_HTML) return Promise.resolve(GUIDE_HTML); var el=$
     :(window.pako?Promise.resolve(window.pako.inflate(u,{to:"string"})):Promise.reject(new Error("no inflate")));
   return p.then(function(t){ GUIDE_HTML=t; return t; }); }
 function guideQuery(){ var dx=(($("fDx")||{}).textContent||"").replace(/\([A-Z]\d[^)]*\)/g,"").replace(/[,;—–].*$/,"").trim(), tt=((document.querySelector(".bar-main input")||{}).value||"").replace(/\(.*?\)/g,"").trim();
-  var t=(dx||tt).toLowerCase(); var MAP=[[/dengue/,"dengue"],[/malaria|paludis/,"malaria"],[/typho/,"typhoid"],[/pneumon/,"pneumonia"],[/tubercul/,"tuberculosis"],[/asthm/,"asthma"],[/pharyng|tonsil|sore throat|angine/,"pharyngitis"],[/common cold|nasopharyng|upper respiratory|urti|rhinit|influenza/,"cold"],[/gastroenter|diarrh|cholera|dysent/,"diarrhea"],[/gastrit|gerd|reflux|dyspeps|peptic|ulcer|pylori/,"gastritis"],[/urinary|cystit|pyelo|\buti\b/,"urinary"],[/hypertens/,"hypertension"],[/diabet/,"diabetes"],[/eclamp/,"eclampsia"],[/anaemi|anemi/,"anémie"],[/cellulit/,"cellulitis"],[/gout/,"gout"],[/lipid|cholesterol/,"cholesterol"],[/uric/,"uric"],[/migraine|headache/,"headache"],[/renal colic|kidney stone|lith/,"kidney stone"],[/back pain|lumbago|myalg/,"back pain"],[/abdominal pain/,"abdominale"],[/cough/,"toux"],[/fever/,"fièvre"],[/vomit|nausea/,"vomissement"],[/urticar|allerg|itch|prurit/,"allergie"],[/constip/,"constipation"]];
+  var t=(dx||tt).toLowerCase(); var MAP=[[/sepsis|septic/,"sepsis"],[/mening/,"meningitis"],[/ketoacid|\bdka\b/,"dka"],[/hypogly/,"hypoglyc"],[/copd|bpco/,"copd"],[/bronchiolit/,"bronchiolitis"],[/heart failure/,"heart failure"],[/coronary|myocard|angina/,"coronary"],[/stroke|\bavc\b/,"stroke"],[/cholecyst|biliary/,"cholecystitis"],[/pancreat/,"pancreatitis"],[/gi bleed|haematemes|melaen|gastrointestinal haem/,"upper gi"],[/dysent|shigell|colitis/,"dysentery"],[/pelvic inflam|\bpid\b/,"pelvic inflammatory"],[/ectopic|pelvic pain/,"ectopic"],[/hyperemes/,"hyperemesis"],[/postpartum|\bpph\b/,"postpartum"],[/leptospir/,"leptospirosis"],[/scrub typhus|rickett/,"scrub"],[/melioid/,"melioidosis"],[/snake/,"snake"],[/organophos|pesticide/,"organophosphate"],[/\bburns?\b/,"burn"],[/hypokal|hyperkal|hyponat|potassium|sodium/,"electrolyte"],[/otitis/,"otitis"],[/sinusit/,"sinusitis"],[/allergic rhinit|rhinitis/,"allergic rhinitis"],[/conjunctivitis/,"conjunctivitis"],[/scabies/,"scabies"],[/tinea|fungal skin|ringworm/,"tinea"],[/varicel|chickenpox|zoster|shingles/,"chickenpox"],[/vagin|candid|trichomon/,"vaginal"],[/anaphyla/,"anaphylaxis"],[/seizure|convuls|epilep/,"seizure"],[/dengue/,"dengue"],[/malaria|paludis/,"malaria"],[/typho/,"typhoid"],[/pneumon/,"pneumonia"],[/tubercul/,"tuberculosis"],[/asthm/,"asthma"],[/pharyng|tonsil|sore throat|angine/,"pharyngitis"],[/common cold|nasopharyng|upper respiratory|urti|rhinit|influenza/,"cold"],[/gastroenter|diarrh|cholera|dysent/,"diarrhea"],[/gastrit|gerd|reflux|dyspeps|peptic|ulcer|pylori/,"gastritis"],[/urinary|cystit|pyelo|\buti\b/,"urinary"],[/hypertens/,"hypertension"],[/diabet/,"diabetes"],[/eclamp/,"eclampsia"],[/anaemi|anemi/,"anémie"],[/cellulit/,"cellulitis"],[/gout/,"gout"],[/lipid|cholesterol/,"cholesterol"],[/uric/,"uric"],[/migraine|headache/,"headache"],[/renal colic|kidney stone|lith/,"kidney stone"],[/back pain|lumbago|myalg/,"back pain"],[/abdominal pain/,"abdominale"],[/cough/,"toux"],[/fever/,"fièvre"],[/vomit|nausea/,"vomissement"],[/urticar|allerg|itch|prurit/,"allergie"],[/constip/,"constipation"]];
   var h=MAP.find(function(m){ return m[0].test(t); }); return h?h[1]:""; }
+function guideInject(w){ try{ w.eval("(function(E){ var have={}; DB.forEach(function(d){ have[d.id]=1; }); var add=E.filter(function(e){ return !have[e[0]]; }).map(function(e){ var o={id:e[0],cat:e[1],name:e[2],en:e[3],fr:e[4],alt:e[5]+' '+e[3]+' '+e[4],status:'ព្រាង – ផ្ទៀងផ្ទាត់ជាមួយ WHO និង CNM/MoH កម្ពុជា មុនប្រើ',tx:e[6],inv:e[7],red:e[8],src:['WHO / BNF / MSF clinical guidelines (summary)','ត្រូវបន្ថែម៖ គោលការណ៍ណែនាំជាតិកម្ពុជា'],verified:'ព្រាង'}; o.i18n={en:{tx:e[6],inv:e[7],red:e[8]}}; return o; }); DB=DB.concat(add); DEFAULT.push.apply(DEFAULT,add);"+
+  "[['បន្ទាន់ / ICU','Emergency / ICU','Urgences / réanimation'],['ប្រសាទ','Neurology','Neurologie'],['កុមារ','Children','Pédiatrie'],['ភ្នែក / ORL','Eye / ENT','Œil / ORL']].forEach(function(a){ M(a[0],a[1],a[2]); }); render(); })")(GUIDE_EXTRA); }catch(e){ console.error("guide inject",e); } }
 function guideOpen(){ var ov=$("guideOv"); if(!ov){ ov=mk("div","guideov noprint"); ov.id="guideOv"; ov.innerHTML='<div class="gd-h"><b>📖 ការព្យាបាលតាម Guideline · WHO / កម្ពុជា</b><button type="button" class="gd-x">✕</button></div><div class="gd-b">⏳</div>';
     document.body.appendChild(ov); ov.querySelector(".gd-x").onclick=function(){ ov.hidden=true; document.body.classList.remove("gd-open"); };
-    var st=mk("style"); st.textContent=".guideov{position:fixed;inset:0;z-index:80;background:#fff;display:flex;flex-direction:column}.guideov[hidden]{display:none}.gd-h{display:flex;align-items:center;gap:8px;padding:8px 12px;background:linear-gradient(90deg,#0b6e8a,#0e7c9b);color:#fff;font:600 14.5px var(--kh)}.gd-h b{flex:1}.gd-x{border:0;background:rgba(255,255,255,.2);color:#fff;border-radius:10px;width:38px;height:34px;font-size:16px;cursor:pointer}.gd-b{flex:1;display:flex;align-items:center;justify-content:center}.gd-b iframe{border:0;width:100%;height:100%}body.gd-open{overflow:hidden}";
+    var st=mk("style"); st.textContent=".guideov{position:fixed;inset:0;z-index:80;background:#fff;display:flex;flex-direction:column}.guideov[hidden]{display:none}.gd-h{display:flex;align-items:center;gap:8px;padding:8px 12px;background:linear-gradient(90deg,#0b6e8a,#0e7c9b);color:#fff;font:600 14.5px var(--kh)}.gd-h b{flex:1}.gd-x{border:0;background:rgba(255,255,255,.2);color:#fff;border-radius:10px;width:38px;height:34px;font-size:16px;cursor:pointer}.gd-b{flex:1;display:flex;align-items:center;justify-content:center}.gd-b iframe{border:0;width:100%;height:100%}body.gd-open{overflow:hidden}@media(min-width:900px){.guideov{left:auto;width:min(42vw,600px);box-shadow:-8px 0 30px rgba(15,23,42,.18);border-left:1px solid #d9dee4}body.gd-open{overflow:auto;margin-right:min(42vw,600px)}body.gd-open.drawer-open{margin-right:0}body.gd-open .sheetwrap{grid-template-columns:minmax(0,1fr)!important}body.gd-open .topbar,body.gd-open .uxsteps{max-width:100%}}@media(max-width:899px){.guideov{top:auto;height:88vh;border-radius:16px 16px 0 0;box-shadow:0 -10px 30px rgba(15,23,42,.25)}.gd-h{border-radius:16px 16px 0 0}}";
     document.head.appendChild(st); }
-  ov.hidden=false; document.body.classList.add("gd-open"); var q=guideQuery(), box=ov.querySelector(".gd-b"), fr=box.querySelector("iframe");
-  var setQ=function(){ try{ var d=fr.contentWindow.document, i=d.getElementById("q"); if(i&&q){ i.value=q; i.dispatchEvent(new Event("input",{bubbles:true})); } }catch(e){} };
+  ov.hidden=false; document.body.classList.add("gd-open"); if(window.innerWidth>=900&&document.body.classList.contains("drawer-open")){ var dc=$("drawerClose"); if(dc) dc.click(); } var q=guideQuery(), box=ov.querySelector(".gd-b"), fr=box.querySelector("iframe");
+  var setQ=function(){ try{ var d=fr.contentWindow.document, i=d.getElementById("q"); GUIDE_LASTQ=q; if(i&&q){ i.value=q; i.dispatchEvent(new Event("input",{bubbles:true})); } }catch(e){} };
   if(fr){ setQ(); return; }
-  guideSrc().then(function(html){ box.textContent=""; fr=mk("iframe"); fr.title="Guideline"; fr.onload=function(){ try{ var d=fr.contentWindow.document, x=d.createElement("style"); x.textContent="header{display:none}"; d.head.appendChild(x); }catch(e){} setTimeout(setQ,300); }; fr.srcdoc=html; box.appendChild(fr); })
+  guideSrc().then(function(html){ box.textContent=""; fr=mk("iframe"); fr.title="Guideline"; fr.onload=function(){ try{ var w=fr.contentWindow, d=w.document, x=d.createElement("style"); x.textContent="header{display:none}"; d.head.appendChild(x); guideInject(w); }catch(e){} setTimeout(setQ,300); }; fr.srcdoc=html; box.appendChild(fr); })
    .catch(function(){ box.textContent="មិនអាចបើក Guideline បានទេ (browser ចាស់ពេក)"; }); }
-function guideMenu(){ var g=document.querySelector("#uxDx .rm-grid"); if(!g||$("uxGuideBtn")) return; var b=mk("button","btn alt"); b.type="button"; b.id="uxGuideBtn"; b.textContent="📖 Guideline ព្យាបាល";
+var GUIDE_LASTQ="";
+function guideFollow(){ var f=$("fDx"); if(!f) return; var tm=0; new MutationObserver(function(){ clearTimeout(tm); tm=setTimeout(function(){ var ov=$("guideOv"); if(!ov||ov.hidden) return; var fr=ov.querySelector("iframe"), q=guideQuery(); if(!fr||!q||q===GUIDE_LASTQ) return; GUIDE_LASTQ=q; try{ var i=fr.contentWindow.document.getElementById("q"); i.value=q; i.dispatchEvent(new Event("input",{bubbles:true})); }catch(e){} },300); }).observe(f,{childList:true,characterData:true,subtree:true}); }
+function guideMenu(){ guideFollow(); var g=document.querySelector("#uxDx .rm-grid"); if(!g||$("uxGuideBtn")) return; var b=mk("button","btn alt"); b.type="button"; b.id="uxGuideBtn"; b.textContent="📖 Guideline ព្យាបាល";
   b.onclick=function(){ var m=$("rxMenu"), mb=$("rxMenuBtn"); if(m&&!m.hidden&&mb) mb.click(); setTimeout(guideOpen,30); }; g.insertBefore(b,g.firstChild); }
 /* ---------- Simple / Full mode ---------- */
 function setSimple(on){ document.body.classList.toggle("ux-simple",!!on); try{ localStorage.setItem(SIMPLE_KEY,on?"1":"0"); }catch(e){} }
